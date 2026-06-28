@@ -121,6 +121,8 @@ Steps:
 
 **Mode B (repository) vaults:** If `wiki/modules/`, `wiki/flows/`, or `wiki/decisions/` exist, link new or updated `concepts/` and `entities/` pages to the best-matching module, flow, or ADR, and add a short paragraph to those pages when the source is about code layout or behavior.
 
+**Mode ADLC vaults:** If the vault is Mode ADLC (`wiki/requirements/`, `wiki/user-stories/`, etc. exist), do NOT flatten BA sources into generic `entities/` + `concepts/`. Still write the raw-source summary to `sources/` as usual, then route the structured deliverables to the BA workers: `ba-suite-subagent` for requirements / stories / gaps / tests, and `architecture-subagent` for per-service technical specs. They preserve stable IDs and traceability. See `skills/wiki/references/ba-suite-pipeline.md` and `technical-planning.md`.
+
 ---
 
 ## Batch Ingest
