@@ -52,10 +52,11 @@ Not skills — the ADLC agent dispatches these at the service level during the p
 
 - **`feature-builder`** — implements code + unit tests from the spec (reads the service's own AGENTS.md for commands).
 - **`feature-tester`** — authors e2e specs from the feature's verification contract.
+- **`feature-reviewer`** — reviews the diff (correctness, reuse, efficiency, test coverage); registers a review record in the wiki; returns APPROVED or CHANGES_REQUESTED.
 - **`feature-verifier`** — runs the contract via `docker compose` + chrome-devtools MCP; logs pass/fail; never fixes bugs.
 - **`doc-writer`** — writes user docs for built + verified features.
 
-Sequenced build -> test -> verify -> document; the agent commits. Ported from a reference app, stack-neutral (no hardcoded framework).
+Sequenced build -> test -> review -> verify -> document; the agent commits. On CHANGES_REQUESTED the review loops back to builder + tester, then re-reviews (capped rounds). Stack-neutral (no hardcoded framework).
 
 ### Project context
 

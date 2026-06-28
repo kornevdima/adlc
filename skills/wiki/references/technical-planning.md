@@ -25,10 +25,13 @@ Each service is its own service: its own repo, its own Mode B code wiki, its own
 
 1. **`feature-builder`** — implements the code + unit tests from the spec. Reads the service's own AGENTS.md for commands and conventions; runs typecheck / lint / unit green.
 2. **`feature-tester`** — authors e2e specs from the feature's verification contract; keeps coverage tags honest.
-3. **`feature-verifier`** — runs the contract end-to-end (see Verification below); logs pass/fail; never fixes bugs.
-4. **`doc-writer`** — writes the user docs (the `writing` concern) for built + verified features.
+3. **`feature-reviewer`** — reviews the diff (correctness, conventions, reuse, efficiency, test coverage) against the service's AGENTS.md / Don'ts; registers a review record in the wiki; returns APPROVED or CHANGES_REQUESTED. Reviews, does not fix.
+4. **`feature-verifier`** — runs the contract end-to-end (see Verification below); logs pass/fail; never fixes bugs.
+5. **`doc-writer`** — writes the user docs (the `writing` concern) for built + verified features.
 
-The dispatcher (ADLC agent) authors the per-feature verification contract, sequences build -> test -> verify, and commits. The product wiki `features/` page links to the service spec; the `wrap-up` skill keeps both sides in sync at session end.
+**Review loop:** on CHANGES_REQUESTED the dispatcher loops back to `feature-builder` (code findings) and `feature-tester` (test gaps), then re-dispatches `feature-reviewer`. Cap the loop at a few rounds; escalate to the human if findings persist. Only on APPROVED does the pipeline proceed to verify.
+
+The dispatcher (ADLC agent) authors the per-feature verification contract, sequences build -> test -> review -> verify, and commits. The product wiki `features/` page links to the service spec; the `wrap-up` skill keeps both sides in sync at session end.
 
 ## Verification (operator's toolset)
 

@@ -42,6 +42,7 @@ Replace `<VAULT_PATH>` with the project root. Trim patterns the project does not
       "Task(ba-export-subagent)",
       "Task(feature-builder)",
       "Task(feature-tester)",
+      "Task(feature-reviewer)",
       "Task(feature-verifier)",
       "Task(doc-writer)",
       "Task(wiki-ingest-subagent)",

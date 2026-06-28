@@ -159,7 +159,7 @@ Key wiki pages to create: `[[Project Overview]]`, `[[Requirements Index]]`, `[[B
 
 The ingest and planning pipelines run through two workers that each cover a whole skill family: `agents/ba-suite-subagent.md` (BA deliverables) and `agents/architecture-subagent.md` (shift-left technical specs). The ADLC pass and the `wrap-up` skill dispatch them one task at a time (parallel where independent) and update `index` / `log` / `hot` after. See [`ba-suite-pipeline.md`](ba-suite-pipeline.md) and [`technical-planning.md`](technical-planning.md).
 
-The per-service **build pipeline** runs four more service-level workers: `agents/feature-builder.md`, `agents/feature-tester.md`, `agents/feature-verifier.md`, `agents/doc-writer.md` (build -> test -> verify -> document). Export uses `agents/ba-export-subagent.md`. All BA + build + shift-left methods are bundled (`references/ba/`, `references/shift-left/`) — no external plugin.
+The per-service **build pipeline** runs five more service-level workers: `agents/feature-builder.md`, `agents/feature-tester.md`, `agents/feature-reviewer.md`, `agents/feature-verifier.md`, `agents/doc-writer.md` (build -> test -> review -> verify -> document; review loops back to builder / tester on changes requested). Export uses `agents/ba-export-subagent.md`. All BA + build + shift-left methods are bundled (`references/ba/`, `references/shift-left/`) — no external plugin.
 
 ### Permissions
 
