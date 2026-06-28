@@ -52,7 +52,7 @@ Navigation: [[overview]] | [[log]] | [[hot]] | [[maintenance-triggers]]
 - [[Recursive Language Models]] — inference strategy: long context as a REPL variable the model greps/chunks/recurses over; sidesteps context rot (status: developing)
 - [[Context Rot]] — model accuracy degrades as context grows even within the window; the motivation for RLM and tight-context habits (status: current)
 - [[RLM-Optimized Wiki Querying]] — design: apply RLM (grep-first + bounded recursion over the wiki filesystem) to wiki-query for large ADLC vaults (status: developing)
-- [[Graphify Relative Paths]] — plan: store project-root-relative source_file in committed graph artifacts so the project is portable across team members (status: planned)
+- [[Graphify Relative Paths]] — design+impl: store project-root-relative source_file in committed graph artifacts so the project is portable across team members (status: implemented)
 
 ---
 

@@ -10,7 +10,7 @@ tags:
   - graphify
   - plan
   - multi-member
-status: planned
+status: implemented
 related:
   - "[[graphify-integration]]"
 ---
@@ -39,3 +39,15 @@ related:
 Whether the external `graphifyy` package emits absolute `source_file`. The post-merge relativization (step 1) makes the fix robust regardless of source.
 
 Tracked as Phase 13.
+
+## Implemented (2026-06-28)
+
+Deterministic relativization in Python, not pushed onto the subagent (which would require error-prone LLM path math):
+
+- `merge.py`, `update.py`, `regenerate.py`: added a `to_rel(src, project)` helper and rewrite every node's `source_file` to project-root-relative posix before `graph.json` / `.graphify_extract.json` are written. Covers paths from both the external AST extractor and the semantic subagents.
+- `update.py` prune compares on relative paths, so it works whether the existing graph stored absolute (pre-migration) or relative `source_file`. The first `/graphify-update` (or a `/graphify-ingest` rebuild) auto-migrates an old absolute graph to relative.
+- `regenerate.py` community-page links and the `hot.md` god-node snippet use the relative path directly.
+- `graphify-extract-subagent.md` documents that it records the absolute read-path and the merge step relativizes it.
+- Query skills need no change: they print `source_file` as stored (now relative), already portable.
+
+Verified: `py_compile` passes on all three scripts; `to_rel` unit-tested (absolute-under-project to relative, already-relative passthrough, outside-project unchanged, empty/None safe).

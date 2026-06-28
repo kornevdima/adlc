@@ -25,6 +25,12 @@ Parse recent entries: `grep "^## \[" wiki/log.md | head -10`
 
 ---
 
+## [2026-06-28] impl | Graphify Relative Paths (Phase 13 done)
+- Implemented per [[Graphify Relative Paths]]: `to_rel()` helper in merge.py / update.py / regenerate.py rewrites node `source_file` to project-root-relative before graph.json is written. update.py prune compares relative (auto-migrates old absolute graphs). Subagent + ingest SKILL docs updated. Query skills unchanged (print stored relative paths).
+- Verified: py_compile OK on all three scripts; to_rel unit-tested. Deterministic Python relativization chosen over LLM path math in the subagent.
+
+---
+
 ## [2026-06-28] plan | Graphify Relative Paths (multi-member portability)
 - Filed [[Graphify Relative Paths]]: committed graphify artifacts (graph.json source_file, GRAPH_REPORT.md, wiki/code/*) store machine-absolute paths that break for teammates at other checkout paths.
 - Plan: post-merge relativization to project-root-relative source_file; subagent records relative; query skills resolve to absolute only when reading. Tracked as roadmap Phase 13.
