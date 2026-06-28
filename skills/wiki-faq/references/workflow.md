@@ -46,6 +46,17 @@ Use the narrative layer for any project (code, product docs, BA workflows). Add 
 
 - **`wrap-up`** — session-end sync (ADLC). On "wrap up" / "end session": checks git across `services/`, injects updates into the code wikis, reflects shipped features / gaps / requirements into the product wiki, refreshes `hot.md` + `log.md`. The `Stop` hook nudges it when `services/` changed.
 
+### Service build (ADLC, internal sub-agents)
+
+Not skills — the ADLC agent dispatches these at the service level during the per-service build pipeline:
+
+- **`feature-builder`** — implements code + unit tests from the spec (reads the service's own AGENTS.md for commands).
+- **`feature-tester`** — authors e2e specs from the feature's verification contract.
+- **`feature-verifier`** — runs the contract via `docker compose` + chrome-devtools MCP; logs pass/fail; never fixes bugs.
+- **`doc-writer`** — writes user docs for built + verified features.
+
+Sequenced build -> test -> verify -> document; the agent commits. Ported from a reference app, stack-neutral (no hardcoded framework).
+
 ### Project context
 
 - **`/project-profile`** — generate `AGENTS.md` for a brownfield project. Mechanical scan of build/test/lint configs (via `mechanical-scanner-subagent`) plus a short tribal-knowledge interview. Cross-tool format.
