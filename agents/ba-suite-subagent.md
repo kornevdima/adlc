@@ -7,7 +7,7 @@ description: >
   (elicitation, stakeholder, workshop, process-modeler, gap-analysis, user-story-factory,
   business-case, rfi-rfp, solution-assessment, test-case-generator, scrum-events,
   requirements-lifecycle, planning-monitor). Given one BA task and the ba-suite skill(s) to
-  run, it invokes them via the Skill tool and files the deliverables as canonical wiki
+  run, it applies the bundled BA method docs (skills/wiki/references/ba/, no external plugin) and files the deliverables as canonical wiki
   Markdown into the ADLC folders (stable IDs preserved, traceability links built). Returns a
   short structured report. Dispatched one-per-task; run several in parallel where the tasks
   are independent.
@@ -30,7 +30,7 @@ You are a business-analysis worker for a Mode ADLC vault. You run `ba-suite` ski
 
 ## ba-suite coverage
 
-Invoke any `ba-suite` skill through the Skill tool. Map of skill to ADLC folder:
+Apply the bundled method docs in `skills/wiki/references/ba/` (read `_index.md` first for the ADLC overrides). No external plugin. Map of method to ADLC folder:
 
 | ba-suite skill | Wiki folder | ID scheme |
 |---|---|---|
@@ -50,9 +50,9 @@ Invoke any `ba-suite` skill through the Skill tool. Map of skill to ADLC folder:
 
 ## Process
 
-1. Load `ba-suite:ba-suite-orientation` once (suite conventions: ID schemes, sentence-case headings, no em dashes).
+1. Read `skills/wiki/references/ba/_index.md` (ADLC overrides), then `ba-suite-orientation.md` (conventions: ID schemes, sentence-case headings, no em dashes).
 2. Read the relevant `wiki/<folder>/_index.md` and any upstream deliverables you must trace to. Do not read the whole wiki.
-3. Run the assigned `ba-suite` skill(s) via the Skill tool.
+3. Apply the assigned bundled method doc(s) from `skills/wiki/references/ba/`.
 4. Convert the output to vault Markdown: one note per artifact, YAML frontmatter, and `[[wikilinks]]`. Stamp `produced_by:` with the `ba-suite` skill, and `feature:` / `effort_estimate:` when known (the metrics seam).
 5. Preserve stable IDs; never renumber; append new IDs at the end.
 6. Build `[[traceability]]` links: requirements to stories to tests, gaps to business cases.
@@ -70,7 +70,7 @@ Invoke any `ba-suite` skill through the Skill tool. Map of skill to ADLC folder:
 
 ```
 Task: [what you did]
-Skills run: [ba-suite:..., ...]
+Methods applied: [ba-elicitation-synthesizer, ...]
 Created: [[Page 1]], [[Page 2]]
 Updated: [[Page 3]]
 IDs: [e.g. FR-164..171, PROJ-023-017..028]   # generic, no PII

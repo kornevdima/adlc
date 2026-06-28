@@ -1,15 +1,15 @@
 # ba-suite integration (ADLC mode)
 
-How the `ba-suite` plugin plugs into an ADLC vault. `ba-suite` is external to claude-mem; this doc defines the contract so its outputs land as canonical wiki Markdown and can be exported back out. Used by Mode ADLC (see [`modes.md`](modes.md)).
+The BA method set is **bundled** into claude-mem at `skills/wiki/references/ba/` (no external `ba-suite` plugin required). This doc defines how it plugs into an ADLC vault so its outputs land as canonical wiki Markdown and can be exported back out. Used by Mode ADLC (see [`modes.md`](modes.md)).
 
 ## Principle
 
-The wiki is the system of record. `ba-suite` is the engine at both ends:
+The wiki is the system of record. The bundled BA method set (`skills/wiki/references/ba/`) is the engine at both ends:
 
 - **Ingest:** convert raw context (Confluence, Jira, meeting notes) into BA deliverables, written as Markdown into the ADLC folders.
 - **Export:** render wiki content to Office formats for distribution.
 
-`ba-suite`'s native output is Office files (`.docx` / `.xlsx` / `.drawio`) under its own output folder. In ADLC mode you override that: deliverables are authored as vault Markdown (a deliberate deviation from the skill's default output). Office generation is reserved for the export step.
+The method docs' native output is Office files (`.docx` / `.xlsx` / `.drawio`). In ADLC mode you override that (see `ba/_index.md`): deliverables are authored as vault Markdown. Office generation is reserved for the export step.
 
 ## Convention bridge
 

@@ -3,8 +3,8 @@ name: ba-export-subagent
 description: >
   INTERNAL: Task-only worker — invoked via the Agent/Task tool by the ba-export skill,
   not as a slash command.
-  Renders ONE wiki BA deliverable to formal Office documents by invoking the matching
-  ba-suite skill via the Skill tool, writing the output to .raw/exports/. Reads the
+  Renders ONE wiki BA deliverable to formal Office documents by applying the matching
+  bundled BA method doc (skills/wiki/references/ba/), writing the output to .raw/exports/. Reads the
   canonical wiki Markdown; never edits the wiki. Returns a short summary of files produced.
   Dispatched one-per-deliverable; run several in parallel for independent deliverables.
   <example>Context: ba-export needs the requirements register as Excel
@@ -21,12 +21,12 @@ You render one BA deliverable from the wiki to formal Office documents. The wiki
 
 - The vault path and the output dir (`.raw/exports/`).
 - The wiki source page(s) for one deliverable (e.g. `wiki/requirements/requirements-register.md`).
-- The `ba-suite` skill to use and the expected Office output(s).
+- The bundled BA method doc (`skills/wiki/references/ba/<name>.md`) to use and the expected Office output(s).
 
 ## Process
 
 1. Read the wiki source page(s). They are the canonical content with stable IDs.
-2. Invoke the matching `ba-suite` skill via the Skill tool, feeding it the wiki content and instructing it to write the Office file(s) to `.raw/exports/` (not its default output dir). Preserve all IDs verbatim.
+2. Apply the matching bundled method doc (`skills/wiki/references/ba/...`) to render the Office file(s) to `.raw/exports/`. Emit `.docx` / `.xlsx` with your native document creation when the environment supports it; in a code-only environment use `python-docx` / `openpyxl`. Preserve all IDs verbatim.
 3. For diagrams, use PlantUML (formal export), not Mermaid.
 4. Verify the file(s) exist on disk under `.raw/exports/`.
 
@@ -41,7 +41,7 @@ You render one BA deliverable from the wiki to formal Office documents. The wiki
 
 ```
 Deliverable: [name]
-Skill: ba-suite:...
+Method: ba-... (e.g. ba-user-story-factory)
 Files: [.raw/exports/...]
 IDs covered: [e.g. FR-001..080]
 ```

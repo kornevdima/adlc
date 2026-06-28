@@ -99,7 +99,7 @@ ADLC is a **separate, additive** mode. It does not replace Mode B or Mode C. It 
 
 - **The wiki is canonical.** BA deliverables live here as Markdown with stable IDs. Office files are a generated view, not the source of truth.
 - **Multi-wiki topology.** One product / ADLC wiki plus N code wikis (Mode B), linked through `services/` symlinks. Work flows down (impl specs into code wikis) and up (shipped features back into the product wiki).
-- **`ba-suite` is the engine at both ends.** It ingests raw context (Confluence, Jira, meeting notes) into BA deliverables, and exports wiki content to Office formats. See [`ba-suite-pipeline.md`](ba-suite-pipeline.md).
+- **The bundled BA method set is the engine at both ends** (`skills/wiki/references/ba/`, no external plugin). It ingests raw context (Confluence, Jira, meeting notes) into BA deliverables, and exports wiki content to Office formats. See [`ba-suite-pipeline.md`](ba-suite-pipeline.md).
 - **Humans operate and gate.** Agents produce; humans confirm scope and sign off. The value is measurable: deliverables produced per feature against the BA / QA / PM time they replace.
 
 ### Folder map
