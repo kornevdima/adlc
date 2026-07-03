@@ -1,7 +1,7 @@
 ---
 type: meta
 title: "Hot Cache"
-updated: 2026-06-28
+updated: 2026-07-03T00:00:00
 tags:
   - meta
   - hot-cache
@@ -9,9 +9,9 @@ status: evergreen
 related:
   - "[[index]]"
   - "[[log]]"
-  - "[[Research Recursive Language Models]]"
-  - "[[RLM-Optimized Wiki Querying]]"
-  - "[[Recursive Language Models]]"
+  - "[[Product Management Layer Skill]]"
+  - "[[shift-left-engineering-advisor]]"
+  - "[[Project Profile Skill Suite]]"
 ---
 
 # Recent Context
@@ -20,20 +20,23 @@ Navigation: [[index]] | [[log]]
 
 ## Last Updated
 
-**2026-06-28 (autoresearch: Recursive Language Models)**: Filed 9 pages on RLMs (Zhang, Kraska, Khattab, MIT CSAIL; arXiv 2512.24601). Synthesis at [[Research Recursive Language Models]]; application design at [[RLM-Optimized Wiki Querying]].
+**2026-07-03 (feature: Product Management Layer Skill)**: Filed the design/plan for a new planned skill. Page at [[Product Management Layer Skill]]; raw governing plan (immutable) at [[pm-layer-execution-plan]] in `.raw/`.
 
 ## Key Recent Facts
 
-- **RLM** = inference strategy: long context lives in a REPL as a variable; the model gets only the query, then greps/chunks/prints it and recursively calls sub-LMs (`rlm_query`, depth=1). Sidesteps [[Context Rot]]; scales to 10M+ tokens. (Source: [[rlm-blog-zhang]], [[rlm-paper-arxiv]])
-- Reported +26% vs GPT-5 compaction / +130% vs CodeAct-sub-calls / +13% vs Claude Code at comparable cost (medium confidence; [[rlm-reproduction-overthink]] confirms direction, warns on over-recursion/latency).
-- **Application to claude-mem**: the ADLC agent has bash over `wiki/`, which is the RLM precondition (vault = environment, bash = REPL). Evolve `wiki-query` to **grep-first + bounded recursion** (peek hot.md, rg matches, recurse per large area via sub-agents, synthesize). Do not rebuild structure; reinforce greppable frontmatter, `_index.md`, short pages, stable IDs.
+- **`product-management-layer`** is a planned **"Gate 0" governance skill** above [[shift-left-engineering-advisor]]. It governs *which tools/vendors are allowed* before engineering starts; shift-left governs Gates 1–4 (requirements → ADR).
+- **v1 scope (8 FRs):** use-case intake & approval registry · vendor lifecycle + re-review triggers (acquisition/sunset/newUseCase/expiry) · per-use-case compliance scoping · buy-vs-build + TCO · shelfware detection · portfolio STATUS · handoff contracts · decision log.
+- **Handoff:** up = shift-left escalates vendor/tool Qs here; down = approved intake → shift-left Gate 1 with trace IDs. Companion shift-left patch is a **separate** skill-creator mini-cycle (its own regression eval).
+- **Key rule:** an ApprovalEntry is scoped to (use case × tool) and **never transfers**; acquisition/sunset triggers invalidate dependent approvals; AssetRecord without approval ⇒ shelfware.
+- **Main risk:** trigger collision with shift-left → disjoint vocabulary (P3.5) + negative evals E5/E6 + description optimization (P5.9). Golden eval E1 = the Embrace.ai sunset retrospective.
 
 ## Recent Changes
 
-- Created: the 9 RLM pages (4 sources, 1 entity, 3 concepts, 1 synthesis). See [[log]].
-- Index/log updated; total pages 51 -> 60.
+- Created: [[Product Management Layer Skill]] (concepts/), [[pm-layer-execution-plan]] (.raw/).
+- Updated: [[index]] (+1 concept, 60→61), [[log]] (new plan entry at top).
 
 ## Active Threads
 
-- **RLM -> wiki-query**: design filed; not yet implemented. Open: ship as `wiki-query` evolution vs a large-vault mode flag; whether `wiki/index.json` is needed at scale; sub-answer caching to `questions/`.
-- **ADLC mode (Phase 11, in code not this wiki)**: shipped this session in `skills/wiki/references/` + `agents/` + `skills/wrap-up/` + hooks + `permissions.md` + `mcp-setup.md` + `technical-planning.md`. Two workers: `ba-suite-subagent`, `architecture-subagent`. Uncommitted on `main`. Tracked in the roadmap memory (Phase 11).
+- **pm-layer skill**: plan filed, **not yet built**. Build is gated (ai-agent-builder) via skill-creator: Gates 1–4 → SKILL.md → evals E1–E8 → package/install on branch `feat/pm-layer-skill`. Nothing implemented yet.
+- **RLM → wiki-query**: design filed ([[RLM-Optimized Wiki Querying]]), not yet implemented.
+- **ADLC mode (Phase 11)**: shipped in code (skills/agents/hooks); tracked in the roadmap memory.

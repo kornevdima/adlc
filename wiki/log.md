@@ -25,6 +25,21 @@ Parse recent entries: `grep "^## \[" wiki/log.md | head -10`
 
 ---
 
+## [2026-07-03] patch | shift-left advisor — Gate 0 governance escalation
+- Companion change for [[Product Management Layer Skill]]: added a "Governance Escalation (Gate 0, up)" section to the bundled `shift-left-engineering-advisor.md` so vendor/tool/buy-vs-build/subscription/compliance/shelfware questions route **up** to the planned pm-layer skill (satisfies eval E6), keeping vocabularies disjoint; documented the down-handoff (approved intake → Gate 1 with trace IDs).
+- Also fixed a dead `reference.md` link (dropped when shift-left was bundled) → `_index.md` + `technical-planning.md`; added a 5th ADLC override note in the bundle `_index.md`.
+- Repo reality: shift-left is a bundled method doc read by `architecture-subagent`, not a standalone installable skill — no package/install/eval cycle (the plan's Phase 5b tooling is absent here); frontmatter `description` is vestigial, so no trigger regression.
+
+---
+
+## [2026-07-03] plan | Product Management Layer Skill (Gate 0 governance)
+- Filed [[Product Management Layer Skill]]: new planned skill layering **above** [[shift-left-engineering-advisor]] — use-case intake/approval registry, vendor lifecycle + re-review triggers, buy-vs-build TCO, per-use-case compliance scoping, shelfware detection, portfolio STATUS. Bidirectional handoff (up: shift-left escalates vendor/tool Qs here; down: approved intake → shift-left Gate 1).
+- Raw governing plan saved immutable at [[pm-layer-execution-plan]] (`.raw/`): 6 phases, Gates 1–4, 8 FRs, 8 evals (E1 golden = Embrace.ai sunset), built via ai-agent-builder + skill-creator.
+- Main risk: trigger collision with shift-left → disjoint vocabulary + negative evals E5/E6 + description optimization. Companion shift-left patch is its own skill-creator mini-cycle.
+- Index count 60 → 61.
+
+---
+
 ## [2026-06-28] impl | Graphify Relative Paths (Phase 13 done)
 - Implemented per [[Graphify Relative Paths]]: `to_rel()` helper in merge.py / update.py / regenerate.py rewrites node `source_file` to project-root-relative before graph.json is written. update.py prune compares relative (auto-migrates old absolute graphs). Subagent + ingest SKILL docs updated. Query skills unchanged (print stored relative paths).
 - Verified: py_compile OK on all three scripts; to_rel unit-tested. Deterministic Python relativization chosen over LLM path math in the subagent.
