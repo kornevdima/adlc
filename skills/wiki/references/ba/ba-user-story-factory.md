@@ -71,6 +71,18 @@ patterns and apply them to generate candidate stories.
 Apply a minimum of 2 splitting patterns per epic. Common first pass: workflow step split + role split.
 Do not generate more than 12 stories per epic on first pass — consolidate before adding more.
 
+### Step 2.5 — Vertical Slice Check (tracer bullets)
+Every Functional story must cut through every layer it touches (schema → service → API → minimal UI)
+and end in something a reviewer can observe working. Splitting drifts horizontal by default
+("build the gamification service", "create the schema") — nothing is integration-testable until the
+last layer lands, and horizontal stories serialize implementers that could otherwise work in parallel.
+
+- A story whose deliverable is a single layer with no observable behavior FAILS the check.
+  Repair: re-split so the first story is the thinnest end-to-end path
+  (e.g. "award points for lesson completion, visible on the dashboard"), then widen with later stories.
+- `Technical Enabler` is the only story type exempt, and each one must carry a one-line
+  justification for why it cannot be folded into a slice.
+
 ### Step 3 — Write Stories in Standard Form
 Format: `As a [specific role], I want [specific action or capability], so that [specific outcome or value]`.
 
@@ -126,6 +138,9 @@ Identify sequencing constraints between stories:
 - "This story needs [story ID] to be Done first"
 - "These two stories can run in parallel"
 - Circular dependencies are a defect — flag and resolve
+- The map must form a DAG of independently grabbable stories: minimize chain length, maximize
+  Parallel-safe entries. A long sequential chain can only be executed by one implementer at a time;
+  report the longest chain and re-split if it exceeds half the story count
 
 ### Step 8 — NFR Story Generation
 For each NFR in the input (or inherited from the source requirements register):
@@ -190,6 +205,7 @@ Before delivering any output:
 - [ ] Every story has a "So that" clause — no exceptions
 - [ ] Every story has at minimum one happy-path and one negative-path Gherkin scenario
 - [ ] No story contains AND in the "I want" clause
+- [ ] Every Functional story is a vertical slice (observable end-to-end behavior); horizontal layer-stories are repaired or justified as Technical Enablers
 - [ ] Every L-sized story is flagged for splitting
 - [ ] Every dependency is bidirectional in the dependency map
 - [ ] NFR stories have measurable thresholds in their acceptance criteria

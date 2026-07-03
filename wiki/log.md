@@ -1,7 +1,7 @@
 ---
 type: meta
 title: "Operation Log"
-updated: 2026-07-03
+updated: 2026-07-04
 tags:
   - meta
   - log
@@ -22,6 +22,25 @@ Append-only. New entries go at the TOP. Never edit past entries.
 Entry format: `## [YYYY-MM-DD] operation | Title`
 
 Parse recent entries: `grep "^## \[" wiki/log.md | head -10`
+
+---
+
+## [2026-07-04] wrap-up | Session end sync + commit
+- Trigger: operator "commit this and wrap up". Scope: this vault only (plugin repo; no `services/` checkouts).
+- Rollups reconciled: [[overview]] last-activity line and "Planned / not yet built" updated (tier 2–3 backlog → only metrics seam / mission-control remains planned). [[hot]] rewritten for the tier 2 session; [[index]] unchanged (no new pages this session — all edits were harness files).
+- Committed on `adlc` in one commit: 8 harness files (tier 2 + ingest video/language), `.gitattributes` (merge=union), `git-setup.md` scaffold addition, wiki bookkeeping (hot / log / overview).
+- Follow-ups for the human: redeploy `agents/*.md` to service repos (stale snapshots; one lacks feature-reviewer); add the two-line `.gitattributes` to existing project vaults by hand; `plugin.json` 0.3.0→0.4.0 bump; queued work — metrics seam / mission-control, pm-layer evals E1–E8, RLM→wiki-query.
+
+---
+
+## [2026-07-04] impl | Harness tier 2 + wiki-ingest tier 3 (video + language)
+- Implemented the tier 2 backlog from [[hot]]: **grilling gate** before Gate 1 approval + **milestone holistic verification** (cross-feature journeys, fresh-target re-verify, unscoped suite) + **verifier-FAILs→backlog** dispatcher rule (`conditional — fix pending`; ENV_MISMATCH / NEEDS_SIGN_IN = operational, not defects) in `references/technical-planning.md`.
+- **Vertical-slice rule** in `references/ba/ba-user-story-factory.md`: Step 2.5 tracer-bullet check (horizontal layer-stories fail; Technical Enabler needs justification), DAG quality bar on the dependency map, new quality gate.
+- **Assertion-coverage ledger**: `feature-tester` step 7 maintains `coverage/_index.md` (one row per contract scenario; derived — contract + spec win) + report field; documented in `references/concerns/qa.md`.
+- `wiki-lint-subagent`: 2 new checks — FAIL records / bug pages without a backlog item (critical), coverage-ledger drift. `wrap-up` step 4 now reconciles the defect route (bugs page + backlog item per FAIL).
+- Tier 3 partial: `wiki-ingest` gained a **Video / YouTube ingestion** path (yt-dlp subs-only capture, VTT cleaning, proper-noun caveat) and a **Canonical Language** rule (wiki pages in vault language; `.raw/` never translated; `source_language:` frontmatter).
+- Closed wrap-up follow-up #2: `wiki/log.md merge=union` — `.gitattributes` created in this repo, and `references/git-setup.md` now scaffolds it into every new vault (scaffold step 8 reads that doc). Other existing project vaults still need the two-line file added by hand.
+- Remaining backlog: metrics seam / mission-control (tier 3), pm-layer evals E1–E8, RLM→wiki-query, redeploy stale agent copies to service repos.
 
 ---
 

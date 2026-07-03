@@ -1,7 +1,7 @@
 ---
 type: meta
 title: "Hot Cache"
-updated: 2026-07-03T23:59:00
+updated: 2026-07-04T12:00:00
 tags:
   - meta
   - hot-cache
@@ -9,9 +9,9 @@ status: evergreen
 related:
   - "[[index]]"
   - "[[log]]"
-  - "[[Multi-Agent Communication Taxonomy]]"
-  - "[[Domain-Specific Agents]]"
   - "[[Grilling Session]]"
+  - "[[Vertical Slices for Agent Tasks]]"
+  - "[[Validation Contract]]"
 ---
 
 # Recent Context
@@ -20,28 +20,28 @@ Navigation: [[index]] | [[log]]
 
 ## Last Updated
 
-**2026-07-03 (harness audit + 5-talk ingest + wrap-up)**: Audited the ADLC harness against two production vaults' decision/verification trails, applied evidence-backed fixes (audit findings + tier 1) across the workers and dispatcher docs, batch-ingested 5 YouTube talks, filed the team-sync protocol, and closed with a wrap-up sync (rollups reconciled).
+**2026-07-04 (harness tier 2 + ingest tier 3, committed)**: Implemented the full tier 2 harness backlog (grilling gate, milestone holistic verification, verifier-FAILs→backlog, vertical-slice rule, assertion-coverage ledger) plus the wiki-ingest tier 3 items (YouTube capture path, canonical-language rule) and the `merge=union` scaffold. Wrapped up and committed on `adlc`.
 
 ## Key Recent Facts
 
-- **Production audit findings (two ADLC vaults):** failures cluster by worker — feature-tester specs assumed unseeded environment state (largest class); feature-verifier PASSes were environment-dependent and one "VERIFIED" shipped a bug because the integration was stubbed in e2e; BA/architecture workers authored doc-first claims later falsified against code (12 corrections in one vault); log.md hit ~7,000 lines carrying full records inline.
-- **Harness fixes applied (committed, `bc511a3`):** verifier target-fingerprint + `ENV_MISMATCH` + "Not exercised" stub list + restart-once false-red protocol + records-as-pages; tester "preconditions are code, not assumptions" + honest tag flips; reviewer test-self-sufficiency dimension; planner code-grounding (`[UNVERIFIED — from docs]`) + contradiction cross-check; dispatcher rules in `technical-planning.md`; wrap-up rollup reconciliation; 4 new wiki-lint checks.
-- **Model split (operator decision):** workers draft on Sonnet (now pinned on architecture- + ba-suite-subagents too); judgment/orchestration/re-verification live at the dispatcher (session model). Don't fix worker quality with model upgrades.
-- **5 talks ingested** as sources: [[orlov-rag-wiki-llm-graphify]] (wiki-LLM pattern reproduced on non-Claude stacks), [[yt-schroeder-domain-specific-agents]] (composition of small complete agents), [[yt-alvoeiro-multi-agent-architecture]] (validation contracts, structured handoffs w/ exit codes, serial writers), [[yt-pocock-ai-coding-workflow]] (grilling, vertical slices, AFK loop, doc-rot lifecycle), [[campbell-after-ai-hype]] (same-model evaluation publicly failed; verify outcomes not reasoning).
-- New concept pages: [[Multi-Agent Communication Taxonomy]], [[Validation Contract]], [[Structured Handoff]], [[Domain-Specific Agents]], [[Grilling Session]], [[Ralph Wiggum Loop]], [[Vertical Slices for Agent Tasks]], [[Deep Modules]].
+- **Tier 2 shipped (uncommitted):** `technical-planning.md` gained a **grilling gate** (dispatcher interviews the human question-by-question with recommended answers before Gate 1 approval; grounded by an Explore pass; never delegated/unattended), a **milestone holistic verification** section (cross-feature seam journeys, fresh-target re-verify of shipped contracts, unscoped e2e suite; `conditional — milestone verify pending` otherwise), and the **FAILs→backlog** dispatcher rule (every FAIL = bug page + backlog item + `conditional — fix pending`; ENV_MISMATCH / NEEDS_SIGN_IN are operational, never defects).
+- **Vertical slices:** `ba-user-story-factory` Step 2.5 tracer-bullet check — Functional stories must cut schema→service→API→UI and end observable; horizontal layer-stories fail and get re-split; Technical Enabler requires justification; dependency map must be a DAG of independently grabbable stories (longest chain reported, re-split if > half the stories).
+- **Assertion-coverage ledger:** `feature-tester` step 7 maintains `coverage/_index.md` in the service code wiki (one row per contract scenario: feature, id, tag, test title, last result + date; derived — contract + spec always win). Documented in `concerns/qa.md`; `wiki-lint` checks ledger drift and FAILs-without-backlog-item (critical); `wrap-up` step 4 reconciles the defect route.
+- **wiki-ingest:** new Video / YouTube path (yt-dlp `--skip-download --write-subs --write-auto-subs`, VTT cleaning incl. rolling-duplicate dedupe, proper-noun `(sp?)` caveat) and Canonical Language rule (wiki pages in vault language; `.raw/` never translated; `source_language:` frontmatter).
+- **Model split (operator decision):** workers draft on Sonnet; judgment/orchestration/re-verification live at the dispatcher (session model). Don't fix worker quality with model upgrades.
+- **Production audit findings (context for all of the above):** tester env-precondition assumptions were the largest failure class; verifier PASSes were environment-dependent; one "VERIFIED" shipped a bug via a stubbed integration; logs full of FAILs sat next to an empty backlog.
 
 ## Recent Changes
 
-- Edited: `agents/feature-{verifier,tester,reviewer,builder}.md`, `agents/{architecture,ba-suite}-subagent.md`, `agents/wiki-lint-subagent.md`, `skills/wrap-up/SKILL.md`, `skills/wiki/references/technical-planning.md`, `skills/wiki/references/shift-left/_index.md`.
-- Ingested: 5 YouTube transcripts into `.raw/` (yt-dlp auto-subs, cleaned) → 80 wiki pages total; `.raw/.manifest.json` now tracks all 5.
-- Created: `skills/wiki/references/team-sync.md` (+ modes.md link, [[Wiki Sharing Patterns]] pointer).
-- Committed on `adlc`: harness hardening `bc511a3`; team-sync `0278002`; 5-talk ingest `59449d5`; wrap-up sync (overview rewrite + index metric fix).
-- Wrap-up reconcile: [[overview]] rewritten (was still the April demo-seed text at "26 pages"; now describes the design wiki at 80 pages, dead canvas links removed); [[index]] metric disambiguated to "Source pages: 23".
+- Edited: `skills/wiki/references/technical-planning.md` (3 sections), `skills/wiki/references/ba/ba-user-story-factory.md`, `agents/feature-tester.md`, `agents/wiki-lint-subagent.md` (checks 11–12), `skills/wrap-up/SKILL.md`, `skills/wiki-ingest/SKILL.md` (2 new sections), `skills/wiki/references/concerns/qa.md`.
+- Closed wrap-up follow-up: `.gitattributes` (`wiki/log.md merge=union` + `**/wiki/log.md`) created in this repo; `references/git-setup.md` now bakes it into the scaffold. Existing project vaults still need it added by hand.
+- Logged: [[log]] entry `2026-07-04 impl | Harness tier 2 + wiki-ingest tier 3`.
+- Prior session (committed): harness hardening `bc511a3`, team-sync `0278002`, 5-talk ingest `59449d5`.
 
 ## Active Threads
 
-- **Tier 1 implemented** (evidence + left-undone handoff fields with dispatcher blocking, `tools:` allowlists on all 7 workers, push-standards-to-reviewer, 3-round review cap, plan-doc archival in wrap-up) plus `references/team-sync.md` (multi-role wiki state sharing). **Tier 2–3 backlog remains**: verifier-failures→backlog, milestone-level holistic verification, grilling gate, vertical-slice rule in user-story-factory, YouTube capture path + canonical-language rule in wiki-ingest, assertion-coverage ledger, metrics seam / mission-control.
-- **Deployed agent copies are stale**: service repos carry their own `.claude/agents/` snapshots (one lacks feature-reviewer entirely) — redeploy after committing harness fixes.
+- **Tier 2 committed** — next: **redeploy agent copies to service repos** (stale `.claude/agents/` snapshots; one lacks feature-reviewer entirely), and add the two-line `.gitattributes` to existing project vaults by hand.
+- **Remaining backlog (tier 3):** metrics seam / mission-control (rollups from `produced_by` frontmatter — `ba-suite-pipeline.md` § Metrics seam is the stub).
 - **pm-layer evals**: E1–E8 documented but not encoded/run.
 - **`plugin.json`**: 0.3.0→0.4.0 bump still uncommitted (user-managed).
 - **RLM → wiki-query**: design filed ([[RLM-Optimized Wiki Querying]]), not implemented.

@@ -31,7 +31,7 @@ This is the **claude-mem design wiki**: the knowledge base behind the claude-mem
 
 - Wiki pages: 80 (32 concepts, 16 entities, 23 sources, plus comparisons / questions / meta)
 - Raw sources on disk: 8 (`.raw/`), 5 tracked in `.raw/.manifest.json`
-- Last activity: 2026-07-03 — ADLC harness audit against two production vaults, tier-1 hardening applied, 5 conference/YouTube talks ingested, team-sync protocol filed
+- Last activity: 2026-07-04 — tier 2 harness backlog implemented (grilling gate, milestone verification, FAILs→backlog, vertical slices, assertion-coverage ledger) plus wiki-ingest video path + canonical-language rule; `merge=union` scaffolded
 
 ---
 
@@ -40,7 +40,7 @@ This is the **claude-mem design wiki**: the knowledge base behind the claude-mem
 - **Pattern & memory research** — [[LLM Wiki Pattern]], [[Hot Cache]], [[Compounding Knowledge]], [[Context Rot]], [[Recursive Language Models]], [[Contextual Retrieval]], [[Wiki vs RAG]]
 - **Harness & agent design** — [[Generator-Evaluator Pattern]], [[Multi-Agent Communication Taxonomy]], [[Validation Contract]], [[Structured Handoff]], [[Domain-Specific Agents]], [[Vertical Slices for Agent Tasks]], [[Grilling Session]]
 - **Shipped skill designs** — [[Product Management Layer Skill]], [[Project Profile Skill Suite]], [[graphify-integration]], [[SDLC Wiki Concerns]], [[Wiki Sharing Patterns]] (operational protocol: `skills/wiki/references/team-sync.md`)
-- **Planned / not yet built** — [[RLM-Optimized Wiki Querying]], pm-layer evals E1–E8, tier 2–3 harness backlog (see [[hot]])
+- **Planned / not yet built** — [[RLM-Optimized Wiki Querying]], pm-layer evals E1–E8, metrics seam / mission-control (see [[hot]])
 
 ---
 

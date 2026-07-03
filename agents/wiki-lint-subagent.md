@@ -37,6 +37,8 @@ You will be given:
 8. Flag a `log.md` over ~1,000 lines, or one carrying full verification / review records inline — records should be their own pages with one-line log pointers.
 9. Flag readiness dashboards whose ✅ rows contradict their own stated criteria (e.g. "release-ready" with the e2e spec still pending).
 10. Flag concern folders that stayed empty while `log.md` records matching events (e.g. `bugs/` at "None yet" alongside FAIL entries in the log) — that is routing drift, not absence of bugs.
+11. In ADLC vaults: every verification record with `status: fail` (and every `bugs/` page) must trace to a backlog item — a story / task wikilink pointing at `user-stories/` or a sprint plan. A FAIL with no scheduled fix is routing drift; flag as critical.
+12. If an assertion-coverage ledger exists (`coverage/_index.md` in a service code wiki): cross-check its rows against the contracts' `coverage:` tags and the e2e specs' test titles. A ledger row that disagrees with either is drift — the contract + spec win; flag the row.
 
 ## Output
 

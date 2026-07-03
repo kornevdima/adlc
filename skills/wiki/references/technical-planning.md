@@ -19,6 +19,12 @@ The `architecture-subagent` (`agents/architecture-subagent.md`) is the worker. I
 
 Gates are sequential with a human approval between each (no skipping). Refinement traces every technical requirement back to a BA requirement ID. Specs are written to `services/<svc>/wiki/specs/` (or the repo's `plans/` convention), one set per service.
 
+### Grilling gate (before Gate 1 is approved)
+
+Elicitation is non-interactive: `ba-suite` synthesizes requirements from `.raw/` sources and leaves an open-questions list. Before the human approves Gate 1, burn that list down in a **grilling session**: the dispatcher interviews the human relentlessly — one question at a time, each with the dispatcher's recommended answer — walking each branch of the decision tree until shared understanding, not until a spec merely exists. Ground the questions first with an Explore pass over the affected service code so they reference real constraints, not doc assumptions (doc-first claims later falsified against code were a leading planner failure in production audits). Feed the answers back into the Gate 1 spec, and into the BA requirements when an answer changes scope.
+
+This is the one stage that cannot be delegated to a worker or run unattended — its whole point is converting unknown unknowns into decisions with the human before requirements freeze. Skip it only for trivial single-service changes with an empty open-questions list; a new epic, a cross-service feature, or any spec with open questions always gets one.
+
 ## Per-service agentic build
 
 Each service is its own service: its own repo, its own Mode B code wiki, its own build pipeline. Once a spec lands in the service code wiki, the ADLC agent runs the per-service build pipeline at the service level:
@@ -43,7 +49,7 @@ The workers are pinned to a fast model (Sonnet) — they draft specs, code, test
 - **Re-verify worker claims before commit.** Worker completion reports have been wrong in production ("all N updated" when two weren't; builds claimed green that weren't). Before committing, re-run the checks the worker reported green (typecheck / lint / unit at minimum, using the exact commands from its Evidence field) and spot-check one claimed mutation.
 - **Release-ready means every criterion, literally.** If the readiness bar says contract + review APPROVED + verifier PASS on the fingerprinted target + e2e spec green + docs updated, then a feature with any criterion pending is `conditional — <criterion> pending`, never ✅. Dashboards that contradict their own bar erode trust in every other ✅.
 - **Records are pages; log entries are pointers.** Verification records, review records, and retros live as their own wiki pages; `log.md` gets one line each. Production logs that carried full records inline grew past 7,000 lines and stopped being greppable.
-- **File defects where they belong.** Verifier FAILs and post-ship bugs go to `bugs/` (qa concern) with a log pointer — not inline-only in `log.md`. An empty `bugs/` folder next to a log full of FAIL entries means the routing broke, not that there were no bugs.
+- **File defects where they belong — and put the fix on the backlog.** Verifier FAILs and post-ship bugs go to `bugs/` (qa concern) with a log pointer — not inline-only in `log.md`. An empty `bugs/` folder next to a log full of FAIL entries means the routing broke, not that there were no bugs. Every FAIL additionally becomes a backlog item (a story / task in the product wiki's `user-stories/` or sprint plan) tracing to the bug page and the exact broken assertion, and the feature flips to `conditional — fix pending` until a re-verify PASSes; a FAIL that exists only as a record never gets scheduled. `ENV_MISMATCH` / `NEEDS_SIGN_IN` are operational blocks, not defects: fix the environment or authenticate, then re-dispatch the verifier — never file them as bugs or let them silently drop the feature from the queue.
 
 ## Verification (operator's toolset)
 
@@ -53,6 +59,16 @@ Features are verified by `feature-verifier` with the same tools the agent operat
 - **E2E:** the chrome-devtools MCP. Use `navigate_page` + `evaluate_script` to assert computed styles, DOM state, network calls, and console hygiene; `take_screenshot` for evidence. Mirrors the `chrome-ui-verify` pattern.
 - **Backend / API:** the service's own test suite (unit + integration + e2e) run via the project's commands.
 - **Record:** file a verification execution note (per test case: objective, observed value, PASS / FAIL) and link it from the feature page. The verifier never fixes bugs; it logs and stops.
+
+### Milestone verification (holistic)
+
+Per-feature verification proves each feature against its own contract; it never exercises the seams between features, and its PASSes age as the environment drifts. At each milestone boundary (sprint close, release candidate, or every ~5 shipped features), the dispatcher authors a **milestone verification contract** and dispatches `feature-verifier` with it:
+
+- **Cross-feature journeys:** 2–4 end-to-end scenarios that chain shipped features through their seams (feature A's output is feature B's input) — the paths no per-feature contract covers.
+- **Re-verify on a fresh target:** bring the stack up clean (fresh `compose up`, seeded from scratch) and re-run the per-feature contracts of features shipped since the last milestone. A PASS that only ever ran on a lived-in dev environment is unproven — production audits found environment-dependent PASSes that evaporated on clean stacks.
+- **Full e2e suite, unscoped** — not the per-feature scoped runs.
+
+Failures route exactly like per-feature FAILs (bug page + backlog item). A release with the holistic pass un-run is `conditional — milestone verify pending`, never ✅.
 
 ## Diagrams and HTML export
 
