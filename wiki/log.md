@@ -25,6 +25,40 @@ Parse recent entries: `grep "^## \[" wiki/log.md | head -10`
 
 ---
 
+## [2026-07-03] impl | Harness hardening (audit-driven + tier 1) + team-sync protocol
+- Audited the ADLC harness against two production vaults' decision/verification trails (2 Explore agents). Failure clusters: tester env-precondition assumptions, verifier env-dependent PASSes + stubbed-integration "VERIFIED" + dev-artifact false reds, planner doc-first claims falsified against code, log.md bloat (~7k lines), false completion claims.
+- Applied fixes across `agents/feature-{builder,tester,reviewer,verifier}.md`, `agents/{architecture,ba-suite}-subagent.md`, `agents/wiki-lint-subagent.md`, `skills/wrap-up/`, `references/{technical-planning,shift-left/_index}.md`: target fingerprint + ENV_MISMATCH, "Not exercised" stub list, restart-once protocol, records-as-pages, preconditions-are-code, honest tag flips, code-grounding `[UNVERIFIED — from docs]`, dispatcher re-verify + readiness bar.
+- Tier 1 (from the 5-talk cross-check): Evidence (commands + exit codes) + "Left undone" fields on all 7 worker reports with a dispatcher blocking rule; `tools:` allowlists on all 7 workers; push-standards-to-reviewer; review loop capped at 3 rounds; plan-doc archival step in wrap-up. Model split encoded: Sonnet workers draft, dispatcher (session model) orchestrates + re-verifies.
+- New: `references/team-sync.md` — multi-role / multi-wiki state sharing (git as state bus, role → concern ownership, pull-first / wrap-up-last, `log.md merge=union`, hot.md regenerate-don't-merge, machine-local `services/` symlinks, status fields as the shared state machine). Linked from modes.md + [[Wiki Sharing Patterns]].
+- Improvement backlog (tiers 2–3) recorded in [[hot]]: verifier-failures→backlog, milestone holistic verify, grilling gate, vertical-slice rule, YouTube capture path in wiki-ingest, assertion-coverage ledger, metrics seam.
+
+---
+
+## [2026-07-03] ingest | Full Walkthrough: Workflow for AI Coding (Pocock, AI Engineer)
+- Source: `.raw/yt-pocock-ai-coding-workflow.md` → [[yt-pocock-ai-coding-workflow]]. Created: [[Grilling Session]], [[Ralph Wiggum Loop]], [[Vertical Slices for Agent Tasks]], [[Deep Modules]], [[Matt Pocock]]. Updated: [[Context Rot]] (smart/dumb zone, ~100K marker, clear-over-compact), [[Context Engineering for Coding Agents]] (push-vs-pull standards, fresh-context review, model tiering, doc rot as anti-context), [[AGENTS.md]] (near-empty always-on file, pull-first counterpoint), [[Compounding Knowledge]] (contradiction callout: doc rot vs compounding — plans rot, as-built knowledge compounds), [[index]], sub-indexes. Key insight: the human's leverage is at alignment (grilling) and QA; implementation becomes an AFK loop over a vertical-slice issue DAG, and the repo's feedback-loop quality — not the model — is the ceiling on agent output.
+
+---
+
+## [2026-07-03] ingest | The Multi-Agent Architecture That Actually Ships (Alvoeiro, AI Engineer)
+- Source: `.raw/yt-alvoeiro-multi-agent-architecture.md` → [[yt-alvoeiro-multi-agent-architecture]]. Created: [[Multi-Agent Communication Taxonomy]], [[Validation Contract]], [[Structured Handoff]], [[Factory]], [[Luke Alvoeiro]]. Updated: [[Generator-Evaluator Pattern]] (missions production case, cross-provider evaluators), [[Context Engineering for Coding Agents]] (clean-context workers, serial execution), [[index]], sub-indexes. Key insight: multi-day autonomous delivery works when correctness is defined before code (validation contract), state travels via structured handoffs with exit-code evidence, validators never see the code, and features run serially with only read-only ops parallelized.
+
+---
+
+## [2026-07-03] ingest | AI Agent Memory: from RAG to Wiki LLM to Graphify (Orlov, YouTube)
+- Source: `.raw/yt-orlov-ai-agent-memory-wiki-llm.md` → [[orlov-rag-wiki-llm-graphify]]. Created: [[Orlov]]. Updated: [[Andrej Karpathy]] (vibe-coding coinage + flagged unverified "joined Anthropic" claim), [[Wiki vs RAG]] (three-waves framing), [[graphify-integration]] (external claims: video/audio inputs, 50–70x savings claim, small-project caveat), [[Contextual Retrieval]] (chunk-as-assertion heuristic), [[LLM Wiki Pattern]] (adoption beyond Claude stack), [[index]], sub-indexes. Key insight: the wiki pattern is being independently reproduced on non-Claude stacks (Antigravity + Gemini) and pitched to lay audiences as the successor to RAG, with graphs as the third wave.
+
+---
+
+## [2026-07-03] ingest | The Future Is Domain-Specific Agents (Schroeder, AI Engineer)
+- Source: `.raw/yt-schroeder-domain-specific-agents.md` → [[yt-schroeder-domain-specific-agents]]. Created: [[Domain-Specific Agents]], [[Justin Schroeder]], [[StandardAgents]]. Updated: [[Context Engineering for Coding Agents]] (composition-over-inheritance section), [[Context Rot]] (DSA as architectural fix), [[index]], all three sub-indexes. Key insight: composition of small complete agents (own prompt/tools/history under a coordinator) beats inflating one agent's context — claimed >80% token efficiency, small-model viability, capability limits by construction; prediction: 2027 = year of multi-agent orchestration.
+
+---
+
+## [2026-07-03] ingest | After the AI Hype — What's Real, and What's Next (Campbell, NDC 2026)
+- Source: `.raw/yt-campbell-after-ai-hype.md` → [[campbell-after-ai-hype]]. Updated: [[Generator-Evaluator Pattern]] (GPT-5 LLM-judge failure case), [[Product Management Layer Skill]] (vendor-volatility evidence), [[index]], [[sources/_index]]. Key insight: the first real LLM product impact was the agentic issue→PR→argue→accept loop — but same-model evaluation rubber-stamps garbage and half the 2025 agentic tools are already gone.
+
+---
+
 ## [2026-07-03] eval | Product Management Layer skill — 4/4 pass + 5 fixes
 - Role-played E1 (Embrace.ai sunset, golden), E2 (buy-vs-build + owned Arize asset), E5 (negative: ADR request), E6 (cross-trigger: buy inside shift-left escalates up) against the actual skill files via a subagent. Verdict: **PASS 4/4** — disjoint-vocabulary contract + non-transferability + buy-vs-build option set enforced as hard rules on both sides.
 - Applied 5 minor fixes: (1) retroactive intake when a sunset/acquisition trigger hits an in-use *ungoverned* tool (was a silent no-op — the real E1 edge); (2) reworded §2 "automatically" to name the VENDOR-REVIEW gate (Anti-Magic self-conflict); (3) spelled out "open a NEW ApprovalEntry for the replacement" in the migration checklist; (4) added rationalization trigger phrases ("why are we still paying for X", "do we still need X", "consolidate our tools"); (5) clarified a mode's linked parts = one gate.

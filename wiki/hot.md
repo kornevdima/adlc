@@ -1,7 +1,7 @@
 ---
 type: meta
 title: "Hot Cache"
-updated: 2026-07-03T00:00:00
+updated: 2026-07-03T23:59:00
 tags:
   - meta
   - hot-cache
@@ -9,9 +9,9 @@ status: evergreen
 related:
   - "[[index]]"
   - "[[log]]"
-  - "[[Product Management Layer Skill]]"
-  - "[[shift-left-engineering-advisor]]"
-  - "[[Project Profile Skill Suite]]"
+  - "[[Multi-Agent Communication Taxonomy]]"
+  - "[[Domain-Specific Agents]]"
+  - "[[Grilling Session]]"
 ---
 
 # Recent Context
@@ -20,25 +20,27 @@ Navigation: [[index]] | [[log]]
 
 ## Last Updated
 
-**2026-07-03 (impl: Product Management Layer skill)**: Shipped the Gate 0 governance skill at `skills/product-management-layer/` and patched the shift-left advisor to escalate up to it. Design page: [[Product Management Layer Skill]] (now status: implemented).
+**2026-07-03 (harness audit + 5-talk ingest)**: Audited the ADLC harness against two production vaults' decision/verification trails, applied evidence-backed fixes to 9 harness files, then batch-ingested 5 YouTube talks (5 parallel subagents) as harness benchmark material.
 
 ## Key Recent Facts
 
-- **`product-management-layer`** is a shipped, user-facing claude-mem skill (auto-discovered from `skills/*/SKILL.md`). It governs *which tools/vendors are approved* before engineering; shift-left governs Gates 1–4.
-- **Built the claude-mem way, not the plan's way.** The plan assumed `skill-creator` / `package_skill` / `docs/adr` / `evals/` tooling that **doesn't exist here**. So: a `SKILL.md` (pushy description, 5 modes) + `references/reference.md` (10 artifact templates). No plugin.json edit needed.
-- **5 modes:** INTAKE · VENDOR-REVIEW · BUY-VS-BUILD · COMPLIANCE-SCOPE · REGISTRY-STATUS. Registries persist as Markdown under `wiki/governance/` (or `docs/governance/`); decision-log append-only.
-- **Domain invariants:** ApprovalEntry scoped to (use case × tool), never transfers; acquisition/sunset triggers invalidate dependent approvals + spawn a migration checklist; asset with no approval ⇒ shelfware.
-- **Handoffs:** down = approved intake → shift-left Gate 1 (packet w/ trace IDs); up = shift-left escalates governance Qs here; sideways = evidence → solutioning. Vocabulary disjoint (satisfies eval E6).
+- **Production audit findings (two ADLC vaults):** failures cluster by worker — feature-tester specs assumed unseeded environment state (largest class); feature-verifier PASSes were environment-dependent and one "VERIFIED" shipped a bug because the integration was stubbed in e2e; BA/architecture workers authored doc-first claims later falsified against code (12 corrections in one vault); log.md hit ~7,000 lines carrying full records inline.
+- **Harness fixes applied (uncommitted):** verifier target-fingerprint + `ENV_MISMATCH` + "Not exercised" stub list + restart-once false-red protocol + records-as-pages; tester "preconditions are code, not assumptions" + honest tag flips; reviewer test-self-sufficiency dimension; planner code-grounding (`[UNVERIFIED — from docs]`) + contradiction cross-check; dispatcher rules in `technical-planning.md`; wrap-up rollup reconciliation; 4 new wiki-lint checks.
+- **Model split (operator decision):** workers draft on Sonnet (now pinned on architecture- + ba-suite-subagents too); judgment/orchestration/re-verification live at the dispatcher (session model). Don't fix worker quality with model upgrades.
+- **5 talks ingested** as sources: [[orlov-rag-wiki-llm-graphify]] (wiki-LLM pattern reproduced on non-Claude stacks), [[yt-schroeder-domain-specific-agents]] (composition of small complete agents), [[yt-alvoeiro-multi-agent-architecture]] (validation contracts, structured handoffs w/ exit codes, serial writers), [[yt-pocock-ai-coding-workflow]] (grilling, vertical slices, AFK loop, doc-rot lifecycle), [[campbell-after-ai-hype]] (same-model evaluation publicly failed; verify outcomes not reasoning).
+- New concept pages: [[Multi-Agent Communication Taxonomy]], [[Validation Contract]], [[Structured Handoff]], [[Domain-Specific Agents]], [[Grilling Session]], [[Ralph Wiggum Loop]], [[Vertical Slices for Agent Tasks]], [[Deep Modules]].
 
 ## Recent Changes
 
-- Created: `skills/product-management-layer/SKILL.md` + `references/reference.md`.
-- Patched: `skills/wiki/references/shift-left/` (Gate 0 escalation + dead-link fix), README Skills table.
-- Updated: [[Product Management Layer Skill]] (planned→implemented), [[index]], [[log]] (impl entry), [[hot]].
-- Committed: 2 commits (shift-left patch; wiki plan filing). Skill impl + wiki updates still uncommitted.
+- Edited: `agents/feature-{verifier,tester,reviewer,builder}.md`, `agents/{architecture,ba-suite}-subagent.md`, `agents/wiki-lint-subagent.md`, `skills/wrap-up/SKILL.md`, `skills/wiki/references/technical-planning.md`, `skills/wiki/references/shift-left/_index.md`.
+- Ingested: 5 YouTube transcripts into `.raw/` (yt-dlp auto-subs, cleaned) → 80 wiki pages total; `.raw/.manifest.json` now tracks all 5.
+- Created: `skills/wiki/references/team-sync.md` (+ modes.md link, [[Wiki Sharing Patterns]] pointer).
+- Committed in 3 commits on `adlc`: harness hardening; team-sync reference; wiki ingest + session sync.
 
 ## Active Threads
 
-- **pm-layer evals**: E1–E8 (E1 golden = Embrace.ai sunset; E5/E6 negative triggers) are **documented but not encoded/run**. Next step if wanted.
-- **`plugin.json`**: pre-existing version bump 0.3.0→0.4.0, still uncommitted (user-managed).
+- **Tier 1 implemented** (evidence + left-undone handoff fields with dispatcher blocking, `tools:` allowlists on all 7 workers, push-standards-to-reviewer, 3-round review cap, plan-doc archival in wrap-up) plus `references/team-sync.md` (multi-role wiki state sharing). **Tier 2–3 backlog remains**: verifier-failures→backlog, milestone-level holistic verification, grilling gate, vertical-slice rule in user-story-factory, YouTube capture path + canonical-language rule in wiki-ingest, assertion-coverage ledger, metrics seam / mission-control.
+- **Deployed agent copies are stale**: service repos carry their own `.claude/agents/` snapshots (one lacks feature-reviewer entirely) — redeploy after committing harness fixes.
+- **pm-layer evals**: E1–E8 documented but not encoded/run.
+- **`plugin.json`**: 0.3.0→0.4.0 bump still uncommitted (user-managed).
 - **RLM → wiki-query**: design filed ([[RLM-Optimized Wiki Querying]]), not implemented.

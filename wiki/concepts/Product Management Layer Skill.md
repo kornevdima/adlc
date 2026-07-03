@@ -27,6 +27,7 @@ related:
   - "[[Generator-Evaluator Pattern]]"
 sources:
   - "[[pm-layer-execution-plan]]"
+  - "[[campbell-after-ai-hype]]"
 ---
 
 # Product Management Layer Skill
@@ -127,6 +128,10 @@ Gated per `ai-agent-builder` — one gate per exchange, owner approval before ad
 ## Definition of done
 
 FRs approved and traced to passing evals E1–E8 · Gates 1–4 artifacts in `docs/` · ADR merged · skill packaged, installed, repo-synced · shift-left companion patch installed without trigger regression · `CLAUDE.md` + registries updated · negative-trigger cases pass.
+
+## External evidence
+
+- [[campbell-after-ai-hype]] (NDC 2026 keynote) independently corroborates the vendor-lifecycle premise: of the 2025 agentic-tool proliferation, "half these products already have disappeared" — incumbents gut startups by hiring away staff rather than acquiring them; no AI vendor is profitable in this line of business; and vendor promises repeat unchanged month over month ("fill the pipeline with noise"). Supports the acquisition/sunset re-review triggers, the viability check in VENDOR-REVIEW, and the practice of dating vendor claims in the decision log.
 
 ## Connections
 

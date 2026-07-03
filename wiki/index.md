@@ -23,7 +23,7 @@ related:
 
 # Wiki Index
 
-Last updated: 2026-07-03 | Total pages: 61 | Sources ingested: 4
+Last updated: 2026-07-03 | Total pages: 80 | Sources ingested: 9
 
 Navigation: [[overview]] | [[log]] | [[hot]] | [[maintenance-triggers]]
 
@@ -54,6 +54,14 @@ Navigation: [[overview]] | [[log]] | [[hot]] | [[maintenance-triggers]]
 - [[Context Rot]] — model accuracy degrades as context grows even within the window; the motivation for RLM and tight-context habits (status: current)
 - [[RLM-Optimized Wiki Querying]] — design: apply RLM (grep-first + bounded recursion over the wiki filesystem) to wiki-query for large ADLC vaults (status: developing)
 - [[Graphify Relative Paths]] — design+impl: store project-root-relative source_file in committed graph artifacts so the project is portable across team members (status: implemented)
+- [[Domain-Specific Agents]] — composition over inheritance for agents: small complete agents under a coordinator, minimal per-agent context; >80% token-efficiency claim (status: developing)
+- [[Multi-Agent Communication Taxonomy]] — five primitives: delegation, creator-verifier, direct communication, negotiation, broadcast; missions composes four (status: current)
+- [[Validation Contract]] — correctness written at planning time before any code; assertion coverage accounted across features; validated behaviorally by adversarial validators (status: current)
+- [[Structured Handoff]] — schema-shaped worker report (done / undone / commands + exit codes / issues / procedure compliance); progress blocks on unresolved issues (status: current)
+- [[Grilling Session]] — alignment-first relentless interview (one question at a time + recommended answer) until a shared design concept exists; precedes any plan/PRD (status: current)
+- [[Ralph Wiggum Loop]] — AFK implementation loop: fresh context per iteration over an issue backlog, sentinel-terminated, Docker-sandboxed; Sandcastle parallel version (status: current)
+- [[Vertical Slices for Agent Tasks]] — tracer-bullet issue decomposition; Kanban DAG of independently grabbable all-layer slices enables parallel agents (status: current)
+- [[Deep Modules]] — Ousterhout's small-interface/big-functionality modules as agent enablement; feedback-loop quality is the ceiling on agent output (status: current)
 
 ---
 
@@ -69,6 +77,12 @@ Navigation: [[overview]] | [[log]] | [[hot]] | [[maintenance-triggers]]
 - [[kepano-obsidian-skills]] — official skills from Obsidian creator; defuddle, obsidian-bases (status: current)
 - [[Claudian-YishenTu]] — native Obsidian plugin embedding Claude Code; plan mode, @mention (status: current)
 - [[Alex L. Zhang]] — MIT CSAIL; lead author of Recursive Language Models (status: current)
+- [[Justin Schroeder]] — StandardAgents engineer; domain-specific-agents advocate; Dmux, ArrowJS (status: current)
+- [[StandardAgents]] — stealth startup building a domain-specific-agent ecosystem; tracks token prices (status: developing)
+- [[Orlov]] — Ukrainian-language YouTube educator on AI tooling; popularized Wiki LLM + graphify (status: current)
+- [[Factory]] — AI dev-tools company; missions system for multi-day autonomous delivery; agents called droids (status: current)
+- [[Luke Alvoeiro]] — leads core agent harness at Factory; started Goose at Block; "droid whispering" (status: current)
+- [[Matt Pocock]] — developer educator (Total TypeScript, AI Hero); grilling → PRD → vertical-slice Kanban → Ralph loop workflow; author of Sandcastle (status: current)
 
 ---
 
@@ -92,6 +106,11 @@ Navigation: [[overview]] | [[log]] | [[hot]] | [[maintenance-triggers]]
 - [[rlm-blog-zhang]] — 2025-10 | Alex L. Zhang | informal primary writeup with mechanics
 - [[rlm-github-repo]] — alexzhang13/rlm | reference implementation (REPL backends, rlm_query)
 - [[rlm-reproduction-overthink]] — 2026 | reproduction (arXiv 2603.02615) | confirms mechanism, flags over-recursion
+- [[campbell-after-ai-hype]] — 2026-06-18 | Richard Campbell, NDC keynote | post-hype landscape; agentic-PR loop validated, LLM-judge failure case, vendor volatility
+- [[yt-schroeder-domain-specific-agents]] — 2026-06-29 | Justin Schroeder (StandardAgents), AI Engineer | domain-specific agents; composition over inheritance; 2027 = multi-agent orchestration
+- [[orlov-rag-wiki-llm-graphify]] — 2026-06-27 | Orlov (YouTube, uk) | three waves of agent memory: RAG → Wiki LLM → graphify; chunk-as-assertion heuristic; auto-transcript caveats
+- [[yt-alvoeiro-multi-agent-architecture]] — 2026-05-06 | Luke Alvoeiro (Factory), AI Engineer | five multi-agent primitives; missions: validation contracts, structured handoffs, serial execution, per-role models; 16-day runs
+- [[yt-pocock-ai-coding-workflow]] — 2026-04-24 | Matt Pocock @ AI Engineer | full workflow: grilling → PRD → vertical-slice Kanban → AFK Ralph loop → TDD → fresh-context review → manual QA; deep modules; doc rot
 
 ---
 
