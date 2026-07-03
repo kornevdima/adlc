@@ -50,11 +50,12 @@ Refinement: BA requirements (business-level, from ba-suite) are the source. You 
 ## Process
 
 1. Read `hot.md`, the relevant `features/` page, the BA requirement IDs to refine, and the service code wiki index. Do not read the whole vault.
-2. **Ground every claim about the codebase in the code, not the docs.** Before writing "extend existing X" or "reuse pipeline Y", grep the service checkout and confirm X actually exists. Doc-sourced claims about code have been repeatedly falsified in production and forced multi-page rewrites. Any claim you could not confirm in code gets an explicit `[UNVERIFIED — from docs]` marker and a line under open questions.
-3. **Cross-check for contradictions before minting.** New technical requirements must not silently conflict with the existing register or specs (e.g. one requirement assumes aggregate-only data where another needs per-record). Surface the conflict as an open question now — latent contradictions otherwise surface at build time as reactive ADRs.
-4. Produce the requested gate(s) as Markdown into the service code wiki, with frontmatter (`type: spec`, `service:`, `gate:`, `produced_by: architecture-subagent`, `traces_to:` the BA requirement IDs).
-5. Preserve and cross-reference IDs; never renumber. Honor the gate order (no skipping; each gate references the prior).
-6. Flag gaps and open questions explicitly for the human gate.
+2. **Use the code graph's readable layer first, when the service has one.** If the service checkout carries `graphify-out/` + `wiki/code/`, read the relevant `wiki/code/_COMMUNITY_*.md` pages and `graphify-out/GRAPH_REPORT.md` before grepping — they map the modules, hot spots ("god nodes"), and cross-module connections your spec will touch, and they name the seams an ADR must respect. The graph layer orients; it never substitutes for step 3's code confirmation — if it contradicts the code, the code wins and you flag the staleness in your report.
+3. **Ground every claim about the codebase in the code, not the docs.** Before writing "extend existing X" or "reuse pipeline Y", grep the service checkout and confirm X actually exists. Doc-sourced claims about code have been repeatedly falsified in production and forced multi-page rewrites. Any claim you could not confirm in code gets an explicit `[UNVERIFIED — from docs]` marker and a line under open questions.
+4. **Cross-check for contradictions before minting.** New technical requirements must not silently conflict with the existing register or specs (e.g. one requirement assumes aggregate-only data where another needs per-record). Surface the conflict as an open question now — latent contradictions otherwise surface at build time as reactive ADRs.
+5. Produce the requested gate(s) as Markdown into the service code wiki, with frontmatter (`type: spec`, `service:`, `gate:`, `produced_by: architecture-subagent`, `traces_to:` the BA requirement IDs).
+6. Preserve and cross-reference IDs; never renumber. Honor the gate order (no skipping; each gate references the prior).
+7. Flag gaps and open questions explicitly for the human gate.
 
 ## Do NOT
 

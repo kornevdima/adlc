@@ -120,7 +120,7 @@ vault/
 │   ├── planning/         # BA approach, governance, information mgmt, performance
 │   ├── comms/            # circulation memos, synthesis exports, meeting notes
 │   ├── sources/          # one summary page per ingested raw source
-│   └── meta/             # dashboards, lint, the ba-activity ledger (metrics seam)
+│   └── meta/             # mission-control board, ba-activity ledger (metrics seam), lint reports
 ├── services/             # symlinks to code checkouts; each service's code wiki holds its specs (no project-context folder)
 └── AGENTS.md
 ```
@@ -173,9 +173,9 @@ ADLC is agent-operated: routine project work should run without prompts, destruc
 
 ADLC vaults often hold client data. Keep PII (person names, headcount, contract values, staffing) out of the committed wiki: put sensitive context in a gitignored private note (e.g. `proposals/`), and keep role-based RACI / engagement analysis (no named individuals) in the wiki. Anonymize when in doubt.
 
-### Metrics seam (build later)
+### Metrics seam
 
-`log.md` already records every operation with the skill that ran it; it is the activity ledger. To roll up "cost saved by the agent covering the BA role" later, keep the `produced_by` / `effort_estimate` / `feature` frontmatter fields populated and maintain a `meta/ba-activity.md` summary. No dashboard is built at scaffold time.
+`log.md` records every operation with the skill that ran it; the `produced_by` / `effort_estimate` / `feature` frontmatter fields feed the rollups. Two derived pages in `meta/` consume them: `mission-control.md` (the operator's async delivery board, updated by the dispatcher at stage transitions) and `ba-activity.md` (the cost rollup, refreshed at wrap-up). Formats, update triggers, and the derived-view rule: [`mission-control.md`](mission-control.md). Seed both at scaffold time with empty tables.
 
 ---
 

@@ -25,6 +25,31 @@ Parse recent entries: `grep "^## \[" wiki/log.md | head -10`
 
 ---
 
+## [2026-07-04] wrap-up | Session end sync + commit (tier 3 + graphify grounding)
+- Trigger: operator "wrap up and commit". Scope: this vault only (plugin repo; no `services/` checkouts).
+- Rollups reconciled: [[overview]] last-activity line covers both increments; planned list already trimmed to pm-layer evals + RLM→wiki-query. [[index]] unchanged (no new wiki pages — the session's output is harness files + `references/mission-control.md`). [[hot]] rewritten.
+- Committed on `adlc` in one commit: metrics seam / mission-control (1 new reference + 7 wired files) + graphify grounding for workers (6 agent/reference files) + wiki bookkeeping.
+- Follow-ups for the human: **redeploy `agents/*.md` snapshots to service repos** (now carrying graphify grounding; one repo lacks feature-reviewer); run `/graphify-ingest` once in service repos without a graph; seed `meta/mission-control.md` + `meta/ba-activity.md` in existing ADLC vaults; `.gitattributes` two-liner in existing project vaults; `plugin.json` 0.3.0→0.4.0. Queued: pm-layer evals E1–E8, RLM→wiki-query.
+
+---
+
+## [2026-07-04] impl | Workers ground in the graphify layer (pre-redeploy)
+- Before redeploying agent snapshots to service repos: ADLC workers now leverage graphify data where a service carries it. New **Code graph grounding** section in `technical-planning.md`: graph for *finding* (connections, callers, blast radius — zero LLM cost), code for *asserting*; on disagreement the code wins and the worker reports staleness; freshness is the dispatcher's job (`/graphify-update` post-verify pre-commit, in the dispatch packet when present); `wrap-up` step 3 refreshes graphs of changed repos.
+- Bash-capable workers got a self-contained CLI step (pinned-python `python -m graphify query --budget 1500`): `feature-builder` (orient step 2 — definition sites / callers / community before survey), `feature-reviewer` (step 3 blast-radius check — callers outside the diff, the missed-call-site bug class), `feature-tester` (step 2 — routes/components the scenarios exercise + neighboring specs to extend).
+- Bash-less workers use the readable layer (`wiki/code/_COMMUNITY_*.md`, `GRAPH_REPORT.md`): `architecture-subagent` (new step 2 — module map / god nodes / seams before grep-grounding) and `doc-writer` (step 3 — locate routes fast, confirm in source).
+- All agent steps are self-contained (no plugin-relative paths) so the snapshots work standalone in service repos. `feature-verifier` deliberately untouched (runtime verification; the graph adds nothing there).
+- Uncommitted, same session as the tier 3 metrics seam below.
+
+---
+
+## [2026-07-04] impl | Harness tier 3: metrics seam / mission-control
+- Built the last planned harness item: **`references/mission-control.md`** (new) specifies two derived pages in an ADLC vault's `meta/` — `mission-control.md` (operator's async board: in-flight table with stages, release readiness against the literal bar, defect-route table, milestone status, open human gates; dispatcher updates a row at every stage transition) and `ba-activity.md` (cost rollup from `produced_by` / `feature` / `effort_estimate` frontmatter, grep-first, refreshed at wrap-up; "Not counted" line is the seam's own health check). Both derived — records always win, same principle as the coverage ledger. Optional Obsidian Base for humans.
+- Wired in: `technical-planning.md` new dispatcher rule (board row per stage transition); `wrap-up` step 6 reconciles both pages; `wiki-lint-subagent` check 13 (missing `produced_by`, board rows contradicting records, board staleness); `team-sync.md` merge rule (regenerate-don't-merge, like hot.md); `modes.md` + `ba-suite-pipeline.md` metrics-seam stubs upgraded from "(build later)" to pointers; `wiki/SKILL.md` scaffolds both pages for ADLC and refreshes the ledger in the initial-pass integrate step.
+- Origin: mission-control operator UX from [[yt-alvoeiro-multi-agent-architecture]] ("budget/progress visibility" gap); the rollup target from the ADLC operating model ("deliverables produced vs BA/QA/PM time replaced").
+- Not committed (operator gates commits). Still queued: pm-layer evals E1–E8, RLM→wiki-query; human follow-ups unchanged (agent redeploy to service repos, `.gitattributes` in project vaults, `plugin.json` bump).
+
+---
+
 ## [2026-07-04] wrap-up | Session end sync + commit
 - Trigger: operator "commit this and wrap up". Scope: this vault only (plugin repo; no `services/` checkouts).
 - Rollups reconciled: [[overview]] last-activity line and "Planned / not yet built" updated (tier 2–3 backlog → only metrics seam / mission-control remains planned). [[hot]] rewritten for the tier 2 session; [[index]] unchanged (no new pages this session — all edits were harness files).

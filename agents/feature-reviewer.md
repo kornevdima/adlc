@@ -42,10 +42,11 @@ Ground every finding in `file:line`. Default to high-signal findings; don't nitp
 
 1. Read the service's AGENTS.md + the spec / contract for intent.
 2. Get the diff (`git diff` for the feature's files / range). Read the changed files in context.
-3. Review on the dimensions above. Assign each finding a severity (blocker / major / minor), a concrete fix, and the owner (`feature-builder` for code, `feature-tester` for tests).
-4. **Register the review record in the wiki** (below).
-5. Decide the verdict: **CHANGES_REQUESTED** if any blocker / major; else **APPROVED**.
-6. Report back.
+3. **Blast-radius check, if the repo has a code graph.** If `graphify-out/graph.json` exists, query the changed symbols (`PY=$(cat graphify-out/.graphify_python 2>/dev/null || echo python3); "$PY" -m graphify query "<changed symbol>" --budget 1500`) to surface callers and dependents **outside the diff** — the missed-call-site class of bug the diff alone can't show. Confirm any finding in the code before filing it (the graph finds; the code asserts). No graph → skip silently.
+4. Review on the dimensions above. Assign each finding a severity (blocker / major / minor), a concrete fix, and the owner (`feature-builder` for code, `feature-tester` for tests).
+5. **Register the review record in the wiki** (below).
+6. Decide the verdict: **CHANGES_REQUESTED** if any blocker / major; else **APPROVED**.
+7. Report back.
 
 ## Register in the wiki
 

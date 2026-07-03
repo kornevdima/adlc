@@ -59,9 +59,9 @@ The `ba-export` skill (with `ba-export-subagent`) renders wiki content back to `
 
 Diagrams in the formal export use PlantUML (rendered PNGs alongside the Office docs). The living tech docs use Mermaid with an HTML export instead (see [`technical-planning.md`](technical-planning.md)).
 
-## Metrics seam (build later)
+## Metrics seam
 
-`log.md` is the activity ledger: each entry stamps the skill that ran and the deliverables produced. To enable cost-saving rollups later, populate the `produced_by` / `effort_estimate` / `feature` frontmatter fields and keep a `meta/ba-activity.md` summary. Rollup target: deliverables produced per feature versus the BA / QA / PM time they replace.
+`log.md` is the activity ledger: each entry stamps the skill that ran and the deliverables produced. Populate the `produced_by` / `effort_estimate` / `feature` frontmatter fields on every authored note — `meta/ba-activity.md` rolls them up into deliverables produced per feature versus the BA / QA / PM time they replace, and `meta/mission-control.md` gives the operator the async delivery board. Formats and update triggers: [`mission-control.md`](mission-control.md).
 
 ## Privacy
 

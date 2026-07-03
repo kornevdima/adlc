@@ -44,6 +44,7 @@ One writer per wiki area at a time is advisory, not enforced — concurrent sess
 
   Union merge keeps both sides' lines; because entries are self-contained dated blocks, order glitches are cosmetic and the next wrap-up can reorder. Keep entries one-line-per-fact pointers (full records are their own pages) — this is also what keeps the log greppable.
 - **`hot.md` — regenerate, never merge.** It is a cache of "what's hot now", scoped to the last session. On conflict, take either side and let the next wrap-up regenerate it from `log.md` + the session. Never hand-merge two hot caches.
+- **`meta/mission-control.md` / `meta/ba-activity.md` — derived, regenerate from records.** Like `hot.md`, never hand-merge: on conflict take either side, then reconcile the board against the verification / review records and the ledger against `produced_by` frontmatter (see [`mission-control.md`](mission-control.md)). The records are the truth; the pages are views.
 - **`index.md` / `_index.md` — derived counts, sorted entries.** Keep catalog lines one-per-page and alphabetically / chronologically sorted so concurrent additions land in different diff hunks. Counts are derived — when in doubt, `wiki-lint` reconciles them; don't fight over them in a merge.
 - **Records are pages.** Verification records, review records, retros, decision records: one file each, named with feature + date. Two sessions never conflict on a file only one of them creates.
 

@@ -1,0 +1,112 @@
+# Mission control and the metrics seam (ADLC mode)
+
+Two derived pages in the product wiki's `meta/` folder give the operator an async view of the delivery and make the agent's cost savings measurable. Together they close the metrics seam: producers stamp `produced_by` / `feature` / `effort_estimate` frontmatter (see [`modes.md`](modes.md)), and these pages are the rollups that consume it.
+
+Both pages are **derived views**. The detailed records — verification contracts and records, review records, feature pages, note frontmatter — always win on disagreement, exactly like the assertion-coverage ledger (see [`concerns/qa.md`](concerns/qa.md)). Never edit delivery state on the board that isn't backed by a record; never trust the board over the record.
+
+## meta/mission-control.md — the operator's board
+
+The operator plugs into a running delivery like a project manager: what is in flight, what is blocked, what needs a human. Chat scrollback doesn't answer that; this page does.
+
+```markdown
+---
+type: meta
+title: "Mission Control"
+updated: YYYY-MM-DDTHH:MM:SS
+tags: [meta, mission-control]
+---
+
+# Mission Control
+
+## In flight
+| Feature | Service | Stage | Last verdict | Blocked on |
+|---|---|---|---|---|
+| [[FEAT-012 Saved filters]] | backend | verify | review APPROVED (round 2) | — |
+| [[FEAT-013 Bulk export]] | web | build | — | grilling pending |
+
+## Release readiness
+Bar: contract + review APPROVED + verifier PASS on fingerprinted target + e2e green + docs updated.
+| Feature | Status |
+|---|---|
+| [[FEAT-010 Role gates]] | ✅ |
+| [[FEAT-011 Audit log]] | conditional — fix pending ([[BUG-004]]) |
+
+## Defect route
+Open FAILs: N — each must have a `bugs/` page **and** a backlog item ([[technical-planning]] dispatcher rules).
+| Bug | Feature | Backlog item | Re-verify |
+|---|---|---|---|
+| [[BUG-004]] | FEAT-011 | [[US-042]] | pending |
+
+## Milestone
+Last holistic verify: YYYY-MM-DD ([[record]]) — next due at ~5 shipped features / sprint close.
+Features shipped since: N. Status: `conditional — milestone verify pending` | ✅
+
+## Human gates open
+- Grilling session for FEAT-013 (open questions: N)
+- Gate 2 sign-off for backend spec
+```
+
+**Stage** is one of: `spec` → `grilling` → `build` → `test` → `review` → `verify` → `docs` → `shipped` (matching the pipeline in [`technical-planning.md`](technical-planning.md)).
+
+### Who updates it, when
+
+- **The dispatcher, at stage transitions.** When a worker is dispatched, a handoff is accepted, a verdict lands (APPROVED / CHANGES_REQUESTED / PASS / FAIL), or a FAIL is routed to `bugs/` + backlog — update the affected row in the same breath as the record. One row edit, not a rewrite.
+- **`wrap-up`, at session end.** Reconcile the whole board against the records this session touched (it is one of the rollups in the wrap-up reconcile step).
+- Statuses obey the readiness bar literally: any pending criterion is `conditional — <criterion> pending`, never ✅.
+
+## meta/ba-activity.md — the cost rollup
+
+The value claim of ADLC is measurable: deliverables produced per feature versus the BA / QA / PM time they replace. This page is that rollup.
+
+```markdown
+---
+type: meta
+title: "BA Activity Ledger"
+updated: YYYY-MM-DDTHH:MM:SS
+tags: [meta, metrics]
+---
+
+# BA Activity Ledger
+
+## Per feature
+| Feature | Role covered | Deliverables (produced_by) | Effort replaced |
+|---|---|---|---|
+| FEAT-012 | BA | 3 requirements, 4 stories (ba-elicitation-synthesizer, ba-user-story-factory) | ~1.5d |
+| FEAT-012 | QA | 6 test cases (ba-test-case-generator), 4 e2e specs (feature-tester) | ~1d |
+
+## Per role (running totals)
+| Role | Deliverables | Effort replaced |
+|---|---|---|
+| BA | 41 | ~12d |
+| QA | 63 | ~9d |
+| PM | 8 | ~2d |
+
+## Not counted
+Notes missing `produced_by` since last rollup: N (list or "none")
+```
+
+Role mapping: `ba-*` skills → BA; `feature-tester` + test-case output → QA; sprint packs / planning-monitor output → PM; `architecture-subagent` → architecture (add a row if the team wants it counted).
+
+### How to compute it (cheap)
+
+Grep frontmatter — never LLM-read the whole vault:
+
+```bash
+grep -r "^produced_by:" wiki/ --include="*.md" -h | sort | uniq -c
+grep -rl "^feature: \"FEAT-012\"" wiki/ --include="*.md"
+```
+
+Sum `effort_estimate:` per feature / role from the matched notes. Notes with `produced_by` empty go under **Not counted** — that line is the seam's own health check, and `wiki-lint` flags the same gap.
+
+### Who updates it, when
+
+- **`wrap-up`, at session end** — the only mandatory refresh. Dispatchers do not touch it mid-flight.
+- On demand, when the operator asks "what has the agent saved us" — refresh, then answer from the page.
+
+## Obsidian Bases (optional, for humans)
+
+For a live, self-maintaining view, add `meta/ba-activity.base` with views grouped by `produced_by` and by `feature` (see the `obsidian-bases` skill). Bases render for humans inside Obsidian; the Markdown pages above remain the agent-readable artifacts — keep both, don't replace one with the other.
+
+## Scaffold
+
+At ADLC scaffold time (and on the first initial pass in an existing vault), seed both pages with empty tables and the readiness bar filled in from `technical-planning.md`. An empty board with the right columns is the contract; the first dispatch fills it.

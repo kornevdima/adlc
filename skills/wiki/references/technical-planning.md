@@ -39,6 +39,15 @@ Each service is its own service: its own repo, its own Mode B code wiki, its own
 
 The dispatcher (ADLC agent) authors the per-feature verification contract, sequences build -> test -> review -> verify, and commits. The product wiki `features/` page links to the service spec; the `wrap-up` skill keeps both sides in sync at session end.
 
+### Code graph grounding (when the service has one)
+
+When a service checkout carries a graphify graph (`graphify-out/graph.json` + `wiki/code/` community pages, built by `/graphify-ingest`), workers ground their structural questions there **before** raw grep — one CLI call answers "what's connected to X", "who calls Y", "blast radius of Z" at zero LLM cost, and the `wiki/code/_COMMUNITY_*.md` pages give Bash-less workers a readable map. Two rules make this safe:
+
+- **Map, not territory.** The graph is for *finding* things, never for *asserting* them. Any claim that lands in a spec, review finding, or test must still be confirmed in the code (Read / Grep). If the graph and the code disagree, the code wins — and the worker reports the mismatch so the dispatcher refreshes the graph.
+- **Freshness is the dispatcher's job.** After each shipped feature (post-verify, pre-commit), run `/graphify-update` on the changed service so the graph and `wiki/code/` stay current for the next worker. A stale graph silently degrades every downstream dispatch; `wiki-lint` checks graph staleness against source files.
+
+Mention the graph in the dispatch packet when it exists ("this service has `graphify-out/` — orient there first"); workers skip silently when it doesn't.
+
 ### Model split: workers draft, the dispatcher orchestrates
 
 The workers are pinned to a fast model (Sonnet) — they draft specs, code, tests, and records. The judgment lives at the dispatcher level (the session model, e.g. Opus): it collects the context, authors contracts, sequences the pipeline, arbitrates review loops, and re-verifies claims. Don't upgrade a worker's model to fix a quality problem — tighten its inputs (spec, contract, AGENTS.md) or catch it at the dispatcher.
@@ -49,6 +58,7 @@ The workers are pinned to a fast model (Sonnet) — they draft specs, code, test
 - **Re-verify worker claims before commit.** Worker completion reports have been wrong in production ("all N updated" when two weren't; builds claimed green that weren't). Before committing, re-run the checks the worker reported green (typecheck / lint / unit at minimum, using the exact commands from its Evidence field) and spot-check one claimed mutation.
 - **Release-ready means every criterion, literally.** If the readiness bar says contract + review APPROVED + verifier PASS on the fingerprinted target + e2e spec green + docs updated, then a feature with any criterion pending is `conditional — <criterion> pending`, never ✅. Dashboards that contradict their own bar erode trust in every other ✅.
 - **Records are pages; log entries are pointers.** Verification records, review records, and retros live as their own wiki pages; `log.md` gets one line each. Production logs that carried full records inline grew past 7,000 lines and stopped being greppable.
+- **Keep the board current at every stage transition.** The product wiki's `meta/mission-control.md` is the operator's async view (see [`mission-control.md`](mission-control.md)). When you dispatch a worker, accept a handoff, record a verdict, or route a FAIL, update the affected board row in the same breath as the record — one row edit, not a rewrite. A board the operator can't trust mid-flight defeats its purpose; it is a derived view, so on any disagreement the records win.
 - **File defects where they belong — and put the fix on the backlog.** Verifier FAILs and post-ship bugs go to `bugs/` (qa concern) with a log pointer — not inline-only in `log.md`. An empty `bugs/` folder next to a log full of FAIL entries means the routing broke, not that there were no bugs. Every FAIL additionally becomes a backlog item (a story / task in the product wiki's `user-stories/` or sprint plan) tracing to the bug page and the exact broken assertion, and the feature flips to `conditional — fix pending` until a re-verify PASSes; a FAIL that exists only as a record never gets scheduled. `ENV_MISMATCH` / `NEEDS_SIGN_IN` are operational blocks, not defects: fix the environment or authenticate, then re-dispatch the verifier — never file them as bugs or let them silently drop the feature from the queue.
 
 ## Verification (operator's toolset)

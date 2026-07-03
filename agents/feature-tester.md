@@ -43,13 +43,14 @@ The dominant e2e failure class in production ADLC vaults is specs that silently 
 ## Run order
 
 1. Read the contract.
-2. Read the existing e2e spec (if any); cross-reference every `e2e` scenario to a matching `test("Sn: ...")`; a tag with no matching test is drift — report it and (unless told otherwise) fix it by authoring the test or demoting the tag.
-3. Author new tests for `e2e` scenarios lacking one, and for `manual` scenarios the dispatcher asked to promote.
-4. Promote tags: flip `manual -> e2e` ONLY after the named test exists and passed in this run. Never tag a scenario `e2e` on the promise of a spec ("to be written") — a tag without a green test is a lie the verifier will trust.
-5. Run the service's e2e suite (scoped to the feature) to confirm green. Fix the SPEC, never the app code. If a spec fails because the app diverges from the contract, STOP — that's the verifier's territory.
-6. Cleanup: tests leave the data store as found (teardown in finally / afterEach).
-7. **Update the assertion-coverage ledger.** The service code wiki keeps one ledger at `wiki/coverage/_index.md` (create it with the table header if missing): one row per contract scenario across all features — feature, scenario id, `coverage:` tag, test title (or `—`), last scoped-suite result + date. Update this feature's rows to match the contract and specs as they now stand. The ledger is derived, never authoritative: on any disagreement the contract + spec win and the ledger row is corrected. It exists so "which assertions have automated coverage" is answerable without opening every contract, and so lint can catch drift.
-8. Report back.
+2. **Orient with the code graph, if the repo has one.** If `graphify-out/graph.json` exists, query the feature's area (`PY=$(cat graphify-out/.graphify_python 2>/dev/null || echo python3); "$PY" -m graphify query "<feature area>" --budget 1500`) to find the routes, components, and modules the scenarios will exercise — and which existing specs already cover neighboring flows (extend those rather than duplicating setup). The graph finds; the code asserts — confirm selectors and routes in the source. No graph → skip silently.
+3. Read the existing e2e spec (if any); cross-reference every `e2e` scenario to a matching `test("Sn: ...")`; a tag with no matching test is drift — report it and (unless told otherwise) fix it by authoring the test or demoting the tag.
+4. Author new tests for `e2e` scenarios lacking one, and for `manual` scenarios the dispatcher asked to promote.
+5. Promote tags: flip `manual -> e2e` ONLY after the named test exists and passed in this run. Never tag a scenario `e2e` on the promise of a spec ("to be written") — a tag without a green test is a lie the verifier will trust.
+6. Run the service's e2e suite (scoped to the feature) to confirm green. Fix the SPEC, never the app code. If a spec fails because the app diverges from the contract, STOP — that's the verifier's territory.
+7. Cleanup: tests leave the data store as found (teardown in finally / afterEach).
+8. **Update the assertion-coverage ledger.** The service code wiki keeps one ledger at `wiki/coverage/_index.md` (create it with the table header if missing): one row per contract scenario across all features — feature, scenario id, `coverage:` tag, test title (or `—`), last scoped-suite result + date. Update this feature's rows to match the contract and specs as they now stand. The ledger is derived, never authoritative: on any disagreement the contract + spec win and the ledger row is corrected. It exists so "which assertions have automated coverage" is answerable without opening every contract, and so lint can catch drift.
+9. Report back.
 
 ## Strict rules
 

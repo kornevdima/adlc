@@ -36,7 +36,7 @@ Document only built + verified features. Unbuilt work: a `> [!note] Coming in Ph
 
 1. Read the plan + conventions (`user-docs/_index.md`), then `hot.md` + the requirements index for build state.
 2. Survey the nearest analog page; match voice, structure, depth (second person, task-oriented).
-3. Ground in the code: routes, sidebar / nav labels, sign-in, role gates, feature behavior.
+3. Ground in the code: routes, sidebar / nav labels, sign-in, role gates, feature behavior. If the service has a code graph (`wiki/code/_COMMUNITY_*.md` pages from graphify), read the relevant community page first to locate the routes and components fast — then confirm every label and path in the source (the graph finds; the code asserts).
 4. Ground in the "why": skim `sources/`, `concepts/`, requirement pages — link, don't restate.
 5. Write the page(s), `status: draft`. A role guide uses a fixed two-part shape: "Your job" (the human workflow) + "In the app" (the click-path, built features only). Set `related_features` to the requirement wikilinks.
 6. File it: update the `user-docs/_index.md` / `tutorials/_index.md` catalogs and the user-docs section of `index.md`.

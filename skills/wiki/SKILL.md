@@ -127,7 +127,7 @@ Steps:
 5. Create domain pages + `_index.md` sub-indexes (for applicable modes), and `_index.md` files for every mode-specific and concern-specific folder created in step 4.
 6. Create `wiki/index.md`, `wiki/log.md`, `wiki/hot.md`, `wiki/overview.md`.
 7. Create the vault `AGENTS.md` using the template below.
-8. Initialize git. Read `references/git-setup.md`. For **Mode ADLC**, also scaffold `.claude/settings.json` from `references/permissions.md` so routine project work runs without prompts while destructive operations stay gated.
+8. Initialize git. Read `references/git-setup.md`. For **Mode ADLC**, also scaffold `.claude/settings.json` from `references/permissions.md` so routine project work runs without prompts while destructive operations stay gated, and seed `wiki/meta/mission-control.md` + `wiki/meta/ba-activity.md` with empty tables per `references/mission-control.md` (the metrics seam).
 9. Present the structure and ask: "Want to adjust anything before we start?"
 
 > Visual customization (theme, color snippets, plugin recommendations) is **not** applied automatically. The default scaffold leaves Obsidian's stock appearance untouched — users pick their own theme and plugins from Obsidian's community marketplace.
@@ -160,7 +160,7 @@ If there is **no** checkout to analyze (empty folder, secrets-only repo), create
 5. **Tests** — With the `qa` concern present, generate test cases into `wiki/test-cases/` (test-case-generator), tracing to stories; update `coverage/`.
 6. **Technical specs (per service)** — dispatch an `architecture-subagent` per service to refine the BA requirements into a shift-left spec (Gate 1 / 1.5 / 2 / 3) inside that service's code wiki. No `project-context/` folder. See `references/technical-planning.md`.
 7. **Verify** — run the service locally via `docker compose` and verify features with the chrome-devtools MCP (e2e) plus the service's own test suite; file an execution note. Same toolset as the operator.
-8. **Integrate** — Update `wiki/index.md` (an **ADLC** section listing `requirements/`, `user-stories/`, `gaps/`, `features/`, `sprints/`), `wiki/hot.md`, append the **top** of `wiki/log.md`, and refresh vault `AGENTS.md` **Structure**. Stamp `produced_by` on authored notes for the metrics seam.
+8. **Integrate** — Update `wiki/index.md` (an **ADLC** section listing `requirements/`, `user-stories/`, `gaps/`, `features/`, `sprints/`), `wiki/hot.md`, append the **top** of `wiki/log.md`, and refresh vault `AGENTS.md` **Structure**. Stamp `produced_by` on authored notes and refresh `meta/ba-activity.md` from the frontmatter (the metrics seam, `references/mission-control.md`).
 
 If there is no source context yet, create `_index.md` stubs only and note what belongs in `.raw/` for a later ingest. After feature work each session, run the `wrap-up` skill to keep the code wikis and this wiki in sync.
 

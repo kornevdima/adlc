@@ -1,7 +1,7 @@
 ---
 type: meta
 title: "Hot Cache"
-updated: 2026-07-04T12:00:00
+updated: 2026-07-04T16:30:00
 tags:
   - meta
   - hot-cache
@@ -10,7 +10,6 @@ related:
   - "[[index]]"
   - "[[log]]"
   - "[[Grilling Session]]"
-  - "[[Vertical Slices for Agent Tasks]]"
   - "[[Validation Contract]]"
 ---
 
@@ -20,28 +19,23 @@ Navigation: [[index]] | [[log]]
 
 ## Last Updated
 
-**2026-07-04 (harness tier 2 + ingest tier 3, committed)**: Implemented the full tier 2 harness backlog (grilling gate, milestone holistic verification, verifier-FAILs→backlog, vertical-slice rule, assertion-coverage ledger) plus the wiki-ingest tier 3 items (YouTube capture path, canonical-language rule) and the `merge=union` scaffold. Wrapped up and committed on `adlc`.
+**2026-07-04 (tier 3 metrics seam + graphify grounding for workers, committed)**: Two harness increments this session — the metrics seam / mission-control spec, then (pre-redeploy) all ADLC workers taught to leverage graphify data. Wrapped up and committed on `adlc`.
 
 ## Key Recent Facts
 
-- **Tier 2 shipped (uncommitted):** `technical-planning.md` gained a **grilling gate** (dispatcher interviews the human question-by-question with recommended answers before Gate 1 approval; grounded by an Explore pass; never delegated/unattended), a **milestone holistic verification** section (cross-feature seam journeys, fresh-target re-verify of shipped contracts, unscoped e2e suite; `conditional — milestone verify pending` otherwise), and the **FAILs→backlog** dispatcher rule (every FAIL = bug page + backlog item + `conditional — fix pending`; ENV_MISMATCH / NEEDS_SIGN_IN are operational, never defects).
-- **Vertical slices:** `ba-user-story-factory` Step 2.5 tracer-bullet check — Functional stories must cut schema→service→API→UI and end observable; horizontal layer-stories fail and get re-split; Technical Enabler requires justification; dependency map must be a DAG of independently grabbable stories (longest chain reported, re-split if > half the stories).
-- **Assertion-coverage ledger:** `feature-tester` step 7 maintains `coverage/_index.md` in the service code wiki (one row per contract scenario: feature, id, tag, test title, last result + date; derived — contract + spec always win). Documented in `concerns/qa.md`; `wiki-lint` checks ledger drift and FAILs-without-backlog-item (critical); `wrap-up` step 4 reconciles the defect route.
-- **wiki-ingest:** new Video / YouTube path (yt-dlp `--skip-download --write-subs --write-auto-subs`, VTT cleaning incl. rolling-duplicate dedupe, proper-noun `(sp?)` caveat) and Canonical Language rule (wiki pages in vault language; `.raw/` never translated; `source_language:` frontmatter).
-- **Model split (operator decision):** workers draft on Sonnet; judgment/orchestration/re-verification live at the dispatcher (session model). Don't fix worker quality with model upgrades.
-- **Production audit findings (context for all of the above):** tester env-precondition assumptions were the largest failure class; verifier PASSes were environment-dependent; one "VERIFIED" shipped a bug via a stubbed integration; logs full of FAILs sat next to an empty backlog.
+- **Graphify grounding (new, motivated by the pending agent redeploy):** `technical-planning.md` § Code graph grounding — where a service has `graphify-out/graph.json` + `wiki/code/`, workers orient there before grep. Doctrine: **the graph finds; the code asserts** — claims in specs/reviews/tests still need code confirmation; on disagreement the code wins and staleness is reported. **Freshness is the dispatcher's job**: `/graphify-update` post-verify pre-commit; `wrap-up` step 3 refreshes changed repos' graphs. Bash workers use the CLI (self-contained pinned-python snippet): `feature-builder` (orient), `feature-reviewer` (blast radius — callers outside the diff), `feature-tester` (routes + neighboring specs). Bash-less workers use the readable layer (`wiki/code/_COMMUNITY_*.md`, `GRAPH_REPORT.md`): `architecture-subagent`, `doc-writer`. `feature-verifier` untouched (runtime).
+- **Metrics seam / mission-control (`references/mission-control.md`, new):** two derived pages in ADLC `meta/` — `mission-control.md` (operator's async board: in-flight stages `spec→grilling→build→test→review→verify→docs→shipped`, readiness vs the literal bar, defect-route table, milestone status, open human gates; dispatcher updates a row per stage transition, wrap-up reconciles) and `ba-activity.md` (cost rollup from `produced_by`/`feature`/`effort_estimate` frontmatter, grep-first, wrap-up-refreshed; "Not counted" = seam health check). Derived-view rule: records always win; team-sync merge rule = regenerate-don't-merge. `wiki-lint` check 13 (missing `produced_by`, board contradictions, board staleness). ADLC scaffold seeds both pages.
+- Earlier same day (committed `91934de`): tier 2 — grilling gate, milestone holistic verify, FAILs→backlog, vertical slices, coverage ledger, ingest video path + canonical language.
 
 ## Recent Changes
 
-- Edited: `skills/wiki/references/technical-planning.md` (3 sections), `skills/wiki/references/ba/ba-user-story-factory.md`, `agents/feature-tester.md`, `agents/wiki-lint-subagent.md` (checks 11–12), `skills/wrap-up/SKILL.md`, `skills/wiki-ingest/SKILL.md` (2 new sections), `skills/wiki/references/concerns/qa.md`.
-- Closed wrap-up follow-up: `.gitattributes` (`wiki/log.md merge=union` + `**/wiki/log.md`) created in this repo; `references/git-setup.md` now bakes it into the scaffold. Existing project vaults still need it added by hand.
-- Logged: [[log]] entry `2026-07-04 impl | Harness tier 2 + wiki-ingest tier 3`.
-- Prior session (committed): harness hardening `bc511a3`, team-sync `0278002`, 5-talk ingest `59449d5`.
+- Created: `skills/wiki/references/mission-control.md`.
+- Edited (metrics seam): `technical-planning.md`, `skills/wrap-up/SKILL.md`, `agents/wiki-lint-subagent.md`, `team-sync.md`, `modes.md`, `ba-suite-pipeline.md`, `skills/wiki/SKILL.md`.
+- Edited (graphify grounding): `technical-planning.md` (new section), `agents/feature-builder.md`, `agents/feature-reviewer.md`, `agents/feature-tester.md`, `agents/architecture-subagent.md`, `agents/doc-writer.md`, `skills/wrap-up/SKILL.md` (step 3).
+- Logged: [[log]] entries `impl | Workers ground in the graphify layer` and `impl | Harness tier 3: metrics seam / mission-control`.
 
 ## Active Threads
 
-- **Tier 2 committed** — next: **redeploy agent copies to service repos** (stale `.claude/agents/` snapshots; one lacks feature-reviewer entirely), and add the two-line `.gitattributes` to existing project vaults by hand.
-- **Remaining backlog (tier 3):** metrics seam / mission-control (rollups from `produced_by` frontmatter — `ba-suite-pipeline.md` § Metrics seam is the stub).
-- **pm-layer evals**: E1–E8 documented but not encoded/run.
-- **`plugin.json`**: 0.3.0→0.4.0 bump still uncommitted (user-managed).
-- **RLM → wiki-query**: design filed ([[RLM-Optimized Wiki Querying]]), not implemented.
+- **Both increments committed** — next: **redeploy `agents/*.md` snapshots to service repos** (now carrying graphify grounding; one repo lacks feature-reviewer entirely). Service repos without a graph need `/graphify-ingest` once for workers to benefit.
+- Other human follow-ups: `.gitattributes` two-liner in existing project vaults; seed the two `meta/` pages in existing ADLC vaults; `plugin.json` 0.3.0→0.4.0.
+- Remaining planned: pm-layer evals E1–E8; RLM → wiki-query ([[RLM-Optimized Wiki Querying]]).

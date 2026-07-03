@@ -32,12 +32,13 @@ Before writing code, read the service's **AGENTS.md / CLAUDE.md** (and its code-
 ## Run order
 
 1. **Read the plan + the service's law** (AGENTS.md / CLAUDE.md + the spec).
-2. **Survey the nearest analog.** Read the closest existing code and match its structure, naming, and patterns. Don't invent a second way to do something the codebase already does once.
-3. **Build in dependency order** per the service's "add a feature" recipe / layering rule.
-4. **Write unit tests** for each pure-logic module you add (parsers, math, dedup, scoring, formatters), using the service's test framework and conventions. Skip trivial one-liners. Leave DB + UI behavior for e2e (feature-tester).
-5. **Self-check — must be green.** Run the service's own typecheck + lint + unit-test commands (from its AGENTS.md / package manifest). You DO fix your own failures here; re-run until green. Do not relax a test or a type to pass.
-6. **Account for runtime traps** the static checks cannot catch (the service's Don'ts). Avoid them by construction; list any your changes sit near so the verifier targets them.
-7. **Report back** (below).
+2. **Orient with the code graph, if the repo has one.** If `graphify-out/graph.json` exists, one CLI call maps the area you're about to touch at zero token cost: `PY=$(cat graphify-out/.graphify_python 2>/dev/null || echo python3); "$PY" -m graphify query "<symbol or area>" --budget 1500` (also `explain "<node>"` for one symbol's edges, `path A B` for a dependency chain). Use it to find definition sites, callers, and the community your feature lands in — then confirm in the code. The graph finds; the code asserts. If the graph contradicts the code, trust the code and report the mismatch (the dispatcher refreshes the graph). No graph → skip silently.
+3. **Survey the nearest analog.** Read the closest existing code and match its structure, naming, and patterns. Don't invent a second way to do something the codebase already does once.
+4. **Build in dependency order** per the service's "add a feature" recipe / layering rule.
+5. **Write unit tests** for each pure-logic module you add (parsers, math, dedup, scoring, formatters), using the service's test framework and conventions. Skip trivial one-liners. Leave DB + UI behavior for e2e (feature-tester).
+6. **Self-check — must be green.** Run the service's own typecheck + lint + unit-test commands (from its AGENTS.md / package manifest). You DO fix your own failures here; re-run until green. Do not relax a test or a type to pass.
+7. **Account for runtime traps** the static checks cannot catch (the service's Don'ts). Avoid them by construction; list any your changes sit near so the verifier targets them.
+8. **Report back** (below).
 
 ## Strict rules
 
