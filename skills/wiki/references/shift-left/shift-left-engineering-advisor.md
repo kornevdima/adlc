@@ -44,6 +44,23 @@ Respect the user's choice. The gates are guardrails, not blockers. Always name t
   - If Gate 3 is confirmed or explicitly skipped, do Gate 4 implementation guidance or code review.
 - STATUS mode: summarize gates passed, gaps, open questions, and next best action.
 
+## Governance Escalation (Gate 0, up)
+
+Some questions are **governance decisions**, not engineering ones. They belong to the `product-management-layer` skill (Gate 0), which sits above this advisor. Do **not** resolve them inside a gate.
+
+Escalate **up** when the user asks about any of:
+
+- vendor viability, a vendor being acquired or shutting down / sunset
+- whether a tool is **approved** for a use case
+- **buy vs build** (do not run the buy-vs-build / TCO evaluation here)
+- a **subscription**, license, or **budget** commitment
+- the **compliance class** or data policy for a use case
+- **shelfware** (paying for something unused)
+
+When one surfaces, say so and route it: *"That's a governance decision — it belongs to the product-management-layer (Gate 0), not this gate. I can flag it and continue the engineering track once it's resolved."* Keep this vocabulary **disjoint** from the advisor's own (requirements, FR, ADR, spec, architecture, build): never claim a governance decision as a requirement or design element.
+
+Escalate **down into this advisor** only after Gate 0 approves a use-case intake. A downstream handoff arrives with trace IDs; treat the approved intake as an input to **Gate 1** requirements, and cite its IDs.
+
 ## Core Rules
 
 - Complete one gate per exchange. Present the artifact, ask "Does this look right?", and wait for approval.
@@ -73,7 +90,7 @@ When the user provides source material before Gate 1:
 
 ## Gate Execution
 
-Follow the detailed artifact formats and decision rules in [reference.md](reference.md).
+Apply the artifact formats inline, per each gate's Output Expectations below. For the claude-mem Mode ADLC overrides — per-service specs, BA trace-down, Mermaid diagrams, human gate between gates — read [`_index.md`](_index.md) and [`../technical-planning.md`](../technical-planning.md).
 
 ## Output Expectations By Gate
 

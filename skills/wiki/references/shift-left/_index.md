@@ -12,5 +12,6 @@ The advisor describes gates 1 / 1.5 / 2 / 3 (/ 4). In claude-mem Mode ADLC:
 2. **Trace down from BA.** Each technical requirement traces to a BA requirement ID (from the bundled BA method set in `../ba/`).
 3. **Diagrams: Mermaid** in the living spec; PlantUML reserved for formal export.
 4. **Human gate between gates** (no skipping).
+5. **Gate 0 escalation (up).** Governance questions — vendor viability, tool approval, buy-vs-build, subscription/budget, compliance class, shelfware — are not engineering decisions. Route them up to the planned `product-management-layer` skill and keep the advisor's vocabulary disjoint. See the doc's "Governance Escalation" section; design is documented at `wiki/concepts/Product Management Layer Skill.md`.
 
 See [`../technical-planning.md`](../technical-planning.md).
