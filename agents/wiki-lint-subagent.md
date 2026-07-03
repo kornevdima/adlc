@@ -33,6 +33,10 @@ You will be given:
 4. Scan for unlinked mentions (entity names appearing without `[[` brackets).
 5. Check `wiki/index.md` for stale entries pointing to renamed/deleted files.
 6. Identify pages with status `seed` that have not been updated in over 30 days.
+7. In ADLC vaults (verification contracts present): cross-check every scenario tagged `coverage: e2e` against the service's e2e spec files — a tag with no matching `test("Sn: ...")` is critical (the verifier will trust it as automated coverage).
+8. Flag a `log.md` over ~1,000 lines, or one carrying full verification / review records inline — records should be their own pages with one-line log pointers.
+9. Flag readiness dashboards whose ✅ rows contradict their own stated criteria (e.g. "release-ready" with the e2e spec still pending).
+10. Flag concern folders that stayed empty while `log.md` records matching events (e.g. `bugs/` at "None yet" alongside FAIL entries in the log) — that is routing drift, not absence of bugs.
 
 ## Output
 

@@ -29,9 +29,21 @@ Each service is its own service: its own repo, its own Mode B code wiki, its own
 4. **`feature-verifier`** — runs the contract end-to-end (see Verification below); logs pass/fail; never fixes bugs.
 5. **`doc-writer`** — writes the user docs (the `writing` concern) for built + verified features.
 
-**Review loop:** on CHANGES_REQUESTED the dispatcher loops back to `feature-builder` (code findings) and `feature-tester` (test gaps), then re-dispatches `feature-reviewer`. Cap the loop at a few rounds; escalate to the human if findings persist. Only on APPROVED does the pipeline proceed to verify.
+**Review loop:** on CHANGES_REQUESTED the dispatcher loops back to `feature-builder` (code findings) and `feature-tester` (test gaps), then re-dispatches `feature-reviewer`. Cap the loop at **3 rounds**; escalate to the human if findings persist. Only on APPROVED does the pipeline proceed to verify. When dispatching the reviewer, **push the standards**: include the service's AGENTS.md conventions + Don'ts (or their exact paths) and the spec / contract in the dispatch packet alongside the diff range — an automated reviewer needs the code and the standards side by side, not a chance to skip the pull.
 
 The dispatcher (ADLC agent) authors the per-feature verification contract, sequences build -> test -> review -> verify, and commits. The product wiki `features/` page links to the service spec; the `wrap-up` skill keeps both sides in sync at session end.
+
+### Model split: workers draft, the dispatcher orchestrates
+
+The workers are pinned to a fast model (Sonnet) — they draft specs, code, tests, and records. The judgment lives at the dispatcher level (the session model, e.g. Opus): it collects the context, authors contracts, sequences the pipeline, arbitrates review loops, and re-verifies claims. Don't upgrade a worker's model to fix a quality problem — tighten its inputs (spec, contract, AGENTS.md) or catch it at the dispatcher.
+
+### Dispatcher rules (from production ADLC audits)
+
+- **Handoffs carry evidence, and unresolved handoffs block progress.** Every worker report ends with an **Evidence** field (the exact commands run, with exit codes, where the worker runs commands) and a **Left undone** field. A handoff with a non-zero exit code, a missing evidence field, or a Left-undone item the next stage depends on BLOCKS the pipeline: resolve it or rescope it before dispatching the next worker — never proceed past it.
+- **Re-verify worker claims before commit.** Worker completion reports have been wrong in production ("all N updated" when two weren't; builds claimed green that weren't). Before committing, re-run the checks the worker reported green (typecheck / lint / unit at minimum, using the exact commands from its Evidence field) and spot-check one claimed mutation.
+- **Release-ready means every criterion, literally.** If the readiness bar says contract + review APPROVED + verifier PASS on the fingerprinted target + e2e spec green + docs updated, then a feature with any criterion pending is `conditional — <criterion> pending`, never ✅. Dashboards that contradict their own bar erode trust in every other ✅.
+- **Records are pages; log entries are pointers.** Verification records, review records, and retros live as their own wiki pages; `log.md` gets one line each. Production logs that carried full records inline grew past 7,000 lines and stopped being greppable.
+- **File defects where they belong.** Verifier FAILs and post-ship bugs go to `bugs/` (qa concern) with a log pointer — not inline-only in `log.md`. An empty `bugs/` folder next to a log full of FAIL entries means the routing broke, not that there were no bugs.
 
 ## Verification (operator's toolset)
 
