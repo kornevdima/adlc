@@ -1,7 +1,7 @@
 ---
 type: meta
 title: "Entities Index"
-updated: 2026-07-03
+updated: 2026-07-08
 tags:
   - meta
   - index
@@ -41,7 +41,9 @@ All entity pages — people, organizations, products, and tools.
 
 ## Products & Tools
 
-<!-- Add tool and product pages here -->
+- [[OpenManus]] — MetaGPT team's open agent framework; pattern source for autoresearch v2; rejected as runtime (semi-dormant)
+- [[Claude Agent SDK]] — Anthropic's agent-with-a-computer runtime; chosen for the future headless claude-mem branch
+- [[Google ADK]] — Google's multi-agent framework (ADK 2.0: graph workflows, A2A); interop via future vault MCP server
 
 ---
 

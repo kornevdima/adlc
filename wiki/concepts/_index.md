@@ -1,7 +1,7 @@
 ---
 type: meta
 title: "Concepts Index"
-updated: 2026-07-03
+updated: 2026-07-08
 tags:
   - meta
   - index
@@ -37,6 +37,7 @@ All concept pages — ideas, patterns, and frameworks extracted from sources.
 - [[Multi-Agent Communication Taxonomy]] — five primitives: delegation, creator-verifier, direct communication, negotiation, broadcast (Source: [[yt-alvoeiro-multi-agent-architecture]])
 - [[Validation Contract]] — correctness defined at planning time, before code; assertion coverage accounted across features; validated behaviorally (Source: [[yt-alvoeiro-multi-agent-architecture]])
 - [[Structured Handoff]] — schema-shaped worker report (done / undone / commands + exit codes / issues / procedure compliance) that lets clean-context agents inherit state (Sources: [[yt-alvoeiro-multi-agent-architecture]], [[anthropic-harness-design]])
+- [[Plan-Driven Research Loop]] — autoresearch v2: persisted plan artifact with `[ ] [→] [✓] [!]` statuses, question-driven loop, subagent per question, stuck rule, budgets (Source: [[openmanus-repo]])
 
 ---
 

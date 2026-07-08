@@ -1,7 +1,7 @@
 ---
 type: meta
 title: "Sources Index"
-updated: 2026-07-03
+updated: 2026-07-08
 tags:
   - meta
   - index
@@ -34,7 +34,13 @@ All source pages — summaries of ingested documents, transcripts, articles, and
 
 ## Articles
 
-<!-- Add article source pages here -->
+- [[agent-sdk-comparisons-2026]] — 2026 | Composio, TURION.AI, Morph, Sau Sheong (aggregated) | Claude Agent SDK vs Google ADK landscape; medium confidence (vendor-adjacent blogs)
+
+---
+
+## Code Repositories
+
+- [[openmanus-repo]] — 2025 | FoundationAgents (MetaGPT team) | PlanningFlow per-step statuses, is_stuck(), max_steps, MCP both directions; semi-dormant since 2025-04
 
 ---
 
