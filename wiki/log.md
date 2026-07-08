@@ -25,6 +25,13 @@ Parse recent entries: `grep "^## \[" wiki/log.md | head -10`
 
 ---
 
+## [2026-07-08] fix | DEFECT-001 closed: /project-profile now augments an existing AGENTS.md
+- `skills/project-profile/SKILL.md` Step 5 branches: no existing file → template as before; existing `AGENTS.md` → **augment path** (split into `##` sections, refresh the seven skill-owned sections, `Conventions`/`Code Generations` as a deduped union, preserve every foreign section verbatim in order).
+- Step 1 reframed to "back up and augment" (default cancel); Step 7 backs up to `AGENTS.md.bak` (`.bak.N` if taken) before writing; Step 8 logs an augment variant; hard rule 6 added ("never drop a section you don't own"); modes table + known-limitations note updated.
+- [[Project Profile Skill Suite]] → Known Defects: DEFECT-001 marked **Fixed** with the approach; the ⚠️ on the first-run flow flipped to ✅. Dedicated `--refresh` (section-level diff) still deferred; the data-loss regression is closed.
+
+---
+
 ## [2026-07-08] defect | DEFECT-001: /project-profile first-run overwrites existing AGENTS.md
 - Filed in [[Project Profile Skill Suite]] under "Known Defects" (this vault has no `defects/` folder).
 - Discovered during a `/project-profile` first-run on a brownfield service repo whose existing `AGENTS.md` carried `wiki/` + ADLC topology sections; on "back up and proceed" the first-run replaced them with mechanical-only output.

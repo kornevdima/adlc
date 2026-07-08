@@ -86,7 +86,7 @@ project-root/
 
 **First-run flow**:
 
-1. Detect existing `AGENTS.md` / `CLAUDE.md` / `.cursorrules` / `CONVENTIONS.md`. If any exist, augment rather than replace. ⚠️ **The shipped implementation does not yet honor "augment" — see [[#Known Defects]] → DEFECT-001.**
+1. Detect existing `AGENTS.md` / `CLAUDE.md` / `.cursorrules` / `CONVENTIONS.md`. If any exist, augment rather than replace. ✅ **The shipped implementation now honors "augment": first-run on an existing `AGENTS.md` backs it up, refreshes the skill-owned sections, and preserves foreign sections verbatim — see [[#Known Defects]] → DEFECT-001 (Fixed).**
 2. Dispatch `mechanical-scanner-subagent`: extracts build/test/lint commands from `package.json`, `Makefile`, `pyproject.toml`, CI configs, linter configs.
 3. Show user the proposed mechanical sections of AGENTS.md. Edit / approve.
 4. Conduct tribal interview (inline, not subagent):
@@ -284,7 +284,7 @@ Defects found in the shipped implementation. Tracked here (this vault has no `de
 | Field | Value |
 |---|---|
 | Severity | **High** (data loss) |
-| Status | Open |
+| Status | **Fixed** — 2026-07-08, `skills/project-profile/SKILL.md` Step 5 augment path |
 | Found | 2026-07-08, during a `/project-profile` first-run on a brownfield service repo whose `AGENTS.md` already carried `wiki/` + ADLC topology sections |
 | Area | `skills/project-profile/SKILL.md` — first-run composition |
 
@@ -297,6 +297,8 @@ Defects found in the shipped implementation. Tracked here (this vault has no `de
 **Workaround.** Manual merge from the `.bak` file created by the "back up and proceed" option.
 
 **Fix direction.** Composition must diff/merge the scanner + interview output into the existing `AGENTS.md`, preserving unrecognized sections — or, minimally, re-append them under a "Preserved from prior AGENTS.md" heading until the `--refresh` mode (implementation sequence step 4) lands.
+
+**Fix (2026-07-08).** `skills/project-profile/SKILL.md` Step 5 now branches: with no existing file it writes the template as before; with an existing `AGENTS.md` it takes an **augment path** — split the existing file into `##` sections, replace the seven *skill-owned* sections (mechanical sections from the fresh scan; `Conventions` / `Code Generations` as a deduplicated union of old + new), and **preserve every foreign section verbatim in its original order**. Step 1 reframes the prompt as "back up and augment" (default cancel); Step 7 backs the file up to `AGENTS.md.bak` (`.bak.N` if taken) before writing; Step 8 logs it as an augment. Hard rule 6 encodes "never drop a section you don't own." The dedicated `--refresh` mode (section-level diff, tribal untouched) is still deferred, but the data-loss regression is closed — re-running first-run is now non-destructive.
 
 ## Connections
 
