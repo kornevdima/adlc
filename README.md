@@ -66,7 +66,7 @@ bash bin/setup-graphify.sh /path/to/your-app   # also pin to a specific code pro
 | `lint the wiki` | Health check |
 | `/wiki-faq` | In-session help: requirements, workflow, troubleshooting, glossary |
 | `/save` | File the current conversation as a wiki note |
-| `/autoresearch [topic]` | Autonomous research loop: search, fetch, synthesize, file |
+| `/autoresearch [topic]` | Plan-driven autonomous research: persisted, resumable question plan; one subagent per question; synthesize, file |
 | `/product-management-layer` | Gate 0 governance advisor: tool/vendor approval, buy-vs-build TCO, compliance scoping, shelfware — hands approved intake down to shift-left |
 | `obsidian-markdown` | Reference for correct Obsidian Flavored Markdown |
 | `obsidian-bases` | Create and edit `.base` files (Obsidian's database layer) |
@@ -85,7 +85,7 @@ bash bin/setup-graphify.sh /path/to/your-app   # also pin to a specific code pro
 | `ingest all of these` | Batch process multiple sources, then cross-reference |
 | `what do you know about X?` | Read index, drill into relevant pages, synthesize answer |
 | `/save` | File the current conversation as a wiki note |
-| `/autoresearch [topic]` | Run the autonomous research loop |
+| `/autoresearch [topic]` | Run the plan-driven research loop (resumable via the `_plan` note in `wiki/questions/`) |
 | `lint the wiki` | Health check: orphans, dead links, gaps, suggestions |
 | `/wiki-faq` | "How do I...?", "what's the workflow?", "why is X broken?" — guided help |
 | `/graphify-ingest` | Build code structure graph (AST + semantic), file into `wiki/code/` |

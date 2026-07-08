@@ -31,10 +31,14 @@ Always note the source date for factual claims. Mark claims from sources older t
 
 ## Loop Constraints
 
-- Max search rounds per topic: **3**
-- Max wiki pages created per session: **15**
-- Max sources fetched per round: **5**
-- If max pages is reached before the loop completes: file what you have, note what was skipped in Open Questions
+Plan-driven loop budgets (see `wiki/concepts/Plan-Driven Research Loop.md` for design):
+
+- Max research questions per plan: **7** (`max_questions`)
+- Max searches per question: **5**
+- Max sources fetched per question: **3**
+- Max passes per question: **2** — a question with no new sources after a rewritten second pass is marked `[!]` blocked
+- Max wiki pages created per session: **15** (`max_pages`)
+- If a budget is reached before the plan completes: mark remaining questions `[!]` with note "budget", file what you have, list every `[!]` question under Open Questions in the synthesis
 
 ---
 

@@ -1,77 +1,83 @@
 ---
 name: autoresearch
 description: >
-  Autonomous iterative research loop. Takes a topic, runs web searches, fetches sources,
+  Autonomous plan-driven research loop. Takes a topic, decomposes it into research
+  questions in a persisted plan artifact, dispatches research subagents per question,
   synthesizes findings, and files everything into the wiki as structured pages.
-  Based on Karpathy's autoresearch pattern: program.md configures objectives and constraints,
-  the loop runs until depth is reached, output goes directly into the knowledge base.
+  Resumable: an interrupted session leaves the plan in the vault and the next run
+  continues it. Based on Karpathy's autoresearch pattern plus OpenManus PlanningFlow
+  patterns: program.md configures objectives and budgets, statuses live in the plan note.
   Triggers on: "/autoresearch", "autoresearch", "research [topic]", "deep dive into [topic]",
   "investigate [topic]", "find everything about [topic]", "research and file",
-  "go research", "build a wiki on".
+  "go research", "build a wiki on", "resume research".
 ---
 
-# autoresearch: Autonomous Research Loop
+# autoresearch: Plan-Driven Research Loop
 
-You are a research agent. You take a topic, run iterative web searches, synthesize findings, and file everything into the wiki. The user gets wiki pages, not a chat response.
+You are a research agent. You take a topic, decompose it into research questions, work through them via a persisted plan, and file everything into the wiki. The user gets wiki pages, not a chat response.
 
-This is based on Karpathy's autoresearch pattern: a configurable program defines your objectives. You run the loop until depth is reached. Output goes into the knowledge base.
+Design rationale: `wiki/concepts/Plan-Driven Research Loop.md`. v1 (fixed 3-round loop) was replaced 2026-07-08.
 
 ---
 
 ## Before Starting
 
-Read `references/program.md` to load the research objectives and constraints. This file is user-configurable. It defines what sources to prefer, how to score confidence, and any domain-specific constraints.
+1. Read `references/program.md` for objectives, confidence scoring, and budgets. User-configurable.
+2. Check `wiki/questions/` for an existing `_plan Research *.md` matching the topic (or any plan with open steps if the user said "resume research"). If found: show its status and ask **resume or restart**. Resume = continue from the first non-completed question.
 
 ---
 
-## Research Loop
+## Step 1. Plan
 
+Decompose the topic into **3-7 research questions** (budget: `max_questions` in program.md). Good questions are answerable independently and collectively cover the topic.
+
+Write the plan artifact to `wiki/questions/_plan Research [Topic].md`:
+
+```markdown
+---
+type: research-plan
+title: "Plan: Research [Topic]"
+created: YYYY-MM-DD
+updated: YYYY-MM-DD
+tags: [research, plan]
+status: active
+---
+
+# Plan: Research [Topic]
+
+Statuses: `[ ]` not started | `[→]` in progress | `[✓]` done | `[!]` blocked
+
+- [ ] Q1: [question]
+- [ ] Q2: [question]
+- [ ] Q3: [question]
+
+## Notes
+<!-- one line per completed/blocked question: what was found or why blocked -->
 ```
-Input: topic (from user command)
 
-Round 1. Broad search
-1. Decompose topic into 3-5 distinct search angles
-2. For each angle: run 2-3 WebSearch queries
-3. For top 2-3 results per angle: WebFetch the page
-4. Extract from each: key claims, entities, concepts, open questions
-
-Round 2. Gap fill
-5. Identify what's missing or contradicted from Round 1
-6. Run targeted searches for each gap (max 5 queries)
-7. Fetch top results for each gap
-
-Round 3. Synthesis check (optional, if gaps remain)
-8. If major contradictions or missing pieces still exist: one more targeted pass
-9. Otherwise: proceed to filing
-
-Max rounds: 3 (as set in program.md). Stop when depth is reached or max rounds hit.
-```
+The plan is live in Obsidian — the user watches statuses flip as research progresses.
 
 ---
 
-## Filing Results
+## Step 2. Execute (loop)
 
-After research is complete, create these pages:
+While open questions (`[ ]` or `[→]`) remain AND budgets allow:
 
-**wiki/sources/**. One page per major reference found
-- Use source frontmatter (type, source_type, author, date_published, url, confidence, key_claims)
-- Body: summary of the source, what it contributes to the topic
+1. Pick the **first non-completed** question. Mark it `[→]` in the plan (update `updated:` too).
+2. **Dispatch a `research-subagent`** (Agent tool, `subagent_type: "research-subagent"`) with: the question, the topic, vault path, and the budgets + source rules from program.md. The subagent searches, fetches, files source/entity/concept pages, and returns a structured report.
+   - Exception: if the plan has ≤2 questions, do the work inline (same procedure as the subagent) — dispatch overhead isn't justified.
+3. On report:
+   - **New sources found** → mark `[✓]`, append a one-line note (key finding + pages created).
+   - **No new sources** → rewrite the question from a different angle and re-dispatch once. A second empty pass → mark `[!]` blocked with a note. Never spend more than 2 passes on one question.
+4. Re-read the plan before each iteration (statuses are the single source of truth — this is what makes the loop resumable).
 
-**wiki/concepts/**. One page per significant concept extracted
-- Only create a page if the concept is substantive enough to stand alone
-- Check the index first: update existing concept pages rather than creating duplicates
-
-**wiki/entities/**. One page per significant person, org, or product identified
-- Check the index first: update existing entity pages
-
-**wiki/questions/**. One synthesis page titled "Research: [Topic]"
-- This is the master synthesis. Everything comes together here.
-- Sections: Overview, Key Findings, Entities, Concepts, Contradictions, Open Questions, Sources
-- Full frontmatter with related links to all pages created in this session
+Stop when: all questions are `[✓]`/`[!]`, or `max_pages` / per-question budgets are exhausted. On budget stop: mark remaining questions `[!]` with note "budget".
 
 ---
 
-## Synthesis Page Structure
+## Step 3. Synthesize
+
+Create `wiki/questions/Research [Topic].md` (no colon in filename):
 
 ```markdown
 ---
@@ -93,12 +99,10 @@ sources:
 # Research: [Topic]
 
 ## Overview
-[2-3 sentence summary of what was found]
+[2-3 sentence summary]
 
 ## Key Findings
 - Finding 1 (Source: [[Source Page]])
-- Finding 2 (Source: [[Source Page]])
-- ...
 
 ## Key Entities
 - [[Entity Name]]: role/significance
@@ -107,54 +111,51 @@ sources:
 - [[Concept Name]]: one-line definition
 
 ## Contradictions
-- [[Source A]] says X. [[Source B]] says Y. [Brief note on which is more credible and why]
+- [[Source A]] says X. [[Source B]] says Y. [Which is more credible and why]
 
 ## Open Questions
-- [Question that research didn't fully answer]
-- [Gap that needs more sources]
+- [Every [!] blocked question from the plan, with its blocking note]
+- [Anything skipped for budget]
 
 ## Sources
 - [[Source 1]]: author, date
-- [[Source 2]]: author, date
 ```
+
+Blocked (`[!]`) plan steps map 1:1 into Open Questions — nothing is silently dropped.
 
 ---
 
-## After Filing
+## Step 4. File and Close
 
-1. Update `wiki/index.md`. Add all new pages to the right sections
-2. Append to `wiki/log.md` (at the TOP):
+1. Update `wiki/index.md`: add all new pages to the right sections, bump counts and date.
+2. Update `wiki/sources/_index.md`, `wiki/concepts/_index.md`, `wiki/entities/_index.md`.
+3. Append to `wiki/log.md` (at the TOP):
    ```
    ## [YYYY-MM-DD] autoresearch | [Topic]
-   - Rounds: N
-   - Sources found: N
-   - Pages created: [[Page 1]], [[Page 2]], ...
-   - Synthesis: [[Research: Topic]]
+   - Questions: N total, N answered, N blocked
+   - Sources found: N | Pages created: [[Page 1]], [[Page 2]], ...
+   - Synthesis: [[Research [Topic]]]
    - Key finding: [one sentence]
    ```
-3. Update `wiki/hot.md` with the research summary
+4. Update `wiki/hot.md` with the research summary.
+5. **Delete the plan artifact** — the synthesis page and log entry carry its content. (A surviving `_plan` file = interrupted session = resume marker.)
 
 ---
 
 ## Report to User
 
-After filing everything:
-
 ```
 Research complete: [Topic]
 
-Rounds: N | Searches: N | Pages created: N
+Questions: N answered, N blocked | Searches: N | Pages created: N
 
 Created:
-  wiki/questions/Research: [Topic].md (synthesis)
-  wiki/sources/[Source 1].md
-  wiki/concepts/[Concept 1].md
-  wiki/entities/[Entity 1].md
+  wiki/questions/Research [Topic].md (synthesis)
+  wiki/sources/... wiki/concepts/... wiki/entities/...
 
 Key findings:
 - [Finding 1]
 - [Finding 2]
-- [Finding 3]
 
 Open questions filed: N
 ```
@@ -163,10 +164,11 @@ Open questions filed: N
 
 ## Constraints
 
-Follow the limits in `references/program.md`:
-- Max rounds (default: 3)
-- Max pages per session (default: 15)
-- Confidence scoring rules
-- Source preference rules
+All budgets live in `references/program.md`:
+- Max questions per plan (default: 7)
+- Max searches / fetches per question (defaults: 5 / 3)
+- Max wiki pages per session (default: 15)
+- Max passes per question: 2 (hard rule, then `[!]`)
+- Confidence scoring and source preference rules
 
-If a constraint conflicts with completeness, respect the constraint and note what was left out in the Open Questions section.
+If a constraint conflicts with completeness, respect the constraint and file the gap in Open Questions.
