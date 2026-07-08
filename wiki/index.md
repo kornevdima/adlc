@@ -1,7 +1,7 @@
 ---
 type: meta
 title: "Wiki Index"
-updated: 2026-07-03
+updated: 2026-07-08
 tags:
   - meta
   - index
@@ -23,7 +23,7 @@ related:
 
 # Wiki Index
 
-Last updated: 2026-07-03 | Total pages: 80 | Source pages: 23
+Last updated: 2026-07-08 | Total pages: 87 | Source pages: 25
 
 Navigation: [[overview]] | [[log]] | [[hot]] | [[maintenance-triggers]]
 
@@ -63,6 +63,7 @@ Navigation: [[overview]] | [[log]] | [[hot]] | [[maintenance-triggers]]
 - [[Ralph Wiggum Loop]] — AFK implementation loop: fresh context per iteration over an issue backlog, sentinel-terminated, Docker-sandboxed; Sandcastle parallel version (status: current)
 - [[Vertical Slices for Agent Tasks]] — tracer-bullet issue decomposition; Kanban DAG of independently grabbable all-layer slices enables parallel agents (status: current)
 - [[Deep Modules]] — Ousterhout's small-interface/big-functionality modules as agent enablement; feedback-loop quality is the ceiling on agent output (status: current)
+- [[Plan-Driven Research Loop]] — autoresearch v2: persisted plan artifact, question-driven loop, subagent per question, stuck rule, budgets; adapted from OpenManus source (status: implemented)
 
 ---
 
@@ -84,6 +85,9 @@ Navigation: [[overview]] | [[log]] | [[hot]] | [[maintenance-triggers]]
 - [[Factory]] — AI dev-tools company; missions system for multi-day autonomous delivery; agents called droids (status: current)
 - [[Luke Alvoeiro]] — leads core agent harness at Factory; started Goose at Block; "droid whispering" (status: current)
 - [[Matt Pocock]] — developer educator (Total TypeScript, AI Hero); grilling → PRD → vertical-slice Kanban → Ralph loop workflow; author of Sandcastle (status: current)
+- [[OpenManus]] — MetaGPT team's open agent framework; pattern source for autoresearch v2; rejected as claude-mem runtime (status: current)
+- [[Claude Agent SDK]] — Anthropic's agent-with-a-computer runtime; chosen for the future headless claude-mem branch (status: current)
+- [[Google ADK]] — Google's multi-agent framework; not chosen for headless branch; MCP interop path instead (status: current)
 
 ---
 
@@ -112,6 +116,8 @@ Navigation: [[overview]] | [[log]] | [[hot]] | [[maintenance-triggers]]
 - [[orlov-rag-wiki-llm-graphify]] — 2026-06-27 | Orlov (YouTube, uk) | three waves of agent memory: RAG → Wiki LLM → graphify; chunk-as-assertion heuristic; auto-transcript caveats
 - [[yt-alvoeiro-multi-agent-architecture]] — 2026-05-06 | Luke Alvoeiro (Factory), AI Engineer | five multi-agent primitives; missions: validation contracts, structured handoffs, serial execution, per-role models; 16-day runs
 - [[yt-pocock-ai-coding-workflow]] — 2026-04-24 | Matt Pocock @ AI Engineer | full workflow: grilling → PRD → vertical-slice Kanban → AFK Ralph loop → TDD → fresh-context review → manual QA; deep modules; doc rot
+- [[openmanus-repo]] — 2025 | FoundationAgents (MetaGPT team) | PlanningFlow statuses, is_stuck(), max_steps, MCP both directions; semi-dormant since 2025-04
+- [[agent-sdk-comparisons-2026]] — 2026 | aggregated comparison articles | Claude Agent SDK vs Google ADK; medium confidence
 
 ---
 
@@ -121,6 +127,7 @@ Navigation: [[overview]] | [[log]] | [[hot]] | [[maintenance-triggers]]
 - [[Research Feedback-Driven Project Profile]] — 2026-05-09 synthesis: how engineer feedback should update AGENTS.md (status: developing)
 - [[How does the LLM Wiki pattern work]] — how the pattern works and why it outperforms RAG at human scale (status: developing)
 - [[Research Recursive Language Models]] — 2026-06-28 synthesis: RLM mechanics, results, limits, and the wiki-query/structure application for ADLC (status: developing)
+- [[Research OpenManus for claude-mem]] — 2026-07-08 synthesis: reject OpenManus as runtime, adopt its planning patterns; SDK for headless branch, MCP for interop (status: developing)
 
 ---
 

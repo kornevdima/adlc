@@ -9,6 +9,8 @@ status: evergreen
 related:
   - "[[index]]"
   - "[[log]]"
+  - "[[Research OpenManus for claude-mem]]"
+  - "[[Plan-Driven Research Loop]]"
   - "[[Project Profile Skill Suite]]"
   - "[[Product Management Layer Skill]]"
   - "[[RLM-Optimized Wiki Querying]]"
@@ -19,6 +21,8 @@ related:
 Navigation: [[index]] | [[log]]
 
 ## Last Updated
+
+**2026-07-08 (OpenManus research + autoresearch v2)**: Evaluated OpenManus for agent-style API usage → **reject as runtime, adopt patterns** ([[Research OpenManus for claude-mem]]). Headless branch decision: Claude Agent SDK (skills reuse, zero port); vault MCP server deferred but agreed as the interop path (AGENTS.md will declare its tools). Implemented **autoresearch v2** ([[Plan-Driven Research Loop]]): persisted plan artifact in `wiki/questions/_plan Research [Topic].md` (`[ ] [→] [✓] [!]`), question-driven loop, per-question `research-subagent` dispatch, stuck rule (2 empty passes → blocked), budgets in `program.md`. New `agents/research-subagent.md`; plugin → 0.8.0. Skill-creator evals pending. Uncommitted (stale `.git/index.lock` blocked commit from session).
 
 **2026-07-08 (DEFECT-001 fixed)**: Closed **DEFECT-001** in `skills/project-profile/SKILL.md`. Step 5 now branches — with an existing `AGENTS.md` it takes an **augment path**: split into `##` sections, refresh the seven skill-owned sections (mechanical from the fresh scan; `Conventions`/`Code Generations` as a deduped union), and preserve every foreign section verbatim in order. Step 1 → "back up and augment" (default cancel); Step 7 backs up to `AGENTS.md.bak` before writing; hard rule 6 added. [[Project Profile Skill Suite]] → Known Defects marked **Fixed**; ⚠️ on the first-run flow flipped to ✅. Uncommitted.
 

@@ -25,6 +25,15 @@ Parse recent entries: `grep "^## \[" wiki/log.md | head -10`
 
 ---
 
+## [2026-07-08] research + impl | OpenManus evaluated; autoresearch v2 (plan-driven loop) implemented
+- Research question: can OpenManus make claude-mem an autonomous agent over APIs? Verdict: reject as runtime (Agent Skills not portable; project semi-dormant since 2025-04), adopt planning patterns. Headless runtime → Claude Agent SDK (future `feat/headless-agent`, FRs pending); interop → future vault MCP server (deferred).
+- Sources: [[openmanus-repo]] (PlanningFlow, is_stuck, max_steps — read from source), [[agent-sdk-comparisons-2026]] (SDK vs ADK, medium confidence).
+- Pages created: [[Research OpenManus for claude-mem]] (synthesis), [[Plan-Driven Research Loop]], [[OpenManus]], [[Claude Agent SDK]], [[Google ADK]], [[openmanus-repo]], [[agent-sdk-comparisons-2026]].
+- Implemented: `skills/autoresearch/SKILL.md` v2 — persisted plan artifact (`wiki/questions/_plan Research [Topic].md`, statuses `[ ] [→] [✓] [!]`), question-driven loop, `research-subagent` dispatch per question, no-new-sources stuck rule, per-question budgets in `references/program.md`; new `agents/research-subagent.md`; AGENTS.md + README tables updated; plugin 0.8.0.
+- Deviation: implemented per owner instruction without skill-creator eval pass — evals registered as an open question.
+
+---
+
 ## [2026-07-08] fix | DEFECT-001 closed: /project-profile now augments an existing AGENTS.md
 - `skills/project-profile/SKILL.md` Step 5 branches: no existing file → template as before; existing `AGENTS.md` → **augment path** (split into `##` sections, refresh the seven skill-owned sections, `Conventions`/`Code Generations` as a deduped union, preserve every foreign section verbatim in order).
 - Step 1 reframed to "back up and augment" (default cancel); Step 7 backs up to `AGENTS.md.bak` (`.bak.N` if taken) before writing; Step 8 logs an augment variant; hard rule 6 added ("never drop a section you don't own"); modes table + known-limitations note updated.
