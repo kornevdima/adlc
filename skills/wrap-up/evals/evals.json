@@ -1,0 +1,12 @@
+{
+ "skill_name": "wrap-up",
+ "evals": [
+  {
+   "prompt": "Wrap up this session (several pages were created and one skill edited during the session).",
+   "expected_output": "hot.md Last Updated block prepended, log entries present, usage report refreshed, uncommitted-state called out.",
+   "assertions": [],
+   "id": 0,
+   "files": []
+  }
+ ]
+}

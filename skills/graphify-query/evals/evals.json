@@ -1,0 +1,12 @@
+{
+ "skill_name": "graphify-query",
+ "evals": [
+  {
+   "prompt": "/graphify-query \"what touches the payment module?\" against a prebuilt fixture graph.",
+   "expected_output": "BFS/DFS traversal answer from graph.json without LLM re-extraction.",
+   "assertions": [],
+   "id": 0,
+   "files": []
+  }
+ ]
+}

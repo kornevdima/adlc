@@ -1,0 +1,12 @@
+{
+ "skill_name": "ba-export",
+ "evals": [
+  {
+   "prompt": "Export the BA deliverables for the 'checkout redesign' feature from the wiki into a Word document.",
+   "expected_output": "A .docx assembled from the relevant wiki pages with proper headings; wiki not modified.",
+   "assertions": [],
+   "id": 0,
+   "files": []
+  }
+ ]
+}

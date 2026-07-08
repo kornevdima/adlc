@@ -1,0 +1,12 @@
+{
+ "skill_name": "obsidian-bases",
+ "evals": [
+  {
+   "prompt": "Create a .base file that lists all source pages with columns for confidence and date_published, sorted by date.",
+   "expected_output": "Valid .base YAML per Obsidian Bases syntax targeting type: source pages.",
+   "assertions": [],
+   "id": 0,
+   "files": []
+  }
+ ]
+}

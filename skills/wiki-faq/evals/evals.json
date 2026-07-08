@@ -1,0 +1,19 @@
+{
+ "skill_name": "wiki-faq",
+ "evals": [
+  {
+   "prompt": "How do I add a new source to the wiki and what happens during ingest?",
+   "expected_output": "Answers from the FAQ/skill references (drop into .raw/, run ingest, manifest tracking) without inventing features.",
+   "assertions": [],
+   "id": 0,
+   "files": []
+  },
+  {
+   "prompt": "Why are my wikilinks broken after I renamed a page in Obsidian?",
+   "expected_output": "Troubleshooting guidance consistent with vault conventions; suggests wiki-lint.",
+   "assertions": [],
+   "id": 1,
+   "files": []
+  }
+ ]
+}

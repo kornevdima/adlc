@@ -1,0 +1,34 @@
+{
+ "skill_name": "wiki-query",
+ "evals": [
+  {
+   "prompt": "What do we know about whether CQRS requires event sourcing? Answer from the wiki.",
+   "expected_output": "Correct negative answer citing wiki pages; vault not mutated.",
+   "assertions": [
+    "correct answer: CQRS does NOT require event sourcing",
+    "cites wiki pages",
+    "vault not mutated by a read-only query"
+   ],
+   "id": 0,
+   "files": []
+  },
+  {
+   "prompt": "What does our wiki say about GraphQL federation? (Topic absent from vault.)",
+   "expected_output": "Explicit gap admission, no fabrication, vault untouched.",
+   "assertions": [
+    "admits the gap",
+    "no fabricated wiki content",
+    "vault not mutated"
+   ],
+   "id": 1,
+   "files": []
+  },
+  {
+   "prompt": "WAVE-2: large-vault mode \u2014 ask a cross-domain question against a 60+ page vault with index.json present.",
+   "expected_output": "Uses cache-first + jq-over-index.json locate path instead of reading every page.",
+   "assertions": [],
+   "id": 2,
+   "files": []
+  }
+ ]
+}

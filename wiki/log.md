@@ -25,6 +25,15 @@ Parse recent entries: `grep "^## \[" wiki/log.md | head -10`
 
 ---
 
+## [2026-07-08] eval | Wave-1 skill-creator eval pass: autoresearch, wiki-ingest, wiki-query, wiki-lint
+- Harness: 18 subagent runs (8 test cases × with-skill + baseline; autoresearch baseline = v1 from `d6203be`, rerun after a snapshot contamination was caught), programmatic grading, benchmark aggregation, static review viewers.
+- Results (with-skill vs baseline pass rate): autoresearch **100% vs 92%** (v1 fails resume close-out — leaves the `_plan` file), wiki-ingest **100% vs 76%** (baseline misses `.manifest.json` delta tracking and log-prepend convention), wiki-query **100% vs 100%**, wiki-lint **100% vs 100%** (ties — evals non-discriminating at this vault size; harder wave-2 cases registered).
+- v2 autoresearch main-thread tokens **~40% lower** than v1 (96.5k vs 155k — subagent isolation working as designed) at higher wall time (dispatch overhead; parallel-dispatch of independent questions filed as an improvement candidate).
+- `evals/evals.json` scaffolded for **all 17 skills** (wave-1 four carry graded assertions; graphify set needs a fixture code project; pm-layer runner needs local `claude` login).
+- Artifacts (session outputs, not committed): 4 static review viewers + benchmarks under `skill-evals/`.
+
+---
+
 ## [2026-07-08] research + impl | OpenManus evaluated; autoresearch v2 (plan-driven loop) implemented
 - Research question: can OpenManus make claude-mem an autonomous agent over APIs? Verdict: reject as runtime (Agent Skills not portable; project semi-dormant since 2025-04), adopt planning patterns. Headless runtime → Claude Agent SDK (future `feat/headless-agent`, FRs pending); interop → future vault MCP server (deferred).
 - Sources: [[openmanus-repo]] (PlanningFlow, is_stuck, max_steps — read from source), [[agent-sdk-comparisons-2026]] (SDK vs ADK, medium confidence).

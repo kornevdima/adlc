@@ -1,0 +1,12 @@
+{
+ "skill_name": "graphify-path",
+ "evals": [
+  {
+   "prompt": "/graphify-path \"OrderService\" \"EmailSender\" against a prebuilt fixture graph.",
+   "expected_output": "Shortest path with edge list; graceful not-found if disconnected.",
+   "assertions": [],
+   "id": 0,
+   "files": []
+  }
+ ]
+}

@@ -1,0 +1,19 @@
+{
+ "skill_name": "project-profile",
+ "evals": [
+  {
+   "prompt": "/project-profile on a brownfield repo that already has an AGENTS.md with custom sections (wiki topology + team conventions).",
+   "expected_output": "AUGMENT path: backs up to .bak, refreshes the seven skill-owned sections, preserves every foreign section verbatim (DEFECT-001 regression case).",
+   "assertions": [],
+   "id": 0,
+   "files": []
+  },
+  {
+   "prompt": "/project-profile on a fresh repo with no AGENTS.md.",
+   "expected_output": "First-run template with mechanical sections from the scanner.",
+   "assertions": [],
+   "id": 1,
+   "files": []
+  }
+ ]
+}

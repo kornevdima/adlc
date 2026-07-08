@@ -1,0 +1,33 @@
+{
+ "skill_name": "wiki-ingest",
+ "evals": [
+  {
+   "prompt": "Ingest .raw/outbox-pattern.md into the wiki.",
+   "expected_output": "Source page with frontmatter, concept/entity pages, .raw untouched, index updated, log prepended, .raw/.manifest.json written.",
+   "assertions": [
+    "source page created in wiki/sources/",
+    "source page has confidence + key_claims frontmatter",
+    "concept page(s) extracted",
+    ".raw source untouched (byte-identical)",
+    "index.md updated",
+    "log entry prepended (top position)",
+    "delta-tracking manifest written (.raw/.manifest.json)"
+   ],
+   "id": 0,
+   "files": []
+  },
+  {
+   "prompt": "Ingest all unprocessed sources in .raw/ into the wiki (there are three), then cross-reference them.",
+   "expected_output": "All three filed, wikilink cross-references between the three patterns, manifest written, index counts bumped, .raw untouched.",
+   "assertions": [
+    "all three sources filed as pages",
+    "cross-references between the three patterns",
+    "all .raw sources untouched",
+    "delta-tracking manifest written",
+    "index page counts updated"
+   ],
+   "id": 1,
+   "files": []
+  }
+ ]
+}

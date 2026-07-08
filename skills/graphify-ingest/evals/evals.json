@@ -1,0 +1,12 @@
+{
+ "skill_name": "graphify-ingest",
+ "evals": [
+  {
+   "prompt": "/graphify-ingest on the fixture code project (small Flask app, ~20 files).",
+   "expected_output": "Graph JSON artifacts + wiki/code/ summary pages; requires graphifyy backend installed (fixture: needs a code project).",
+   "assertions": [],
+   "id": 0,
+   "files": []
+  }
+ ]
+}
