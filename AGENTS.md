@@ -36,6 +36,7 @@ Subagents (in `agents/<name>.md`) are dispatched by skills via the Agent tool wi
 | `wiki-ingest-subagent` | `wiki-ingest` skill (batch mode, 3+ sources) | Process one source fully (read, extract, file pages); returns a summary |
 | `wiki-lint-subagent` | `wiki-lint` skill (default for vaults ≥20 pages) | Read the whole vault and produce a structured lint report |
 | `graphify-extract-subagent` | `graphify-ingest` and `graphify-update` skills | Read a chunk of files, extract entities/edges/hyperedges per the graphify schema, write JSON to disk |
+| `research-subagent` | `autoresearch` skill (one per plan question) | Answer one research question: search, fetch, file source/entity/concept pages; returns a structured report |
 | `mechanical-scanner-subagent` | `project-profile` skill | Scan project configs and return structured AGENTS.md mechanical sections |
 
 Skills handle orchestration; subagents handle isolated work.
