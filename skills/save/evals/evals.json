@@ -1,0 +1,19 @@
+{
+ "skill_name": "save",
+ "evals": [
+  {
+   "prompt": "/save \u2014 file this conversation about choosing PostgreSQL over MongoDB for the orders service.",
+   "expected_output": "Wiki note with frontmatter capturing the decision and rationale; index + log updated; hot cache refreshed.",
+   "assertions": [],
+   "id": 0,
+   "files": []
+  },
+  {
+   "prompt": "/save after a short trivial chat with no durable knowledge.",
+   "expected_output": "Declines or files a minimal note; does not fabricate significance.",
+   "assertions": [],
+   "id": 1,
+   "files": []
+  }
+ ]
+}

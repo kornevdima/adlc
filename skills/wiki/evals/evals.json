@@ -1,0 +1,19 @@
+{
+ "skill_name": "wiki",
+ "evals": [
+  {
+   "prompt": "/wiki \u2014 set up a wiki for this repository (mode B).",
+   "expected_output": "Scaffolds wiki/ structure (index, hot, log, concept/entity/source dirs) per mode B; no overwrite of existing content.",
+   "assertions": [],
+   "id": 0,
+   "files": []
+  },
+  {
+   "prompt": "/wiki \u2014 continue where we left off (vault already scaffolded, hot.md present).",
+   "expected_output": "Reads hot.md silently, reports recent context and suggests next action instead of re-scaffolding.",
+   "assertions": [],
+   "id": 1,
+   "files": []
+  }
+ ]
+}

@@ -1,0 +1,28 @@
+{
+ "skill_name": "wiki-lint",
+ "evals": [
+  {
+   "prompt": "Lint the wiki (fixture has seeded orphan page, dead wikilink, and a CQRS-requires-ES contradiction).",
+   "expected_output": "Report names all three seeded defects; no auto-fixes applied.",
+   "assertions": [
+    "dead link found",
+    "contradiction found",
+    "orphan found",
+    "report-only: no auto-fixes applied"
+   ],
+   "id": 0,
+   "files": []
+  },
+  {
+   "prompt": "Lint the wiki (clean fixture).",
+   "expected_output": "Healthy verdict, no false-positive dead links/contradictions, vault unchanged.",
+   "assertions": [
+    "no false-positive defects asserted",
+    "overall verdict: healthy",
+    "vault unchanged"
+   ],
+   "id": 1,
+   "files": []
+  }
+ ]
+}

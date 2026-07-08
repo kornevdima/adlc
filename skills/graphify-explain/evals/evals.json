@@ -1,0 +1,12 @@
+{
+ "skill_name": "graphify-explain",
+ "evals": [
+  {
+   "prompt": "/graphify-explain \"OrderService\" against a prebuilt fixture graph.",
+   "expected_output": "Node summary + immediate neighbors with edge confidences.",
+   "assertions": [],
+   "id": 0,
+   "files": []
+  }
+ ]
+}

@@ -1,0 +1,12 @@
+{
+ "skill_name": "graphify-update",
+ "evals": [
+  {
+   "prompt": "/graphify-update after modifying two files in the fixture project.",
+   "expected_output": "Incremental re-extraction of changed files only; community labels preserved via Jaccard matching.",
+   "assertions": [],
+   "id": 0,
+   "files": []
+  }
+ ]
+}

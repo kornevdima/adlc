@@ -1,0 +1,19 @@
+{
+ "skill_name": "obsidian-markdown",
+ "evals": [
+  {
+   "prompt": "Rewrite this pasted GitHub-flavored markdown note into correct Obsidian Flavored Markdown with callouts and wikilinks.",
+   "expected_output": "Valid OFM: [[wikilinks]], > [!note] callouts, frontmatter preserved; no broken syntax.",
+   "assertions": [],
+   "id": 0,
+   "files": []
+  },
+  {
+   "prompt": "Add a contradiction callout and cross-references to an existing wiki page.",
+   "expected_output": "> [!contradiction] callout added with wikilinks to both sides; frontmatter updated timestamp.",
+   "assertions": [],
+   "id": 1,
+   "files": []
+  }
+ ]
+}
