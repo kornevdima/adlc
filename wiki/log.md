@@ -1,7 +1,7 @@
 ---
 type: meta
 title: "Operation Log"
-updated: 2026-07-04
+updated: 2026-07-17
 tags:
   - meta
   - log
@@ -24,6 +24,21 @@ Entry format: `## [YYYY-MM-DD] operation | Title`
 Parse recent entries: `grep "^## \[" wiki/log.md | head -10`
 
 ---
+
+## [2026-07-17] concept | Agentic Orchestration Levels (operator synthesis)
+- New draft page [[Agentic Orchestration Levels]]: four-level adoption ladder (0 chat session → 3 orchestrator / Mode ADLC with grilling gate). Operator pinned the endpoints; levels 1–2 interpolated from the Day-1 spectrum — flagged with a `[!gap]`.
+
+## [2026-07-17] rename | claude-mem → adlc (plugin 1.0.0)
+- Project renamed and repositioned as the **ADLC harness**: knowledge substrate → role skills → delivery orchestration → project bindings. README rewritten; marketplace now `adlc-marketplace`; skill namespace `adlc:`. Historical wiki pages keep the old name (this entry is the record). [[Plugin Hooks]] renamed from "Claude-mem Hooks" (live-linked from skill docs). Commit `b45f996`.
+
+## [2026-07-17] impl | git-flow branch topology reference
+- New `skills/wiki/references/git-flow.md`: session wiki branches (`wiki/<epic-id>`), code-only service PRs (free in the multi-repo topology), Mode B worktree seam, review-by-reading-not-merging rule, singleton single-writer rule. Wired into `/adlc` Step 0 run policy and `wrap-up` commit rules; `git-setup.md` gains the `linguist-generated` block. Commit `625b15b`.
+
+## [2026-07-17] impl | OKF bundle export + lint conformance
+- `skills/wiki/scripts/okf_export.py` renders the vault as a Google Open Knowledge Format v0.1 bundle (frontmatter mapping, wikilinks → relative md links; test run: 91 pages, 806 links). `wiki-lint` check 6 now notes `type` as the OKF-required field. Sharing tiers: git intra-team ([[Wiki Sharing Patterns]]), OKF bundle inter-team. Commit `b82f425`.
+
+## [2026-07-17] ingest | Google Day-1 vibe-coding whitepaper (Osmani/Saboo/Kartakis, 2026-05)
+- `.raw/Day_1_v3.pdf` → [[vibe-coding-new-sdlc-day1]] (new source) + [[Harness Engineering]] (new concept). Updated: [[Andrej Karpathy]] (agentic-engineering coinage), [[Context Engineering for Coding Agents]] (six types, static/dynamic, financial lever), [[Context Rot]] (skills as the fix), [[Google ADK]] (Agents CLI). References the operator-authored [[Agentic Orchestration Levels]].
 
 ## [2026-07-08] eval + fix | Graphify suite G1–G5: three real defects in graphify-update found and fixed
 - Runner: `skills/graphify-ingest/evals/run-evals.sh` (G1 ingest → G2 query → G3 path → G4 explain → G5 update) over the `demo-app` fixture, owner-run locally. First attempt failed on harness permissions (`claude -p` can't answer approval prompts) — fixed with `--add-dir` + `--dangerously-skip-permissions` on the throwaway workspace; G3/G4 graders hardened against prompt-echo false positives.

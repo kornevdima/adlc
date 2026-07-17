@@ -5,7 +5,7 @@ entity_type: person
 role: "AI researcher, educator, founder"
 first_mentioned: "[[LLM Wiki Pattern]]"
 created: 2026-04-07
-updated: 2026-07-03
+updated: 2026-07-17
 tags:
   - entity
   - person
@@ -17,6 +17,7 @@ related:
   - "[[entities/_index]]"
 sources:
   - "[[orlov-rag-wiki-llm-graphify]]"
+  - "[[vibe-coding-new-sdlc-day1]]"
 ---
 
 # Andrej Karpathy
@@ -43,7 +44,8 @@ His framing: "The wiki is a persistent, compounding artifact. The cross-referenc
 
 ## Other Attributions
 
-- Coined the term **"vibe coding"** (Source: [[orlov-rag-wiki-llm-graphify]]; widely corroborated).
+- Coined the term **"vibe coding"** in February 2025 — "fully give in to the vibes, embrace exponentials, and forget that the code even exists" (Source: [[orlov-rag-wiki-llm-graphify]]; date and quote per [[vibe-coding-new-sdlc-day1]]).
+- Coined **"agentic engineering"** in early 2026, after acknowledging the original vibe-coding framing was too narrow — the term for the disciplined end of the spectrum (Source: [[vibe-coding-new-sdlc-day1]]).
 
 > [!contradiction] Unverified claim: "joined Anthropic"
 > [[orlov-rag-wiki-llm-graphify]] (auto-generated transcript, 2026-06-27) states Karpathy "has now joined Anthropic." No other source in this wiki corroborates it; known history is OpenAI founding member → Tesla AI director → independent (Eureka Labs). Needs a primary source before this page's bio changes.

@@ -1,7 +1,7 @@
 ---
 type: meta
 title: "Concepts Index"
-updated: 2026-07-08
+updated: 2026-07-17
 tags:
   - meta
   - index
@@ -38,6 +38,8 @@ All concept pages — ideas, patterns, and frameworks extracted from sources.
 - [[Validation Contract]] — correctness defined at planning time, before code; assertion coverage accounted across features; validated behaviorally (Source: [[yt-alvoeiro-multi-agent-architecture]])
 - [[Structured Handoff]] — schema-shaped worker report (done / undone / commands + exit codes / issues / procedure compliance) that lets clean-context agents inherit state (Sources: [[yt-alvoeiro-multi-agent-architecture]], [[anthropic-harness-design]])
 - [[Plan-Driven Research Loop]] — autoresearch v2: persisted plan artifact with `[ ] [→] [✓] [!]` statuses, question-driven loop, subagent per question, stuck rule, budgets (Source: [[openmanus-repo]])
+- [[Harness Engineering]] — Agent = Model + Harness: the discipline of owning the scaffolding (rules, tools, sandboxes, orchestration, hooks, observability); most agent failures are configuration failures; configure → run → feedback loop → observe lifecycle (Source: [[vibe-coding-new-sdlc-day1]])
+- [[Agentic Orchestration Levels]] — operator's four-level adoption ladder: 0 chat session, 1 assisted editing, 2 conductor with a harness, 3 orchestrator (Mode ADLC, grilling gate before delegation); levels 1–2 interpolated from the Day-1 spectrum (Source: [[vibe-coding-new-sdlc-day1]], operator synthesis)
 
 ---
 

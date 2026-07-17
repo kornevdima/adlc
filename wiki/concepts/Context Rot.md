@@ -2,7 +2,7 @@
 type: concept
 title: "Context Rot"
 created: 2026-06-28
-updated: 2026-07-03
+updated: 2026-07-17
 confidence: high
 tags:
   - concept
@@ -16,6 +16,7 @@ related:
   - "[[Hot Cache]]"
   - "[[rlm-blog-zhang]]"
   - "[[yt-pocock-ai-coding-workflow]]"
+  - "[[vibe-coding-new-sdlc-day1]]"
 ---
 
 # Context Rot
@@ -27,6 +28,8 @@ Model performance degrades as input context grows, even when the input fits insi
 It is the motivation for [[Recursive Language Models]]: rather than enlarge the window, keep the working context small and process the bulk out-of-context (grep, chunk, recurse). It also justifies claude-mem's existing tight-context habits: the [[Hot Cache]] (~500 words), short pages (under 200-300 lines), and sub-agent returns of 1-2K tokens (see [[Context Engineering for Coding Agents]]).
 
 It is also the architectural motivation for [[Domain-Specific Agents]]: stacking skills/MCP onto one agent ("inheritance") hits diminishing-to-negative returns, so composition of small agents with minimal per-agent context is the structural fix. (Source: [[yt-schroeder-domain-specific-agents]])
+
+Google's Day-1 vibe-coding paper names "context rot from overloaded prompts" first among the four problems Agent Skills solve via progressive disclosure, and classifies a noise-stuffed context window as a harness *configuration* failure rather than a model failure — see [[Harness Engineering]]. (Source: [[vibe-coding-new-sdlc-day1]])
 
 ## Practitioner framing: smart zone / dumb zone
 
