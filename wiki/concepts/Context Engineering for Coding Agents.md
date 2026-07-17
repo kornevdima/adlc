@@ -7,7 +7,7 @@ aliases:
   - "Agent Context Engineering"
   - "Coding Agent Context"
 created: 2026-05-09
-updated: 2026-07-03
+updated: 2026-07-17
 tags:
   - concept
   - context-engineering
@@ -29,6 +29,7 @@ sources:
   - "[[yt-pocock-ai-coding-workflow]]"
   - "[[yt-schroeder-domain-specific-agents]]"
   - "[[yt-alvoeiro-multi-agent-architecture]]"
+  - "[[vibe-coding-new-sdlc-day1]]"
 ---
 
 # Context Engineering for Coding Agents
@@ -122,6 +123,15 @@ Critically: below 200K tokens of "important context" (~500 pages), Anthropic rec
 - **Doc rot as anti-context**: stale planning docs (old PRDs) left in the repo are *negative* context — agents find and trust them after the code has diverged. Pocock deletes/closes them post-implementation. This is the practitioner echo of the ETH finding that wrong/duplicative context files are net-negative.
 - **Token visibility**: a status line showing exact token usage in every session, so the operator knows distance to the dumb zone.
 
+## The six-types and static/dynamic framing (Google, 2026)
+
+[[vibe-coding-new-sdlc-day1]] contributes a vocabulary that complements the hybrid model above. Six context types every agent needs: **instructions, knowledge, memory, examples, tools, guardrails**. The design decision is which of these sit in **static context** (always loaded — rule files, personas; every token paid on every interaction) vs **dynamic context** (loaded on demand — skills via progressive disclosure, tool results, RAG, windowed history), and the paper's rule matches this vault's practice: treat that boundary as a first-class architectural decision, reviewed and versioned like configuration.
+
+Two additions worth keeping:
+
+- **Context engineering as a financial lever.** In the token economy, a dense high-signal payload raises first-pass success and avoids the trial-and-error prompting loops that dominate vibe-coding OpEx; passing a 100K-token repo into every prompt is financially unviable at scale. Context quality is a TCO line item, not just an accuracy one.
+- Context engineering is "the bridge between vibe coding and agentic engineering" — the same question as the ETH curation finding, asked from the discipline side: *what would a new team member need to know, and how do you encode it in a form the AI can use?* The wider scaffolding this bridge belongs to is [[Harness Engineering]] — context policy is one harness layer among tools, hooks, sandboxes, and observability.
+
 ## Connections
 
 - [[AGENTS.md]] — the convention layer
@@ -130,3 +140,4 @@ Critically: below 200K tokens of "important context" (~500 pages), Anthropic rec
 - [[Project Profile]] — claude-mem's planned design that synthesizes these findings
 - [[Hot Cache]] — claude-mem's existing always-loaded context, which is itself a context-engineering choice
 - [[Structured Handoff]] — the artifact that makes clean-context worker resets viable ([[yt-alvoeiro-multi-agent-architecture]])
+- [[Harness Engineering]] — the superset discipline: context policy plus tools, hooks, sandboxes, orchestration, observability

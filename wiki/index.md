@@ -1,7 +1,7 @@
 ---
 type: meta
 title: "Wiki Index"
-updated: 2026-07-08
+updated: 2026-07-17
 tags:
   - meta
   - index
@@ -23,7 +23,7 @@ related:
 
 # Wiki Index
 
-Last updated: 2026-07-08 | Total pages: 87 | Source pages: 25
+Last updated: 2026-07-17 | Total pages: 90 | Source pages: 26
 
 Navigation: [[overview]] | [[log]] | [[hot]] | [[maintenance-triggers]]
 
@@ -64,6 +64,8 @@ Navigation: [[overview]] | [[log]] | [[hot]] | [[maintenance-triggers]]
 - [[Vertical Slices for Agent Tasks]] — tracer-bullet issue decomposition; Kanban DAG of independently grabbable all-layer slices enables parallel agents (status: current)
 - [[Deep Modules]] — Ousterhout's small-interface/big-functionality modules as agent enablement; feedback-loop quality is the ceiling on agent output (status: current)
 - [[Plan-Driven Research Loop]] — autoresearch v2: persisted plan artifact, question-driven loop, subagent per question, stuck rule, budgets; adapted from OpenManus source (status: implemented)
+- [[Harness Engineering]] — Agent = Model + Harness: owning the scaffolding around the model (rules, tools, sandboxes, orchestration, hooks, observability); most agent failures are configuration failures (status: current)
+- [[Agentic Orchestration Levels]] — operator's four-level adoption ladder (chat session → assisted editing → conductor with harness → orchestrator / Mode ADLC); a ladder prescribes harness investment where a spectrum only describes practice (status: draft)
 
 ---
 
@@ -118,6 +120,7 @@ Navigation: [[overview]] | [[log]] | [[hot]] | [[maintenance-triggers]]
 - [[yt-pocock-ai-coding-workflow]] — 2026-04-24 | Matt Pocock @ AI Engineer | full workflow: grilling → PRD → vertical-slice Kanban → AFK Ralph loop → TDD → fresh-context review → manual QA; deep modules; doc rot
 - [[openmanus-repo]] — 2025 | FoundationAgents (MetaGPT team) | PlanningFlow statuses, is_stuck(), max_steps, MCP both directions; semi-dormant since 2025-04
 - [[agent-sdk-comparisons-2026]] — 2026 | aggregated comparison articles | Claude Agent SDK vs Google ADK; medium confidence
+- [[vibe-coding-new-sdlc-day1]] — 2026-05 | Osmani, Saboo, Kartakis (Google) | Day-1 course whitepaper: vibe→agentic spectrum, harness engineering, factory model, tests-vs-evals, CapEx/OpEx economics, adoption checklists
 
 ---
 

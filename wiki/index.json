@@ -1,6 +1,6 @@
 {
- "generated": "2026-07-08T15:35:34Z",
- "page_count": 85,
+ "generated": "2026-07-17T09:14:21Z",
+ "page_count": 95,
  "pages": [
   {
    "path": "wiki/comparisons/Wiki vs RAG.md",
@@ -68,20 +68,24 @@
    ]
   },
   {
-   "path": "wiki/concepts/Claude-mem Hooks.md",
-   "name": "Claude-mem Hooks",
+   "path": "wiki/concepts/Agentic Orchestration Levels.md",
+   "name": "Agentic Orchestration Levels",
    "type": "concept",
-   "title": "Claude-mem Hooks",
-   "created": "2026-05-09",
-   "updated": "2026-05-09",
+   "title": "Agentic Orchestration Levels",
+   "created": "2026-07-17",
+   "updated": "2026-07-17",
    "tags": [
-    "architecture",
-    "hooks",
-    "infrastructure"
+    "orchestration",
+    "adoption",
+    "harness",
+    "adlc"
    ],
-   "status": "evergreen",
+   "status": "draft",
+   "produced_by": "operator",
    "related": [
-    "graphify-integration"
+    "Harness Engineering",
+    "Grilling Session",
+    "Context Engineering for Coding Agents"
    ]
   },
   {
@@ -109,7 +113,7 @@
    "type": "concept",
    "title": "Context Engineering for Coding Agents",
    "created": "2026-05-09",
-   "updated": "2026-07-03",
+   "updated": "2026-07-17",
    "tags": [
     "concept",
     "context-engineering",
@@ -132,7 +136,7 @@
    "type": "concept",
    "title": "Context Rot",
    "created": "2026-06-28",
-   "updated": "2026-07-03",
+   "updated": "2026-07-17",
    "confidence": "high",
    "tags": [
     "concept",
@@ -146,7 +150,8 @@
     "Domain-Specific Agents",
     "Hot Cache",
     "rlm-blog-zhang",
-    "yt-pocock-ai-coding-workflow"
+    "yt-pocock-ai-coding-workflow",
+    "vibe-coding-new-sdlc-day1"
    ]
   },
   {
@@ -297,6 +302,31 @@
    ]
   },
   {
+   "path": "wiki/concepts/Harness Engineering.md",
+   "name": "Harness Engineering",
+   "type": "concept",
+   "title": "Harness Engineering",
+   "created": "2026-07-17",
+   "updated": "2026-07-17",
+   "tags": [
+    "concept",
+    "harness",
+    "agentic-engineering",
+    "context-engineering",
+    "evals"
+   ],
+   "status": "current",
+   "related": [
+    "vibe-coding-new-sdlc-day1",
+    "Context Engineering for Coding Agents",
+    "Context Rot",
+    "Generator-Evaluator Pattern",
+    "Agentic Orchestration Levels",
+    "AGENTS.md",
+    "LLM Wiki Pattern"
+   ]
+  },
+  {
    "path": "wiki/concepts/Hot Cache.md",
    "name": "Hot Cache",
    "type": "concept",
@@ -358,6 +388,42 @@
     "Validation Contract",
     "Structured Handoff",
     "Factory"
+   ]
+  },
+  {
+   "path": "wiki/concepts/Plan-Driven Research Loop.md",
+   "name": "Plan-Driven Research Loop",
+   "type": "concept",
+   "title": "Plan-Driven Research Loop",
+   "created": "2026-07-08",
+   "updated": "2026-07-08",
+   "tags": [
+    "concept",
+    "agents",
+    "autoresearch"
+   ],
+   "status": "implemented",
+   "related": [
+    "openmanus-repo",
+    "OpenManus",
+    "Research OpenManus for claude-mem"
+   ]
+  },
+  {
+   "path": "wiki/concepts/Plugin Hooks.md",
+   "name": "Plugin Hooks",
+   "type": "concept",
+   "title": "Plugin Hooks",
+   "created": "2026-05-09",
+   "updated": "2026-05-09",
+   "tags": [
+    "architecture",
+    "hooks",
+    "infrastructure"
+   ],
+   "status": "evergreen",
+   "related": [
+    "graphify-integration"
    ]
   },
   {
@@ -672,7 +738,7 @@
    "name": "_index",
    "type": "meta",
    "title": "Concepts Index",
-   "updated": "2026-07-03",
+   "updated": "2026-07-17",
    "tags": [
     "meta",
     "index",
@@ -790,7 +856,7 @@
    "type": "entity",
    "title": "Andrej Karpathy",
    "created": "2026-04-07",
-   "updated": "2026-07-03",
+   "updated": "2026-07-17",
    "tags": [
     "entity",
     "person",
@@ -820,6 +886,24 @@
     "LLM Wiki Pattern",
     "cherry-picks",
     "claude-obsidian-ecosystem"
+   ]
+  },
+  {
+   "path": "wiki/entities/Claude Agent SDK.md",
+   "name": "Claude Agent SDK",
+   "type": "entity",
+   "title": "Claude Agent SDK",
+   "created": "2026-07-08",
+   "updated": "2026-07-08",
+   "tags": [
+    "entity",
+    "tool",
+    "sdk"
+   ],
+   "status": "current",
+   "related": [
+    "agent-sdk-comparisons-2026",
+    "Research OpenManus for claude-mem"
    ]
   },
   {
@@ -878,6 +962,24 @@
     "Luke Alvoeiro",
     "Multi-Agent Communication Taxonomy",
     "Validation Contract"
+   ]
+  },
+  {
+   "path": "wiki/entities/Google ADK.md",
+   "name": "Google ADK",
+   "type": "entity",
+   "title": "Google ADK",
+   "created": "2026-07-08",
+   "updated": "2026-07-17",
+   "tags": [
+    "entity",
+    "tool",
+    "sdk"
+   ],
+   "status": "current",
+   "related": [
+    "agent-sdk-comparisons-2026",
+    "Research OpenManus for claude-mem"
    ]
   },
   {
@@ -958,6 +1060,25 @@
    ]
   },
   {
+   "path": "wiki/entities/OpenManus.md",
+   "name": "OpenManus",
+   "type": "entity",
+   "title": "OpenManus",
+   "created": "2026-07-08",
+   "updated": "2026-07-08",
+   "tags": [
+    "entity",
+    "tool",
+    "agents"
+   ],
+   "status": "current",
+   "related": [
+    "openmanus-repo",
+    "Plan-Driven Research Loop",
+    "Research OpenManus for claude-mem"
+   ]
+  },
+  {
    "path": "wiki/entities/Orlov.md",
    "name": "Orlov",
    "type": "entity",
@@ -1001,7 +1122,7 @@
    "name": "_index",
    "type": "meta",
    "title": "Entities Index",
-   "updated": "2026-07-03",
+   "updated": "2026-07-08",
    "tags": [
     "meta",
     "index",
@@ -1089,6 +1210,8 @@
    "related": [
     "index",
     "log",
+    "Research OpenManus for claude-mem",
+    "Plan-Driven Research Loop",
     "Project Profile Skill Suite",
     "Product Management Layer Skill",
     "RLM-Optimized Wiki Querying"
@@ -1099,7 +1222,7 @@
    "name": "index",
    "type": "meta",
    "title": "Wiki Index",
-   "updated": "2026-07-03",
+   "updated": "2026-07-17",
    "tags": [
     "meta",
     "index"
@@ -1125,7 +1248,7 @@
    "name": "log",
    "type": "meta",
    "title": "Operation Log",
-   "updated": "2026-07-04",
+   "updated": "2026-07-17",
    "tags": [
     "meta",
     "log"
@@ -1219,6 +1342,26 @@
    ]
   },
   {
+   "path": "wiki/questions/Research OpenManus for claude-mem.md",
+   "name": "Research OpenManus for claude-mem",
+   "type": "synthesis",
+   "title": "Research: OpenManus for claude-mem",
+   "created": "2026-07-08",
+   "updated": "2026-07-08",
+   "tags": [
+    "research",
+    "agents",
+    "runtime"
+   ],
+   "status": "developing",
+   "related": [
+    "OpenManus",
+    "Claude Agent SDK",
+    "Google ADK",
+    "Plan-Driven Research Loop"
+   ]
+  },
+  {
    "path": "wiki/questions/Research Pre-computed Context for Coding Agents.md",
    "name": "Research Pre-computed Context for Coding Agents",
    "type": "synthesis",
@@ -1279,7 +1422,7 @@
    "name": "_index",
    "type": "meta",
    "title": "Sources Index",
-   "updated": "2026-07-03",
+   "updated": "2026-07-17",
    "tags": [
     "meta",
     "index",
@@ -1291,6 +1434,26 @@
     "log",
     "entities/_index",
     "Andrej Karpathy"
+   ]
+  },
+  {
+   "path": "wiki/sources/agent-sdk-comparisons-2026.md",
+   "name": "agent-sdk-comparisons-2026",
+   "type": "source",
+   "title": "Agent SDK comparisons 2026 (web-research synthesis)",
+   "created": "2026-07-08",
+   "updated": "2026-07-08",
+   "confidence": "medium",
+   "tags": [
+    "source",
+    "agents",
+    "sdk"
+   ],
+   "status": "current",
+   "related": [
+    "Claude Agent SDK",
+    "Google ADK",
+    "Research OpenManus for claude-mem"
    ]
   },
   {
@@ -1506,6 +1669,26 @@
    ]
   },
   {
+   "path": "wiki/sources/openmanus-repo.md",
+   "name": "openmanus-repo",
+   "type": "source",
+   "title": "FoundationAgents/OpenManus (GitHub)",
+   "created": "2026-07-08",
+   "updated": "2026-07-08",
+   "confidence": "high",
+   "tags": [
+    "source",
+    "agents",
+    "planning"
+   ],
+   "status": "current",
+   "related": [
+    "OpenManus",
+    "Plan-Driven Research Loop",
+    "Research OpenManus for claude-mem"
+   ]
+  },
+  {
    "path": "wiki/sources/orlov-rag-wiki-llm-graphify.md",
    "name": "orlov-rag-wiki-llm-graphify",
    "type": "source",
@@ -1694,6 +1877,33 @@
    "status": "mature",
    "related": [
     "Spec-Kit and claude-mem"
+   ]
+  },
+  {
+   "path": "wiki/sources/vibe-coding-new-sdlc-day1.md",
+   "name": "vibe-coding-new-sdlc-day1",
+   "type": "source",
+   "title": "The New SDLC With Vibe Coding — From Ad-hoc Prompting to Agentic Engineering (Day 1)",
+   "created": "2026-07-17",
+   "updated": "2026-07-17",
+   "confidence": "high",
+   "tags": [
+    "source",
+    "whitepaper",
+    "agentic-engineering",
+    "vibe-coding",
+    "harness",
+    "sdlc",
+    "economics"
+   ],
+   "status": "current",
+   "related": [
+    "Harness Engineering",
+    "Agentic Orchestration Levels",
+    "Context Engineering for Coding Agents",
+    "Andrej Karpathy",
+    "Generator-Evaluator Pattern",
+    "AGENTS.md"
    ]
   },
   {

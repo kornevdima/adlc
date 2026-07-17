@@ -1,7 +1,7 @@
 ---
 type: meta
 title: "Sources Index"
-updated: 2026-07-08
+updated: 2026-07-17
 tags:
   - meta
   - index
@@ -46,7 +46,7 @@ All source pages — summaries of ingested documents, transcripts, articles, and
 
 ## Papers
 
-<!-- Add paper source pages here -->
+- [[vibe-coding-new-sdlc-day1]] — 2026-05 | Osmani, Saboo, Kartakis (Google) | Day 1, vibe-coding course | syntax→intent thesis; vibe/structured/agentic spectrum; Agent = Model + Harness; factory model; CapEx/OpEx economics; eval-not-demo checklists
 
 ---
 
