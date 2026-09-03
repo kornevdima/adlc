@@ -1,7 +1,7 @@
 ---
 type: meta
 title: "Concepts Index"
-updated: 2026-07-17
+updated: 2026-09-03
 tags:
   - meta
   - index
@@ -50,6 +50,16 @@ All concept pages — ideas, patterns, and frameworks extracted from sources.
 - [[Ralph Wiggum Loop]] — AFK implementation loop: fresh context per iteration over an issue backlog, sentinel-terminated, sandboxed; Sandcastle for the parallel version (Source: [[yt-pocock-ai-coding-workflow]])
 - [[Vertical Slices for Agent Tasks]] — tracer-bullet issue decomposition; Kanban DAG of independently grabbable, all-layer slices enables parallel agents (Source: [[yt-pocock-ai-coding-workflow]])
 - [[Deep Modules]] — Ousterhout's small-interface/big-functionality modules as agent enablement: feedback-loop quality is the ceiling on agent output (Source: [[yt-pocock-ai-coding-workflow]])
+
+---
+
+## Knowledge Sharing & Publishing
+
+- [[Open Knowledge Format]] — Google's markdown + YAML interchange format for agent knowledge; v0.2; visualizer is a one-file graph viewer, Knowledge Catalog is agent-facing (Source: [[okf-spec-and-reference-repo]])
+- [[Vault Publishing Topologies]] — rebuild-from-repo vs push-from-app vs live-render; only the first keeps agent commits live for readers (Source: [[obsidian-static-publishers-comparison]])
+- [[Obsidian Vault Portability]] — portability tiers, build rules, Confluence-expectation map (Source: [[obsidian-vault-site-generators]])
+- [[One-Way Publish vs Round-Trip Wiki Sync]] — lowering-step spec and decision tree for a git-canonical wiki (Source: [[git-backed-wiki-platforms-comparison]])
+- [[Cross-Repo Wiki Access]] — agent routes into a sibling vault and convention breakage per GitHub surface (Source: [[claude-code-large-codebases-docs]], [[github-docs-markdown-wikis-pages]])
 
 ---
 

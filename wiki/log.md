@@ -1,7 +1,7 @@
 ---
 type: meta
 title: "Operation Log"
-updated: 2026-07-17
+updated: 2026-09-03
 tags:
   - meta
   - log
@@ -24,6 +24,23 @@ Entry format: `## [YYYY-MM-DD] operation | Title`
 Parse recent entries: `grep "^## \[" wiki/log.md | head -10`
 
 ---
+
+## [2026-09-03] autoresearch | Sharing the Wiki with People
+- Questions: 5 total, 5 answered, 0 blocked | Searches: 25 | Fetches: 15 | Pages created: 14 (budget 15)
+- Sources found: 8 — [[okf-spec-and-reference-repo]], [[google-cloud-okf-announcement]], [[obsidian-static-publishers-comparison]], [[obsidian-vault-site-generators]], [[git-backed-wiki-platforms-comparison]], [[kovetskiy-mark-readme]], [[github-docs-markdown-wikis-pages]], [[claude-code-large-codebases-docs]]. Concepts: [[Open Knowledge Format]], [[Vault Publishing Topologies]], [[Obsidian Vault Portability]], [[One-Way Publish vs Round-Trip Wiki Sync]], [[Cross-Repo Wiki Access]]. Entity: [[Quartz]] (two subagents wrote it; merged).
+- Synthesis: [[Research Sharing the Wiki with People]]; [[Wiki Sharing Patterns]] gained a pointer + pricing refinement.
+- Key finding: the OKF "preview" is a one-file proof-of-concept graph viewer, not a wiki; for Confluence-like navigation with git canonical and agent commits live, pilot Quartz v5 (repo-triggered build), keep a CI-mirrored GitHub Wiki as the free-private fallback, publish one-way to Confluence only where readers already live there. Plugin follow-up: `okf_export.py` targets a frozen OKF path — retarget to v0.2.
+
+## [2026-09-03] impl | scope-analyst wired + worker toolset clauses + operator profile + lint checks (plugin 1.0.1)
+- **`scope-analyst`** (new worker, census / reconcile, operator-authored 2026-08-25) wired into `/adlc` (Step 1a census only when scope is unknown; Step 8a reconcile after close), `technical-planning.md` (pipeline step 0 + reconcile loop), `permissions.md`, `modes.md`, wiki-faq workflow + glossary, README, root AGENTS.md subagent table (now lists all 14).
+- **Worker clauses** from [[Integrate the wiki toolset into the ADLC workers]]: "use the shipped instrument" (builder, tester, verifier), "filing in the vault" (tester, reviewer, verifier, doc-writer), reviewer dimension 7 *instrument reinvention*. Dispatcher rules added: name the instrument not the property; effort tracks irreversibility / blast radius (unit = the claim); done-condition per dispatch; workers file in the vault's dialect. Vault `AGENTS.md` template gained a **Filing conventions** table (the manifest) incl. `census/`.
+- **Root cause of "`references/ba/` does not exist"**: bare relative path resolved against the vault root; docs verified present in the installed plugin cache. `ba-suite-subagent`, `ba-export-subagent`, `architecture-subagent` now resolve the plugin root and must report `INFERRED` loudly.
+- **Operator profile** ([[Operator profile - learn engagement style from corrections]]) — smallest useful version: `skills/wiki/references/operator-profile.md` (template, correction classes, rules, effort-per-claim), seeded at ADLC scaffold / `/adlc` Step 0, ledger `engagement:` knob, interjections logged, `/adlc distill` proposes, `wrap-up` 7a appends.
+- **`wiki-lint`** 12a story ↔ feature back-links (both directions), 12b stale denominators, 12c ambiguous basenames.
+- Open-task check: plugin reinstall under the new name is **done** (`adlc@adlc-marketplace` 1.0.1 installed from the directory marketplace); GitHub repo + local dir are still `claude-mem`; agent redeploy to service repos still pending.
+
+## [2026-09-03] ingest | Anthropic AI-Native SDLC Playbook (Claxton, 2026-08-21)
+- `.raw/claude-ai-native-sdlc-playbook.md` (curl + HTML→Markdown, `sd-s1…s6` anchors kept) → [[claude-ai-native-sdlc-playbook]] (source) + [[AI-Native SDLC Playbook vs ADLC]] (comparison: stage map, vocabulary map, gaps) + [[Review the ADLC flow against the AI-Native SDLC Playbook]] (open task, Stage 6 first). Operator ruling recorded: typed wiki records stay; no `intent.md` / `spec.md` / `plan.md` common-name files; the playbook is the external vocabulary for ADLC.
 
 ## [2026-07-17] concept | Agentic Orchestration Levels (operator synthesis)
 - New draft page [[Agentic Orchestration Levels]]: four-level adoption ladder (0 chat session → 3 orchestrator / Mode ADLC with grilling gate). Operator pinned the endpoints; levels 1–2 interpolated from the Day-1 spectrum — flagged with a `[!gap]`.

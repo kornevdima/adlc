@@ -1,7 +1,33 @@
 {
- "generated": "2026-07-17T09:14:21Z",
- "page_count": 95,
+ "generated": "2026-09-03T13:19:05Z",
+ "page_count": 115,
  "pages": [
+  {
+   "path": "wiki/comparisons/AI-Native SDLC Playbook vs ADLC.md",
+   "name": "AI-Native SDLC Playbook vs ADLC",
+   "type": "comparison",
+   "title": "AI-Native SDLC Playbook vs ADLC",
+   "created": "2026-09-03",
+   "updated": "2026-09-03",
+   "tags": [
+    "comparison",
+    "adlc",
+    "sdlc",
+    "ai-native-sdlc",
+    "artifact-chain"
+   ],
+   "status": "developing",
+   "related": [
+    "claude-ai-native-sdlc-playbook",
+    "Review the ADLC flow against the AI-Native SDLC Playbook",
+    "Agentic Orchestration Levels",
+    "Harness Engineering",
+    "ADLC Field Review Findings",
+    "Grilling Session",
+    "AGENTS.md",
+    "Wiki vs RAG"
+   ]
+  },
   {
    "path": "wiki/comparisons/Wiki vs RAG.md",
    "name": "Wiki vs RAG",
@@ -172,6 +198,28 @@
     "Context Engineering for Coding Agents",
     "Hot Cache",
     "anthropic-contextual-retrieval"
+   ]
+  },
+  {
+   "path": "wiki/concepts/Cross-Repo Wiki Access.md",
+   "name": "Cross-Repo Wiki Access",
+   "type": "concept",
+   "title": "Cross-Repo Wiki Access",
+   "created": "2026-09-03",
+   "updated": "2026-09-03",
+   "tags": [
+    "wiki-sharing",
+    "github",
+    "multi-repo",
+    "publishing",
+    "design-decision"
+   ],
+   "status": "developing",
+   "related": [
+    "Wiki Sharing Patterns",
+    "AGENTS.md",
+    "Hot Cache",
+    "Harness Engineering"
    ]
   },
   {
@@ -388,6 +436,75 @@
     "Validation Contract",
     "Structured Handoff",
     "Factory"
+   ]
+  },
+  {
+   "path": "wiki/concepts/Obsidian Vault Portability.md",
+   "name": "Obsidian Vault Portability",
+   "type": "concept",
+   "title": "Obsidian Vault Portability",
+   "created": "2026-09-03",
+   "updated": "2026-09-03",
+   "confidence": "medium",
+   "tags": [
+    "concept",
+    "obsidian",
+    "docs-as-code",
+    "wiki-sharing",
+    "static-site"
+   ],
+   "status": "developing",
+   "related": [
+    "obsidian-vault-site-generators",
+    "Wiki Sharing Patterns",
+    "Quartz",
+    "LLM Wiki Pattern"
+   ]
+  },
+  {
+   "path": "wiki/concepts/One-Way Publish vs Round-Trip Wiki Sync.md",
+   "name": "One-Way Publish vs Round-Trip Wiki Sync",
+   "type": "concept",
+   "title": "One-Way Publish vs Round-Trip Wiki Sync",
+   "created": "2026-09-03",
+   "updated": "2026-09-03",
+   "tags": [
+    "wiki-sharing",
+    "docs-as-code",
+    "git-sync",
+    "confluence",
+    "architecture",
+    "design-decision"
+   ],
+   "status": "developing",
+   "related": [
+    "Wiki Sharing Patterns",
+    "SDLC Wiki Concerns",
+    "LLM Wiki Pattern"
+   ]
+  },
+  {
+   "path": "wiki/concepts/Open Knowledge Format.md",
+   "name": "Open Knowledge Format",
+   "type": "concept",
+   "title": "Open Knowledge Format",
+   "created": "2026-09-03",
+   "updated": "2026-09-03",
+   "tags": [
+    "concept",
+    "okf",
+    "knowledge-format",
+    "wiki-sharing",
+    "viewer",
+    "google-cloud"
+   ],
+   "status": "current",
+   "related": [
+    "Wiki Sharing Patterns",
+    "wiki-sharing-research",
+    "LLM Wiki Pattern",
+    "Hot Cache",
+    "Google ADK"
    ]
   },
   {
@@ -694,6 +811,29 @@
    ]
   },
   {
+   "path": "wiki/concepts/Vault Publishing Topologies.md",
+   "name": "Vault Publishing Topologies",
+   "type": "concept",
+   "title": "Vault Publishing Topologies",
+   "created": "2026-09-03",
+   "updated": "2026-09-03",
+   "confidence": "medium",
+   "tags": [
+    "concept",
+    "publishing",
+    "wiki-sharing",
+    "obsidian"
+   ],
+   "status": "developing",
+   "related": [
+    "obsidian-static-publishers-comparison",
+    "Wiki Sharing Patterns",
+    "wiki-sharing-research",
+    "Quartz",
+    "LLM Wiki Pattern"
+   ]
+  },
+  {
    "path": "wiki/concepts/Vertical Slices for Agent Tasks.md",
    "name": "Vertical Slices for Agent Tasks",
    "type": "concept",
@@ -719,7 +859,7 @@
    "type": "concept",
    "title": "Wiki Sharing Patterns",
    "created": "2026-05-10",
-   "updated": "2026-05-10",
+   "updated": "2026-09-03",
    "tags": [
     "architecture",
     "sharing",
@@ -738,7 +878,7 @@
    "name": "_index",
    "type": "meta",
    "title": "Concepts Index",
-   "updated": "2026-07-17",
+   "updated": "2026-09-03",
    "tags": [
     "meta",
     "index",
@@ -1099,6 +1239,30 @@
    ]
   },
   {
+   "path": "wiki/entities/Quartz.md",
+   "name": "Quartz",
+   "type": "entity",
+   "title": "Quartz",
+   "created": "2026-09-03",
+   "updated": "2026-09-03",
+   "confidence": "medium",
+   "tags": [
+    "entity",
+    "tool",
+    "static-site",
+    "obsidian",
+    "digital-garden"
+   ],
+   "status": "current",
+   "related": [
+    "obsidian-vault-site-generators",
+    "obsidian-static-publishers-comparison",
+    "Obsidian Vault Portability",
+    "Vault Publishing Topologies",
+    "Wiki Sharing Patterns"
+   ]
+  },
+  {
    "path": "wiki/entities/StandardAgents.md",
    "name": "StandardAgents",
    "type": "entity",
@@ -1122,7 +1286,7 @@
    "name": "_index",
    "type": "meta",
    "title": "Entities Index",
-   "updated": "2026-07-08",
+   "updated": "2026-09-03",
    "tags": [
     "meta",
     "index",
@@ -1201,7 +1365,7 @@
    "name": "hot",
    "type": "meta",
    "title": "Hot Cache",
-   "updated": "2026-07-08T00:00:00",
+   "updated": "2026-09-03T00:00:00",
    "tags": [
     "meta",
     "hot-cache"
@@ -1210,11 +1374,9 @@
    "related": [
     "index",
     "log",
-    "Research OpenManus for claude-mem",
-    "Plan-Driven Research Loop",
-    "Project Profile Skill Suite",
-    "Product Management Layer Skill",
-    "RLM-Optimized Wiki Querying"
+    "Research Sharing the Wiki with People",
+    "AI-Native SDLC Playbook vs ADLC",
+    "Integrate the wiki toolset into the ADLC workers"
    ]
   },
   {
@@ -1222,7 +1384,7 @@
    "name": "index",
    "type": "meta",
    "title": "Wiki Index",
-   "updated": "2026-07-17",
+   "updated": "2026-09-03",
    "tags": [
     "meta",
     "index"
@@ -1248,7 +1410,7 @@
    "name": "log",
    "type": "meta",
    "title": "Operation Log",
-   "updated": "2026-07-17",
+   "updated": "2026-09-03",
    "tags": [
     "meta",
     "log"
@@ -1313,6 +1475,52 @@
     "Hot Cache",
     "index",
     "Wiki vs RAG"
+   ]
+  },
+  {
+   "path": "wiki/questions/Integrate the wiki toolset into the ADLC workers.md",
+   "name": "Integrate the wiki toolset into the ADLC workers",
+   "type": "synthesis",
+   "title": "Integrate the wiki toolset into the ADLC workers",
+   "created": "2026-08-25",
+   "updated": "2026-09-03",
+   "tags": [
+    "agents",
+    "wiki",
+    "adlc",
+    "toolset"
+   ],
+   "status": "open",
+   "related": [
+    "LLM Wiki Pattern",
+    "Hot Cache",
+    "Compounding Knowledge",
+    "Context Engineering for Coding Agents",
+    "AGENTS.md"
+   ]
+  },
+  {
+   "path": "wiki/questions/Operator profile - learn engagement style from corrections.md",
+   "name": "Operator profile - learn engagement style from corrections",
+   "type": "synthesis",
+   "title": "Operator profile: learn engagement style from corrections",
+   "created": "2026-08-25",
+   "updated": "2026-09-03",
+   "tags": [
+    "agents",
+    "adlc",
+    "personalization",
+    "operator",
+    "workflow"
+   ],
+   "status": "open",
+   "related": [
+    "Project Profile",
+    "AGENTS.md",
+    "Hot Cache",
+    "Compounding Knowledge",
+    "Context Engineering for Coding Agents",
+    "Integrate the wiki toolset into the ADLC workers"
    ]
   },
   {
@@ -1418,11 +1626,68 @@
    ]
   },
   {
+   "path": "wiki/questions/Research Sharing the Wiki with People.md",
+   "name": "Research Sharing the Wiki with People",
+   "type": "synthesis",
+   "title": "Research: Sharing the Wiki with People",
+   "created": "2026-09-03",
+   "updated": "2026-09-03",
+   "tags": [
+    "research",
+    "sharing",
+    "publishing",
+    "okf",
+    "confluence",
+    "github"
+   ],
+   "status": "developing",
+   "related": [
+    "Wiki Sharing Patterns",
+    "Open Knowledge Format",
+    "Vault Publishing Topologies",
+    "Obsidian Vault Portability",
+    "One-Way Publish vs Round-Trip Wiki Sync",
+    "Cross-Repo Wiki Access",
+    "Quartz",
+    "obsidian-static-publishers-comparison",
+    "obsidian-vault-site-generators",
+    "git-backed-wiki-platforms-comparison",
+    "kovetskiy-mark-readme",
+    "github-docs-markdown-wikis-pages",
+    "claude-code-large-codebases-docs",
+    "okf-spec-and-reference-repo",
+    "google-cloud-okf-announcement"
+   ]
+  },
+  {
+   "path": "wiki/questions/Review the ADLC flow against the AI-Native SDLC Playbook.md",
+   "name": "Review the ADLC flow against the AI-Native SDLC Playbook",
+   "type": "synthesis",
+   "title": "Review the ADLC flow against the AI-Native SDLC Playbook",
+   "created": "2026-09-03",
+   "updated": "2026-09-03",
+   "tags": [
+    "adlc",
+    "sdlc",
+    "review",
+    "open-task"
+   ],
+   "status": "open",
+   "related": [
+    "AI-Native SDLC Playbook vs ADLC",
+    "claude-ai-native-sdlc-playbook",
+    "Agentic Orchestration Levels",
+    "Integrate the wiki toolset into the ADLC workers",
+    "Operator profile - learn engagement style from corrections",
+    "Research OpenManus for claude-mem"
+   ]
+  },
+  {
    "path": "wiki/sources/_index.md",
    "name": "_index",
    "type": "meta",
    "title": "Sources Index",
-   "updated": "2026-07-17",
+   "updated": "2026-09-03",
    "tags": [
     "meta",
     "index",
@@ -1607,6 +1872,60 @@
    ]
   },
   {
+   "path": "wiki/sources/claude-ai-native-sdlc-playbook.md",
+   "name": "claude-ai-native-sdlc-playbook",
+   "type": "source",
+   "title": "The AI-Native SDLC Playbook",
+   "created": "2026-09-03",
+   "updated": "2026-09-03",
+   "confidence": "high",
+   "tags": [
+    "source",
+    "playbook",
+    "sdlc",
+    "ai-native-sdlc",
+    "governance",
+    "claude-code",
+    "artifact-chain"
+   ],
+   "status": "current",
+   "related": [
+    "AI-Native SDLC Playbook vs ADLC",
+    "Review the ADLC flow against the AI-Native SDLC Playbook",
+    "vibe-coding-new-sdlc-day1",
+    "Harness Engineering",
+    "Agentic Orchestration Levels",
+    "Grilling Session",
+    "AGENTS.md",
+    "Generator-Evaluator Pattern"
+   ]
+  },
+  {
+   "path": "wiki/sources/claude-code-large-codebases-docs.md",
+   "name": "claude-code-large-codebases-docs",
+   "type": "source",
+   "title": "Claude Code Docs: Set up Claude Code in a monorepo or large codebase (additional directories, sparse worktrees)",
+   "created": "2026-09-03",
+   "updated": "2026-09-03",
+   "confidence": "high",
+   "tags": [
+    "source",
+    "documentation",
+    "claude-code",
+    "multi-repo",
+    "wiki-sharing",
+    "harness"
+   ],
+   "status": "current",
+   "related": [
+    "Cross-Repo Wiki Access",
+    "AGENTS.md",
+    "Harness Engineering",
+    "Context Engineering for Coding Agents",
+    "github-docs-markdown-wikis-pages"
+   ]
+  },
+  {
    "path": "wiki/sources/claude-obsidian-ecosystem-research.md",
    "name": "claude-obsidian-ecosystem-research",
    "type": "source",
@@ -1666,6 +1985,182 @@
     "Context Engineering for Coding Agents",
     "Project Profile",
     "Research Pre-computed Context for Coding Agents"
+   ]
+  },
+  {
+   "path": "wiki/sources/git-backed-wiki-platforms-comparison.md",
+   "name": "git-backed-wiki-platforms-comparison",
+   "type": "source",
+   "title": "Git-Backed Wiki Platforms for a Confluence-Like Experience (web synthesis)",
+   "created": "2026-09-03",
+   "updated": "2026-09-03",
+   "confidence": "medium",
+   "tags": [
+    "source",
+    "wiki-sharing",
+    "docs-as-code",
+    "confluence",
+    "git-sync",
+    "knowledge-base"
+   ],
+   "status": "current",
+   "related": [
+    "Wiki Sharing Patterns",
+    "wiki-sharing-research",
+    "One-Way Publish vs Round-Trip Wiki Sync",
+    "kovetskiy-mark-readme",
+    "SDLC Wiki Concerns"
+   ]
+  },
+  {
+   "path": "wiki/sources/github-docs-markdown-wikis-pages.md",
+   "name": "github-docs-markdown-wikis-pages",
+   "type": "source",
+   "title": "GitHub Docs: Markdown rendering, repository Wikis, and Pages (as vault-sharing surfaces)",
+   "created": "2026-09-03",
+   "updated": "2026-09-03",
+   "confidence": "high",
+   "tags": [
+    "source",
+    "documentation",
+    "github",
+    "markdown",
+    "wiki-sharing",
+    "publishing"
+   ],
+   "status": "current",
+   "related": [
+    "Cross-Repo Wiki Access",
+    "Wiki Sharing Patterns",
+    "wiki-sharing-research",
+    "claude-code-large-codebases-docs",
+    "okf-spec-and-reference-repo"
+   ]
+  },
+  {
+   "path": "wiki/sources/google-cloud-okf-announcement.md",
+   "name": "google-cloud-okf-announcement",
+   "type": "source",
+   "title": "How the Open Knowledge Format can improve data sharing (Google Cloud launch post)",
+   "created": "2026-09-03",
+   "updated": "2026-09-03",
+   "confidence": "high",
+   "tags": [
+    "source",
+    "blog",
+    "okf",
+    "knowledge-catalog",
+    "google-cloud",
+    "wiki-sharing"
+   ],
+   "status": "current",
+   "related": [
+    "Open Knowledge Format",
+    "okf-spec-and-reference-repo",
+    "Wiki Sharing Patterns",
+    "wiki-sharing-research"
+   ]
+  },
+  {
+   "path": "wiki/sources/kovetskiy-mark-readme.md",
+   "name": "kovetskiy-mark-readme",
+   "type": "source",
+   "title": "kovetskiy/mark — Sync your markdown files with Confluence pages (README)",
+   "created": "2026-09-03",
+   "updated": "2026-09-03",
+   "confidence": "high",
+   "tags": [
+    "source",
+    "confluence",
+    "docs-as-code",
+    "git-sync",
+    "cli",
+    "github-actions"
+   ],
+   "status": "current",
+   "related": [
+    "git-backed-wiki-platforms-comparison",
+    "One-Way Publish vs Round-Trip Wiki Sync",
+    "Wiki Sharing Patterns"
+   ]
+  },
+  {
+   "path": "wiki/sources/obsidian-static-publishers-comparison.md",
+   "name": "obsidian-static-publishers-comparison",
+   "type": "source",
+   "title": "Obsidian-native publishers compared: Quartz, Flowershow, Digital Garden, Perlite, Obsidian Publish",
+   "created": "2026-09-03",
+   "updated": "2026-09-03",
+   "confidence": "medium",
+   "tags": [
+    "source",
+    "research",
+    "obsidian",
+    "publishing",
+    "static-site",
+    "wiki-sharing"
+   ],
+   "status": "current",
+   "related": [
+    "Wiki Sharing Patterns",
+    "wiki-sharing-research",
+    "Vault Publishing Topologies",
+    "Quartz",
+    "LLM Wiki Pattern"
+   ]
+  },
+  {
+   "path": "wiki/sources/obsidian-vault-site-generators.md",
+   "name": "obsidian-vault-site-generators",
+   "type": "source",
+   "title": "Rendering an Obsidian Vault with Docs-as-Code Site Generators (web synthesis)",
+   "created": "2026-09-03",
+   "updated": "2026-09-03",
+   "confidence": "medium",
+   "tags": [
+    "source",
+    "docs-as-code",
+    "static-site",
+    "obsidian",
+    "wiki-sharing",
+    "mkdocs",
+    "docusaurus",
+    "starlight",
+    "hugo",
+    "quartz"
+   ],
+   "status": "current",
+   "related": [
+    "Wiki Sharing Patterns",
+    "wiki-sharing-research",
+    "Obsidian Vault Portability",
+    "Quartz",
+    "LLM Wiki Pattern"
+   ]
+  },
+  {
+   "path": "wiki/sources/okf-spec-and-reference-repo.md",
+   "name": "okf-spec-and-reference-repo",
+   "type": "source",
+   "title": "Open Knowledge Format — canonical spec repo (v0.2) and reference visualizer",
+   "created": "2026-09-03",
+   "updated": "2026-09-03",
+   "confidence": "high",
+   "tags": [
+    "source",
+    "repository",
+    "okf",
+    "knowledge-format",
+    "wiki-sharing",
+    "viewer"
+   ],
+   "status": "current",
+   "related": [
+    "Open Knowledge Format",
+    "google-cloud-okf-announcement",
+    "Wiki Sharing Patterns",
+    "wiki-sharing-research",
+    "LLM Wiki Pattern"
    ]
   },
   {

@@ -95,6 +95,21 @@
         "wiki/sources/_index.md",
         "wiki/log.md"
       ]
+    },
+    ".raw/claude-ai-native-sdlc-playbook.md": {
+      "hash": "81c48e1d5d0007dc4677fdd831da46f4",
+      "ingested_at": "2026-09-03",
+      "pages_created": [
+        "wiki/sources/claude-ai-native-sdlc-playbook.md",
+        "wiki/comparisons/AI-Native SDLC Playbook vs ADLC.md",
+        "wiki/questions/Review the ADLC flow against the AI-Native SDLC Playbook.md"
+      ],
+      "pages_updated": [
+        "wiki/index.md",
+        "wiki/sources/_index.md",
+        "wiki/log.md",
+        "wiki/hot.md"
+      ]
     }
   }
 }
