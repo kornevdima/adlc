@@ -1,6 +1,6 @@
 {
   "name": "adlc",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Agentic Development Life Cycle harness. A persistent Obsidian wiki as the knowledge substrate (Karpathy LLM-wiki pattern, OKF-aligned), an optional structural code graph (via graphify), role skills for BA / product / architecture work, and a plan-driven delivery loop that dispatches build / test / review / verify workers story by story. AGENTS.md project profiling calibrates the harness to each repo. Formerly claude-mem.",
   "author": {
     "name": "dmytro"

@@ -121,4 +121,4 @@ For a live, self-maintaining view, add `meta/ba-activity.base` with views groupe
 
 ## Scaffold
 
-At ADLC scaffold time (and on the first initial pass in an existing vault), seed both pages with empty tables and the readiness bar filled in from `technical-planning.md`. An empty board with the right columns is the contract; the first dispatch fills it.
+At ADLC scaffold time (and on the first initial pass in an existing vault), seed both pages with empty tables and the readiness bar filled in from `technical-planning.md`. An empty board with the right columns is the contract; the first dispatch fills it. Seed `meta/operator-profile.md` at the same time (template in [`operator-profile.md`](operator-profile.md)) — the third `meta/` page the delivery loop reads at Step 0: engagement pole, standing rulings, and the correction log that `/adlc distill` turns into proposed settings.

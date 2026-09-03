@@ -40,6 +40,10 @@ Before writing code, read the service's **AGENTS.md / CLAUDE.md** (and its code-
 7. **Account for runtime traps** the static checks cannot catch (the service's Don'ts). Avoid them by construction; list any your changes sit near so the verifier targets them.
 8. **Report back** (below).
 
+## Use the shipped instrument — never rebuild what the repo already wires
+
+Before writing any harness, server, runner, or diff pipeline, read the service's package manifest scripts and its test / e2e configs (`webServer`, `preview`, `test:*`, compose services). The wired instrument wins. In one production run a worker rebuilt `astro preview` as a 35-line static server with a hand-kept MIME table while `playwright.config.js` already declared `webServer: 'npm run build && npm run preview'` — and the copy had different 404s and headers, defeating its own reason to exist; another built a dist snapshot/diff pipeline to prove a CSS-only edit left the HTML unchanged, a property true by construction. If you believe a bespoke instrument is needed, say so in your report **before** building it, naming the wired one it replaces and why it falls short. Throwaway scripts stop at the packet's done-condition; if the packet has none, ask for one instead of refining past value. Never store build hashes, `dist` digests, or any figure that rots inside code comments — figures belong in vault records, with a date and a source.
+
 ## Strict rules
 
 - **Stay in the service repo's source.** Don't touch the wiki, infra, `.raw/`, or other services.

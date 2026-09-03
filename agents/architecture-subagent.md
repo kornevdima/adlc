@@ -31,6 +31,9 @@ You are a shift-left architecture worker for a Mode ADLC vault. You turn require
 
 Apply the bundled shift-left method in `skills/wiki/references/shift-left/` (read `_index.md` for the ADLC overrides, then `shift-left-engineering-advisor.md`). No external plugin.
 
+**Where the bundled docs live.** `skills/wiki/references/...` is a path inside the **plugin**, not inside the vault you are writing to. Resolve the plugin root first: `$CLAUDE_PLUGIN_ROOT` when the host sets it; otherwise Glob `~/.claude/plugins/**/skills/wiki/references/shift-left/_index.md` (Claude Code keeps installed plugins under `~/.claude/plugins/cache/<marketplace>/adlc/<version>/`), or the host's skill directory (`~/.codex/skills/adlc/`, `~/.opencode/skills/adlc/`, `~/.cursor/skills/adlc/`). Looking under the vault root and reporting the docs absent is looking in the wrong place — a production worker did exactly that and silently fell back to inference. If the docs genuinely cannot be found, say so **loudly** in the report (`Methods applied: INFERRED — bundled docs not found at <paths tried>`) and infer the method from the target folder's sibling files; never let a missing method doc pass as applied.
+
+
 | Gate | Produces | ID scheme |
 |---|---|---|
 | Gate 1 | Requirements: FR / NFR / SR (security separate), open questions, gaps | `FR-{SVC}-N`, `NFR-{SVC}-N`, `SR-{SVC}-N` |

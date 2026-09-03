@@ -44,6 +44,7 @@ Replace `<VAULT_PATH>` with the project root. Trim patterns the project does not
       "Task(feature-tester)",
       "Task(feature-reviewer)",
       "Task(feature-verifier)",
+      "Task(scope-analyst)",
       "Task(doc-writer)",
       "Task(wiki-ingest-subagent)",
       "Bash(docker compose up:*)",

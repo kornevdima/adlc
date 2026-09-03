@@ -32,7 +32,11 @@ You are a business-analysis worker for a Mode ADLC vault. You run `ba-suite` ski
 
 ## ba-suite coverage
 
-Apply the bundled method docs in `skills/wiki/references/ba/` (read `_index.md` first for the ADLC overrides). No external plugin. Map of method to ADLC folder:
+Apply the bundled method docs in `skills/wiki/references/ba/` (read `_index.md` first for the ADLC overrides). No external plugin.
+
+**Where the bundled docs live.** `skills/wiki/references/...` is a path inside the **plugin**, not inside the vault you are writing to. Resolve the plugin root first: `$CLAUDE_PLUGIN_ROOT` when the host sets it; otherwise Glob `~/.claude/plugins/**/skills/wiki/references/ba/_index.md` (Claude Code keeps installed plugins under `~/.claude/plugins/cache/<marketplace>/adlc/<version>/`), or the host's skill directory (`~/.codex/skills/adlc/`, `~/.opencode/skills/adlc/`, `~/.cursor/skills/adlc/`). Looking under the vault root and reporting the docs absent is looking in the wrong place — a production worker did exactly that and silently fell back to inference. If the docs genuinely cannot be found, say so **loudly** in the report (`Methods applied: INFERRED — bundled docs not found at <paths tried>`) and infer the method from the target folder's sibling files; never let a missing method doc pass as applied.
+
+Map of method to ADLC folder:
 
 | ba-suite skill | Wiki folder | ID scheme |
 |---|---|---|
