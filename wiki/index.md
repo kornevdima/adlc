@@ -1,7 +1,7 @@
 ---
 type: meta
 title: "Wiki Index"
-updated: 2026-07-17
+updated: 2026-09-03
 tags:
   - meta
   - index
@@ -23,11 +23,17 @@ related:
 
 # Wiki Index
 
-Last updated: 2026-07-17 | Total pages: 90 | Source pages: 26
+Last updated: 2026-09-03 | Total pages: 115 | Source pages: 35
 
 Navigation: [[overview]] | [[log]] | [[hot]] | [[maintenance-triggers]]
 
 ---
+
+## Open tasks
+
+- [[Integrate the wiki toolset into the ADLC workers]] — workers write into a vault they have no toolset for; three reinvention instances measured in one session (status: open)
+- [[Operator profile - learn engagement style from corrections]] — `project-profile` covers the codebase, nothing covers the human running it; business-input vs fully-managed as the axis (status: open — smallest useful version shipped 2026-09-03, see its resolution log)
+- [[Review the ADLC flow against the AI-Native SDLC Playbook]] — stage-by-stage review of `/adlc` against Anthropic's playbook; standing ruling: typed wiki records, no common-name artifact files; Stage 6 (closing the loop) first (status: open)
 
 ## Concepts
 
@@ -67,6 +73,11 @@ Navigation: [[overview]] | [[log]] | [[hot]] | [[maintenance-triggers]]
 - [[Harness Engineering]] — Agent = Model + Harness: owning the scaffolding around the model (rules, tools, sandboxes, orchestration, hooks, observability); most agent failures are configuration failures (status: current)
 - [[Agentic Orchestration Levels]] — operator's four-level adoption ladder (chat session → assisted editing → conductor with harness → orchestrator / Mode ADLC); a ladder prescribes harness investment where a spectrum only describes practice (status: draft)
 
+- [[Open Knowledge Format]] — Google's markdown + YAML interchange format for agent knowledge; v0.2 (2026-06) in a new canonical repo; reference visualizer = one-file graph viewer, not a wiki UI (status: developing)
+- [[Vault Publishing Topologies]] — publishers split by trigger: rebuild-from-repo (agent commits go live) vs push-from-app vs live-render (status: developing)
+- [[Obsidian Vault Portability]] — portability tiers 0–3, three build rules, Confluence-expectation map for rendering a vault outside Obsidian (status: developing)
+- [[One-Way Publish vs Round-Trip Wiki Sync]] — sub-modes, the lowering-step spec (wikilinks, callouts, `_index.md`), decision tree for a git-canonical wiki (status: developing)
+- [[Cross-Repo Wiki Access]] — how an agent in another repo reaches the vault (add-dir, additionalDirectories, submodule / subtree / sibling clone); which conventions break on each GitHub surface (status: developing)
 ---
 
 ## Entities
@@ -91,6 +102,7 @@ Navigation: [[overview]] | [[log]] | [[hot]] | [[maintenance-triggers]]
 - [[Claude Agent SDK]] — Anthropic's agent-with-a-computer runtime; chosen for the future headless claude-mem branch (status: current)
 - [[Google ADK]] — Google's multi-agent framework; not chosen for headless branch; MCP interop path instead (status: current)
 
+- [[Quartz]] — Obsidian-native static-site generator (jackyzha0); v5.0.0 2026-06-11, MIT; explorer + breadcrumbs + search + backlinks + graph out of the box; builds from the repo on push
 ---
 
 ## Sources
@@ -121,6 +133,15 @@ Navigation: [[overview]] | [[log]] | [[hot]] | [[maintenance-triggers]]
 - [[openmanus-repo]] — 2025 | FoundationAgents (MetaGPT team) | PlanningFlow statuses, is_stuck(), max_steps, MCP both directions; semi-dormant since 2025-04
 - [[agent-sdk-comparisons-2026]] — 2026 | aggregated comparison articles | Claude Agent SDK vs Google ADK; medium confidence
 - [[vibe-coding-new-sdlc-day1]] — 2026-05 | Osmani, Saboo, Kartakis (Google) | Day-1 course whitepaper: vibe→agentic spectrum, harness engineering, factory model, tests-vs-evals, CapEx/OpEx economics, adoption checklists
+- [[claude-ai-native-sdlc-playbook]] — 2026-08-21 | Louis Claxton (Anthropic Applied AI) | six-stage AI-native SDLC as a loop; committed-artifact chain (intent → spec → plan → diff → PR findings → incident); skills advisory / hooks deterministic; Stage 6 closes the loop via deterministic detection
+- [[okf-spec-and-reference-repo]] — 2026-06 | GoogleCloudPlatform/open-knowledge-format | OKF v0.2 spec + `reference_agent visualize`; `knowledge-catalog/okf` is a frozen snapshot
+- [[google-cloud-okf-announcement]] — 2026-06-12 | McVeety, Hormati (Google Cloud) | OKF launch post; Knowledge Catalog as the hosted, IAM-gated, agent-facing consumer
+- [[obsidian-static-publishers-comparison]] — 2026-09-03 | web synthesis | Quartz vs Flowershow vs Digital Garden vs Perlite vs Obsidian Publish; repo-triggered vs app-pushed
+- [[obsidian-vault-site-generators]] — 2026-09-03 | web synthesis | MkDocs + obsidian-bridge, Docusaurus, Starlight + starlight-obsidian, Hugo; 10-item rewrite list for this vault shape
+- [[git-backed-wiki-platforms-comparison]] — 2026-09-03 | web synthesis | Docmost, Outline, Wiki.js, BookStack, GitBook, TechDocs, Confluence routes; one-way vs round-trip; dialect-survival table
+- [[kovetskiy-mark-readme]] — 2026 | kovetskiy/mark README | one-way markdown → Confluence sync; GitHub alerts converted, wikilinks unsupported; slow cadence
+- [[github-docs-markdown-wikis-pages]] — 2026-09-03 | GitHub Docs | repo markdown rendering (frontmatter table, 5 alert types, no wikilinks), repository Wiki (`[[Page]]` by title, flat namespace, CI-fillable), Pages (Jekyll drops `_`/dot files; private only on Enterprise Cloud)
+- [[claude-code-large-codebases-docs]] — 2026-09-03 | Claude Code Docs | `--add-dir` (per-session, loads skills) vs `permissions.additionalDirectories` (committable, no skills) vs sparse worktrees (same repo only)
 
 ---
 
@@ -131,6 +152,7 @@ Navigation: [[overview]] | [[log]] | [[hot]] | [[maintenance-triggers]]
 - [[How does the LLM Wiki pattern work]] — how the pattern works and why it outperforms RAG at human scale (status: developing)
 - [[Research Recursive Language Models]] — 2026-06-28 synthesis: RLM mechanics, results, limits, and the wiki-query/structure application for ADLC (status: developing)
 - [[Research OpenManus for claude-mem]] — 2026-07-08 synthesis: reject OpenManus as runtime, adopt its planning patterns; SDK for headless branch, MCP for interop (status: developing)
+- [[Research Sharing the Wiki with People]] — 2026-09-03 synthesis: how to share the git-canonical vault with people (OKF preview is a PoC; Quartz v5 for Confluence-like nav; CI-mirrored GitHub Wiki as the free-private fallback; one-way Confluence publish; round-trip only if UI editing is required) (status: developing)
 
 ---
 
@@ -138,6 +160,7 @@ Navigation: [[overview]] | [[log]] | [[hot]] | [[maintenance-triggers]]
 
 - [[Wiki vs RAG]] — when to use a wiki knowledge base versus RAG; verdict: wiki wins at <1000 pages
 - [[claude-obsidian-ecosystem]] — feature matrix of 16+ Claude+Obsidian projects; where claude-obsidian wins and gaps
+- [[AI-Native SDLC Playbook vs ADLC]] — same lifecycle, different substrate; vocabulary map for explaining ADLC; gaps: Stage 6 trigger layer, evals-on-config-change, per-service review policy page
 
 ---
 

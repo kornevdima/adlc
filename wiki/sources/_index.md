@@ -1,7 +1,7 @@
 ---
 type: meta
 title: "Sources Index"
-updated: 2026-07-17
+updated: 2026-09-03
 tags:
   - meta
   - index
@@ -35,12 +35,21 @@ All source pages — summaries of ingested documents, transcripts, articles, and
 ## Articles
 
 - [[agent-sdk-comparisons-2026]] — 2026 | Composio, TURION.AI, Morph, Sau Sheong (aggregated) | Claude Agent SDK vs Google ADK landscape; medium confidence (vendor-adjacent blogs)
+- [[claude-ai-native-sdlc-playbook]] — 2026-08-21 | Louis Claxton (Anthropic Applied AI) | the AI-native SDLC playbook: six stages as a loop, committed-artifact chain, governance + leading/lagging indicators per play, Stage 6 closing the loop; filed as the external vocabulary for ADLC
+- [[google-cloud-okf-announcement]] — 2026-06-12 | McVeety, Hormati (Google Cloud) | OKF launch post; Knowledge Catalog is the hosted, IAM-gated, agent-facing consumer
+- [[obsidian-static-publishers-comparison]] — 2026-09-03 | web synthesis | five Obsidian publishers; split by publish trigger (repo-rebuild vs app-push vs live-render)
+- [[obsidian-vault-site-generators]] — 2026-09-03 | web synthesis | MkDocs / Docusaurus / Starlight / Hugo Obsidian bridges; rewrite cost for this vault shape
+- [[git-backed-wiki-platforms-comparison]] — 2026-09-03 | web synthesis | git-fed team wikis + Confluence routes; one-way vs round-trip; dialect survival
+- [[github-docs-markdown-wikis-pages]] — 2026-09-03 | GitHub Docs | markdown rendering, repository Wiki, Pages as vault-sharing surfaces
+- [[claude-code-large-codebases-docs]] — 2026-09-03 | Claude Code Docs | additional directories, add-dir, sparse worktrees for cross-repo access
 
 ---
 
 ## Code Repositories
 
 - [[openmanus-repo]] — 2025 | FoundationAgents (MetaGPT team) | PlanningFlow per-step statuses, is_stuck(), max_steps, MCP both directions; semi-dormant since 2025-04
+- [[okf-spec-and-reference-repo]] — 2026-06 | GoogleCloudPlatform/open-knowledge-format | OKF v0.2 spec + reference visualizer; the knowledge-catalog copy is frozen
+- [[kovetskiy-mark-readme]] — 2026 | kovetskiy/mark | one-way markdown → Confluence publisher README
 
 ---
 

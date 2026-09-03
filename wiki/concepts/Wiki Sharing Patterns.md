@@ -2,7 +2,7 @@
 type: concept
 title: "Wiki Sharing Patterns"
 created: 2026-05-10
-updated: 2026-05-10
+updated: 2026-09-03
 tags:
   - architecture
   - sharing
@@ -20,6 +20,9 @@ sources:
 # Wiki Sharing Patterns
 
 How a claude-mem wiki gets shared across roles and across services. **This is a research-and-options page** — claude-mem keeps its current default (one wiki per project, co-located with code) until field feedback motivates a change.
+
+> [!note] September 2026 follow-up
+> A second research pass — [[Research Sharing the Wiki with People]] — covers what this page does not: the OKF reference visualizer, Obsidian-native static publishers ([[Quartz]] recommended), docs-as-code bridges, git-fed team wikis and one-way Confluence publishing, and GitHub's own Wiki / Pages surfaces. Its decision table supersedes the "static site export" row below. Pricing refinement: Obsidian Publish is $8/mo on annual billing, $10 month-to-month.
 
 > [!note] Operational protocol shipped (2026-07-03)
 > The multi-role / multi-wiki **state-sharing protocol** — role → concern ownership, pull-first / wrap-up-last sessions, merge conventions for `log.md` / `hot.md` / indexes, machine-local symlinks, status fields as the cross-role state machine — now lives in `skills/wiki/references/team-sync.md`. This page remains the tooling / topology comparison behind it.
