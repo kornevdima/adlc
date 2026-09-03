@@ -127,7 +127,7 @@ Steps:
 5. Create domain pages + `_index.md` sub-indexes (for applicable modes), and `_index.md` files for every mode-specific and concern-specific folder created in step 4.
 6. Create `wiki/index.md`, `wiki/log.md`, `wiki/hot.md`, `wiki/overview.md`.
 7. Create the vault `AGENTS.md` using the template below.
-8. Initialize git. Read `references/git-setup.md`. For **Mode ADLC**, also scaffold `.claude/settings.json` from `references/permissions.md` so routine project work runs without prompts while destructive operations stay gated, and seed `wiki/meta/mission-control.md` + `wiki/meta/ba-activity.md` with empty tables per `references/mission-control.md` (the metrics seam).
+8. Initialize git. Read `references/git-setup.md`. For **Mode ADLC**, also scaffold `.claude/settings.json` from `references/permissions.md` so routine project work runs without prompts while destructive operations stay gated, and seed `wiki/meta/mission-control.md` + `wiki/meta/ba-activity.md` with empty tables per `references/mission-control.md` (the metrics seam), plus `wiki/meta/operator-profile.md` from the template in `references/operator-profile.md` — ask the one engagement question ("business-input: you rule on product and design and we checkpoint at story boundaries — or fully-managed: the agent rules within stated principles and checkpoints at epic boundaries?").
 9. Present the structure and ask: "Want to adjust anything before we start?"
 
 > Visual customization (theme, color snippets, plugin recommendations) is **not** applied automatically. The default scaffold leaves Obsidian's stock appearance untouched — users pick their own theme and plugins from Obsidian's community marketplace.
@@ -183,7 +183,23 @@ Created: YYYY-MM-DD
 
 If Mode B and you use `wiki-ingest`, also list companion folders: `sources/`, `domains/`, `entities/`, `concepts/`, `meta/`, etc.
 
-If Mode ADLC, list the ADLC folders from `references/modes.md` (`requirements/`, `features/`, `user-stories/`, `gaps/`, `sprints/`, `planning/`, `stakeholders/`, `decisions/`, `deliverables/`, `comms/`) plus the `qa` concern folders, and note that `ba-suite` authors deliverables here per `references/ba-suite-pipeline.md`.
+If Mode ADLC, list the ADLC folders from `references/modes.md` (`requirements/`, `features/`, `user-stories/`, `gaps/`, `sprints/`, `planning/`, `stakeholders/`, `decisions/`, `deliverables/`, `comms/`) plus the `qa` concern folders, and note that `ba-suite` authors deliverables here per `references/ba-suite-pipeline.md`. Point at `meta/operator-profile.md` (engagement pole, standing rulings, correction log) as the third meta page the delivery loop reads.
+
+## Filing conventions
+
+Workers and skills look this table up before writing a record: it makes filing a lookup, not an inference. One row per folder that holds authored records; extend it when a folder gains a naming pattern. Filenames are unique across the vault — `[[Note Name]]` resolves by basename, so two `census.md` files in different folders make every link to one of them ambiguous.
+
+| Folder | Artefact type | Filename pattern | Linked from |
+|---|---|---|---|
+| `sources/` | source summary | `<slug-of-source>.md` | `sources/_index.md`, `index.md` |
+| `questions/` | filed answer / open task | `<Question in sentence case>.md` | `index.md` |
+| `verification/` (code wiki) | verification record | `<feature>-YYYY-MM-DD.md` | feature page, run ledger row |
+| `reviews/` (code wiki) | review record | `<feature>-review-YYYY-MM-DD.md` | feature page |
+| `census/` (code wiki) | scope census | `<STORY-ID>-census-YYYY-MM-DD.md` | run ledger row, story page |
+| `bugs/` | defect | `BUG-NNN <short title>.md` | verification record, backlog item |
+| `sprints/` | run ledger | `_run <EPIC-ID>.md` (deleted at epic close) | `meta/mission-control.md` |
+
+[EXTEND WITH THE MODE / CONCERN FOLDERS THIS VAULT USES]
 
 ## Conventions
 

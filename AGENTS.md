@@ -38,6 +38,11 @@ Subagents (in `agents/<name>.md`) are dispatched by skills via the Agent tool wi
 | `graphify-extract-subagent` | `graphify-ingest` and `graphify-update` skills | Read a chunk of files, extract entities/edges/hyperedges per the graphify schema, write JSON to disk |
 | `research-subagent` | `autoresearch` skill (one per plan question) | Answer one research question: search, fetch, file source/entity/concept pages; returns a structured report |
 | `mechanical-scanner-subagent` | `project-profile` skill | Scan project configs and return structured AGENTS.md mechanical sections |
+| `ba-suite-subagent` | Mode ADLC ingest pass, `wrap-up` | Run one BA task with the bundled method docs; file deliverables as wiki Markdown with stable IDs |
+| `architecture-subagent` | Mode ADLC technical-planning pass | Refine requirements into a per-service shift-left spec (Gates 1 / 1.5 / 2 / 3) in that service's code wiki |
+| `ba-export-subagent` | `ba-export` skill | Render one wiki deliverable to Office / PlantUML under `.raw/exports/` |
+| `scope-analyst` | `adlc` loop (census before the contract when scope is unknown; reconcile after review) | Measure a story's real scope against the code; propose plan revisions. Never rules, never writes feature code |
+| `feature-builder` → `feature-tester` → `feature-reviewer` → `feature-verifier` → `doc-writer` | `adlc` loop, per story | The per-service build pipeline: build → test → review → verify → document |
 
 Skills handle orchestration; subagents handle isolated work.
 

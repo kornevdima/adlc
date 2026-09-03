@@ -25,6 +25,8 @@ You render one BA deliverable from the wiki to formal Office documents. The wiki
 
 ## Process
 
+**Where the bundled docs live.** `skills/wiki/references/...` is a path inside the **plugin**, not inside the vault you are writing to. Resolve the plugin root first: `$CLAUDE_PLUGIN_ROOT` when the host sets it; otherwise Glob `~/.claude/plugins/**/skills/wiki/references/ba/_index.md` (Claude Code keeps installed plugins under `~/.claude/plugins/cache/<marketplace>/adlc/<version>/`), or the host's skill directory (`~/.codex/skills/adlc/`, `~/.opencode/skills/adlc/`, `~/.cursor/skills/adlc/`). Looking under the vault root and reporting the docs absent is looking in the wrong place — a production worker did exactly that and silently fell back to inference. If the docs genuinely cannot be found, say so **loudly** in the report (`Methods applied: INFERRED — bundled docs not found at <paths tried>`) and infer the method from the target folder's sibling files; never let a missing method doc pass as applied.
+
 1. Read the wiki source page(s). They are the canonical content with stable IDs.
 2. Apply the matching bundled method doc (`skills/wiki/references/ba/...`) to render the Office file(s) to `.raw/exports/`. Emit `.docx` / `.xlsx` with your native document creation when the environment supports it; in a code-only environment use `python-docx` / `openpyxl`. Preserve all IDs verbatim.
 3. For diagrams, use PlantUML (formal export), not Mermaid.

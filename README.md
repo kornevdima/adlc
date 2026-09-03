@@ -83,7 +83,7 @@ bash bin/setup-graphify.sh /path/to/your-app   # also pin to a specific code pro
 | `/ba-export` | Render wiki BA deliverables to formal Office documents |
 | `/project-profile` | Scan a repo, generate/augment its AGENTS.md |
 
-Worker subagents (dispatched by the loop, not invoked directly): `feature-builder`, `feature-tester`, `feature-reviewer`, `feature-verifier`, `doc-writer`, `architecture-subagent`, `ba-suite-subagent`, `ba-export-subagent`, `research-subagent`, `wiki-ingest-subagent`, `wiki-lint-subagent`, `graphify-extract-subagent`, `mechanical-scanner-subagent`.
+Worker subagents (dispatched by the loop, not invoked directly): `scope-analyst`, `feature-builder`, `feature-tester`, `feature-reviewer`, `feature-verifier`, `doc-writer`, `architecture-subagent`, `ba-suite-subagent`, `ba-export-subagent`, `research-subagent`, `wiki-ingest-subagent`, `wiki-lint-subagent`, `graphify-extract-subagent`, `mechanical-scanner-subagent`.
 
 ## Wiki Modes and Concerns
 

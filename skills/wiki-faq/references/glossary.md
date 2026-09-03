@@ -71,7 +71,13 @@ A high-degree node — many incoming and outgoing edges. Often a core abstractio
 A reusable workflow defined in `skills/<name>/SKILL.md` with YAML frontmatter (`name`, `description`). Loaded automatically by Claude Code, Cursor, Codex, OpenCode, Copilot when their respective host registers it. Triggered by description-matching against user input or by an explicit slash command.
 
 **Subagent**
-A worker definition in `agents/<name>-subagent.md` dispatched by skills via the Agent tool with `subagent_type: "<name>-subagent"`. Runs in its own isolated context and returns a single message — used for parallel batch work and context isolation. Four exist: `wiki-ingest-subagent`, `wiki-lint-subagent`, `graphify-extract-subagent`, `mechanical-scanner-subagent`.
+A worker definition in `agents/<name>.md` dispatched by skills via the Agent tool with `subagent_type: "<name>"`. Runs in its own isolated context and returns a single message — used for parallel batch work and context isolation. Wiki / graph workers: `wiki-ingest-subagent`, `wiki-lint-subagent`, `graphify-extract-subagent`, `research-subagent`, `mechanical-scanner-subagent`. ADLC role workers: `ba-suite-subagent`, `architecture-subagent`, `ba-export-subagent`. ADLC service-level workers (dispatched per story by the `adlc` loop): `scope-analyst`, `feature-builder`, `feature-tester`, `feature-reviewer`, `feature-verifier`, `doc-writer`.
+
+**Census**
+A `scope-analyst` pass, before a story's verification contract is written, that establishes what the scope *actually* is by measuring the code: do the story's claims survive, what is the family (not the instance), what is the blast radius, what already exists. Only for unknown or evidence-free scope — a census against a scope the operator ruled by direct observation is a category error. Its sibling, **reconcile**, runs after review and proposes how the shipped outcome changes the remaining plan.
+
+**Operator profile**
+`wiki/meta/operator-profile.md` — the human counterpart of the project profile: engagement pole (business-input vs fully-managed), decision rights, standing rulings, preferred verification instruments, plus a classified correction log. The `adlc` loop reads it at Step 0 and appends corrections; `/adlc distill` proposes setting changes the operator ratifies by editing. Format: `skills/wiki/references/operator-profile.md`.
 
 **Hook**
 A lifecycle event handler. adlc ships hooks for `SessionStart` (load hot cache) and `Stop` (prompt to refresh hot cache when wiki changed) across three host formats: `hooks/hooks.json` (Claude Code), `.cursor/hooks.json` (Cursor), `.github/hooks/hooks.json` (Copilot). See [[Plugin Hooks]].

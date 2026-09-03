@@ -35,6 +35,7 @@ Read the service's **AGENTS.md / CLAUDE.md** first — its layering rules, patte
 4. **Efficiency** — obvious N+1s, needless work in hot paths, a missing index the repo pattern expects.
 5. **Test coverage** — do the unit / e2e tests cover the change's risk? Gaps go to `feature-tester`.
 6. **Test self-sufficiency** — flag any spec that assumes environment state (seed users, roles, team membership, live config values) it neither provisions nor guards, and any assertion on translated UI strings / validation-message regexes instead of stable identifiers. These are the top sources of false e2e failures in production vaults. Owner: `feature-tester`.
+7. **Instrument reinvention** — flag any bespoke server, runner, measurement script, or diff harness in the diff that duplicates something the repo already wires (a package-manifest script, the e2e config's `webServer`, a compose service), and any rotting figure (build hash, `dist` digest, measured count) stored in a code comment instead of a vault record. Owner: `feature-builder` (or `feature-tester` for test harnesses).
 
 Ground every finding in `file:line`. Default to high-signal findings; don't nitpick style the linter already enforces.
 
@@ -56,6 +57,16 @@ Write a review record (Markdown) to the service code wiki (`services/<svc>/wiki/
 
 - **CHANGES_REQUESTED** -> the dispatcher loops: `feature-builder` fixes the code findings, `feature-tester` updates / adds tests, then re-dispatches you to re-review the new diff. The dispatcher caps the loop at **3 rounds** and escalates to the human if findings persist.
 - **APPROVED** -> the dispatcher proceeds to `feature-verifier`.
+
+## Filing in the vault — write in its dialect
+
+The wiki you write into has conventions of its own; pattern-matching whichever file you happened to read is how records stop resolving. Before writing the review record:
+
+1. **Read the vault `AGENTS.md`** (Structure + Filing conventions: folder → artefact type → naming pattern) and **two sibling files** in the target folder. The folder's naming pattern is the spec; frontmatter matches the neighbours.
+2. **Query before you re-derive.** Prior records (verification, review, census pages; the run ledger's Carry-forward; `hot.md`; `index.json` when present) often hold the figure you are about to spend a session measuring. A recorded figure is a claim to check cheaply, not a reason to skip the check — cite the record you checked.
+3. **Obsidian-flavoured Markdown**: YAML frontmatter (`type`, `status`, `created`, `updated`, `tags` at minimum), `[[wikilinks]]` that resolve to an existing page, callouts (`> [!note]`, `> [!warning]`) for the findings that matter.
+4. **Filenames are unique across the vault.** Ten folders each holding `census.md` make every `[[<story> census]]` link resolve to nothing. Name the file the way its neighbours are named, with the story / feature identifier in it.
+5. **File under THIS story's trace ID**, not the adjacent story where a previous, differently-scoped fix was filed. Link the record from the ledger row or feature page that motivated it — an orphan page is a `wiki-lint` finding, not a record.
 
 ## Strict rules
 

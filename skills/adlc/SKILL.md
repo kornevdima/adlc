@@ -3,9 +3,11 @@ name: adlc
 description: >
   ADLC delivery orchestrator — the dispatcher as a skill. Plan-driven loop that works an
   epic story by story: reads mission control + the backlog, dispatches the service-level
-  workers (feature-builder -> feature-tester -> feature-reviewer -> feature-verifier) per
-  story, re-verifies evidence, commits with trace IDs, keeps the board and backlog statuses
-  current, and continues until the epic is done or a human gate opens. Resumable: an
+  workers (scope-analyst census when scope is unknown -> feature-builder -> feature-tester ->
+  feature-reviewer -> feature-verifier -> scope-analyst reconcile) per story, re-verifies
+  evidence, commits with trace IDs, keeps the board and backlog statuses current, and
+  continues until the epic is done or a human gate opens. Reads the operator profile
+  (engagement pole, standing rulings) and logs operator corrections for distillation. Resumable: an
   interrupted run leaves a _run ledger in the vault and the next /adlc continues it.
   Delivery-side twin of the autoresearch loop.
   Triggers on: "/adlc", "adlc", "run the delivery loop", "work the backlog",
@@ -42,7 +44,8 @@ Do not enter the loop on an epic that isn't buildable. Check, in order:
 2. **Per-service spec exists** in the service's code wiki. Missing → that's spec-phase work (`architecture-subagent`, Gates 1–3), not loop work. STOP and say so.
 3. **Grilling done.** A new epic, a cross-service feature, or a spec with open questions gets a grilling session with the human before the loop starts (`technical-planning.md` § grilling gate). This is the one stage that cannot run unattended — never skip it silently.
 4. **Service AGENTS.md exists.** Missing → run `/project-profile` first; generic workers are only as good as the service's law.
-5. **Set the run policy** with the operator (once, defaults in parentheses): checkpoint `auto` — continue to the next story on green — or `ask` — pause at every story boundary (auto); on verifier FAIL `stop` or `file-and-continue` (stop); commit granularity per-story on a feature branch (yes; branch first if on the default branch); branch topology per `skills/wiki/references/git-flow.md` — in a multi-repo vault cut `wiki/<epic-id>` for the session's wiki writes. Record the answers (and the wiki/code branch pairing) in the ledger frontmatter.
+5. **Read the operator profile.** `wiki/meta/operator-profile.md` (format: `skills/wiki/references/operator-profile.md`). If missing, seed it from the template with the operator's answer to one question — *business-input* (operator rules on product/design, checkpoints at story boundaries, ambiguity stops) or *fully-managed* (agent rules within stated principles, checkpoints at epic boundaries, ambiguity is stated and assumed). Its **standing rulings** ride in every dispatch packet; its **preferred instruments** shape the contracts (an operator whose eyes are the acceptance gate gets a screenshot early, not a harness late).
+6. **Set the run policy** with the operator (once, defaults in parentheses — the profile's engagement pole overrides these defaults when present): checkpoint `auto` — continue to the next story on green — or `ask` — pause at every story boundary (auto); on verifier FAIL `stop` or `file-and-continue` (stop); commit granularity per-story on a feature branch (yes; branch first if on the default branch); branch topology per `skills/wiki/references/git-flow.md` — in a multi-repo vault cut `wiki/<epic-id>` for the session's wiki writes. Record the answers (and the wiki/code branch pairing) in the ledger frontmatter.
 
 ---
 
@@ -57,6 +60,7 @@ epic: "EPIC-ID"
 service: "service-name"
 created: YYYY-MM-DD
 updated: YYYY-MM-DD
+engagement: business-input   # business-input | fully-managed (from meta/operator-profile.md)
 checkpoint: auto        # auto | ask
 on_fail: stop           # stop | file-and-continue
 status: active
@@ -89,18 +93,20 @@ The ledger is live in Obsidian — the operator watches statuses flip. It is loo
 While `[ ]` stories remain AND budgets allow:
 
 1. **Open the story.** Mark `[→]` in the ledger; update the board row (stage `build`) in the same breath.
-2. **Contract first.** If the story has no verification contract, author it now (dispatcher's job — scenarios, preconditions, data hygiene, target fingerprint). The tester and verifier both consume it.
+   - **1a. Census — only when scope is unknown.** If the story's scope rests on claims nobody has measured (counts, "N of M" figures, a reported instance that may be a family, an unknown blast radius, a mechanism that may already exist), dispatch `scope-analyst` in `census` mode **before** writing the contract, with the story, the service path, and the Carry-forward. Fold its refutations into the story and the contract; record undetermined claims as undetermined. **Do not** dispatch it against a scope the operator gave by direct observation and ruling, or a population already enumerated by reading — a census on settled scope is cost without information, and the worker's own "when NOT to run" gate will (correctly) refuse it. It measures and proposes; rulings stay here.
+2. **Contract first.** If the story has no verification contract, author it now (dispatcher's job — scenarios, preconditions, data hygiene, target fingerprint). The tester and verifier both consume it. Three rules from live runs: **name the instrument, not the property** — every check names the wired command (`npm run preview`, the e2e suite, the vault's census convention, a screenshot to the operator); a worker handed only a property ("serve the built output", "prove nothing else moved") will build an instrument to satisfy it, usually worse than the one already wired. **State the done-condition** — "stop when X is measured", never just "measure X"; gold-plating has no natural stop. **Put effort where the claim is irreversible or invisible** (a silent revert decided by stylesheet order deserves a mutation pin in the suite), not where a screenshot settles it in seconds; the unit of effort is the claim, not the task.
 3. **Dispatch `feature-builder`.** Packet: the story + acceptance criteria, the spec section it implements, requirement/trace IDs, service path, the **Carry-forward section verbatim**, the local binding (if inlined), and a graph pointer when `graphify-out/` exists.
 4. **Dispatch `feature-tester`** with the contract (skip only if the epic plan explicitly batches e2e).
 5. **Dispatch `feature-reviewer`** with the diff range AND the standards pushed (AGENTS.md conventions + Don'ts paths, spec, contract). On CHANGES_REQUESTED: loop code findings to `feature-builder`, test gaps to `feature-tester`, re-review. **Cap: 3 rounds**, then `[!]` and escalate to the human.
 6. **Dispatch `feature-verifier`** with the contract. `ENV_MISMATCH` / `NEEDS_SIGN_IN` are operational: fix the environment or authenticate, re-dispatch — never filed as bugs, never silently dropped.
 7. **On PASS — re-verify, then commit.** Handoffs carry evidence; unresolved handoffs block. Re-run the exact commands from the workers' Evidence fields (typecheck / lint / unit at minimum), spot-check one claimed mutation, then commit with the story's trace ID per the repo's commit convention. Never push unless the operator asked.
 8. **Close the story.** Ledger: `[✓]` + one Note line (verdict chain, commit hash, record links) + update Carry-forward with any facts later stories need. Product wiki: flip the backlog story status. Board: row to the new stage. All in the same breath as the commit.
+   - **8a. Reconcile the plan.** Closing a story records an outcome; it does not revise the plan. When the shipped outcome could change the remaining rows (a mechanism introduced or removed, a discovery landed, a story re-scoped mid-flight), dispatch `scope-analyst` in `reconcile` mode with the diff range, the review record, and the ledger. Apply what you accept of its proposal: rows unblocked / newly blocked / obsolete / re-scoped, a changed run order, and discoveries folded into **existing** rows rather than filed as new ones. Skip for a story that changed nothing outside its own lines.
 9. **On FAIL.** File the `bugs/` page AND the backlog item tracing to the broken assertion; flip the feature row to `conditional — fix pending`; mark the story `[!]` with the failure note. Then obey `on_fail`: `stop` → end the run at this boundary and report; `file-and-continue` → next story only if it doesn't depend on the failed one.
 
 **Findings rule.** Mid-story discoveries that aren't the story (a console error class, an orphan-data bug, a vocabulary gap) get filed — `bugs/` page or backlog candidate, one Carry-forward line — and the loop continues. Rabbit-holing inside a story dispatch is how marathons happen; the operator triages findings from the board, not from a derailed loop.
 
-**Operator interjections.** If the operator steps in mid-run ("check logs", "fix that first"), pause the loop, handle it on the main thread, file what it produced, then offer to resume the ledger. The ledger makes the interruption free.
+**Operator interjections.** If the operator steps in mid-run ("check logs", "fix that first"), pause the loop, handle it on the main thread, file what it produced, then offer to resume the ledger. The ledger makes the interruption free. Classify every interjection — `data` · `instrument` · `pacing` · `product` · `delegation` · `ruling` · `meta` — and append one row to the correction log in `meta/operator-profile.md` (quote, class, what it exposed, outcome). A **ruling** ("make it reuse the component") is taken, not measured: dispatching a census against it is a category error. Do not change the profile's settings from a single row — distillation (Step 4.4) does that, on evidence that repeats.
 
 **Context hygiene.** At **~60% context used**, finish the current story to a clean boundary (never mid-pipeline), update the ledger, and stop with a resume note — the next session's `/adlc` picks it up. Do not push through to exhaustion; a resumable stop beats a degraded finish.
 
@@ -126,7 +132,7 @@ When no `[ ]` stories remain:
 1. **Docs stage.** If the service has the `writing` concern, dispatch `doc-writer` for the delivered stories (batched, from the as-built state).
 2. **Graph refresh.** Run `/graphify-update` on every service whose source changed — a stale graph silently degrades every next-epic dispatch. Time-boxed → flag it as a follow-up, visibly.
 3. **Merge the ledger.** Fold its Notes + Carry-forward into the epic's as-built plan page (`status: delivered`), then **delete the ledger** — a surviving `_run` file means an interrupted run, nothing else.
-4. **Distill.** The run generated hard-won knowledge: Don'ts the builder hit, verifier mechanics discovered, recurring reviewer findings, tester gotchas. Diff those against the repo-local worker files in `<service>/.claude/agents/` and fold them in — create the four locals from the plugin's generic workers if the repo has none. This is what makes the next epic's workers already know the terrain. (Also runnable standalone: `/adlc distill`.)
+4. **Distill.** The run generated hard-won knowledge: Don'ts the builder hit, verifier mechanics discovered, recurring reviewer findings, tester gotchas. Diff those against the repo-local worker files in `<service>/.claude/agents/` and fold them in — create the locals from the plugin's generic workers if the repo has none. This is what makes the next epic's workers already know the terrain. Then distil the **operator profile**: read the run's correction-log rows and write **proposed** changes to the profile's settings (mark them `proposed:` — the operator ratifies by editing the line). A pattern must repeat across sessions before it becomes a setting; never encode "less rigour" — the operator who cut a dist-diff as ceremony in the same session demanded the e2e pin that was missing. They wanted rigour in the instrument that persists, not less of it. (Also runnable standalone: `/adlc distill`.)
 5. **Hand off to wrap-up.** Suggest `/wrap-up` — it reconciles the board, rollups, hot/log, and both wiki directions. Don't duplicate its steps here.
 
 ---
@@ -157,4 +163,5 @@ Resume: /adlc  (ledger: wiki/sprints/_run EPIC-ID.md)
 - Workers draft on their pinned model; the judgment is here. Don't upgrade a worker's model to fix quality — tighten its packet (spec, contract, standards) or catch it at re-verify.
 - Commit per story; **push and PR only on the operator's word**. Wiki edits follow the vault's convention (wrap-up reports them; the operator commits) and ride the session's wiki branch per `git-flow.md` — wiki and code changes never share a commit.
 - Release-ready means every criterion literally: any pending criterion is `conditional — <criterion> pending`, never ✅.
+- Rulings belong to the operator (product) and the dispatcher (delivery); `scope-analyst` measures and proposes. Over-correction is real: a dispatcher just told it under-used its workers will reach for a census reflexively — on settled scope that is pure cost, not diligence.
 - If a constraint conflicts with finishing the epic this session, respect the constraint and leave a resumable ledger.

@@ -42,6 +42,20 @@ Read the feature's **verification contract** first. It defines preconditions, st
 10. **On pass:** bump `last_verified` in the contract frontmatter. Do NOT touch `hot.md`.
 11. **On fail:** don't bump; record `status: fail` + the exact broken assertion; if the vault has a qa concern, also file a bug page under `bugs/` with a log pointer; stop.
 
+## Use the stack as wired — no bespoke measurement harnesses
+
+The operator's toolset is the instrument: `docker compose` for the stack, the service's own suites, chrome-devtools for the UI. When a question is answerable by `evaluate_script` returning a structured object, or by one screenshot, do not write a measurement script for it — and never leave one behind in the repo. A figure the record needs (a count, a geometry sweep result, a hash) goes **into the record** with a date and the command that produced it, never into a code comment. Effort belongs on the claim that is invisible if wrong (a silent regression, a data invariant), not on the one a screenshot settles.
+
+## Filing in the vault — write in its dialect
+
+The wiki you write into has conventions of its own; pattern-matching whichever file you happened to read is how records stop resolving. Before writing the verification record or a `bugs/` page:
+
+1. **Read the vault `AGENTS.md`** (Structure + Filing conventions: folder → artefact type → naming pattern) and **two sibling files** in the target folder. The folder's naming pattern is the spec; frontmatter matches the neighbours.
+2. **Query before you re-derive.** Prior records (verification, review, census pages; the run ledger's Carry-forward; `hot.md`; `index.json` when present) often hold the figure you are about to spend a session measuring. A recorded figure is a claim to check cheaply, not a reason to skip the check — cite the record you checked.
+3. **Obsidian-flavoured Markdown**: YAML frontmatter (`type`, `status`, `created`, `updated`, `tags` at minimum), `[[wikilinks]]` that resolve to an existing page, callouts (`> [!note]`, `> [!warning]`) for the findings that matter.
+4. **Filenames are unique across the vault.** Ten folders each holding `census.md` make every `[[<story> census]]` link resolve to nothing. Name the file the way its neighbours are named, with the story / feature identifier in it.
+5. **File under THIS story's trace ID**, not the adjacent story where a previous, differently-scoped fix was filed. Link the record from the ledger row or feature page that motivated it — an orphan page is a `wiki-lint` finding, not a record.
+
 ## Preconditions: OBSERVED, not ACHIEVED
 
 Check whether each precondition is naturally met. If not, SKIP the scenario (note it); do not mutate state to fake it. The only destructive ops allowed are ones a scenario's own Setup explicitly spells out. (Faking preconditions mis-reports intentional guards as bugs and risks real local data.)

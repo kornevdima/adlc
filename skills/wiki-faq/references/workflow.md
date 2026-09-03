@@ -50,13 +50,14 @@ Use the narrative layer for any project (code, product docs, BA workflows). Add 
 
 Not skills — the ADLC agent dispatches these at the service level during the per-service build pipeline:
 
+- **`scope-analyst`** — `census` mode before the contract, only when a story's scope is unknown or claimed without evidence: measures the story's claims, sweeps for the family, computes the blast radius; refutes stories and dispatcher lines alike. `reconcile` mode after review: what the shipped outcome changed about the remaining plan. Measures and proposes; never rules, never writes feature code.
 - **`feature-builder`** — implements code + unit tests from the spec (reads the service's own AGENTS.md for commands).
 - **`feature-tester`** — authors e2e specs from the feature's verification contract.
 - **`feature-reviewer`** — reviews the diff (correctness, reuse, efficiency, test coverage); registers a review record in the wiki; returns APPROVED or CHANGES_REQUESTED.
 - **`feature-verifier`** — runs the contract via `docker compose` + chrome-devtools MCP; logs pass/fail; never fixes bugs.
 - **`doc-writer`** — writes user docs for built + verified features.
 
-Sequenced build -> test -> review -> verify -> document; the agent commits. On CHANGES_REQUESTED the review loops back to builder + tester, then re-reviews (capped rounds). Stack-neutral (no hardcoded framework).
+Sequenced (census ->) build -> test -> review -> verify (-> reconcile) -> document; the agent commits. On CHANGES_REQUESTED the review loops back to builder + tester, then re-reviews (capped rounds). Stack-neutral (no hardcoded framework).
 
 ### Project context
 
