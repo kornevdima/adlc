@@ -2,7 +2,7 @@
 
 These are the BA methodology docs (the ba-suite skill set) **bundled into adlc** so the external `ba-suite` plugin is NOT required. The `ba-suite-subagent` and `ba-export-subagent` read these directly; they do not call `ba-suite:*` via the Skill tool.
 
-Source: derived from the ba-suite skill set (see `ATTRIBUTION.md`). One file per method.
+Source: derived from the ba-suite skill set (see `ATTRIBUTION.md` at the plugin root). One file per method, plus `references/`: the 23 supporting tables (taxonomies, scoring rubrics, templates, decision rules) the method docs tell you to read before processing input. Those pointers are written as plugin-root paths (`skills/wiki/references/ba/references/<name>.md`); resolve the plugin root the same way as for the method docs. A method doc applied without its reference files is not applied: report it as `INFERRED`.
 
 ## ADLC overrides (read these BEFORE applying any method doc)
 

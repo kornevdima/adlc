@@ -22,8 +22,8 @@ Applies systematic story splitting and outputs a backlog-ready register plus a B
 ## Reference Files
 
 Read both before processing any input:
-- `references/invest-criteria.md` — INVEST test definitions, failure modes, and repair patterns
-- `references/story-splitting-patterns.md` — 9 splitting patterns with examples and application rules
+- `skills/wiki/references/ba/references/invest-criteria.md` — INVEST test definitions, failure modes, and repair patterns
+- `skills/wiki/references/ba/references/story-splitting-patterns.md` — 9 splitting patterns with examples and application rules
 
 ---
 
@@ -65,7 +65,7 @@ Example: `EPIC-001: Authentication — Enable secure, self-service access manage
 One epic per distinct capability cluster. Do not merge unrelated capabilities into a single epic.
 
 ### Step 2 — Apply Story Splitting
-Read `references/story-splitting-patterns.md`. For each epic, identify applicable splitting
+Read `skills/wiki/references/ba/references/story-splitting-patterns.md`. For each epic, identify applicable splitting
 patterns and apply them to generate candidate stories.
 
 Apply a minimum of 2 splitting patterns per epic. Common first pass: workflow step split + role split.
@@ -93,7 +93,7 @@ Rules:
 - If the value is unclear, flag `[VALUE UNCLEAR — confirm with Product Owner]`
 
 ### Step 4 — Apply INVEST Test
-Read `references/invest-criteria.md`. Test every story against all 6 INVEST criteria.
+Read `skills/wiki/references/ba/references/invest-criteria.md`. Test every story against all 6 INVEST criteria.
 Flag failures explicitly. Apply repair patterns from the reference file.
 
 Do not pass a story that fails I (Independent) or T (Testable) without a repair.

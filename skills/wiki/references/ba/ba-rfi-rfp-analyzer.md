@@ -23,7 +23,7 @@ compliance matrix for vendor responses or an evaluation scorecard for buyer asse
 ## Reference File
 
 Read before processing any input:
-- `references/rfp-requirement-classification.md` — requirement category taxonomy, compliance
+- `skills/wiki/references/ba/references/rfp-requirement-classification.md` — requirement category taxonomy, compliance
   status definitions, and common RFP document structure patterns
 
 ---
@@ -52,7 +52,7 @@ If mode is not specified, ask one question:
 ## Processing Steps — Both Modes
 
 ### Step 1 — Parse Document Structure
-Read `references/rfp-requirement-classification.md` §2 for common RFP section patterns.
+Read `skills/wiki/references/ba/references/rfp-requirement-classification.md` §2 for common RFP section patterns.
 Identify and extract:
 - Mandatory requirements (those that must be met for a response to be valid)
 - Evaluation criteria (weighted or unweighted)
@@ -63,7 +63,7 @@ Identify and extract:
 
 ### Step 2 — Extract and Classify Requirements
 Identify every discrete requirement statement in the document. Extract one requirement per row.
-Read `references/rfp-requirement-classification.md` §1 for category taxonomy.
+Read `skills/wiki/references/ba/references/rfp-requirement-classification.md` §1 for category taxonomy.
 
 | Category Code | Category |
 |--------------|---------|
@@ -122,7 +122,7 @@ our [capability] satisfies this requirement."
 
 ### Step 4E — Build Scoring Criteria
 If weights are provided in the RFP, use them. If not, apply defaults from
-`references/rfp-requirement-classification.md` §3.
+`skills/wiki/references/ba/references/rfp-requirement-classification.md` §3.
 
 ### Step 5E — Score Vendor Responses
 For each mandatory requirement: pass/fail.

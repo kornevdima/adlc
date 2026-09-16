@@ -22,8 +22,8 @@ list to a fully annotated engagement strategy depending on how much input is pro
 ## Reference Files
 
 Read both before processing any input:
-- `references/stakeholder-archetypes.md` — 8 archetypes with default engagement strategies, concern profiles, and resistance triggers
-- `references/ba-deliverables-raci.md` — standard BA deliverable set with default RACI assignments per archetype
+- `skills/wiki/references/ba/references/stakeholder-archetypes.md` — 8 archetypes with default engagement strategies, concern profiles, and resistance triggers
+- `skills/wiki/references/ba/references/ba-deliverables-raci.md` — standard BA deliverable set with default RACI assignments per archetype
 
 ---
 
@@ -55,7 +55,7 @@ Do not ask both questions at once. Ask the more important one first (usually pro
 ## Processing Steps
 
 ### Step 1 — Classify Archetypes
-Read `references/stakeholder-archetypes.md`. Assign each stakeholder to the closest archetype.
+Read `skills/wiki/references/ba/references/stakeholder-archetypes.md`. Assign each stakeholder to the closest archetype.
 A stakeholder may span two archetypes — record primary and secondary.
 
 | Archetype | Typical Titles |
@@ -101,7 +101,7 @@ Scoring rationale must be stated for each stakeholder (one sentence).
 | Monitor | Power < 4 AND Interest < 4 | Light-touch; periodic email updates; flag if their status changes |
 
 ### Step 4 — Build RACI Matrix
-Read `references/ba-deliverables-raci.md`. Assign each stakeholder to R/A/C/I for each standard
+Read `skills/wiki/references/ba/references/ba-deliverables-raci.md`. Assign each stakeholder to R/A/C/I for each standard
 BA deliverable. Apply archetype defaults from the reference, then adjust for the specific project context.
 
 RACI rules:

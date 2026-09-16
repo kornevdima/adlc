@@ -23,8 +23,8 @@ primary input.
 ## Reference Files
 
 Read both before processing any input:
-- `references/traceability-matrix-template.md` — column definitions, link types, and coverage rules for the requirements traceability matrix
-- `references/change-impact-classification.md` — change request classification, impact scoring criteria, and approval routing rules
+- `skills/wiki/references/ba/references/traceability-matrix-template.md` — column definitions, link types, and coverage rules for the requirements traceability matrix
+- `skills/wiki/references/ba/references/change-impact-classification.md` — change request classification, impact scoring criteria, and approval routing rules
 
 ---
 
@@ -74,7 +74,7 @@ If the mode is ambiguous, ask one question:
 to their origin, to solution components, and to test cases.
 
 **Step 1.1 — Identify link levels**
-Read `references/traceability-matrix-template.md`. Establish which link levels are in scope:
+Read `skills/wiki/references/ba/references/traceability-matrix-template.md`. Establish which link levels are in scope:
 - Business need to requirement (origin tracing)
 - Requirement to epic or story (decomposition tracing)
 - Requirement to test case (coverage tracing)
@@ -149,7 +149,7 @@ with scope boundaries).
 produce a structured change request assessment.
 
 **Step 4.1 — Classify the change**
-Read `references/change-impact-classification.md`. Classify the change request:
+Read `skills/wiki/references/ba/references/change-impact-classification.md`. Classify the change request:
 
 | Class | Definition | Approval route |
 |-------|-----------|----------------|

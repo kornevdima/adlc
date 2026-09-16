@@ -22,8 +22,8 @@ package. Produces two file outputs and an inline summary.
 ## Reference Files
 
 Read both before processing any input:
-- `references/requirement-types.md` — full classification taxonomy with decision rules and per-type examples
-- `references/moscow-language-triggers.md` — stakeholder language pattern → MoSCoW mapping with override rules
+- `skills/wiki/references/ba/references/requirement-types.md` — full classification taxonomy with decision rules and per-type examples
+- `skills/wiki/references/ba/references/moscow-language-triggers.md` — stakeholder language pattern → MoSCoW mapping with override rules
 
 ---
 
@@ -89,7 +89,7 @@ containing a verb + subject as a candidate statement. Do not merge — keep atom
 a provisional source tag (speaker name, document section, or "Input").
 
 ### Step 2 — Classify
-Read `references/requirement-types.md` and apply the taxonomy to each statement.
+Read `skills/wiki/references/ba/references/requirement-types.md` and apply the taxonomy to each statement.
 
 | Code | Type |
 |------|------|
@@ -115,7 +115,7 @@ A single source statement may produce multiple classified items. Split as needed
 Do not paraphrase meaning. Rewrite form only.
 
 ### Step 4 — Prioritise (MoSCoW)
-Apply `references/moscow-language-triggers.md`. Where no language signal exists, apply:
+Apply `skills/wiki/references/ba/references/moscow-language-triggers.md`. Where no language signal exists, apply:
 - FR with regulatory or contractual basis → Must Have (note basis)
 - FR with stated user workflow dependency → Should Have
 - All others → Could Have, flagged "Inferred — confirm with stakeholder"

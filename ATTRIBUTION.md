@@ -15,7 +15,7 @@ adlc is an original work. The following third-party patterns, tools, and creator
 ## BA method set (ba-suite)
 
 **Author:** dmytro (the ba-suite skill set)
-**Use:** The BA methodology docs under `skills/wiki/references/ba/` are bundled from the author's own ba-suite skill set so adlc's Mode ADLC is self-contained and does not require installing the separate ba-suite plugin. They are applied by `ba-suite-subagent` and `ba-export-subagent`.
+**Use:** The BA methodology docs under `skills/wiki/references/ba/` (one file per method, plus the supporting reference tables in `references/`) are bundled from the author's own ba-suite skill set so adlc's Mode ADLC is self-contained and does not require installing the separate ba-suite plugin. They are applied by `ba-suite-subagent` and `ba-export-subagent`.
 
 ---
 
