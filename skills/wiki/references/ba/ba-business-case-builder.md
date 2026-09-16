@@ -24,8 +24,8 @@ and payback period calculated explicitly.
 ## Reference Files
 
 Read both before processing any input:
-- `references/business-case-anatomy.md` — section-by-section content guide, writing standards, and quality criteria per section
-- `references/financial-model-formulas.md` — NPV, ROI, payback period formulas with worked examples and sensitivity analysis design
+- `skills/wiki/references/ba/references/business-case-anatomy.md` — section-by-section content guide, writing standards, and quality criteria per section
+- `skills/wiki/references/ba/references/financial-model-formulas.md` — NPV, ROI, payback period formulas with worked examples and sensitivity analysis design
 
 ---
 
@@ -92,7 +92,7 @@ For each option, document:
 - Estimated implementation timeline
 
 ### Step 4 — Build Financial Model
-Read `references/financial-model-formulas.md`.
+Read `skills/wiki/references/ba/references/financial-model-formulas.md`.
 Apply a 3-year or 5-year horizon (use 3-year unless specified).
 
 For each option:

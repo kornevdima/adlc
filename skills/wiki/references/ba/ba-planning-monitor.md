@@ -23,8 +23,8 @@ use, in what order, and who approves their outputs.
 ## Reference Files
 
 Read both before processing any input:
-- `references/ba-approach-patterns.md` — approach archetypes (waterfall, agile, hybrid, iterative) with selection criteria, tool and technique defaults, and risk flags per approach
-- `references/ba-governance-templates.md` — governance plan structure, information management schema, and performance review scoring rubric
+- `skills/wiki/references/ba/references/ba-approach-patterns.md` — approach archetypes (waterfall, agile, hybrid, iterative) with selection criteria, tool and technique defaults, and risk flags per approach
+- `skills/wiki/references/ba/references/ba-governance-templates.md` — governance plan structure, information management schema, and performance review scoring rubric
 
 ---
 
@@ -71,7 +71,7 @@ If no project type is provided, ask one question:
 **Purpose:** Select and document the BA methodology, techniques, and tools for the engagement.
 
 **Step 1.1 — Classify the engagement**
-Read `references/ba-approach-patterns.md`. Match the project context to an approach archetype.
+Read `skills/wiki/references/ba/references/ba-approach-patterns.md`. Match the project context to an approach archetype.
 
 | Approach | Use when |
 |----------|---------|
@@ -194,7 +194,7 @@ commercially sensitive or personally identifiable information that require restr
 produce actionable improvements for the next project.
 
 **Step 5.1 — Assess BA effectiveness**
-Read `references/ba-governance-templates.md`. Score the BA practice across six dimensions:
+Read `skills/wiki/references/ba/references/ba-governance-templates.md`. Score the BA practice across six dimensions:
 
 | Dimension | What is assessed | Score 1–5 |
 |-----------|-----------------|----------|

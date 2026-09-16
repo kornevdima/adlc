@@ -1,7 +1,7 @@
 ---
 type: meta
 title: "Operation Log"
-updated: 2026-09-03
+updated: 2026-09-16
 tags:
   - meta
   - log
@@ -24,6 +24,13 @@ Entry format: `## [YYYY-MM-DD] operation | Title`
 Parse recent entries: `grep "^## \[" wiki/log.md | head -10`
 
 ---
+
+## [2026-09-16] fix | Bundled BA method docs pointed at reference tables that were never bundled
+- Report: 13 of 14 method docs in `skills/wiki/references/ba/` pointed at `references/*.md` files that did not exist; the shift-left `_index.md` pointed at `ATTRIBUTION.md` and `agents/architecture-subagent.md` by bare paths that do not resolve from its folder.
+- Root cause (corrected): not a deliberate flattening. The upstream ba-suite source ships 23 reference files (3,928 lines: taxonomies, severity rubrics, INVEST tests, MoSCoW triggers, RTM template, Draw.io XML library). Bundling copied each `SKILL.md` as one method doc and left the tables behind, so every worker that "applied" a method was inferring the rubric. The shift-left upstream is a single `SKILL.md`, so nothing was missing there; only the two path notes were ambiguous.
+- Fix (plugin 1.0.3, uncommitted): copied the 23 files verbatim into `skills/wiki/references/ba/references/`; rewrote every pointer (method docs + one cross-ref inside `business-case-anatomy.md`) to the plugin-root path `skills/wiki/references/ba/references/<name>.md`, the form the workers already resolve; `_index.md` documents the folder and says a method applied without its tables reports `INFERRED`; orientation's "each skill has a references/ subdirectory" line rewritten; `ATTRIBUTION.md` paths qualified "at the plugin root" in both `_index.md` files; `ATTRIBUTION.md` mentions the tables.
+- Verified: all 23 distinct pointers resolve to a file on disk. (The report counted 24 because two table rows were duplicated.)
+- Follow-up: nothing guards against this drift. Candidate: a lint check that every backticked `skills/...` path in `skills/wiki/references/` resolves.
 
 ## [2026-09-03] autoresearch | Sharing the Wiki with People
 - Questions: 5 total, 5 answered, 0 blocked | Searches: 25 | Fetches: 15 | Pages created: 14 (budget 15)

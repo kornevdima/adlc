@@ -22,8 +22,8 @@ specifications. Handles AS-IS, TO-BE, and combined comparison models.
 ## Reference Files
 
 Read both before processing any input:
-- `references/bpmn-element-reference.md` — BPMN element definitions, Draw.io style mappings, and usage rules
-- `references/drawio-swimlane-xml.md` — XML template library for swimlane containers, shapes, connectors, and gateways
+- `skills/wiki/references/ba/references/bpmn-element-reference.md` — BPMN element definitions, Draw.io style mappings, and usage rules
+- `skills/wiki/references/ba/references/drawio-swimlane-xml.md` — XML template library for swimlane containers, shapes, connectors, and gateways
 
 ---
 
@@ -60,7 +60,7 @@ Establish:
 - **Scope in / scope out:** What sub-processes are referenced but not modelled here?
 
 ### Step 2 — Extract Process Elements
-Parse the input and identify each element type. Read `references/bpmn-element-reference.md` for
+Parse the input and identify each element type. Read `skills/wiki/references/ba/references/bpmn-element-reference.md` for
 definitions.
 
 | Element | How to Identify in Narrative |
@@ -118,7 +118,7 @@ Produce a structured written narrative alongside the diagram. One row per task i
 Filename: `{process_name}_{model_type}.drawio`
 Location: `/mnt/user-data/outputs/`
 
-Read `references/drawio-swimlane-xml.md` for exact XML structure.
+Read `skills/wiki/references/ba/references/drawio-swimlane-xml.md` for exact XML structure.
 
 **Layout rules:**
 - Canvas width: 1800–2600px depending on step count

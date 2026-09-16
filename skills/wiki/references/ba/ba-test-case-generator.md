@@ -22,7 +22,7 @@ Produces an Excel register for UAT coordination and a YAML BDD spec for automati
 ## Reference File
 
 Read before processing any input:
-- `references/test-case-patterns.md` — scenario type definitions, boundary value analysis rules,
+- `skills/wiki/references/ba/references/test-case-patterns.md` — scenario type definitions, boundary value analysis rules,
   negative test patterns, and NFR test design
 
 ---
@@ -61,7 +61,7 @@ For each user story or requirement:
 - Note any data conditions, thresholds, or business rules embedded in the criteria
 
 ### Step 2 — Classify Scenario Types
-Read `references/test-case-patterns.md`. For each acceptance criterion and each business rule,
+Read `skills/wiki/references/ba/references/test-case-patterns.md`. For each acceptance criterion and each business rule,
 derive the following scenario types:
 
 | Type Code | Type | Source |
@@ -96,7 +96,7 @@ For each scenario, write a complete test case. Format:
 | Automation Candidate | Yes / No / Partial |
 
 ### Step 4 — Apply Boundary Value Analysis (for numeric/date criteria)
-Read `references/test-case-patterns.md` §2.
+Read `skills/wiki/references/ba/references/test-case-patterns.md` §2.
 For every criterion with a numeric threshold or date boundary, generate three test cases:
 - Value at the boundary (e.g. exactly 50 characters)
 - Value one unit below the boundary (49 characters)

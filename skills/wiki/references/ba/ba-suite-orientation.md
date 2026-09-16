@@ -224,4 +224,4 @@ Whenever a deliverable includes factual claims, statistics, market figures, benc
 
 ## Reference files inside each skill
 
-Every skill has a `references/` subdirectory. Read the reference files listed at the top of each SKILL.md before processing input. They contain classification taxonomies, scoring rubrics, templates, and decision rules that the skill logic depends on.
+In adlc the reference files for every method live together in `skills/wiki/references/ba/references/` (a plugin-root path). Read the reference files listed at the top of each method doc before processing input. They contain classification taxonomies, scoring rubrics, templates, and decision rules that the skill logic depends on.

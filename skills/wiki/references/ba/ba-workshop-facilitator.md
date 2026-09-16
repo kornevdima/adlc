@@ -22,8 +22,8 @@ design, in-session facilitation script, and post-session synthesis.
 ## Reference Files
 
 Read both before processing any input:
-- `references/facilitation-frameworks.md` — framework selection by workshop type, with activity designs, time allocations, and facilitation tips
-- `references/canvas-templates.md` — reusable canvas templates in text/table form for the most common workshop canvases
+- `skills/wiki/references/ba/references/facilitation-frameworks.md` — framework selection by workshop type, with activity designs, time allocations, and facilitation tips
+- `skills/wiki/references/ba/references/canvas-templates.md` — reusable canvas templates in text/table form for the most common workshop canvases
 
 ---
 
@@ -55,7 +55,7 @@ If duration is not provided, assume 2 hours and state the assumption inline.
 ## Processing Steps
 
 ### Step 1 — Select Framework
-Read `references/facilitation-frameworks.md`. Match the workshop type to the recommended framework.
+Read `skills/wiki/references/ba/references/facilitation-frameworks.md`. Match the workshop type to the recommended framework.
 If the type is unclear, derive it from the objective statement using this logic:
 
 | Objective contains | → Workshop type |
@@ -96,7 +96,7 @@ A single page (max 400 words). Sections:
 Tone: clear, human, no jargon. Write for the end user archetype as the least-informed participant.
 
 ### Step 5 — Prepare Canvas(es)
-Read `references/canvas-templates.md`. Select the canvas(es) appropriate to the framework chosen.
+Read `skills/wiki/references/ba/references/canvas-templates.md`. Select the canvas(es) appropriate to the framework chosen.
 Reproduce the canvas structure in a table format suitable for inclusion in the Word output and for
 printing or sharing as a Miro/Mural/whiteboard template.
 

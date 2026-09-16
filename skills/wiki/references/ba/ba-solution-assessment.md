@@ -23,7 +23,7 @@ options, build/buy, or strategic initiative prioritisation.
 ## Reference File
 
 Read before processing any input:
-- `references/evaluation-criteria-library.md` — default criteria sets by decision type,
+- `skills/wiki/references/ba/references/evaluation-criteria-library.md` — default criteria sets by decision type,
   scoring rubrics, and sensitivity analysis design
 
 ---
@@ -65,7 +65,7 @@ Apply knockout check first. Any option failing a must-have is eliminated and not
 output. Do not include eliminated options in the scored comparison.
 
 ### Step 2 — Select Evaluation Criteria
-Read `references/evaluation-criteria-library.md`. Select the default criteria set for the
+Read `skills/wiki/references/ba/references/evaluation-criteria-library.md`. Select the default criteria set for the
 decision type, or use the provided criteria list.
 
 Group criteria into clusters (4–6 clusters of 2–5 criteria each).
@@ -94,7 +94,7 @@ Calculate: Weighted Score = Score × (Weight / 100) per criterion per option.
 Total Score = Sum of Weighted Scores per option.
 
 ### Step 4 — Conduct Sensitivity Analysis
-Read `references/evaluation-criteria-library.md` §3 for sensitivity design.
+Read `skills/wiki/references/ba/references/evaluation-criteria-library.md` §3 for sensitivity design.
 
 Run three sensitivity scenarios:
 1. **Sponsor scenario:** Increase the top-priority criterion weight by 20%; reduce others proportionally

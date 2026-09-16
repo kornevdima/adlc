@@ -22,8 +22,8 @@ and artefact standards. Does not redesign the events — supports the BA's contr
 ## Reference Files
 
 Read both before processing any input:
-- `references/scrum-events-guide.md` — Scrum Guide 2020 event definitions, purposes, time-boxes, and artefact connections
-- `references/definition-of-ready-done.md` — Default DoR and DoD criteria with customisation rules and the BA's responsibility for each criterion
+- `skills/wiki/references/ba/references/scrum-events-guide.md` — Scrum Guide 2020 event definitions, purposes, time-boxes, and artefact connections
+- `skills/wiki/references/ba/references/definition-of-ready-done.md` — Default DoR and DoD criteria with customisation rules and the BA's responsibility for each criterion
 
 ---
 
@@ -201,8 +201,8 @@ Sections:
 2. Sprint Goal (confirmed)
 3. Sprint Backlog: table of committed PBIs with Story ID, Title, Effort, Owner, Status
 4. Capacity: table of Developers × available days
-5. Definition of Ready (from references/definition-of-ready-done.md)
-6. Definition of Done (from references/definition-of-ready-done.md)
+5. Definition of Ready (from skills/wiki/references/ba/references/definition-of-ready-done.md)
+6. Definition of Done (from skills/wiki/references/ba/references/definition-of-ready-done.md)
 7. Links to event outputs (populated as Sprint progresses)
 8. Risks and dependencies active this Sprint
 

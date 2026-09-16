@@ -22,8 +22,8 @@ and a prioritised roadmap view. Works across any analytical dimension.
 ## Reference Files
 
 Read both before processing any input:
-- `references/gap-severity-rubric.md` — scoring criteria for gap severity and root cause classification
-- `references/gap-action-patterns.md` — standard recommended action patterns, effort/impact defaults, and roadmap horizon rules
+- `skills/wiki/references/ba/references/gap-severity-rubric.md` — scoring criteria for gap severity and root cause classification
+- `skills/wiki/references/ba/references/gap-action-patterns.md` — standard recommended action patterns, effort/impact defaults, and roadmap horizon rules
 
 ---
 
@@ -79,7 +79,7 @@ Pair each baseline element with its corresponding target element. If no baseline
 for a target requirement, it is a **new capability gap** (score: Critical by default).
 
 ### Step 3 — Score Gap Severity
-Read `references/gap-severity-rubric.md`. Apply the 5-level severity scale to each element pair.
+Read `skills/wiki/references/ba/references/gap-severity-rubric.md`. Apply the 5-level severity scale to each element pair.
 
 | Score | Label | Definition |
 |-------|-------|-----------|
@@ -105,7 +105,7 @@ For each gap with severity ≥ 1, classify the primary root cause:
 A gap may have a primary and secondary root cause. Record both if relevant.
 
 ### Step 5 — Derive Recommended Actions
-Read `references/gap-action-patterns.md`. Map each gap to a recommended action pattern.
+Read `skills/wiki/references/ba/references/gap-action-patterns.md`. Map each gap to a recommended action pattern.
 Assign effort (Low / Medium / High) and impact (Low / Medium / High) based on severity and root cause.
 
 Derive action horizon:
