@@ -74,7 +74,7 @@ Re-run the chunk plan. Both upstream `detect()` and our `chunks.py` honor `.grap
 
 **Symptom**: opening a fresh session, asking "what's in the hot cache?" returns "no idea."
 
-**Cause**: most likely the [Claude Code plugin-hook STDOUT bug](https://github.com/anthropics/claude-code/issues/10875) — plugin-defined prompt-type hooks may not have STDOUT captured.
+**Cause**: most likely the [Claude Code plugin-hook STDOUT bug](https://github.com/anthropics/claude-code/issues/10875) — plugin-defined hooks may not have STDOUT captured.
 
 **Fix**: copy the hook config from `hooks/hooks.json` into your user-level `~/.claude/settings.json`. The command-type hook (`cat wiki/hot.md`) is the canonical fallback when the plugin path is broken in your Claude Code version.
 
