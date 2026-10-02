@@ -25,6 +25,12 @@ Parse recent entries: `grep "^## \[" wiki/log.md | head -10`
 
 ---
 
+## [2026-10-02] eval | Skills field eval over three operator sessions
+- Sources: three operator transcripts (one Claude Code, two Copilot CLI), reviewed by four parallel read-only reviewers. No project specifics are filed; the transcripts are not ingested into `.raw/`.
+- Filed [[Skills Field Eval 2026-10]]. Confirms K1, K2, K3, K5, K6, K7, K8 (K8 strong: a model-unavailable dispatch led to an offer to build inline). 14 new findings; claims about the plugin source were checked in the repo (SessionStart prompt hook, compose-only verifier, tester/verifier missing CLAUDE.md, graphify hot.md overwrite, 0.6 vs 0.7 threshold, "pinned to Sonnet" prose).
+- Updated [[Configurable subagent models per host]] with the field evidence. Nothing in the plugin changed yet.
+- Operator clarification: working without `/adlc` (implementing a ready story by hand, using `/adlc:wiki` to load context) is a supported mode. N2 was reframed from a routing failure to that use case; the eval page now has a section on it.
+
 ## [2026-10-02] question | Configurable subagent models per host
 - Trigger: in a Copilot org without Claude models, worker dispatch failed on the hardcoded `model: sonnet` and fell back to a general-purpose agent.
 - Filed [[Configurable subagent models per host]] (open): host facts for Claude Code `userConfig`, Cursor `model` / `variables`, Copilot (unverified); a proposed `adlc:setup` + per-machine model file + dispatch-time `model` design; rejected rewriting installed agents as the primary mechanism (lost on update, and dirties the repo in dev mode).
