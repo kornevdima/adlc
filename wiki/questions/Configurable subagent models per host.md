@@ -17,7 +17,7 @@ related:
 
 # Configurable subagent models per host
 
-**Opened from live use.** The plugin was installed in GitHub Copilot in an org without Claude models. The worker dispatch failed on the agent's `model: sonnet`, and the orchestrator proposed a general-purpose agent instead. That agent does not have the worker's instructions.
+**Opened from live use.** Field evidence: [[Skills Field Eval 2026-10]] (K8). The plugin was installed in GitHub Copilot in an org without Claude models. The worker dispatch failed on the agent's `model: sonnet`, and the orchestrator proposed a general-purpose agent instead. That agent does not have the worker's instructions.
 
 ## The problem
 
@@ -43,7 +43,7 @@ The operator proposed a skill that rewrites `model:` in the installed agents fro
    - worker: build, test, verify, BA, docs (cheap, e.g. `sonnet`)
    - judgement: `feature-reviewer`, `scope-analyst`
 
-   It writes the answers to a per-machine file such as `~/.adlc/models.json`, keyed by host. This is the same pattern as `~/.esg/workspace.json` in `ai-sourcer:setup`. The file survives plugin updates.
+   It writes the answers to a per-machine file such as `~/.adlc/models.json`, keyed by host. This is the same pattern other plugins use for a per-machine workspace file. The file survives plugin updates.
 3. **Pass the model at dispatch time.** The `adlc` skill and other dispatchers read the file and call `Agent(subagent_type: "adlc:<worker>", model: <tier>)`, with no files edited.
 4. **Fall back without a model.** On a model error, retry the same `subagent_type` without `model`, so it inherits the session model, and suggest re-running setup. Never fall back to a general-purpose agent.
 5. **Rewrite frontmatter only where dispatch can't pass a model.** This is for a host whose subagent tool has no `model` parameter. Setup rewrites `model:` in the installed copy and records the plugin version. A session-start hook detects a version change and asks to re-run setup. Setup refuses when the installed folder is a git checkout.
@@ -58,3 +58,4 @@ The operator proposed a skill that rewrites `model:` in the installed agents fro
 ## Resolution log
 
 - 2026-10-02: opened; design agreed in discussion, nothing built.
+- 2026-10-02: field eval confirmed it. The failed dispatch led to an offer to build inline; the retry hardcoded another vendor's model; a plugin reload was tried and did nothing. Add to the fix: remove the "pinned to a fast model (Sonnet)" line in `technical-planning.md`, and never answer a model error by doing the work inline.

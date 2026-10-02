@@ -51,6 +51,7 @@ Navigation: [[overview]] | [[log]] | [[hot]] | [[maintenance-triggers]]
 - [[maintenance-triggers]] — when to run which skill/command; the answer to "what should I update?" (status: current)
 - [[graphify-integration]] — design of the structural code-graph layer; option C, Jaccard preservation, labels.json gotcha (status: current)
 - [[LLM Wiki Pattern]] — the pattern for building persistent, compounding knowledge bases using LLMs (status: mature)
+- [[Skills Field Eval 2026-10]] — three operator sessions (Claude Code + Copilot) evaluated against K1–K9: confirms the model, handoff, records and marathon patterns; 14 new findings, led by a broken SessionStart prompt hook, "implement it" bypassing `/adlc`, and the compose-only verifier (status: developing)
 - [[Hot Cache]] — ~500-word session context file, updated after every ingest and session (status: mature)
 - [[Compounding Knowledge]] — why wiki knowledge grows more valuable over time, unlike RAG (status: mature)
 - [[cherry-picks]] — prioritized feature backlog from ecosystem research; 13 features to add to claude-obsidian (status: current)
