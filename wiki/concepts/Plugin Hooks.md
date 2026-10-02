@@ -22,7 +22,7 @@ Plugin lifecycle hooks for the adlc wiki vault. Three host tools are supported: 
 |---|---|---|
 | Claude Code | [`hooks/hooks.json`](../../hooks/hooks.json) | Claude plugin hooks (matchers, `type: "command"`) |
 | Cursor (plugin) | [`hooks/cursor-hooks.json`](../../hooks/cursor-hooks.json), declared in `.cursor-plugin/plugin.json` | Cursor hooks (`version: 1`, inline `command` strings that print JSON) |
-| Copilot (cloud + CLI + JetBrains preview) | [`.github/hooks/hooks.json`](../../.github/hooks/hooks.json) + scripts in [`.github/hooks/scripts/`](../../.github/hooks/scripts) | Copilot hooks (`version: 1`, `bash` field references a script path) |
+| Copilot (plugin) | [`hooks/copilot-hooks.json`](../../hooks/copilot-hooks.json), declared in `.github/plugin/marketplace.json` | Copilot hooks (`version: 1`, inline `command` strings that print JSON; plain-text output is ignored) |
 
 ## Active events
 
@@ -36,7 +36,7 @@ When a session begins, read `wiki/hot.md` so the agent inherits recent context w
 |---|---|---|
 | Claude Code | `SessionStart` (matcher: `startup\|resume`) | inline `cat wiki/hot.md` (a prompt-type companion was removed 2026-10-02: Claude Code rejects prompt hooks on `SessionStart` and showed an error at every startup) |
 | Cursor | `sessionStart` | inline python: prints `{"additional_context": <hot.md>}` |
-| Copilot | `sessionStart` | runs [`scripts/session-start.sh`](../../.github/hooks/scripts/session-start.sh) |
+| Copilot | `sessionStart` | inline python: prints `{"additionalContext": <hot.md>}` |
 
 All three are no-ops in non-vault repos (the file check returns gracefully if `wiki/hot.md` doesn't exist).
 
@@ -48,7 +48,7 @@ At the end of every agent turn, if `wiki/` has uncommitted changes, the hook pri
 |---|---|---|
 | Claude Code | `Stop` | inline shell pipeline checks `git diff --name-only HEAD` for `wiki/` matches |
 | Cursor | `stop` | inline python: same `git diff` check, returns `{"followup_message": ...}` only when `loop_count == 0` (Cursor auto-submits the follow-up, so later stops stay silent) |
-| Copilot | `agentStop` | runs [`scripts/agent-stop.sh`](../../.github/hooks/scripts/agent-stop.sh) |
+| Copilot | `agentStop` | inline python: same `git diff` check, returns `{"decision": "block", "reason": ...}` unless `stop_hook_active` is set (a block forces one more turn) |
 
 ## Removed events
 

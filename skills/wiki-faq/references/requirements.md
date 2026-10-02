@@ -12,7 +12,7 @@ adlc is primarily a Claude Code plugin but the skills follow the cross-platform 
 | **Cursor** | Supported | Reads `AGENTS.md` natively. Symlink `skills/` into `~/.cursor/skills/adlc` or use Cursor's plugin loader. Hooks ship with the plugin in `hooks/cursor-hooks.json` (declared in `.cursor-plugin/plugin.json`). |
 | **Codex CLI** | Supported | `ln -s "$(pwd)/skills" ~/.codex/skills/adlc` |
 | **OpenCode** | Supported | `ln -s "$(pwd)/skills" ~/.opencode/skills/adlc` |
-| **GitHub Copilot** (cloud / CLI / JetBrains preview) | Hooks supported | Reads `AGENTS.md` natively. Hooks: `.github/hooks/hooks.json` already configured. |
+| **GitHub Copilot** (cloud / CLI / JetBrains preview) | Hooks supported | Reads `AGENTS.md` natively. Plugin install via `.github/plugin/marketplace.json`; hooks ship in `hooks/copilot-hooks.json`. |
 
 The `wiki/`, `wiki-ingest`, `wiki-query`, `wiki-lint`, `save`, `autoresearch`, `project-profile`, `obsidian-markdown`, `obsidian-bases`, `wiki-faq` skills work in any of these. The `graphify-*` skills additionally need Python (see below).
 
@@ -73,7 +73,7 @@ adlc hooks (`SessionStart` load hot cache, `Stop` refresh hot cache) and graphif
 - **Node.js / npm**: not used. (We dropped the `defuddle` skill and its npm dep.)
 - **MCP server**: optional. `skills/wiki/references/mcp-setup.md` describes adding an Obsidian MCP server if you want agents to read/write the vault directly. The skills work without it.
 - **Bundled Obsidian plugins**: none ship. Install your own.
-- **GitHub Copilot setup files**: not required — the existing `AGENTS.md` is enough. The hooks at `.github/hooks/` are optional convenience.
+- **GitHub Copilot setup files**: not required — the existing `AGENTS.md` is enough. The plugin's Copilot hooks come with the plugin install.
 
 ## Verifying the install
 

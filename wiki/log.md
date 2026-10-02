@@ -25,6 +25,15 @@ Parse recent entries: `grep "^## \[" wiki/log.md | head -10`
 
 ---
 
+## [2026-10-02] fix | Plugin 1.0.4; Copilot marketplace and hooks; Cursor shows 13 of 14 agents
+- `.claude-plugin/plugin.json`, `.cursor-plugin/plugin.json` and `.cursor-plugin/marketplace.json` are now at 1.0.4. A marketplace update does not reinstall a version it already has, so the prompt-hook removal (N1) never reached the Claude Code install.
+- In Cursor, `scope-analyst` was missing after today's reinstall. The repo, the pushed copy and the Claude Code install all have 14 agents, and its frontmatter matches the agents that do load. Likely cause: Cursor reused an older cached copy under the same version. Check with `find ~/.cursor ~/Library/Application\ Support/Cursor -name scope-analyst.md` on the Cursor machine after installing 1.0.4.
+- Copilot: added `.github/plugin/marketplace.json`. Copilot reads it before `.claude-plugin/marketplace.json`; Claude Code and Cursor ignore it. Its entry sets `version` 1.0.4 and points `hooks` at the new `hooks/copilot-hooks.json`. Copilot does load `hooks/hooks.json` by default, but it parses only JSON from a hook's output, so the plain-text Claude hooks did nothing there. The new file uses Copilot's events: `sessionStart` returns `additionalContext` with hot.md, and `agentStop` returns `decision: block` once when wiki pages changed, skipped while `stop_hook_active` is set. Removed the repo-level `.github/hooks/`: those scripts also printed plain text, so they were no-ops, and the plugin is not developed in Copilot. Updated [[Plugin Hooks]], the wiki-faq requirements page and the glossary. Copilot installs to `~/.copilot/installed-plugins/adlc-marketplace/adlc/` and loads `agents/`, so it also reads `model: sonnet`.
+
+## [2026-10-02] check | SessionStart prompt-hook fix is not installed yet
+- After `claude plugin marketplace update adlc-marketplace` and a restart, there were no startup warnings. The installed copy (`~/.claude/plugins/cache/adlc-marketplace/adlc/1.0.3`, from commit c811f3e) still has the prompt hook, though. The marketplace update did not reinstall the plugin because the version is still 1.0.3. So the missing warning does not prove the fix works, and N1 stays open until a version bump is installed.
+- The marketplace source is a local directory, yet Claude Code installed a copy into the cache. The plugin does not load in place, which corrects a claim on [[Configurable subagent models per host]].
+
 ## [2026-10-02] fix | Remove the SessionStart prompt hook
 - `hooks/hooks.json`: removed the `type: "prompt"` entry under `SessionStart`. Claude Code rejects prompt hooks on that event ("no conversation context is available") and showed an error at every startup (finding N1 in [[Skills Field Eval 2026-10]]). The command hook that prints `wiki/hot.md` stays and still runs.
 - [[Plugin Hooks]] and the wiki-faq troubleshooting page no longer describe a prompt-type hook.

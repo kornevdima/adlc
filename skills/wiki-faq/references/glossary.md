@@ -80,7 +80,7 @@ A `scope-analyst` pass, before a story's verification contract is written, that 
 `wiki/meta/operator-profile.md` — the human counterpart of the project profile: engagement pole (business-input vs fully-managed), decision rights, standing rulings, preferred verification instruments, plus a classified correction log. The `adlc` loop reads it at Step 0 and appends corrections; `/adlc distill` proposes setting changes the operator ratifies by editing. Format: `skills/wiki/references/operator-profile.md`.
 
 **Hook**
-A lifecycle event handler. adlc ships hooks for `SessionStart` (load hot cache) and `Stop` (prompt to refresh hot cache when wiki changed) across three host formats: `hooks/hooks.json` (Claude Code), `hooks/cursor-hooks.json` (Cursor plugin), `.github/hooks/hooks.json` (Copilot). See [[Plugin Hooks]].
+A lifecycle event handler. adlc ships hooks for `SessionStart` (load hot cache) and `Stop` (prompt to refresh hot cache when wiki changed) across three host formats: `hooks/hooks.json` (Claude Code), `hooks/cursor-hooks.json` (Cursor plugin), `hooks/copilot-hooks.json` (Copilot plugin). See [[Plugin Hooks]].
 
 **Manifest**
 `.raw/.manifest.json` (wiki layer) or `graphify-out/manifest.json` (graph layer). Tracks what's been ingested / processed so subsequent runs can skip unchanged inputs. Hash-based change detection.

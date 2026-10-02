@@ -1,0 +1,27 @@
+{
+  "name": "adlc-marketplace",
+  "owner": {
+    "name": "dmytro"
+  },
+  "metadata": {
+    "description": "Marketplace for the adlc plugin in GitHub Copilot (Agentic Development Life Cycle harness)."
+  },
+  "plugins": [
+    {
+      "name": "adlc",
+      "source": "./",
+      "version": "1.0.4",
+      "description": "Agentic Development Life Cycle harness. Obsidian wiki knowledge substrate, role skills, plan-driven delivery loop, and Copilot hooks.",
+      "author": {
+        "name": "dmytro"
+      },
+      "homepage": "https://github.com/kornevdima/adlc",
+      "repository": "https://github.com/kornevdima/adlc",
+      "license": "MIT",
+      "category": "productivity",
+      "agents": "agents/",
+      "skills": "skills/",
+      "hooks": "hooks/copilot-hooks.json"
+    }
+  ]
+}
