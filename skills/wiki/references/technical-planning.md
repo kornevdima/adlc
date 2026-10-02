@@ -86,6 +86,10 @@ Per-feature verification proves each feature against its own contract; it never 
 
 Failures route exactly like per-feature FAILs (bug page + backlog item). A release with the holistic pass un-run is `conditional — milestone verify pending`, never ✅.
 
+## Where ADLC ends: the verified commit
+
+The pipeline (census →) build → test → review → verify (→ reconcile) → document ends at a **verified commit** on a feature branch. Push, PR, deploy and checking a deployed revision are a separate, **optional** stage run by the `devops` worker, and only on the operator's word for each dispatch (`adlc` Step 2.7a). `feature-verifier` checks the working tree or local stack; `devops` checks a deployed revision. Infrastructure, secrets, IAM and rollbacks stay with the operator. Teams that want automated deploys can put the playbook's hooks-as-gates in front of `devops`; the plugin does not ship them.
+
 ## Headless entry (Stage 6 seam: designed, not built)
 
 Every ADLC run starts from an operator session today. A finding from production re-enters the pipeline through the same route as a verifier FAIL: a `bugs/` page plus a backlog item tracing to it. A headless entry reuses that route:

@@ -33,6 +33,8 @@ After editing source files: `claude plugin marketplace update adlc-marketplace` 
 claude --plugin-dir /path/to/adlc
 ```
 
+Before a version bump, run the eval suites locally (no CI): `claude plugin eval . --no-publish`. Cases live in `evals/` (`case.yaml` or `prompt.md` + `graders/*.md`); until the first cases land the command exits 1 ("no cases found"); see [`wiki/questions/Plugin eval suites for claude plugin eval.md`](wiki/questions/Plugin%20eval%20suites%20for%20claude%20plugin%20eval.md).
+
 ### Other options
 
 - **Cowork zip upload** — zip the repo and upload via Cowork UI (no CLI required).
@@ -83,7 +85,25 @@ bash bin/setup-graphify.sh /path/to/your-app   # also pin to a specific code pro
 | `/ba-export` | Render wiki BA deliverables to formal Office documents |
 | `/project-profile` | Scan a repo, generate/augment its AGENTS.md |
 
-Worker subagents (dispatched by the loop, not invoked directly): `scope-analyst`, `feature-builder`, `feature-tester`, `feature-reviewer`, `feature-verifier`, `doc-writer`, `architecture-subagent`, `ba-suite-subagent`, `ba-export-subagent`, `research-subagent`, `wiki-ingest-subagent`, `wiki-lint-subagent`, `graphify-extract-subagent`, `mechanical-scanner-subagent`.
+Non-engineers bring a need in by dropping a five-heading note (problem, outcome, who is affected, constraints, open questions) into `.raw/intake/`; the next ingest turns it into requirements and stories. Template: [`modes.md` § Intake for non-engineers](skills/wiki/references/modes.md#intake-for-non-engineers).
+
+Worker subagents (dispatched by the loop, not invoked directly): `scope-analyst`, `feature-builder`, `feature-tester`, `feature-reviewer`, `feature-verifier`, `devops` (optional: push / deploy / deployed-revision check, only on the operator's word), `doc-writer`, `architecture-subagent`, `ba-suite-subagent`, `ba-export-subagent`, `research-subagent`, `wiki-ingest-subagent`, `wiki-lint-subagent`, `graphify-extract-subagent`, `mechanical-scanner-subagent`.
+
+### Coming from the AI-Native SDLC Playbook
+
+| Playbook | ADLC |
+|---|---|
+| `intent.md` | a `.raw/` source or intake note → requirements and stories with stable IDs |
+| `spec.md` | the per-service shift-left spec (Gates 1–3) in the code wiki |
+| `plan.md` | the run ledger + per-story verification contract |
+| `CLAUDE.md` | `AGENTS.md` (from `/project-profile`) |
+| `REVIEW.md` | `reviews/_policy.md` per service |
+| verifier subagent | `feature-reviewer` then `feature-verifier` |
+| "mistake twice → `CLAUDE.md`" | `/adlc distill` (Don'ts, worker rules, operator profile, upstream) |
+| deploy | optional `devops` worker, on the operator's word |
+| closing the loop | `bugs/` page + backlog item (headless trigger designed, not built) |
+
+ADLC keeps typed wiki records with stable IDs instead of common-name files. The full map is in the wiki's *AI-Native SDLC Playbook vs ADLC* comparison.
 
 ## Wiki Modes and Concerns
 

@@ -21,6 +21,38 @@ Append-only. New entries go at the TOP. Never edit past entries.
 
 Entry format: `## [YYYY-MM-DD] operation | Title`
 
+## [2026-10-02] release | 1.0.6; playbook review rulings 2–8
+
+- Plugin 1.0.6 ships rulings 2–8: `.raw/intake/` note, `reviews/_policy.md`, local evals, distill targets + cross-story Standing rulings, the optional `devops` worker, the README vocabulary map.
+
+## [2026-10-02] decision | Playbook review ruling 8; review closed
+
+- Ruling 8 adopted: README § Coming from the AI-Native SDLC Playbook; the vocabulary map in [[AI-Native SDLC Playbook vs ADLC]] updated with rulings 1–7.
+- [[Review the ADLC flow against the AI-Native SDLC Playbook]] closed.
+
+## [2026-10-02] decision | Playbook review rulings 6–7: defer time metrics; optional devops worker
+
+- Ruling 6: time-based indicators deferred.
+- Ruling 7: new `agents/devops.md`, optional, dispatched only on the operator's word with per-dispatch authorisation: push, PR, deploy via the service's documented path, verify the deployed revision, `deploys/` record. Wired into `adlc` Step 0 (`ship` policy) and 2.7a, `technical-planning.md` § Where ADLC ends, permissions (`Task(devops)`), the filing table, AGENTS.md, README, wiki-faq.
+
+## [2026-10-02] decision | Playbook review ruling 5: distill targets; standing rulings are cross-story
+
+- [[Review the ADLC flow against the AI-Native SDLC Playbook]] ruling 5 adopted, extended to the operator profile: distill proposes only repeats and names a target per lesson; Standing rulings hold cross-story rules only; the correction log records events without "Pattern:" verdicts. `operator-profile.md` rules 7–8, `adlc` Step 2 + 4.4.
+- Evidence from the vault-a vault: 120 single-story lines in Standing rulings (all ride in every dispatch packet), 45 one-off "Pattern:" lines; that project's Claude memory is empty. Its profile clean-up is a vault-side follow-up.
+
+## [2026-10-02] decision | Playbook review ruling 4: local evals only
+
+- [[Review the ADLC flow against the AI-Native SDLC Playbook]] ruling 4 adopted, local only: `claude plugin eval . --no-publish` before each version bump (README); escaped defects become eval cases (adlc Step 4.4).
+- Found: `claude plugin eval` reads `evals/**/case.yaml`; the repo has no `evals/`, and the 18 skill `evals.json` files are in the skill-creator format. Filed [[Plugin eval suites for claude plugin eval]] (open).
+
+## [2026-10-02] decision | Playbook review ruling 3: review policy per service
+
+- [[Review the ADLC flow against the AI-Native SDLC Playbook]] ruling 3 adopted: `reviews/_policy.md` per service (passes, severity bar, nit cap of 3, exclusions). New `skills/wiki/references/review-policy.md`; wired into `feature-reviewer`, `adlc` Step 2.5, `project-profile` and the filing table.
+
+## [2026-10-02] decision | Playbook review ruling 2: non-engineer intake
+
+- [[Review the ADLC flow against the AI-Native SDLC Playbook]] ruling 2 adopted: a five-heading note in `.raw/intake/` (problem, outcome, who is affected, constraints, open questions), ingested like any source. Template in `modes.md` § Intake for non-engineers; README pointer.
+
 ## [2026-10-02] release | 1.0.5; playbook review ruling 1
 
 - Plugin 1.0.5 ships today's fixes: builder/tester ordering and the snapshot-restore rule, `relink.py` and the epic-close relink, the auto-mode permissions section, and manual mode (context load, contract fallback, shipped means verified).

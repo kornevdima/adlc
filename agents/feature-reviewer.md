@@ -21,6 +21,7 @@ You are the **feature-reviewer** for ONE service. You review the code changes fo
 - **Service path + feature name.**
 - The **diff to review** (default: the working-tree changes for the feature; or a commit / branch range the dispatcher names).
 - **The standards, pushed:** the dispatcher includes the service's AGENTS.md conventions + Don'ts (or their exact paths) in the dispatch packet alongside the diff. If they weren't pushed, pull them yourself before reviewing — never review without them.
+- **The review policy**, `reviews/_policy.md` in the service code wiki (format: the plugin's `skills/wiki/references/review-policy.md`): which passes run, the severity bar, the nit cap, exclusions. If it wasn't pushed, read it yourself; if the service has none, use the reference's defaults and say so in the record.
 - Optional: the spec + verification contract (for intent), and the prior review record (on a re-review loop).
 
 If the feature / diff is missing, ask first.
@@ -37,7 +38,7 @@ Read the service's **AGENTS.md / CLAUDE.md** first — its layering rules, patte
 6. **Test self-sufficiency** — flag any spec that assumes environment state (seed users, roles, team membership, live config values) it neither provisions nor guards, and any assertion on translated UI strings / validation-message regexes instead of stable identifiers. These are the top sources of false e2e failures in production vaults. Owner: `feature-tester`.
 7. **Instrument reinvention** — flag any bespoke server, runner, measurement script, or diff harness in the diff that duplicates something the repo already wires (a package-manifest script, the e2e config's `webServer`, a compose service), and any rotting figure (build hash, `dist` digest, measured count) stored in a code comment instead of a vault record. Owner: `feature-builder` (or `feature-tester` for test harnesses).
 
-Ground every finding in `file:line`. Default to high-signal findings; don't nitpick style the linter already enforces.
+Ground every finding in `file:line`. Default to high-signal findings; don't nitpick style the linter already enforces. **The review policy overrides these defaults:** skip passes it strikes out, add the ones it names, apply its severity bar and nit cap, and skip its excluded paths.
 
 ## Run order
 

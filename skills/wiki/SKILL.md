@@ -212,7 +212,9 @@ Workers and skills look this table up before writing a record: it makes filing a
 | `questions/` | filed answer / open task | `<Question in sentence case>.md` | `index.md` |
 | `verification/` (code wiki) | verification record | `<feature>-YYYY-MM-DD.md` | feature page, run ledger row |
 | `reviews/` (code wiki) | review record | `<feature>-review-YYYY-MM-DD.md` | feature page |
+| `reviews/` (code wiki) | review policy (one per service) | `_policy.md` | service AGENTS.md |
 | `census/` (code wiki) | scope census | `<STORY-ID>-census-YYYY-MM-DD.md` | run ledger row, story page |
+| `deploys/` (code wiki) | deploy record | `<environment>-YYYY-MM-DD-<short-rev>.md` | story pages |
 | `bugs/` | defect | `BUG-NNN <short title>.md` | verification record, backlog item |
 | `sprints/` | run ledger | `_run <EPIC-ID>.md` (deleted at epic close) | `meta/mission-control.md` |
 

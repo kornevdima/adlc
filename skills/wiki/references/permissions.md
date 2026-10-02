@@ -46,6 +46,7 @@ Replace `<VAULT_PATH>` with the project root. Trim patterns the project does not
       "Task(feature-verifier)",
       "Task(scope-analyst)",
       "Task(doc-writer)",
+      "Task(devops)",
       "Task(wiki-ingest-subagent)",
       "Bash(docker compose up:*)",
       "Bash(docker compose ps:*)",
@@ -88,6 +89,7 @@ Notes:
 - `Task(ba-suite-subagent)` lets the ADLC ingest pass dispatch the BA worker without a prompt. Add other `Task(...)` workers the vault uses.
 - Bash prefix matching cannot express every dangerous shape (for example "rm -rf anywhere outside the project"). `ask` on bare `rm` plus the guard hook below covers the rest.
 - `relink.py` is the wiki-maintenance path: bulk relinks (the epic close, `wiki-lint` dead-link fixes) go through it, not `sed -i`. The rule names the script, not `Bash(sed:*)`, which would allow in-place edits to any path. The `*` before `skills/` matches the versioned plugin install path.
+- `Task(devops)` only allows the dispatch. Its outward actions stay gated: `git push` and `gh pr` are in `ask`, `gcloud` is denied by this template. A project that lets `devops` deploy adds its exact deploy command to `ask`, never to `allow`.
 - Keep secrets out of `allow`: `.env` reads are denied here as an example.
 - MCP: reads (`mcp__clickup__get_task`) and local verification (`mcp__chrome-devtools__*`, `mcp__plantuml__render_plantuml`, `docker compose up`) are pre-allowed; outward-facing tracker writes (`mcp__clickup__create_task`) are in `ask` because they leave the repo.
 

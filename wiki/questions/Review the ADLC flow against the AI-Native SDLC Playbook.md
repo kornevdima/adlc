@@ -8,7 +8,7 @@ tags:
   - sdlc
   - review
   - open-task
-status: open
+status: closed
 related:
   - "[[AI-Native SDLC Playbook vs ADLC]]"
   - "[[claude-ai-native-sdlc-playbook]]"
@@ -44,6 +44,15 @@ The anchor the operator pointed at is **Stage 6 (Maintain — closing the loop)*
 ## Rulings
 
 1. **Stage 6 headless entry: adopted (operator, 2026-10-02)** as recommended: design the seam only. Landed in `skills/wiki/references/technical-planning.md` § Headless entry. Build when a project has a metrics store.
+2. **Stage 1 non-engineer intake: adopted (operator, 2026-10-02)** as recommended: a documented route only. Five-heading template for `.raw/intake/` in `skills/wiki/references/modes.md` § Intake for non-engineers; pointer in the README.
+3. **Stage 5 review policy per service: adopted (operator, 2026-10-02)** as recommended. `skills/wiki/references/review-policy.md` (format + defaults); `feature-reviewer` reads it and it overrides its defaults; `adlc` Step 2.5 pushes it verbatim; `project-profile` seeds it; filing table row in the wiki skill.
+4. **Stage 4 evals on config change: adopted, local only (operator, 2026-10-02).** No CI. `claude plugin eval . --no-publish` before each version bump (README); escaped defects become eval cases via the Step 4.4 upstream route. The suites themselves are missing: [[Plugin eval suites for claude plugin eval]].
+5. **Stage 5 "mistake twice → instructions": adopted, extended to the operator profile (operator, 2026-10-02).** Distill names a target per lesson (AGENTS.md Don't / worker rule / profile setting / upstream) with the occurrence count, and proposes only what occurred twice. Standing rulings hold cross-story rules only; a ruling on one story goes on that page. The correction log records events, not "Pattern:" verdicts. Landed in `skills/wiki/references/operator-profile.md` rules 7–8 and template, and `adlc` Step 2 (interjections) + Step 4.4. Evidence: the vault-a profile had 120 single-story lines in Standing rulings and 45 one-off "Pattern:" verdicts; Claude memory for that project was empty (the profile file was the only store). Cleaning that vault's profile is a separate, vault-side job.
+6. **Time-based indicators: deferred (operator, 2026-10-02).** Add only when an operator asks for cycle time; commit trace IDs already allow computing it from git history later.
+7. **Deploy: a separate, optional `devops` worker (operator, 2026-10-02),** replacing the recommendation to keep deploy out. ADLC ends at the verified commit; push, PR, deploy and the deployed-revision check run in `agents/devops.md`, dispatched only on the operator's word with an explicit per-dispatch authorisation (`adlc` Step 2.7a; run policy `ship: off | ask`). It uses the service's documented deploy path, never touches infra / secrets / IAM, never rolls back on its own, and writes `deploys/` records. Boundary stated in `technical-planning.md` § Where ADLC ends. Also covers field-eval N4's "deployed revision" target class. The agent ships with no `model:` (the K8 direction).
+8. **Vocabulary in the README: adopted (operator, 2026-10-02).** README § Coming from the AI-Native SDLC Playbook; the full map in [[AI-Native SDLC Playbook vs ADLC]] updated with rulings 1–7.
+
+**Closed 2026-10-02:** all 8 ruled (6 adopted, 1 adopted as an optional worker, 1 deferred), adopted ones landed. Summary moved into [[AI-Native SDLC Playbook vs ADLC]].
 
 ## Not in scope of this review
 

@@ -56,8 +56,9 @@ Not skills — the ADLC agent dispatches these at the service level during the p
 - **`feature-reviewer`** — reviews the diff (correctness, reuse, efficiency, test coverage); registers a review record in the wiki; returns APPROVED or CHANGES_REQUESTED.
 - **`feature-verifier`** — runs the contract via `docker compose` + chrome-devtools MCP; logs pass/fail; never fixes bugs.
 - **`doc-writer`** — writes user docs for built + verified features.
+- **`devops`** (optional) — only when the operator asks: pushes, opens the PR, deploys through the service's documented path, then verifies the deployed revision (health, smoke, logs). Never changes infra or secrets, never rolls back on its own.
 
-Sequenced (census ->) build -> test -> review -> verify (-> reconcile) -> document; the agent commits. On CHANGES_REQUESTED the review loops back to builder + tester, then re-reviews (capped rounds). Stack-neutral (no hardcoded framework).
+Sequenced (census ->) build -> test -> review -> verify (-> reconcile) -> document; the agent commits. Shipping (`devops`) is a separate optional stage after the commit. On CHANGES_REQUESTED the review loops back to builder + tester, then re-reviews (capped rounds). Stack-neutral (no hardcoded framework).
 
 ### Project context
 

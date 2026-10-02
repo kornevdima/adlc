@@ -155,6 +155,31 @@ Key wiki pages to create: `[[Project Overview]]`, `[[Requirements Index]]`, `[[B
 3. **Sync (session wrap-up)** — when the operator says "end session" or "wrap up", the `wrap-up` skill uses already-loaded context to check git changes across `services/`, inject updates into the code wikis (impl specs, ADRs, plans), reflect shipped features / resolved gaps / new requirements into this wiki, then refresh `hot.md` and append `log.md`. The Stop hook is a backstop nudge.
 4. **Export** — reuse `ba-suite`'s Office generation to render wiki content to `.xlsx` / `.docx` under `.raw/exports/`, and push deliverables to the team tracker over MCP (ClickUp or Jira). Formal-export diagrams use PlantUML; living tech docs use Mermaid, HTML-exported to `.raw/exports/`. Mapping + MCP config: [`mcp-setup.md`](mcp-setup.md). Implemented by the `ba-export` skill (+ `ba-export-subagent`); folder + ID conventions are kept export-friendly.
 
+### Intake for non-engineers
+
+A product owner or stakeholder brings a new need in without touching the wiki: they drop one Markdown note into `.raw/intake/` (`YYYY-MM-DD <short title>.md`) with these five headings. Nothing else is required; a blank section is better than a guessed one.
+
+```markdown
+# <short title>
+
+## Problem
+What is wrong or missing today, and for whom.
+
+## Outcome
+What is true when this is done. How you would notice.
+
+## Who is affected
+Roles, teams or customers, and roughly how many.
+
+## Constraints
+Deadlines, budget, regulation, systems that must not change.
+
+## Open questions
+What you do not know yet.
+```
+
+The next ingest picks it up like any other source: `wiki-ingest` files a `sources/` page, and the BA pass turns it into requirements and stories with stable IDs and traceability back to the note. The note itself is never edited (`.raw/` is immutable); answers to its open questions land on the requirement pages. There is no `intent.md`: the typed records are the intent.
+
 ### Sub-agent
 
 The ingest and planning pipelines run through two workers that each cover a whole skill family: `agents/ba-suite-subagent.md` (BA deliverables) and `agents/architecture-subagent.md` (shift-left technical specs). The ADLC pass and the `wrap-up` skill dispatch them one task at a time (parallel where independent) and update `index` / `log` / `hot` after. See [`ba-suite-pipeline.md`](ba-suite-pipeline.md) and [`technical-planning.md`](technical-planning.md).

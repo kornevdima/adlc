@@ -253,6 +253,8 @@ On the augment path, record it as a merge instead of a creation:
 
 If no adlc wiki present, skip this step. The skill is useful in projects without a wiki too.
 
+**Seed the review policy.** If `$TARGET/wiki/` exists and `$TARGET/wiki/reviews/_policy.md` does not, write it from the template in the plugin's `skills/wiki/references/review-policy.md`: fill `service` and `updated`, and add to Exclusions any generated or vendored paths the scanner found. Show it with the AGENTS.md proposal and write it only on accept. Never overwrite an existing policy. Add `reviews/_policy.md` to the log entry's created list.
+
 ### Step 9 — Report to the user
 
 Brief confirmation:

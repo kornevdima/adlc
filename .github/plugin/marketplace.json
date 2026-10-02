@@ -10,7 +10,7 @@
     {
       "name": "adlc",
       "source": "./",
-      "version": "1.0.5",
+      "version": "1.0.6",
       "description": "Agentic Development Life Cycle harness. Obsidian wiki knowledge substrate, role skills, plan-driven delivery loop, and Copilot hooks.",
       "author": {
         "name": "dmytro"

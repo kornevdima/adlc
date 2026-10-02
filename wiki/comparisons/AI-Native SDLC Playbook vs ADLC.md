@@ -40,6 +40,8 @@ The playbook (Anthropic, 2026-08-21) describes the *AI-native SDLC*: six stages 
 
 > [!important] Operator stance, 2026-09-03
 > *"I don't like the idea to keep one file with common name; the current workflow with wiki files looks better to me. But it is the explanation for AI SDLC — what we have as ADLC."*
+> **Review closed 2026-10-02:** rulings 1–8 in [[Review the ADLC flow against the AI-Native SDLC Playbook]]. Adopted: headless-entry seam (designed only), `.raw/intake/` note, per-service review policy, local evals, distill with named targets and repeats only, optional `devops` worker, README vocabulary. Deferred: time-based indicators.
+
 > Ruling: keep the typed-record substrate; use the playbook as the external vocabulary; review the `/adlc` flow against it stage by stage (tracked in [[Review the ADLC flow against the AI-Native SDLC Playbook]], with Stage 6 — closing the loop — as the stage the operator pointed at).
 
 ## Stage by stage
@@ -73,18 +75,20 @@ The playbook (Anthropic, 2026-08-21) describes the *AI-native SDLC*: six stages 
 | Playbook says | ADLC has |
 |---|---|
 | AI-native / agentic / AI SDLC | ADLC (Agentic Development Life Cycle) |
-| `intent.md` | a `.raw/` source + the requirement IDs elicited from it, after the grilling gate |
+| `intent.md` | a `.raw/` source (for non-engineers: the five-heading note in `.raw/intake/`) + the requirement IDs elicited from it, after the grilling gate |
 | `spec.md` | the per-service shift-left spec (Gates 1–3) in the code wiki |
 | `plan.md` | run ledger + per-story verification contract |
 | `CLAUDE.md` | `AGENTS.md` (built by `/project-profile`) |
 | skills as institutional knowledge | plugin skills + bundled method docs (`references/ba/`, `references/shift-left/`) |
 | hooks as guardrails / approval gates | `permissions.md` allow / ask / deny + guard hook |
 | `verifier` subagent | `feature-verifier` (plus `feature-reviewer` before it) |
-| `REVIEW.md` | the standards packet pushed to `feature-reviewer` (candidate: a review policy page per service) |
-| "mistake twice → `CLAUDE.md`" | `/adlc distill` → repo-local workers + AGENTS.md Don'ts |
+| `REVIEW.md` | `reviews/_policy.md` per service, pushed verbatim to `feature-reviewer` with the standards packet |
+| "mistake twice → `CLAUDE.md`" | `/adlc distill`, repeats only, each lesson with a named target: AGENTS.md Don't, repo-local worker, operator-profile setting, or upstream to the plugin |
+| evals on config change | `claude plugin eval` locally before each version bump (no CI) |
+| deploy, agent stops at the production gate | ADLC ends at the verified commit; optional `devops` worker ships and checks the deployed revision, only on the operator's word |
 | PR review findings | review record page in `reviews/` |
 | incident record | `bugs/` page + backlog item + `log.md` pointer |
-| closing the loop | *(gap: headless trigger)* |
+| closing the loop | `bugs/` page + backlog item; headless trigger designed, not built (`technical-planning.md` § Headless entry) |
 
 ## Why not the common-name files
 

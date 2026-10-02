@@ -43,6 +43,7 @@ Subagents (in `agents/<name>.md`) are dispatched by skills via the Agent tool wi
 | `ba-export-subagent` | `ba-export` skill | Render one wiki deliverable to Office / PlantUML under `.raw/exports/` |
 | `scope-analyst` | `adlc` loop (census before the contract when scope is unknown; reconcile after review) | Measure a story's real scope against the code; propose plan revisions. Never rules, never writes feature code |
 | `feature-builder` → `feature-tester` → `feature-reviewer` → `feature-verifier` → `doc-writer` | `adlc` loop, per story | The per-service build pipeline: build → test → review → verify → document |
+| `devops` | `adlc` loop, optional, only on the operator's word | Push, PR, deploy through the service's documented path, then verify the deployed revision. Never touches infra or secrets, never rolls back on its own |
 
 Skills handle orchestration; subagents handle isolated work.
 

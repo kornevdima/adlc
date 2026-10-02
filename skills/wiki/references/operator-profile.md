@@ -50,7 +50,7 @@ status: evergreen
 - Product and design decisions; content removal; whether an asset is fit to publish
 
 ## Standing rulings
-<!-- one line each, dated, verbatim where possible; these ride in every dispatch packet -->
+<!-- cross-story rules only, one line each, dated, verbatim where possible; these ride in every dispatch packet, so keep the section short (~20 lines). A ruling on one story, bug or decision goes on that record's page, not here. -->
 - YYYY-MM-DD — "re-use the shared component, no per-route rules" (design)
 
 ## Preferred instruments
@@ -62,10 +62,11 @@ status: evergreen
 - Snapshot / diff pipelines for changes that cannot alter the artefact: ceremony
 
 ## Proposed changes
-<!-- written by /adlc distill; the operator ratifies by editing the section above and deleting the line -->
-<!-- proposed: YYYY-MM-DD — checkpoints → epic boundaries (pattern seen in 2 epics: EPIC-A, EPIC-B) -->
+<!-- written by /adlc distill; the operator ratifies by editing the target and deleting the line. Each line names its target and its evidence (2+ occurrences). -->
+<!-- proposed: YYYY-MM-DD → profile setting — checkpoints → epic boundaries (seen 2×: EPIC-A, EPIC-B) -->
 
 ## Correction log
+<!-- the event only: what happened and what was done. No "Pattern:" verdicts; generalising is distill's job, on repeats. -->
 | Date | Quote (verbatim, short) | Class | What it exposed | Outcome |
 |---|---|---|---|---|
 | YYYY-MM-DD | "why run a dev server if it's runnable from npm" | instrument | worker rebuilt the wired preview server, worse | contract now names the instrument |
@@ -85,12 +86,14 @@ The **distribution is the finding**: in the session that motivated this referenc
 4. **Proposals, not silent hardening.** Distill writes `proposed:` lines; the operator ratifies by editing. A silently learned profile that gets it wrong is hard to notice; a ratification prompt is friction of the kind the operator objects to. A proposal line in a file they already read is neither.
 5. **Observable working preferences with the evidence attached — not inferred traits.** The log is the evidence; the profile is the distillation. Keep both: a profile without its log cannot be audited or argued with.
 6. **Standing rulings are a different weight from preferences.** A one-off and a standing law look identical in a transcript. The explicit "Standing rulings" block is the manual solution; anything not in it is a preference.
+7. **A ruling lives where it applies.** The test: would this ruling change how a *different, future* story is built? If not ("three factors" for one estimate, "lower to 400" for one default, "accept" on one visual), it is a decision on that story: record it on the story, bug or decision page it settles, and log the event in the correction log. It enters Standing rulings only when the operator states it as standing ("always", "from now on", "for the whole product") or ratifies a distill proposal after it repeats. In one production vault, 120 single-story rulings piled up in Standing rulings and rode in every dispatch packet, while 45 one-off "Pattern:" verdicts in the log turned case-by-case calls into blanket rules the operator had to correct.
+8. **Every distilled lesson names its target.** One of: an AGENTS.md **Don't** (a runtime or code trap of the service), a **worker rule** (the repo's `.claude/agents/`), a **profile setting** (how this operator wants to work), or **upstream** (the plugin, for lessons general to every service). Distill states which and why, with the occurrence count.
 
 ## How the loop uses it
 
 - **`/adlc` Step 0** reads it; the pole sets the run-policy defaults; **standing rulings** and **preferred instruments** ride in every dispatch packet next to the Carry-forward, so a worker that knows "this operator's eyes are the acceptance gate" reaches for a screenshot early rather than a harness late.
-- **Story loop** — every operator interjection is classified and appended to the correction log. A `ruling` is taken; dispatching a census against it is a category error.
-- **Step 4.4 distill** — reads the run's rows, writes `proposed:` changes.
+- **Story loop** — every operator interjection is classified and appended to the correction log. A `ruling` is taken; dispatching a census against it is a category error. It is recorded on the page it decides (rule 7), not added to Standing rulings unless the operator says it is standing.
+- **Step 4.4 distill** — reads the run's rows, groups them, and writes a `proposed:` line only for what occurred at least twice, each naming its target (rule 8) and its evidence. It also proposes moving any story-bound line out of Standing rulings to the page it decides.
 - **`wrap-up`** — appends interjections the loop did not log (non-`/adlc` sessions), lists open proposals in its report.
 
 ## Effort: the unit is the claim, not the task
