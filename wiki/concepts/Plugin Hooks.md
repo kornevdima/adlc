@@ -20,7 +20,7 @@ Plugin lifecycle hooks for the adlc wiki vault. Three host tools are supported: 
 
 | Host | File | Format |
 |---|---|---|
-| Claude Code | [`hooks/hooks.json`](../../hooks/hooks.json) | Claude plugin hooks (matchers, `type: "command"` / `type: "prompt"`) |
+| Claude Code | [`hooks/hooks.json`](../../hooks/hooks.json) | Claude plugin hooks (matchers, `type: "command"`) |
 | Cursor (plugin) | [`hooks/cursor-hooks.json`](../../hooks/cursor-hooks.json), declared in `.cursor-plugin/plugin.json` | Cursor hooks (`version: 1`, inline `command` strings that print JSON) |
 | Copilot (cloud + CLI + JetBrains preview) | [`.github/hooks/hooks.json`](../../.github/hooks/hooks.json) + scripts in [`.github/hooks/scripts/`](../../.github/hooks/scripts) | Copilot hooks (`version: 1`, `bash` field references a script path) |
 
@@ -34,7 +34,7 @@ When a session begins, read `wiki/hot.md` so the agent inherits recent context w
 
 | Host | Event | Implementation |
 |---|---|---|
-| Claude Code | `SessionStart` (matcher: `startup\|resume`) | inline `cat wiki/hot.md` + a prompt-type fallback |
+| Claude Code | `SessionStart` (matcher: `startup\|resume`) | inline `cat wiki/hot.md` (a prompt-type companion was removed 2026-10-02: Claude Code rejects prompt hooks on `SessionStart` and showed an error at every startup) |
 | Cursor | `sessionStart` | inline python: prints `{"additional_context": <hot.md>}` |
 | Copilot | `sessionStart` | runs [`scripts/session-start.sh`](../../.github/hooks/scripts/session-start.sh) |
 
@@ -65,7 +65,7 @@ Phase 3 dropped the hook entirely. Wiki changes now follow the user's normal git
 
 [anthropics/claude-code#10875](https://github.com/anthropics/claude-code/issues/10875) documents that **plugin-defined hook STDOUT may not be captured** by Claude Code in some versions, while identical inline hooks in `~/.claude/settings.json` work correctly.
 
-**Impact**: If the bug is active, the prompt-type `SessionStart` and `PostCompact` hooks may not inject context as expected.
+**Impact**: If the bug is active, the `SessionStart` hook may not inject the hot cache as expected.
 
 **Workaround**: The command-type `SessionStart` hook (`cat wiki/hot.md`) is the canonical safety check. If hot cache restoration fails in a fresh session, copy the hook config from `hooks/hooks.json` into your user-level `~/.claude/settings.json` instead of relying on plugin discovery.
 

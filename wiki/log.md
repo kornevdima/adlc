@@ -25,6 +25,10 @@ Parse recent entries: `grep "^## \[" wiki/log.md | head -10`
 
 ---
 
+## [2026-10-02] fix | Remove the SessionStart prompt hook
+- `hooks/hooks.json`: removed the `type: "prompt"` entry under `SessionStart`. Claude Code rejects prompt hooks on that event ("no conversation context is available") and showed an error at every startup (finding N1 in [[Skills Field Eval 2026-10]]). The command hook that prints `wiki/hot.md` stays and still runs.
+- [[Plugin Hooks]] and the wiki-faq troubleshooting page no longer describe a prompt-type hook.
+
 ## [2026-10-02] eval | Skills field eval over three operator sessions
 - Sources: three operator transcripts (one Claude Code, two Copilot CLI), reviewed by four parallel read-only reviewers. No project specifics are filed; the transcripts are not ingested into `.raw/`.
 - Filed [[Skills Field Eval 2026-10]]. Confirms K1, K2, K3, K5, K6, K7, K8 (K8 strong: a model-unavailable dispatch led to an offer to build inline). 14 new findings; claims about the plugin source were checked in the repo (SessionStart prompt hook, compose-only verifier, tester/verifier missing CLAUDE.md, graphify hot.md overwrite, 0.6 vs 0.7 threshold, "pinned to Sonnet" prose).
