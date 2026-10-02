@@ -30,13 +30,15 @@ Navigation: [[index]] | [[log]]
 
 ## Key Recent Facts
 
+- **Prompt-hook fix not installed (2026-10-02)**: the installed 1.0.3 copy still has the hook, because a marketplace update does not reinstall the same version. Bump to 1.0.4 to ship it. N1 stays open.
+
 - **Plugin follow-up**: `skills/wiki/scripts/okf_export.py` targets `knowledge-catalog/okf`, now a frozen snapshot; OKF is v0.2 in `GoogleCloudPlatform/open-knowledge-format` (`generated` / `verified` / `status` / `stale_after`; per-folder `index.md` reserved). Retarget before relying on the export.
 - Obsidian Publish is $8/mo annual, $10 monthly ([[Wiki Sharing Patterns]] refined).
 - 14 agents; per-story pipeline (census →) build → test → review → verify (→ reconcile) → document. Plugin reinstall under the new name is done; repo + dir still `claude-mem`.
 
 ## Active Threads
 
-- **Open tasks** (index § Open tasks): field-eval priorities (prompt hook → model steps 1–4 → wiki context-load row for manual work → worker portability → graphify); subagent model selection (steps 1–4 first, then verify Copilot/Cursor dispatch `model`); playbook review (Stage 6 first); filing-clause field test; scope-analyst offload test (four candidate changes parked); cheap-worker escalation.
-- **Human follow-ups**: `claude plugin marketplace update adlc-marketplace`; install the Cursor plugin and confirm it loads; decide the sharing pilot (Quartz slice vs GitHub Wiki mirror); retarget the OKF exporter; rename repo + dir; redeploy `agents/*.md` to service repos.
+- **Open tasks** (index § Open tasks): field-eval priorities (model steps 1–4 → wiki context-load row for manual work → worker portability → graphify); subagent model selection (steps 1–4 first, then verify Copilot/Cursor dispatch `model`); playbook review (Stage 6 first); filing-clause field test; scope-analyst offload test (four candidate changes parked); cheap-worker escalation.
+- **Human follow-ups**: install the Cursor plugin and confirm it loads; decide the sharing pilot (Quartz slice vs GitHub Wiki mirror); retarget the OKF exporter; rename repo + dir; redeploy `agents/*.md` to service repos.
 - Research gaps, one fetch each: Flowershow pricing; Quartz v5 changelog; `markdown-confluence` wikilink + callout support.
 - Deferred: vault MCP server; `/project-profile --refresh`; Stage 6 trigger seam.
