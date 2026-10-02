@@ -21,6 +21,49 @@ Append-only. New entries go at the TOP. Never edit past entries.
 
 Entry format: `## [YYYY-MM-DD] operation | Title`
 
+## [2026-10-02] release | 1.0.5; playbook review ruling 1
+
+- Plugin 1.0.5 ships today's fixes: builder/tester ordering and the snapshot-restore rule, `relink.py` and the epic-close relink, the auto-mode permissions section, and manual mode (context load, contract fallback, shipped means verified).
+- [[Review the ADLC flow against the AI-Native SDLC Playbook]] ruling 1 (Stage 6 headless entry) adopted: seam designed in `technical-planning.md`, not built.
+
+## [2026-10-02] fix | Manual mode: context-load route; no delivered on FAIL
+
+- [[Skills Field Eval 2026-10]] N3: `skills/wiki/SKILL.md` gains a CONTEXT LOAD row and operation (the router's fallthrough). It loads hot + the task's pages, reports briefly, stays out of the way, offers `/adlc` once, and offers save / corrections / wrap-up at the end.
+- N2: `feature-tester` and `feature-verifier` fall back to the story's acceptance criteria when no contract exists. `wrap-up` step 5: shipped means a verifier PASS or explicit operator acceptance; a FAIL is never shipped.
+- Field test pending.
+
+## [2026-10-02] fix | Relink at epic close; relink.py; auto mode in permissions
+
+- Resolved [[Wiki maintenance edits blocked in ADLC vaults]]: new `skills/wiki/scripts/relink.py`; `adlc` Step 4.3 relinks before deleting the ledger; `wiki-lint` and `wrap-up` point at it; `permissions.md` allows the script, documents auto mode (project `autoMode` is ignored; narrow allow rules skip the classifier) and drops the no-op `Write(path)` rules.
+- Field test pending: an auto-mode epic close.
+
+## [2026-10-02] fix | Builder and tester take turns; no snapshot restores
+
+- Resolved [[Parallel builder and tester revert each other's edits]]: `skills/adlc/SKILL.md` Step 2.4 (sequential on shared files, incl. fix rounds), 2.7 (restore rule for the spot-check), 4.4 (general lessons go upstream); a restore rule in the generic tester, verifier and reviewer.
+- [[Configurable subagent models per host]] (K8) postponed: low priority, operator.
+- Not version-bumped yet.
+
+## [2026-10-02] question | Parallel builder and tester revert each other's edits
+
+- Filed [[Parallel builder and tester revert each other's edits]] (open), from the vault-a vault's US-058 (S07 wave 5).
+- **What happened:** builder and tester ran at once; the tester restored `render.ts` from a pre-run copy and silently undid the builder's edit. The dispatcher caught it.
+- **Proposed:**
+  - sequential builder/tester dispatch when files overlap (also in fix rounds);
+  - undo-own-edit + `git diff` restore in the generic tester, verifier, reviewer;
+  - an upstream route for general lessons in the Step 4.4 distill.
+- Nothing in the plugin is changed yet.
+
+## [2026-10-02] question | Wiki maintenance edits blocked in ADLC vaults
+
+- Filed [[Wiki maintenance edits blocked in ADLC vaults]] (open), from the vault-a vault's EPIC-001 close.
+- **What happened:** the Step 4.3 ledger delete left 23 dead `[[_run EPIC-001]]` links on 13 pages. A bulk `sed -i` relink was denied by the auto-mode classifier, so the relink was done by hand, page by page.
+- **Proposed:**
+  - relink at the epic close;
+  - a `relink.py` script to allow-list instead of `sed`;
+  - auto-mode guidance in `permissions.md`;
+  - fix the template's no-op `Write(path)` rules.
+- Nothing in the plugin is changed yet.
+
 Parse recent entries: `grep "^## \[" wiki/log.md | head -10`
 
 ---

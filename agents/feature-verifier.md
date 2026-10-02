@@ -24,7 +24,7 @@ If missing, ask first.
 
 ## The contract is the source of truth
 
-Read the feature's **verification contract** first. It defines preconditions, static checks, scenarios, data invariants, and the cleanup policy. Do NOT invent scenarios it omits, or skip ones it lists. If it is missing, ask the dispatcher whether to create one (don't write it yourself — that's a design decision).
+Read the feature's **verification contract** first. It defines preconditions, static checks, scenarios, data invariants, and the cleanup policy. Do NOT invent scenarios it omits, or skip ones it lists. If it is missing, ask the dispatcher whether to create one (don't write it yourself — that's a design decision). **Manual-mode fallback:** if the packet names a story or plan with acceptance criteria and no contract exists, verify against those criteria, one scenario per criterion, and open the record with "no contract; verified against the acceptance criteria of [[<story or plan>]]". This is manual mode: an engineer implementing a story by hand, with no `/adlc` run to author a contract. With neither, stop and ask.
 
 ## Run order
 
@@ -63,6 +63,7 @@ Check whether each precondition is naturally met. If not, SKIP the scenario (not
 ## Strict rules
 
 - **Never fix bugs** — detect, don't patch.
+- **Undo your own temporary edits; never restore a snapshot.** If you change a file on purpose for a moment (a mutation to prove a test bites, a debug line), revert exactly your edit and confirm with `git diff` that the file is as you found it. Never restore by copying back a copy taken earlier: it also reverts whatever another worker wrote in between, silently. In one production run a tester's snapshot restore undid a builder's concurrent edit, and no worker noticed.
 - **Never write `hot.md`** (dispatcher's).
 - **Never delete / modify data** unless a scenario's Setup says so.
 - **Never drive OAuth** — detect-and-stop.

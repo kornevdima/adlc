@@ -9,13 +9,15 @@ tags:
   - plugin
   - models
   - cross-host
-status: open
+status: postponed
 related:
   - "[[Plugin Hooks]]"
   - "[[Integrate the wiki toolset into the ADLC workers]]"
 ---
 
 # Configurable subagent models per host
+
+**Postponed (2026-10-02, operator):** low priority. The other open tasks go first.
 
 **Opened from live use.** Field evidence: [[Skills Field Eval 2026-10]] (K8). The plugin was installed in GitHub Copilot in an org without Claude models. The worker dispatch failed on the agent's `model: sonnet`, and the orchestrator proposed a general-purpose agent instead. That agent does not have the worker's instructions.
 

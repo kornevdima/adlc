@@ -34,7 +34,9 @@ Navigation: [[overview]] | [[log]] | [[hot]] | [[maintenance-triggers]]
 - [[Integrate the wiki toolset into the ADLC workers]] — workers write into a vault they have no toolset for; three reinvention instances measured in one session (status: open)
 - [[Operator profile - learn engagement style from corrections]] — `project-profile` covers the codebase, nothing covers the human running it; business-input vs fully-managed as the axis (status: open — smallest useful version shipped 2026-09-03, see its resolution log)
 - [[Review the ADLC flow against the AI-Native SDLC Playbook]] — stage-by-stage review of `/adlc` against Anthropic's playbook; standing ruling: typed wiki records, no common-name artifact files; Stage 6 (closing the loop) first (status: open)
-- [[Configurable subagent models per host]] — a hardcoded `model: sonnet` broke worker dispatch in a Copilot org without Claude models; design: no model in agents, `adlc:setup` writes per-host tiers to a user file, dispatchers pass `model` (status: open)
+- [[Configurable subagent models per host]] — a hardcoded `model: sonnet` broke worker dispatch in a Copilot org without Claude models; design: no model in agents, `adlc:setup` writes per-host tiers to a user file, dispatchers pass `model` (status: postponed — low priority, operator 2026-10-02)
+- [[Wiki maintenance edits blocked in ADLC vaults]] — the epic close deletes the run ledger but leaves 20+ dead `[[_run …]]` links, and the permissions profile has no path for bulk wiki rewrites (auto mode denied a `sed -i` relink). Fix: relink at the epic close, a scripted relink tool to allow-list, auto-mode guidance, and `Write(path)` rules corrected to `Edit(path)` (status: resolved 2026-10-02 — field test pending)
+- [[Parallel builder and tester revert each other's edits]] — the dispatcher ran builder and tester at once; the tester restored a pre-run copy of `render.ts` and silently undid the builder's edit. Fixed only in one service's local workers. Fix: sequential dispatch on overlapping files, undo-own-edit + `git diff` restore in the generic workers, an upstream route in distill (status: resolved 2026-10-02)
 
 ## Concepts
 

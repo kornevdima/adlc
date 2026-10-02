@@ -79,7 +79,7 @@ What the plugin should do in this mode:
 3. **Keep the wiki honest at the end.** Offer `save` for reusable findings, record operator corrections in the operator profile, update pages the change made stale, and refresh hot and log. `wrap-up` already covers most of this; the context-load row should point to it.
 4. **Offer `/adlc` once.** Only when the work clearly fits a story pipeline, and only as a suggestion.
 
-Open question: whether to give this mode its own entry point (for example `/adlc:wiki context <story>`) or keep it as the router's fallthrough.
+Open question: whether to give this mode its own entry point (for example `/adlc:wiki context <story>`) or keep it as the router's fallthrough. **Resolved 2026-10-02:** the router's fallthrough. Any task that is not a wiki operation routes to CONTEXT LOAD in `skills/wiki/SKILL.md`.
 
 ## What worked
 
@@ -89,6 +89,8 @@ Open question: whether to give this mode its own entry point (for example `/adlc
 - **Workers on Copilot (B).** Once the model problem was resolved they ran cleanly in scope, with exit-coded evidence and honest "left undone" lists. Graph labelling ran in a subagent, which kept the main context lean.
 
 ## Priority (proposed)
+
+**Progress (2026-10-02):** N1 fixed (1.0.4). N2 and N3 built: the CONTEXT LOAD route in the wiki router; `feature-tester` / `feature-verifier` fall back to the story's acceptance criteria when there is no contract; `wrap-up` marks a feature shipped only on a verifier PASS or explicit operator acceptance. K8 postponed (operator, low priority). Field test pending.
 
 1. N1 (one-line fix) and the K8 steps 1–4 in [[Configurable subagent models per host]].
 2. N3 + the manual use case: a context-load row in the wiki router, with `save` / corrections / `wrap-up` at the end. N2's two real defects (delivered on FAIL, no contract fallback) go with it.

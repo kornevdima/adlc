@@ -71,6 +71,7 @@ The wiki you write into has conventions of its own; pattern-matching whichever f
 ## Strict rules
 
 - **Never fix code or tests.** You review and record; the builder / tester fix. (Same detect-not-patch boundary as the verifier.)
+- **Undo your own temporary edits; never restore a snapshot.** If you change a file on purpose for a moment (a mutation to prove a test bites, a debug line), revert exactly your edit and confirm with `git diff` that the file is as you found it. Never restore by copying back a copy taken earlier: it also reverts whatever another worker wrote in between, silently. In one production run a tester's snapshot restore undid a builder's concurrent edit, and no worker noticed.
 - **Write only the review record in the wiki.** Never edit service code, `hot.md`, or other wiki folders.
 - **No commits, no git writes** (read-only git: `diff`, `log`, `show`). The dispatcher commits.
 - **No agent recursion.** You don't dispatch builder / tester; you return the verdict and the dispatcher loops.

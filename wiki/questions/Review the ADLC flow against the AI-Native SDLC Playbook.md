@@ -41,6 +41,10 @@ The anchor the operator pointed at is **Stage 6 (Maintain — closing the loop)*
 7. **Deploy stage — keep it out?** *Recommended*: yes, and say so explicitly in `technical-planning.md`: ADLC ends at a verified commit; push / PR / deploy are the operator's, with the playbook's hooks-as-gates as the documented next step for teams that want it.
 8. **Vocabulary in the README.** *Recommended*: one paragraph mapping playbook terms to ADLC (the vocabulary map), so a reader arriving from the playbook finds their footing.
 
+## Rulings
+
+1. **Stage 6 headless entry: adopted (operator, 2026-10-02)** as recommended: design the seam only. Landed in `skills/wiki/references/technical-planning.md` § Headless entry. Build when a project has a metrics store.
+
 ## Not in scope of this review
 
 - Enterprise managed-settings / sandbox floor (small-team plugin; note as a pointer only).

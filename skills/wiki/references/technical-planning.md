@@ -86,6 +86,17 @@ Per-feature verification proves each feature against its own contract; it never 
 
 Failures route exactly like per-feature FAILs (bug page + backlog item). A release with the holistic pass un-run is `conditional — milestone verify pending`, never ✅.
 
+## Headless entry (Stage 6 seam: designed, not built)
+
+Every ADLC run starts from an operator session today. A finding from production re-enters the pipeline through the same route as a verifier FAIL: a `bugs/` page plus a backlog item tracing to it. A headless entry reuses that route:
+
+- **Trigger:** a schedule, a webhook or a channel message. Deciding that something is wrong stays deterministic and outside the model (an alert rule, a failed check, an error-rate threshold).
+- **Run:** a bounded, read-only diagnosis (logs, the code wiki, the graph). It writes no code and commits nothing.
+- **Output:** a `bugs/` page and a backlog item, filed like a verifier FAIL. The backlog item is the intent; no `intent.md`.
+- **Then:** the operator triages it from the board, and `/adlc` picks it up like any other story.
+
+Build it only when a project has a metrics store to trigger from, on the Agent SDK branch.
+
 ## Diagrams and HTML export
 
 Tech documentation uses **Mermaid**: inline code blocks in the spec Markdown, which render natively in Obsidian and in HTML. For a shareable rendered copy of a tech doc, HTML-export it into `.raw/exports/` (for example via `npx @mermaid-js/mermaid-cli` or a Markdown-to-HTML step). Reserve **PlantUML** for the formal export bundle that ships with `ba-suite` Office docs (see [`ba-suite-pipeline.md`](ba-suite-pipeline.md)).

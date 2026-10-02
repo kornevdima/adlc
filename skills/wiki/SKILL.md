@@ -4,6 +4,7 @@ description: >
   Obsidian knowledge companion for coding agents. Sets up a persistent wiki vault, scaffolds
   structure from a one-sentence description, and routes to specialized sub-skills.
   Use for setup, scaffolding, cross-project referencing, and hot cache management.
+  Also loads project context for work done by hand ("/adlc:wiki implement US-042").
   Triggers on: "set up wiki", "scaffold vault", "create knowledge base", "/wiki",
   "wiki setup", "obsidian vault", "knowledge base", "second brain setup",
   "running notetaker", "persistent memory", "llm wiki".
@@ -108,6 +109,22 @@ Route to the correct operation based on what the user says:
 | "/autoresearch [topic]", "research [topic]" | AUTORESEARCH | `autoresearch` |
 | "wrap up", "end session", "session end" | SYNC | `wrap-up` |
 | "export to docs", "export BA deliverables", "export to clickup" | EXPORT | `ba-export` |
+| anything else: a task that is not a wiki operation ("implement US-042", "fix this bug", "why does X fail") | CONTEXT LOAD | this skill |
+
+---
+
+## CONTEXT LOAD Operation
+
+An engineer often implements a story by hand and calls `/adlc:wiki <task>` only to load project context. This is a supported mode, not a misroute. The engineer drives; the wiki supplies context at the start and stays honest at the end.
+
+1. **Load context once.** Read `wiki/hot.md`. Then find the task's topic: use `wiki/index.json` when it exists (see `wiki-query`), else grep `wiki/index.md` and the code wiki. Read the matching story, module, flow and decision pages, and the open bugs that touch them. Stop at what the task needs; never read the whole vault.
+2. **Report in a few lines:** what the wiki knows (with links), the acceptance criteria if a story is named, the Don'ts and decisions that constrain the change, and any gap ("no page covers X"). Then hand control to the engineer and do the task they asked for.
+3. **Stay out of the way.** No run ledger, census, contract or board. Workers are helpers only when the engineer asks for one; in this mode a missing contract is expected, and `feature-tester` / `feature-verifier` fall back to the story's acceptance criteria (say which story in the packet).
+4. **Offer `/adlc` once, never force it.** Only when the task clearly fits the story pipeline (several stories, an epic, a spec ready to build), as one line. Not again in the session.
+5. **Keep the wiki honest at the end** (when the work is done, or the engineer says they are finishing):
+   - offer `save` for findings worth keeping;
+   - append the engineer's corrections to the correction log in `meta/operator-profile.md`, when the vault has one;
+   - suggest `wrap-up`. It updates the pages the change made stale, refreshes hot and log, and marks a feature shipped only on a verifier PASS or the engineer's explicit acceptance.
 
 ---
 

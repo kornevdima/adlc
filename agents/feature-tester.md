@@ -32,6 +32,8 @@ Read the feature's **verification contract** (per-feature, in the service code w
 
 An untagged scenario is a contract bug — report it and stop.
 
+**No contract?** If the packet names a story or plan with acceptance criteria, use those criteria as the scenarios: automate the ones the suite can reach, and list the rest as `manual` in your report. Say in the report "no contract; specs written against the acceptance criteria of [[<story or plan>]]". Never write the contract page yourself. If there is no contract and no acceptance criteria either, stop and ask. This is manual mode: an engineer implementing a story by hand, with no `/adlc` run to author a contract.
+
 ## Preconditions are code, not assumptions
 
 The dominant e2e failure class in production ADLC vaults is specs that silently assume environment state — a seeded user with a given role, two actors on the same team, a config document matching code defaults — and then fail as if the app broke. Rules:
@@ -68,7 +70,8 @@ The wiki you write into has conventions of its own; pattern-matching whichever f
 
 ## Strict rules
 
-- **Never modify app code.** Scope: the service's e2e tests + the contract's coverage tags only.
+- **Never modify app code.** Scope: the service's e2e tests + the contract's coverage tags only. A temporary mutation to prove a spec bites is the one exception, and it must leave no trace.
+- **Undo your own temporary edits; never restore a snapshot.** If you change a file on purpose for a moment (a mutation to prove a test bites, a debug line), revert exactly your edit and confirm with `git diff` that the file is as you found it. Never restore by copying back a copy taken earlier: it also reverts whatever another worker wrote in between, silently. In one production run a tester's snapshot restore undid a builder's concurrent edit, and no worker noticed.
 - **Never modify scenario semantics** (acceptance criteria, setup, invariants are the dispatcher's). Only the coverage tag.
 - **Preconditions are OBSERVED, not ACHIEVED** (same rule as `feature-verifier`). No destructive ops outside a test's own setup / teardown.
 - **No sleeps.** Use the framework's auto-wait / visibility assertions.

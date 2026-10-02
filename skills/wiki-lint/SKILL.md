@@ -48,7 +48,7 @@ Work through these in order:
 ### Narrative wiki layer
 
 1. **Orphan pages**. Wiki pages with no inbound wikilinks. They exist but nothing points to them.
-2. **Dead links**. Wikilinks that reference a page that does not exist.
+2. **Dead links**. Wikilinks that reference a page that does not exist. When the target was renamed or folded into another page (a deleted `_run` ledger is the common case), the fix is a relink, not a stub: `skills/wiki/scripts/relink.py --from "<old>" --to "<new>" --vault wiki` (dry run by default; `--apply` writes; logs and lint reports are left as history).
 3. **Stale claims**. Assertions on older pages that newer sources have contradicted or updated.
 4. **Missing pages**. Concepts or entities mentioned in multiple pages but lacking their own page.
 5. **Missing cross-references**. Entities mentioned in a page but not linked.
