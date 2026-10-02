@@ -34,6 +34,7 @@ Navigation: [[overview]] | [[log]] | [[hot]] | [[maintenance-triggers]]
 - [[Integrate the wiki toolset into the ADLC workers]] — workers write into a vault they have no toolset for; three reinvention instances measured in one session (status: open)
 - [[Operator profile - learn engagement style from corrections]] — `project-profile` covers the codebase, nothing covers the human running it; business-input vs fully-managed as the axis (status: open — smallest useful version shipped 2026-09-03, see its resolution log)
 - [[Review the ADLC flow against the AI-Native SDLC Playbook]] — stage-by-stage review of `/adlc` against Anthropic's playbook; standing ruling: typed wiki records, no common-name artifact files; Stage 6 (closing the loop) first (status: open)
+- [[Configurable subagent models per host]] — a hardcoded `model: sonnet` broke worker dispatch in a Copilot org without Claude models; design: no model in agents, `adlc:setup` writes per-host tiers to a user file, dispatchers pass `model` (status: open)
 
 ## Concepts
 

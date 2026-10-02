@@ -9,7 +9,7 @@ adlc is primarily a Claude Code plugin but the skills follow the cross-platform 
 | Host | Status | How it loads |
 |---|---|---|
 | **Claude Code** | Primary | Plugin install via local marketplace, GitHub marketplace, or `--plugin-dir`. See `README.md` install section. |
-| **Cursor** | Supported | Reads `AGENTS.md` natively. Symlink `skills/` into `~/.cursor/skills/adlc` or use Cursor's plugin loader. Hooks: `.cursor/hooks.json` already configured. |
+| **Cursor** | Supported | Reads `AGENTS.md` natively. Symlink `skills/` into `~/.cursor/skills/adlc` or use Cursor's plugin loader. Hooks ship with the plugin in `hooks/cursor-hooks.json` (declared in `.cursor-plugin/plugin.json`). |
 | **Codex CLI** | Supported | `ln -s "$(pwd)/skills" ~/.codex/skills/adlc` |
 | **OpenCode** | Supported | `ln -s "$(pwd)/skills" ~/.opencode/skills/adlc` |
 | **GitHub Copilot** (cloud / CLI / JetBrains preview) | Hooks supported | Reads `AGENTS.md` natively. Hooks: `.github/hooks/hooks.json` already configured. |

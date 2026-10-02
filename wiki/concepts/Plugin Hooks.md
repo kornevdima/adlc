@@ -2,7 +2,7 @@
 type: concept
 title: "Plugin Hooks"
 created: 2026-05-09
-updated: 2026-05-09
+updated: 2026-10-02
 tags:
   - architecture
   - hooks
@@ -21,7 +21,7 @@ Plugin lifecycle hooks for the adlc wiki vault. Three host tools are supported: 
 | Host | File | Format |
 |---|---|---|
 | Claude Code | [`hooks/hooks.json`](../../hooks/hooks.json) | Claude plugin hooks (matchers, `type: "command"` / `type: "prompt"`) |
-| Cursor | [`.cursor/hooks.json`](../../.cursor/hooks.json) | Cursor hooks (`version: 1`, inline `command` strings) |
+| Cursor (plugin) | [`hooks/cursor-hooks.json`](../../hooks/cursor-hooks.json), declared in `.cursor-plugin/plugin.json` | Cursor hooks (`version: 1`, inline `command` strings that print JSON) |
 | Copilot (cloud + CLI + JetBrains preview) | [`.github/hooks/hooks.json`](../../.github/hooks/hooks.json) + scripts in [`.github/hooks/scripts/`](../../.github/hooks/scripts) | Copilot hooks (`version: 1`, `bash` field references a script path) |
 
 ## Active events
@@ -35,7 +35,7 @@ When a session begins, read `wiki/hot.md` so the agent inherits recent context w
 | Host | Event | Implementation |
 |---|---|---|
 | Claude Code | `SessionStart` (matcher: `startup\|resume`) | inline `cat wiki/hot.md` + a prompt-type fallback |
-| Cursor | `sessionStart` | inline `cat wiki/hot.md` |
+| Cursor | `sessionStart` | inline python: prints `{"additional_context": <hot.md>}` |
 | Copilot | `sessionStart` | runs [`scripts/session-start.sh`](../../.github/hooks/scripts/session-start.sh) |
 
 All three are no-ops in non-vault repos (the file check returns gracefully if `wiki/hot.md` doesn't exist).
@@ -47,7 +47,7 @@ At the end of every agent turn, if `wiki/` has uncommitted changes, the hook pri
 | Host | Event | Implementation |
 |---|---|---|
 | Claude Code | `Stop` | inline shell pipeline checks `git diff --name-only HEAD` for `wiki/` matches |
-| Cursor | `stop` | same inline pipeline |
+| Cursor | `stop` | inline python: same `git diff` check, returns `{"followup_message": ...}` only when `loop_count == 0` (Cursor auto-submits the follow-up, so later stops stay silent) |
 | Copilot | `agentStop` | runs [`scripts/agent-stop.sh`](../../.github/hooks/scripts/agent-stop.sh) |
 
 ## Removed events
@@ -73,7 +73,7 @@ Phase 3 dropped the hook entirely. Wiki changes now follow the user's normal git
 
 ## Non-vault sessions
 
-All three host configs are designed to be safe in non-vault repos: every hook ends with `|| true` (Claude/Cursor) or `set -e` plus an early `exit 0` (Copilot scripts), so missing `wiki/` or `.git/` directories never raise errors.
+All three host configs are designed to be safe in non-vault repos: every hook ends with `|| true` (Claude), prints `{}` (Cursor) or `set -e` plus an early `exit 0` (Copilot scripts), so missing `wiki/` or `.git/` directories never raise errors.
 
 ## Cross-tool feature parity
 
@@ -82,7 +82,7 @@ All three host configs are designed to be safe in non-vault repos: every hook en
 | Session start (load hot.md) | ✓ | ✓ | ✓ |
 | Stop / refresh hot.md prompt | ✓ | ✓ | ✓ (`agentStop`) |
 | Auto-load `AGENTS.md` for context | ✓ | ✓ | ✓ |
-| Custom skills (`/wiki`, `/save`, …) | ✓ | ✓ (symlink `skills/`) | partial (custom agents, no skill system) |
+| Custom skills (`/wiki`, `/save`, …) | ✓ | ✓ (plugin loader, or symlink `skills/`) | partial (custom agents, no skill system) |
 
 Copilot for JetBrains IDE hooks were public preview as of March 2026; cloud agent and Copilot CLI are GA.
 

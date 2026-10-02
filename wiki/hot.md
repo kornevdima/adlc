@@ -1,7 +1,7 @@
 ---
 type: meta
 title: "Hot Cache"
-updated: 2026-09-16T00:00:00
+updated: 2026-10-02T00:00:00
 tags:
   - meta
   - hot-cache
@@ -12,6 +12,7 @@ related:
   - "[[Research Sharing the Wiki with People]]"
   - "[[AI-Native SDLC Playbook vs ADLC]]"
   - "[[Integrate the wiki toolset into the ADLC workers]]"
+  - "[[Configurable subagent models per host]]"
 ---
 
 # Recent Context
@@ -20,9 +21,11 @@ Navigation: [[index]] | [[log]]
 
 ## Last Updated
 
-**2026-09-16 (fix: plugin 1.0.3, uncommitted)**: The bundled BA method docs pointed at 23 reference tables (rubrics, taxonomies, templates) that were never copied from upstream ba-suite, so BA workers had been inferring those rubrics. The tables are now bundled in `skills/wiki/references/ba/references/`, all pointers use plugin-root paths and resolve, and the shift-left `_index.md` path notes are qualified. See [[log]].
+**2026-10-02 (Cursor plugin + model-selection question)**: Fixed the Cursor marketplace: `source` is now `"./"`; the old value resolved to a missing `./adlc/`. Cursor manifests are at 1.0.3. Cursor plugin hooks now live in `hooks/cursor-hooks.json` and print the JSON Cursor reads; the stop hook fires only on the first stop of a turn, so its auto-submitted follow-up cannot loop. `.cursor/hooks.json` is removed. Opened [[Configurable subagent models per host]]: a hardcoded `model: sonnet` broke worker dispatch in a Copilot org without Claude models. Proposed design: agents ship with no model; `adlc:setup` writes per-host model tiers to a per-machine file; dispatchers pass `model`; on a model error, retry the same worker without one. Nothing built.
 
-**2026-09-03 (autoresearch: Sharing the Wiki with People)**: 5 questions, 5 answered, 14 pages. Synthesis [[Research Sharing the Wiki with People]]. **The OKF "preview" is a proof-of-concept one-file graph viewer** (one HTML file: graph, rendered markdown, backlinks, search; no auth, no page tree); the only hosted consumer, Google Cloud Knowledge Catalog, is IAM-gated and agent-facing. **Publishers split by trigger** ([[Vault Publishing Topologies]]): rebuild-from-repo keeps agent commits live for readers; app-pushed routes (Digital Garden, Obsidian Publish) need a human re-publish. **Recommendation**: pilot [[Quartz]] v5 (explorer, breadcrumbs, search, backlinks, graph, repo-triggered CI, free) on a 20-page slice; keep a **CI-mirrored GitHub Wiki** as the free-private fallback (`[[Page]]` by title = the vault's basename rule); publish **one-way to Confluence** (`kovetskiy/mark`) only where readers already live there; avoid round-trip sync (GitBook / Wiki.js) unless UI editing is required — it competes with agents for writes. Every non-Obsidian route needs a lowering step (wikilinks, callouts, `_index.md`), which `okf_export.py` half-implements ([[One-Way Publish vs Round-Trip Wiki Sync]], [[Obsidian Vault Portability]]). Cross-repo agent access: sibling clone + AGENTS.md pointer + committed `permissions.additionalDirectories` ([[Cross-Repo Wiki Access]]).
+**2026-09-16 (fix: plugin 1.0.3)**: The bundled BA method docs pointed at 23 reference tables (rubrics, taxonomies, templates) that were never copied from upstream ba-suite, so BA workers had been inferring those rubrics. The tables are now bundled (committed in c811f3e) in `skills/wiki/references/ba/references/`, all pointers use plugin-root paths and resolve, and the shift-left `_index.md` path notes are qualified. See [[log]].
+
+**2026-09-03 (autoresearch: Sharing the Wiki with People)**: 14 pages, synthesis [[Research Sharing the Wiki with People]]. Recommendation: pilot [[Quartz]] v5 on a 20-page slice; CI-mirrored GitHub Wiki as the free-private fallback; one-way Confluence publish only where readers already live; avoid round-trip sync. See [[Vault Publishing Topologies]], [[Cross-Repo Wiki Access]].
 
 **2026-09-03 (earlier)**: plugin 1.0.1/1.0.2 — `scope-analyst` wired into `/adlc`, worker filing/instrument clauses, operator profile, AI-Native SDLC Playbook ingested → [[AI-Native SDLC Playbook vs ADLC]].
 
@@ -34,7 +37,7 @@ Navigation: [[index]] | [[log]]
 
 ## Active Threads
 
-- **Open tasks** (index § Open tasks): playbook review (Stage 6 first); filing-clause field test; scope-analyst offload test (four candidate changes parked); cheap-worker escalation.
-- **Human follow-ups**: commit the 1.0.3 BA reference-table fix, then `claude plugin marketplace update adlc-marketplace`; `claude plugin marketplace update adlc-marketplace`; decide the sharing pilot (Quartz slice vs GitHub Wiki mirror); retarget the OKF exporter; rename repo + dir; redeploy `agents/*.md` to service repos.
+- **Open tasks** (index § Open tasks): subagent model selection (steps 1–4 first, then verify Copilot/Cursor dispatch `model`); playbook review (Stage 6 first); filing-clause field test; scope-analyst offload test (four candidate changes parked); cheap-worker escalation.
+- **Human follow-ups**: `claude plugin marketplace update adlc-marketplace`; install the Cursor plugin and confirm it loads; decide the sharing pilot (Quartz slice vs GitHub Wiki mirror); retarget the OKF exporter; rename repo + dir; redeploy `agents/*.md` to service repos.
 - Research gaps, one fetch each: Flowershow pricing; Quartz v5 changelog; `markdown-confluence` wikilink + callout support.
 - Deferred: vault MCP server; `/project-profile --refresh`; Stage 6 trigger seam.

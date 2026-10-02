@@ -1,0 +1,22 @@
+{
+  "name": "adlc",
+  "version": "1.0.3",
+  "description": "Agentic Development Life Cycle harness. Obsidian wiki knowledge substrate, role skills, plan-driven delivery loop, and Cursor hooks.",
+  "author": {
+    "name": "dmytro"
+  },
+  "homepage": "https://github.com/kornevdima/adlc",
+  "repository": "https://github.com/kornevdima/adlc",
+  "license": "MIT",
+  "keywords": [
+    "adlc",
+    "harness",
+    "delivery-loop",
+    "obsidian",
+    "wiki",
+    "agents-md"
+  ],
+  "agents": "agents/",
+  "skills": "skills/",
+  "hooks": "hooks/cursor-hooks.json"
+}
