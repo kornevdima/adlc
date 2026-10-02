@@ -25,6 +25,16 @@ Parse recent entries: `grep "^## \[" wiki/log.md | head -10`
 
 ---
 
+## [2026-10-02] question | Configurable subagent models per host
+- Trigger: in a Copilot org without Claude models, worker dispatch failed on the hardcoded `model: sonnet` and fell back to a general-purpose agent.
+- Filed [[Configurable subagent models per host]] (open): host facts for Claude Code `userConfig`, Cursor `model` / `variables`, Copilot (unverified); a proposed `adlc:setup` + per-machine model file + dispatch-time `model` design; rejected rewriting installed agents as the primary mechanism (lost on update, and dirties the repo in dev mode).
+- Nothing built yet.
+
+## [2026-10-02] fix | Cursor marketplace manifest + plugin hooks
+- `.cursor-plugin/marketplace.json`: `source` was `"adlc"` under `pluginRoot: "./"`, which resolves to a missing `./adlc/` folder. It is now `"./"` and `pluginRoot` is removed. Version bumped to 1.0.3 here and in `.cursor-plugin/plugin.json`, matching the Claude manifest.
+- Plugin hooks moved to `hooks/cursor-hooks.json`, beside Claude's `hooks/hooks.json`, which uses a different format. They now emit the JSON Cursor reads: `sessionStart` → `additional_context` with `wiki/hot.md`; `stop` → `followup_message` on uncommitted `wiki/` changes, only when `loop_count == 0`, so the auto-submitted follow-up cannot loop. The old `.cursor/hooks.json` project hook is removed; plugin development happens in Claude Code.
+- Verified: all manifests are valid JSON; hooks tested against this vault, outside a vault, and against a scratch repo with a dirty wiki page (loop 0 → message, loop 1 → `{}`). Not yet installed in Cursor itself.
+
 ## [2026-09-16] fix | Bundled BA method docs pointed at reference tables that were never bundled
 - Report: 13 of 14 method docs in `skills/wiki/references/ba/` pointed at `references/*.md` files that did not exist; the shift-left `_index.md` pointed at `ATTRIBUTION.md` and `agents/architecture-subagent.md` by bare paths that do not resolve from its folder.
 - Root cause (corrected): not a deliberate flattening. The upstream ba-suite source ships 23 reference files (3,928 lines: taxonomies, severity rubrics, INVEST tests, MoSCoW triggers, RTM template, Draw.io XML library). Bundling copied each `SKILL.md` as one method doc and left the tables behind, so every worker that "applied" a method was inferring the rubric. The shift-left upstream is a single `SKILL.md`, so nothing was missing there; only the two path notes were ambiguous.

@@ -10,7 +10,7 @@ Built on [Andrej Karpathy's LLM Wiki pattern](https://gist.github.com/karpathy/4
 |---|---|---|
 | **Knowledge substrate** | A compounding Obsidian wiki vault, OKF-aligned, plus an optional structural code graph. Every source ingested, every question answered from it, zero manual filing. | `wiki`, `wiki-ingest`, `wiki-query`, `wiki-lint`, `save`, `autoresearch`, `graphify-*` |
 | **Role skills** | BA, product, and architecture methods that read and write the substrate — requirements, stories, specs, governance. Methods are bundled; no external plugins. | `product-management-layer`, `ba-export`, bundled BA + shift-left references |
-| **Delivery orchestration** | Mode ADLC: a plan-driven loop that works an epic story by story, dispatching build → test → review → verify workers, committing with trace IDs, keeping a live mission-control board. | `adlc`, `wrap-up`, 13 subagents |
+| **Delivery orchestration** | Mode ADLC: a plan-driven loop that works an epic story by story, dispatching build → test → review → verify workers, committing with trace IDs, keeping a live mission-control board. | `adlc`, `wrap-up`, 14 subagents |
 | **Project bindings** | Per-repo calibration: AGENTS.md profiling, repo-local worker specializations distilled from each run. | `project-profile`, `/adlc distill` |
 
 The operator model: the engineer refines and plans in a **grilling session** (the one stage that never runs unattended), then delegates to the loop and reviews evidence — records, boards, and diffs, not a 700k-token transcript.

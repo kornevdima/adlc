@@ -8,7 +8,7 @@
   "plugins": [
     {
       "name": "adlc",
-      "description": "Agentic Development Life Cycle harness. Obsidian wiki knowledge substrate + role skills + plan-driven delivery loop with build/test/review/verify workers. 19 skills, 13 subagents.",
+      "description": "Agentic Development Life Cycle harness. Obsidian wiki knowledge substrate + role skills + plan-driven delivery loop with build/test/review/verify workers. 19 skills, 14 subagents.",
       "category": "productivity",
       "source": "./",
       "homepage": "https://github.com/kornevdima/adlc"

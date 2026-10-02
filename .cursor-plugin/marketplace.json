@@ -1,0 +1,17 @@
+{
+  "name": "adlc-marketplace",
+  "owner": {
+    "name": "dmytro"
+  },
+  "metadata": {
+    "description": "Local marketplace for the adlc plugin (Agentic Development Life Cycle harness).",
+    "version": "1.0.3"
+  },
+  "plugins": [
+    {
+      "name": "adlc",
+      "source": "./",
+      "description": "Agentic Development Life Cycle harness. Obsidian wiki, role skills, and the plan-driven delivery loop."
+    }
+  ]
+}
