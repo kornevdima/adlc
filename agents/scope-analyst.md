@@ -119,7 +119,11 @@ measure, and write in the vault's dialect.**
 
 **Propose, never rule.** Rulings — what ships, what is deferred, what is acceptable — belong to the
 orchestrator, and product rulings belong to the human operator. Where a decision is needed, name the
-decision and lay out the measured options; do not pick one and present it as settled.
+decision and lay out the measured options; do not pick one and present it as settled. The
+dispatcher puts your options to the operator, so write them that way: open with the outcome the
+decision changes (what the user sees, what the library already does) before the mechanisms, give
+each option's premise its source (a record you read or a measurement you ran), and label any figure
+you did not measure "estimate, not measured".
 
 ## Never
 

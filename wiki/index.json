@@ -1,6 +1,6 @@
 {
- "generated": "2026-09-03T13:19:05Z",
- "page_count": 115,
+ "generated": "2026-10-04T06:57:07Z",
+ "page_count": 121,
  "pages": [
   {
    "path": "wiki/comparisons/AI-Native SDLC Playbook vs ADLC.md",
@@ -532,7 +532,7 @@
    "type": "concept",
    "title": "Plugin Hooks",
    "created": "2026-05-09",
-   "updated": "2026-05-09",
+   "updated": "2026-10-02",
    "tags": [
     "architecture",
     "hooks",
@@ -748,6 +748,30 @@
    "related": [
     "Project Profile",
     "Context Engineering for Coding Agents"
+   ]
+  },
+  {
+   "path": "wiki/concepts/Skills Field Eval 2026-10.md",
+   "name": "Skills Field Eval 2026-10",
+   "type": "concept",
+   "title": "Skills Field Eval 2026-10",
+   "created": "2026-10-02",
+   "updated": "2026-10-02",
+   "confidence": "medium",
+   "tags": [
+    "concept",
+    "adlc",
+    "field-evidence",
+    "skills-eval",
+    "cross-host"
+   ],
+   "status": "developing",
+   "related": [
+    "ADLC Field Review Findings",
+    "Configurable subagent models per host",
+    "Operator profile - learn engagement style from corrections",
+    "Integrate the wiki toolset into the ADLC workers",
+    "Plugin Hooks"
    ]
   },
   {
@@ -1365,7 +1389,7 @@
    "name": "hot",
    "type": "meta",
    "title": "Hot Cache",
-   "updated": "2026-09-03T00:00:00",
+   "updated": "2026-10-02T23:30:00",
    "tags": [
     "meta",
     "hot-cache"
@@ -1374,7 +1398,8 @@
    "related": [
     "index",
     "log",
-    "Research Sharing the Wiki with People",
+    "Plugin eval suites for claude plugin eval",
+    "Skills Field Eval 2026-10",
     "AI-Native SDLC Playbook vs ADLC",
     "Integrate the wiki toolset into the ADLC workers"
    ]
@@ -1410,7 +1435,7 @@
    "name": "log",
    "type": "meta",
    "title": "Operation Log",
-   "updated": "2026-09-03",
+   "updated": "2026-09-16",
    "tags": [
     "meta",
     "log"
@@ -1428,7 +1453,7 @@
    "name": "usage",
    "type": "meta",
    "title": "Token Usage",
-   "updated": "2026-07-04T11:38:47Z",
+   "updated": "2026-10-02T21:11:05Z",
    "tags": [
     "meta",
     "usage",
@@ -1453,6 +1478,45 @@
     "hot",
     "log",
     "LLM Wiki Pattern"
+   ]
+  },
+  {
+   "path": "wiki/questions/Configurable subagent models per host.md",
+   "name": "Configurable subagent models per host",
+   "type": "synthesis",
+   "title": "Configurable subagent models per host",
+   "created": "2026-10-02",
+   "updated": "2026-10-02",
+   "tags": [
+    "agents",
+    "adlc",
+    "plugin",
+    "models",
+    "cross-host"
+   ],
+   "status": "postponed",
+   "related": [
+    "Plugin Hooks",
+    "Integrate the wiki toolset into the ADLC workers"
+   ]
+  },
+  {
+   "path": "wiki/questions/Dispatcher rules for writing ruling questions.md",
+   "name": "Dispatcher rules for writing ruling questions",
+   "type": "synthesis",
+   "title": "Dispatcher rules for writing ruling questions",
+   "created": "2026-10-03",
+   "updated": "2026-10-04",
+   "tags": [
+    "adlc",
+    "dispatcher",
+    "operator-profile",
+    "upstream"
+   ],
+   "status": "resolved",
+   "related": [
+    "Review the ADLC flow against the AI-Native SDLC Playbook",
+    "Operator profile - learn engagement style from corrections"
    ]
   },
   {
@@ -1521,6 +1585,45 @@
     "Compounding Knowledge",
     "Context Engineering for Coding Agents",
     "Integrate the wiki toolset into the ADLC workers"
+   ]
+  },
+  {
+   "path": "wiki/questions/Parallel builder and tester revert each other's edits.md",
+   "name": "Parallel builder and tester revert each other's edits",
+   "type": "synthesis",
+   "title": "Parallel builder and tester revert each other's edits",
+   "created": "2026-10-02",
+   "updated": "2026-10-02",
+   "tags": [
+    "adlc",
+    "plugin",
+    "workers",
+    "dispatch",
+    "distill"
+   ],
+   "status": "resolved",
+   "related": [
+    "Wiki maintenance edits blocked in ADLC vaults",
+    "Integrate the wiki toolset into the ADLC workers"
+   ]
+  },
+  {
+   "path": "wiki/questions/Plugin eval suites for claude plugin eval.md",
+   "name": "Plugin eval suites for claude plugin eval",
+   "type": "synthesis",
+   "title": "Plugin eval suites for claude plugin eval",
+   "created": "2026-10-02",
+   "updated": "2026-10-02",
+   "tags": [
+    "plugin",
+    "evals",
+    "adlc",
+    "workers"
+   ],
+   "status": "open",
+   "related": [
+    "Review the ADLC flow against the AI-Native SDLC Playbook",
+    "Skills Field Eval 2026-10"
    ]
   },
   {
@@ -1672,7 +1775,7 @@
     "review",
     "open-task"
    ],
-   "status": "open",
+   "status": "closed",
    "related": [
     "AI-Native SDLC Playbook vs ADLC",
     "claude-ai-native-sdlc-playbook",
@@ -1680,6 +1783,26 @@
     "Integrate the wiki toolset into the ADLC workers",
     "Operator profile - learn engagement style from corrections",
     "Research OpenManus for claude-mem"
+   ]
+  },
+  {
+   "path": "wiki/questions/Wiki maintenance edits blocked in ADLC vaults.md",
+   "name": "Wiki maintenance edits blocked in ADLC vaults",
+   "type": "synthesis",
+   "title": "Wiki maintenance edits blocked in ADLC vaults",
+   "created": "2026-10-02",
+   "updated": "2026-10-02",
+   "tags": [
+    "adlc",
+    "plugin",
+    "permissions",
+    "wrap-up",
+    "epic-close"
+   ],
+   "status": "resolved",
+   "related": [
+    "Configurable subagent models per host",
+    "Integrate the wiki toolset into the ADLC workers"
    ]
   },
   {

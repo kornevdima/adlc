@@ -1,7 +1,7 @@
 ---
 type: meta
 title: "Token Usage"
-updated: 2026-07-04T11:38:47Z
+updated: 2026-10-02T21:11:05Z
 tags:
   - meta
   - usage
@@ -12,7 +12,7 @@ status: evergreen
 # Token Usage
 
 > [!note] Derived, host-local view — regenerate, don't hand-edit.
-> Built by `usage_report.py` from Claude Code transcripts (`/Users/dmytro/.claude/projects/-Users-dmytro-IdeaProjects-claude-mem`).
+> Built by `usage_report.py` from Claude Code transcripts (`/Users/dmytro/.claude/projects/-Users-dmytro-IdeaProjects-adlc`).
 > Transcripts exist only on the machine that ran the sessions; teammates regenerate their own
 > (team-sync rule: regenerate-don't-merge). Ledger rows outlive transcript garbage-collection.
 > Reading the numbers: **output** and **cache write** are the expensive classes;
@@ -23,40 +23,39 @@ status: evergreen
 
 | input | output | cache write | cache read |
 |---|---|---|---|
-| 392,279 | 1,433,641 | 5,640,758 | 311,443,503 |
+| 393,129 | 1,651,649 | 6,824,039 | 353,842,199 |
 
 ## Top sessions by output tokens (transcripts currently on disk)
 
 | session | label | output (main+sub) |
 |---|---|---|
-| `8ccf9641` | Hi! I want to improve cloud-mem project. | 466,034 |
-| `fd099c2f` | /claude-mem:wiki I want to run the skill re-avalutaion. I have a feedb | 398,967 |
-| `2602cc6b` | /model | 224,983 |
-| `f43eac40` | /claude-mem:wiki let's check the latest changes in the project, starti | 139,495 |
-| `42d7c8d5` | /login | 71,142 |
+| `6cb242e5` | what other bugs we have in backlog | 124,515 |
+| `069f95ff` | /adlc:wiki I've added a curosr marketplace. verify it | 44,840 |
+| `4c4e9a20` | restarted session, no warnings ✔ Successfully updated marketplace: adl | 34,662 |
+| `e503456c` | check the ledger. I've added a new bug | 13,991 |
 
 ## By model (main context; transcripts currently on disk)
 
 | model | input | output | cache write | cache read |
 |---|---|---|---|---|
-| claude-opus-4-7 | 12,118 | 452,397 | 2,175,166 | 195,289,214 |
-| claude-opus-4-8 | 78,768 | 449,202 | 997,226 | 56,784,888 |
-| claude-fable-5 | 116,121 | 332,086 | 1,230,625 | 48,072,712 |
+| claude-opus-5-5 | 582 | 208,095 | 556,599 | 37,384,540 |
 
 ## By subagent type (transcripts currently on disk)
 
 | agent type | runs | input | output | cache write | cache read |
 |---|---|---|---|---|---|
-| claude-mem:wiki-ingest-subagent | 5 | 108,006 | 101,477 | 403,208 | 6,384,183 |
-| Explore | 8 | 59,546 | 84,513 | 754,972 | 4,747,206 |
-| claude-mem:graphify-extract-subagent | 2 | 13 | 13,637 | 47,072 | 155,880 |
-| general-purpose | 1 | 17,707 | 329 | 32,489 | 9,420 |
+| claude-code-guide | 3 | 156 | 7,648 | 185,007 | 717,039 |
+| general-purpose | 4 | 112 | 2,265 | 441,675 | 4,297,117 |
 
 ## Session ledger (cumulative; newest first)
 
 <!-- ledger -->
 | date | session | label | branch | models | requests | input | output | cache write | cache read | sub % |
 |---|---|---|---|---|---|---|---|---|---|---|
+| 2026-10-02 | `069f95ff` | /adlc:wiki I've added a curosr marketplace. verify it | main | claude-opus-5-5 | 114 | 236 | 44,840 | 581,873 | 11,257,687 | 5% |
+| 2026-10-02 | `4c4e9a20` | restarted session, no warnings ✔ Successfully updated marketplace: adl | main | claude-opus-5-5 | 65 | 130 | 34,662 | 86,554 | 5,829,720 | 0% |
+| 2026-10-02 | `6cb242e5` | what other bugs we have in backlog | main | claude-opus-5-5 | 142 | 410 | 124,515 | 431,682 | 22,158,565 | 6% |
+| 2026-10-02 | `e503456c` | check the ledger. I've added a new bug | main | claude-opus-5-5 | 37 | 74 | 13,991 | 83,172 | 3,152,724 | 0% |
 | 2026-07-04 | `f43eac40` | /claude-mem:wiki let's check the latest changes in the project, starti | adlc | claude-fable-5 | 129 | 54,613 | 139,495 | 601,068 | 20,183,269 | 13% |
 | 2026-07-03 | `2602cc6b` | /model | adlc | claude-fable-5 | 210 | 162,688 | 224,983 | 1,124,679 | 20,406,575 | 63% |
 | 2026-07-03 | `42d7c8d5` | /login | adlc | claude-opus-4-8 | 64 | 38,194 | 71,142 | 166,422 | 6,929,895 | 0% |

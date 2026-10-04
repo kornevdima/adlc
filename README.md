@@ -33,7 +33,7 @@ After editing source files: `claude plugin marketplace update adlc-marketplace` 
 claude --plugin-dir /path/to/adlc
 ```
 
-Before a version bump, run the eval suites locally (no CI): `claude plugin eval . --no-publish`. Cases live in `evals/` (`case.yaml` or `prompt.md` + `graders/*.md`); until the first cases land the command exits 1 ("no cases found"); see [`wiki/questions/Plugin eval suites for claude plugin eval.md`](wiki/questions/Plugin%20eval%20suites%20for%20claude%20plugin%20eval.md).
+Before a version bump, run the eval suites locally (no CI): `claude plugin eval . --scaffold --allow-tools Write Edit Bash --ablation none --no-publish -j 4`. Cases, fixtures, tags and grader rules: [`evals/README.md`](evals/README.md).
 
 ### Other options
 

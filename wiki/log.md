@@ -21,6 +21,37 @@ Append-only. New entries go at the TOP. Never edit past entries.
 
 Entry format: `## [YYYY-MM-DD] operation | Title`
 
+## [2026-10-04] fix | Dispatcher rules for writing ruling questions
+- [[Dispatcher rules for writing ruling questions]] is resolved (unreleased). Added `/adlc` Step 2 § Writing a ruling question: source every premise, outcome first, one decision per question. Pointers from `technical-planning.md` grilling, Step 4.4 distill and `scope-analyst`.
+- Page corrections:
+  - the 2026-09-16 evidence is now cited from `the earlier profile`;
+  - lesson 2 recounted from 3× to 2×, because US-139 was a premise error;
+  - mirroring the rule in `wrap-up` dropped, since it asks nothing.
+- New eval fixture layer `adlc-vault` and two cases, `adlc/ruling-cites-record` and `adlc/ruling-outcome-first`. Both pass, and so does the no-plugin baseline (Δ 0.00, two rounds). Kept as regression pins.
+
+## [2026-10-03] maintenance | vault-a operator profile cleaned (ruling 5 follow-up)
+- The vault-side follow-up to [[Review the ADLC flow against the AI-Native SDLC Playbook]] ruling 5 is done in vault-a.
+  - Standing rulings went from 122 lines to 8 cross-story rules.
+  - The 114 story-bound rulings were checked on, or added to, their DEC, sprint and story pages.
+  - 51 Pattern/Lesson verdicts were removed.
+  - The checkpoint is now one setting: sprint close.
+- **Upstream candidate (from that distill):** move "cite the record before stating a status" into the `/adlc` option-writing rule (seen 5×), plus "frame a ruling by its outcome first" (seen 3×). Filed as [[Dispatcher rules for writing ruling questions]] (open).
+
+## [2026-10-02] wrap-up | Session close: 1.0.5, 1.0.6, evals conversion
+
+- **Trigger:** operator `/adlc:wrap-up`. Scope: the plugin repo only (no services, ledger or operator profile here).
+- **Shipped:** 1.0.5 `b2b1d45` (worker edit safety, epic-close relink, manual mode) and 1.0.6 `8a23c39` (playbook rulings 2–8, the `devops` worker). Not pushed.
+- **Uncommitted:** the evals conversion (`evals/`, 12 `evals.json` removed, README, wiki).
+- **Rollups:** the index Open tasks list now holds only open work; resolved items moved under "Resolved". `index.json` regenerated (120 pages); `meta/usage.md` refreshed; hot rewritten.
+- **Follow-ups:** the evals backlog; field-eval N4–N14; vault-side clean-ups (the vault-a profile, redeploying workers, allow rules).
+
+## [2026-10-02] evals | Skill evals converted to claude plugin eval
+
+- [[Plugin eval suites for claude plugin eval]]: 22 cases from 12 skills' `evals.json` now live in `evals/<skill>/<case>/` with layered fixtures (`evals/_fixtures/`); old json removed. `evals/README.md` has the run commands, tags and grader rules.
+- The 10 `fast` cases pass after grader fixes. Slow and network cases are not run yet.
+- Finding: `obsidian-markdown` lacks the vault's `[!contradiction]` callout convention.
+- Uncommitted.
+
 ## [2026-10-02] release | 1.0.6; playbook review rulings 2–8
 
 - Plugin 1.0.6 ships rulings 2–8: `.raw/intake/` note, `reviews/_policy.md`, local evals, distill targets + cross-story Standing rulings, the optional `devops` worker, the README vocabulary map.
