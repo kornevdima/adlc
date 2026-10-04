@@ -79,6 +79,9 @@ A `scope-analyst` pass, before a story's verification contract is written, that 
 **Operator profile**
 `wiki/meta/operator-profile.md` — the human counterpart of the project profile: engagement pole (business-input vs fully-managed), decision rights, standing rulings, preferred verification instruments, plus a classified correction log. The `adlc` loop reads it at Step 0 and appends corrections; `/adlc distill` proposes setting changes the operator ratifies by editing. Format: `skills/wiki/references/operator-profile.md`.
 
+**ADLC upstream log**
+`wiki/meta/adlc-upstream.md`: lessons about the **plugin itself** (a skill step, a generic worker rule, a script) that any vault would hit. Single occurrences are rows; a repeat, a plugin bug or an operator-approved design becomes an `UP-nnn` entry. Ratified entries leave the vault as cleaned exports via `/adlc upstream`: a GitHub issue when `gh` works, otherwise a file handed over by hand. The plugin lists shipped reports in `skills/adlc/references/upstream-shipped.md`, and vaults close their entries from that list. Format: `skills/wiki/references/adlc-upstream.md`.
+
 **Hook**
 A lifecycle event handler. adlc ships hooks for `SessionStart` (load hot cache) and `Stop` (prompt to refresh hot cache when wiki changed) across three host formats: `hooks/hooks.json` (Claude Code), `hooks/cursor-hooks.json` (Cursor plugin), `hooks/copilot-hooks.json` (Copilot plugin). See [[Plugin Hooks]].
 

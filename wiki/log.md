@@ -21,6 +21,22 @@ Append-only. New entries go at the TOP. Never edit past entries.
 
 Entry format: `## [YYYY-MM-DD] operation | Title`
 
+## [2026-10-04] feature | Upstream channel: adlc-upstream.md
+- [[Upstream channel from vaults to the plugin]], operator ruling "adlc-upstream.md works".
+  - New reference `skills/wiki/references/adlc-upstream.md`, and `skills/adlc/references/upstream-shipped.md`.
+  - `/adlc`: `upstream` subcommand, Before Starting step 4, the interjection and distill routes.
+  - `wrap-up` 7b; operator-profile rule 8; manual mode; permissions (`gh issue create` in ask); glossary; README; AGENTS.md intake; `.raw/upstream/`; `repository` field in `plugin.json`.
+- Gap C of [[Parallel builder and tester revert each other's edits]] reopened and now routed here.
+- vault-a `wiki/meta/adlc-upstream.md` seeded with UP-001 to UP-004 (sent by hand) and one occurrence row (uncommitted in that vault).
+
+## [2026-10-04] fix | Build snapshot and tester footprint check
+- [[Tester edits app code to prove a test bites]] filed from the vault-a EPIC-002 ledger (the operator said "Good") and resolved (unreleased).
+  - New `skills/adlc/scripts/build_snapshot.py`.
+  - `/adlc` Step 2: 3a snapshot, 4a footprint, 7 clean.
+  - `feature-tester`: never edits app code, not even temporarily.
+  - A technical-planning dispatcher rule, an allow rule in permissions, and a Test globs line in the project-profile template.
+- Missed in the morning's review: it was staged in the vault's ledger for the epic distill, and that review looked only in this repo.
+
 ## [2026-10-04] fix | Dispatcher rules for writing ruling questions
 - [[Dispatcher rules for writing ruling questions]] is resolved (unreleased). Added `/adlc` Step 2 § Writing a ruling question: source every premise, outcome first, one decision per question. Pointers from `technical-planning.md` grilling, Step 4.4 distill and `scope-analyst`.
 - Page corrections:

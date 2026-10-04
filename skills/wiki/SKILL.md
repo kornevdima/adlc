@@ -123,7 +123,7 @@ An engineer often implements a story by hand and calls `/adlc:wiki <task>` only 
 4. **Offer `/adlc` once, never force it.** Only when the task clearly fits the story pipeline (several stories, an epic, a spec ready to build), as one line. Not again in the session.
 5. **Keep the wiki honest at the end** (when the work is done, or the engineer says they are finishing):
    - offer `save` for findings worth keeping;
-   - append the engineer's corrections to the correction log in `meta/operator-profile.md`, when the vault has one;
+   - append the engineer's corrections to the correction log in `meta/operator-profile.md`, when the vault has one; a correction about the plugin itself also goes to `meta/adlc-upstream.md` (`references/adlc-upstream.md`);
    - suggest `wrap-up`. It updates the pages the change made stale, refreshes hot and log, and marks a feature shipped only on a verifier PASS or the engineer's explicit acceptance.
 
 ---

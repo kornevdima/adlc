@@ -35,7 +35,9 @@ Navigation: [[index]] | [[log]]
   - the README maps playbook terms to ADLC;
   - time metrics are deferred.
 - **K8 postponed.**
-- **2026-10-04 (uncommitted):** [[Dispatcher rules for writing ruling questions]] is resolved. `/adlc` Step 2 now has § Writing a ruling question (sourced premises, outcome first, one decision). Two `evals/adlc/` cases on the `adlc-vault` fixture; the baseline passes too (Δ 0). To do after the next release: remove the vault-a profile line.
+- **2026-10-04 (uncommitted):** [[Upstream channel from vaults to the plugin]]. Vaults log plugin lessons in `wiki/meta/adlc-upstream.md`; `/adlc upstream` exports them (a GitHub issue, or a manual hand-off). This repo's intake is `.raw/upstream/` plus the co-located vaults' logs. `upstream-shipped.md` lists 4 vault-a entries for 1.0.7.
+- **2026-10-04 (uncommitted):** [[Tester edits app code to prove a test bites]] is resolved. The dispatcher snapshots each builder round (`refs/adlc/<story>/build-<n>`), and `build_snapshot.py footprint` runs after each tester round; the tester never edits app code. In the vaults: redeploy `feature-tester.md` and add the script's allow rule.
+- **2026-10-04 (committed `7e2fdd4`):** [[Dispatcher rules for writing ruling questions]] is resolved. `/adlc` Step 2 now has § Writing a ruling question (sourced premises, outcome first, one decision). Two `evals/adlc/` cases on the `adlc-vault` fixture; the baseline passes too (Δ 0). To do after the next release: remove the vault-a profile line.
 - **Evals (uncommitted):** 22 skill cases converted to `claude plugin eval` under `evals/`, with layered fixtures. The `fast` set passes. See `evals/README.md`.
 
 ## Key Recent Facts

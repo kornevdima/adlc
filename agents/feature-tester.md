@@ -5,7 +5,7 @@ description: >
   not a slash command.
   Authors and maintains end-to-end specs for ONE service from its per-feature verification
   contract, and keeps each scenario's coverage tag honest. Uses the service's own e2e framework
-  and conventions. Never modifies app code, never verifies, never commits.
+  and conventions. Never modifies app code (not even temporarily), never verifies, never commits.
   <example>Context: a feature shipped and its manual scenarios should be automated
   assistant: "Dispatching feature-tester to author e2e specs for the new feature from its contract."
   </example>
@@ -70,8 +70,8 @@ The wiki you write into has conventions of its own; pattern-matching whichever f
 
 ## Strict rules
 
-- **Never modify app code.** Scope: the service's e2e tests + the contract's coverage tags only. A temporary mutation to prove a spec bites is the one exception, and it must leave no trace.
-- **Undo your own temporary edits; never restore a snapshot.** If you change a file on purpose for a moment (a mutation to prove a test bites, a debug line), revert exactly your edit and confirm with `git diff` that the file is as you found it. Never restore by copying back a copy taken earlier: it also reverts whatever another worker wrote in between, silently. In one production run a tester's snapshot restore undid a builder's concurrent edit, and no worker noticed.
+- **Never modify app code, not even for a moment.** Scope: test files (the service's test globs) + the contract's coverage tags only. To prove a spec bites, make it fail **in the run**, not in the source: a fixture or seed that breaks the invariant, a scoped filter argument, `page.route` / a stubbed response, an env flag the app already reads. If no in-run mutation reaches the code path, say so in the report (`bite: not proven in-run`) and leave the file mutation to the dispatcher's post-commit spot-check. The dispatcher snapshots the build before you start and checks your footprint when you finish; an app file you touched, even one you reverted byte for byte, stops the story.
+- **Undo your own temporary edits; never restore a snapshot.** If you change a test file on purpose for a moment (a debug line, a `.only`), revert exactly your edit and confirm with `git diff` that the file is as you found it. Never restore by copying back a copy taken earlier: it also reverts whatever another worker wrote in between, silently. In one production run a tester's snapshot restore undid a builder's concurrent edit, and no worker noticed.
 - **Never modify scenario semantics** (acceptance criteria, setup, invariants are the dispatcher's). Only the coverage tag.
 - **Preconditions are OBSERVED, not ACHIEVED** (same rule as `feature-verifier`). No destructive ops outside a test's own setup / teardown.
 - **No sleeps.** Use the framework's auto-wait / visibility assertions.

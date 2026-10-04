@@ -9,6 +9,7 @@ tags:
   - operator-profile
   - upstream
 status: resolved
+upstream: [vault-a/UP-001, vault-a/UP-002]
 related:
   - "[[Review the ADLC flow against the AI-Native SDLC Playbook]]"
   - "[[Operator profile - learn engagement style from corrections]]"

@@ -37,6 +37,7 @@ Replace `<VAULT_PATH>` with the project root. Trim patterns the project does not
       "Bash(npm test:*)",
       "Bash(npx:*)",
       "Bash(python3 *skills/wiki/scripts/relink.py *)",
+      "Bash(python3 *skills/adlc/scripts/build_snapshot.py *)",
       "Task(ba-suite-subagent)",
       "Task(architecture-subagent)",
       "Task(ba-export-subagent)",
@@ -65,6 +66,7 @@ Replace `<VAULT_PATH>` with the project root. Trim patterns the project does not
       "Bash(docker compose down:*)",
       "Bash(npm install:*)",
       "Bash(gh pr:*)",
+      "Bash(gh issue create:*)",
       "mcp__clickup__create_task"
     ],
     "deny": [
@@ -89,7 +91,9 @@ Notes:
 - `Task(ba-suite-subagent)` lets the ADLC ingest pass dispatch the BA worker without a prompt. Add other `Task(...)` workers the vault uses.
 - Bash prefix matching cannot express every dangerous shape (for example "rm -rf anywhere outside the project"). `ask` on bare `rm` plus the guard hook below covers the rest.
 - `relink.py` is the wiki-maintenance path: bulk relinks (the epic close, `wiki-lint` dead-link fixes) go through it, not `sed -i`. The rule names the script, not `Bash(sed:*)`, which would allow in-place edits to any path. The `*` before `skills/` matches the versioned plugin install path.
+- `build_snapshot.py` is the dispatcher's build snapshot and tester footprint check (`/adlc` Step 2.3a / 2.4a). It writes only `refs/adlc/<story>/*` through a throwaway index, and `restore` touches only the paths it is given, so it is safe to allow; it never pushes.
 - `Task(devops)` only allows the dispatch. Its outward actions stay gated: `git push` and `gh pr` are in `ask`, `gcloud` is denied by this template. A project that lets `devops` deploy adds its exact deploy command to `ask`, never to `allow`.
+- `gh issue create` is in `ask` for `/adlc upstream`: an export leaves the vault only after the operator reads it. Where GitHub is unreachable, the manual hand-off needs no rule.
 - Keep secrets out of `allow`: `.env` reads are denied here as an example.
 - MCP: reads (`mcp__clickup__get_task`) and local verification (`mcp__chrome-devtools__*`, `mcp__plantuml__render_plantuml`, `docker compose up`) are pre-allowed; outward-facing tracker writes (`mcp__clickup__create_task`) are in `ask` because they leave the repo.
 

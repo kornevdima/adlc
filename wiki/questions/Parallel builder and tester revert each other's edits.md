@@ -11,6 +11,7 @@ tags:
   - distill
 status: resolved
 related:
+  - "[[Upstream channel from vaults to the plugin]]"
   - "[[Wiki maintenance edits blocked in ADLC vaults]]"
   - "[[Integrate the wiki toolset into the ADLC workers]]"
 ---
@@ -61,6 +62,8 @@ All three proposals built as written:
 - Step 4.4: each distilled lesson is marked service-specific or general; general ones go to the operator as proposed plugin text.
 
 Not yet field-tested. Ships with the next plugin version bump.
+
+**Gap C reopened (2026-10-04).** "Tell the operator" was a conversation, not a route: the next general lesson waited in a vault's ledger until the operator pointed at it. The route is now [[Upstream channel from vaults to the plugin]].
 
 ## Evidence
 

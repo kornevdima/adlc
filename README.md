@@ -118,6 +118,10 @@ A vault has **one base mode** plus **zero or more opt-in concerns**.
 
 Concerns add folder kits per SDLC role: `ops`, `qa`, `sec`, `design`, `writing`. Per-concern docs live in [`skills/wiki/references/concerns/`](skills/wiki/references/concerns/); mode details in [`skills/wiki/references/modes.md`](skills/wiki/references/modes.md).
 
+## Reporting back to the plugin
+
+A vault that uses the plugin records what the plugin itself got wrong in `wiki/meta/adlc-upstream.md`: a skill step, a generic worker rule, a script. Single occurrences are rows; a repeat, a plugin bug, or a design the operator approved becomes an `UP-nnn` entry. `/adlc upstream` exports the ratified entries as cleaned reports. It files them as GitHub issues when `gh` works; otherwise you copy the file into this repo's `.raw/upstream/`. Shipped reports are listed in [`skills/adlc/references/upstream-shipped.md`](skills/adlc/references/upstream-shipped.md), and vaults close their entries from it. Format: [`skills/wiki/references/adlc-upstream.md`](skills/wiki/references/adlc-upstream.md).
+
 ## Sharing and Interop
 
 - **Format, not platform.** The vault is plain Markdown + YAML frontmatter + git — readable by humans and agents in any tool. Frontmatter is OKF-compatible (`type` is the one required field); `skills/wiki/scripts/okf_export.py` renders the vault as a portable OKF bundle.

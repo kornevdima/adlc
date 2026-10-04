@@ -1,6 +1,6 @@
 {
- "generated": "2026-10-04T06:57:07Z",
- "page_count": 121,
+ "generated": "2026-10-04T07:11:49Z",
+ "page_count": 123,
  "pages": [
   {
    "path": "wiki/comparisons/AI-Native SDLC Playbook vs ADLC.md",
@@ -1603,6 +1603,7 @@
    ],
    "status": "resolved",
    "related": [
+    "Upstream channel from vaults to the plugin",
     "Wiki maintenance edits blocked in ADLC vaults",
     "Integrate the wiki toolset into the ADLC workers"
    ]
@@ -1783,6 +1784,48 @@
     "Integrate the wiki toolset into the ADLC workers",
     "Operator profile - learn engagement style from corrections",
     "Research OpenManus for claude-mem"
+   ]
+  },
+  {
+   "path": "wiki/questions/Tester edits app code to prove a test bites.md",
+   "name": "Tester edits app code to prove a test bites",
+   "type": "synthesis",
+   "title": "Tester edits app code to prove a test bites",
+   "created": "2026-10-04",
+   "updated": "2026-10-04",
+   "tags": [
+    "adlc",
+    "workers",
+    "feature-tester",
+    "dispatcher",
+    "upstream"
+   ],
+   "status": "resolved",
+   "related": [
+    "Parallel builder and tester revert each other's edits",
+    "Dispatcher rules for writing ruling questions",
+    "Plugin eval suites for claude plugin eval"
+   ]
+  },
+  {
+   "path": "wiki/questions/Upstream channel from vaults to the plugin.md",
+   "name": "Upstream channel from vaults to the plugin",
+   "type": "synthesis",
+   "title": "Upstream channel from vaults to the plugin",
+   "created": "2026-10-04",
+   "updated": "2026-10-04",
+   "tags": [
+    "adlc",
+    "plugin",
+    "distill",
+    "upstream"
+   ],
+   "status": "resolved",
+   "related": [
+    "Parallel builder and tester revert each other's edits",
+    "Tester edits app code to prove a test bites",
+    "Dispatcher rules for writing ruling questions",
+    "Operator profile - learn engagement style from corrections"
    ]
   },
   {

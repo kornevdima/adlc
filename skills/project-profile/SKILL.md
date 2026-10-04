@@ -136,6 +136,8 @@ Build the file in this exact structure. **Do not add a "Project overview" sectio
 
 [mechanical-scanner output, exact commands]
 
+Test globs: [the paths the tester may write, e.g. `*.test.* *.spec.* *.itest.* tests/** e2e/**`, plus any file the suite regenerates; read by the `/adlc` footprint check]
+
 ## Linting & Formatting
 
 [mechanical-scanner output, exact commands]

@@ -54,6 +54,7 @@ Skills handle orchestration; subagents handle isolated work.
 - **Source documents**: `.raw/` (immutable: agents never modify these)
 - **Generated knowledge**: `wiki/` (agent-owned, links to sources via wikilinks)
 - **Manifest**: `.raw/.manifest.json` tracks ingested sources (delta tracking)
+- **Upstream intake**: reports from vaults that use the plugin arrive in `.raw/upstream/` (hand-delivered) or as GitHub issues titled `[upstream]`. When reviewing new proposals, check there, and in the co-located vaults' `wiki/meta/adlc-upstream.md`, not only this repo. File each report as a `wiki/questions/` page with `upstream: [<vault_key>/UP-nnn]`; a release that ships one adds a row to `skills/adlc/references/upstream-shipped.md`.
 
 ## Bootstrap
 
