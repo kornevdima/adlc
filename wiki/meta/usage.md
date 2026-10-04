@@ -1,7 +1,7 @@
 ---
 type: meta
 title: "Token Usage"
-updated: 2026-10-02T21:11:05Z
+updated: 2026-10-04T07:16:41Z
 tags:
   - meta
   - usage
@@ -23,13 +23,14 @@ status: evergreen
 
 | input | output | cache write | cache read |
 |---|---|---|---|
-| 393,129 | 1,651,649 | 6,824,039 | 353,842,199 |
+| 393,299 | 1,722,692 | 6,999,757 | 365,665,236 |
 
 ## Top sessions by output tokens (transcripts currently on disk)
 
 | session | label | output (main+sub) |
 |---|---|---|
-| `6cb242e5` | what other bugs we have in backlog | 124,515 |
+| `6cb242e5` | what other bugs we have in backlog | 127,889 |
+| `6c4ba497` | I've added a new update proposal for adlc, check the canges | 67,669 |
 | `069f95ff` | /adlc:wiki I've added a curosr marketplace. verify it | 44,840 |
 | `4c4e9a20` | restarted session, no warnings ✔ Successfully updated marketplace: adl | 34,662 |
 | `e503456c` | check the ledger. I've added a new bug | 13,991 |
@@ -38,7 +39,7 @@ status: evergreen
 
 | model | input | output | cache write | cache read |
 |---|---|---|---|---|
-| claude-opus-5-5 | 582 | 208,095 | 556,599 | 37,384,540 |
+| claude-opus-5-5 | 752 | 279,138 | 732,317 | 49,207,577 |
 
 ## By subagent type (transcripts currently on disk)
 
@@ -52,9 +53,10 @@ status: evergreen
 <!-- ledger -->
 | date | session | label | branch | models | requests | input | output | cache write | cache read | sub % |
 |---|---|---|---|---|---|---|---|---|---|---|
+| 2026-10-04 | `6c4ba497` | I've added a new update proposal for adlc, check the canges | main | claude-opus-5-5 | 81 | 162 | 67,669 | 171,434 | 10,684,913 | 0% |
 | 2026-10-02 | `069f95ff` | /adlc:wiki I've added a curosr marketplace. verify it | main | claude-opus-5-5 | 114 | 236 | 44,840 | 581,873 | 11,257,687 | 5% |
 | 2026-10-02 | `4c4e9a20` | restarted session, no warnings ✔ Successfully updated marketplace: adl | main | claude-opus-5-5 | 65 | 130 | 34,662 | 86,554 | 5,829,720 | 0% |
-| 2026-10-02 | `6cb242e5` | what other bugs we have in backlog | main | claude-opus-5-5 | 142 | 410 | 124,515 | 431,682 | 22,158,565 | 6% |
+| 2026-10-02 | `6cb242e5` | what other bugs we have in backlog | main | claude-opus-5-5 | 146 | 418 | 127,889 | 435,966 | 23,296,689 | 5% |
 | 2026-10-02 | `e503456c` | check the ledger. I've added a new bug | main | claude-opus-5-5 | 37 | 74 | 13,991 | 83,172 | 3,152,724 | 0% |
 | 2026-07-04 | `f43eac40` | /claude-mem:wiki let's check the latest changes in the project, starti | adlc | claude-fable-5 | 129 | 54,613 | 139,495 | 601,068 | 20,183,269 | 13% |
 | 2026-07-03 | `2602cc6b` | /model | adlc | claude-fable-5 | 210 | 162,688 | 224,983 | 1,124,679 | 20,406,575 | 63% |

@@ -21,6 +21,15 @@ Append-only. New entries go at the TOP. Never edit past entries.
 
 Entry format: `## [YYYY-MM-DD] operation | Title`
 
+## [2026-10-04] release | 1.0.7; ruling questions, build snapshot, upstream channel
+- **Trigger:** operator "bump version, wrap-up and push". Scope: the plugin repo; one vault-side file in vault-a.
+- **Shipped in 1.0.7:**
+  - [[Dispatcher rules for writing ruling questions]] (`7e2fdd4`, with the evals conversion);
+  - [[Tester edits app code to prove a test bites]] and [[Upstream channel from vaults to the plugin]] (`29e77af`).
+- **Version:** the Claude, Cursor and Copilot manifests are at 1.0.7. Fast evals before the bump: 9 of 10 pass. `obsidian-markdown/contradiction-callout` fails on its callout grader, the known backlog item (that skill is unchanged this session).
+- **Process miss:** the morning's review of "new proposals" looked only in this repo. The snapshot design was in a co-located vault. AGENTS.md § Upstream intake now covers that.
+- **Follow-ups:** the vault-a clean-ups after install (hot § Active Threads), redeploying workers, the evals backlog.
+
 ## [2026-10-04] feature | Upstream channel: adlc-upstream.md
 - [[Upstream channel from vaults to the plugin]], operator ruling "adlc-upstream.md works".
   - New reference `skills/wiki/references/adlc-upstream.md`, and `skills/adlc/references/upstream-shipped.md`.
