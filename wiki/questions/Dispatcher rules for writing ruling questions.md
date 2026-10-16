@@ -42,9 +42,9 @@ A rollup can't be the source: `hot.md`, mission control and the run ledger all g
 | 2026-10-01 | "the admin can't read wikis" | it can (TC-120) | an invite was created then revoked; Q-005 was filed then withdrawn |
 | 2026-10-02 | BUG-018 "open"; "one edit gives 4.7:1" | fixed (`f265115`); 2.58:1 when measured | wrong work proposed; a fix offered on a worker's estimate |
 
-The 2026-09-16 row is no longer in the correction log. It was a Standing-rulings line that the 2026-10-03 cleanup moved to the page it settles: `the earlier profile:wiki/meta/operator-profile.md` ("Test-plan gap 3 … First answered 'defer' on a wrong summary from the agent"), and `wiki/sprints/Sprint 07.md:477`.
+The 2026-09-16 row is no longer in the correction log. It was a Standing-rulings line that the 2026-10-03 cleanup moved to the page it settles: the profile before the cleanup ("Test-plan gap 3 … First answered 'defer' on a wrong summary from the agent"), and the Sprint 07 page.
 
-The vault-a vault ratified this rule in its profile on 2026-10-02. Once the plugin rule ships, that line comes out of the profile.
+Vault-a ratified this rule in its profile on 2026-10-02. Once the plugin rule ships, that line comes out of the profile.
 
 ## Lesson 2: outcome first, mechanism second (seen 2×, plus one that belongs to lesson 1)
 
@@ -67,11 +67,11 @@ Open a ruling question with what the user sees, what the library does, or who ow
 3. Eval cases ([[Plugin eval suites for claude plugin eval]]):
    - a status question where `hot.md` contradicts the bug page. Pass: the option cites the bug page.
    - a CSP question where a library does the injecting. Pass: the question opens with what the library does.
-4. Once the vault-a vault runs the release that carries the rule, remove "Cite the record" from the vault-a profile's Pacing and ceremony section, and delete its `proposed:` lines.
+4. Once vault-a runs the release that carries the rule, remove "Cite the record" from the Pacing and ceremony section of vault-a's profile, and delete its `proposed:` lines.
 
 ## Evidence
 
-The correction log in vault-a `wiki/meta/operator-profile.md` (commit `(commit)`, 2026-10-03): the rows dated 2026-09-21, 09-24, 09-30 (×2), 10-01 and 10-02 (×3).
+The correction log in vault-a `wiki/meta/operator-profile.md` (the version of 2026-10-03): the rows dated 2026-09-21, 09-24, 09-30 (×2), 10-01 and 10-02 (×3).
 
 ## Resolution (2026-10-04)
 

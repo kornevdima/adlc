@@ -17,7 +17,7 @@ related:
 
 # Wiki maintenance edits blocked in ADLC vaults
 
-**Opened from live use** (the vault-a vault, EPIC-001 close, 2026-10-02). The operator asked for this to be fixed in the plugin, so that every vault the plugin scaffolds can do routine wiki maintenance without being blocked.
+**Opened from live use** (vault-a, EPIC-001 close, 2026-10-02). The operator asked for this to be fixed in the plugin, so that every vault the plugin scaffolds can do routine wiki maintenance without being blocked.
 
 ## What happened
 
@@ -55,7 +55,7 @@ related:
 
 Built all four, as proposed:
 1. **Relink at epic close:** `skills/adlc/SKILL.md` Step 4.3 runs the relink (dry run, then `--apply`) before it deletes the ledger. `wrap-up` flags any `[[_run …]]` link left on a live page when no ledger survives.
-2. **`skills/wiki/scripts/relink.py`:** a dry run by default. It keeps aliases and anchors, lists anchored links to check, handles embeds, path-qualified targets and a `.md` suffix, and skips code. It leaves `log.md`, `log-archive*.md` and `lint-report-*.md` alone. `wiki-lint` points at it for renamed or folded pages. Tested on a scratch vault. A dry run on the vault-a vault finds 0 links left (they were relinked by hand) and skips its log, archive and lint report.
+2. **`skills/wiki/scripts/relink.py`:** a dry run by default. It keeps aliases and anchors, lists anchored links to check, handles embeds, path-qualified targets and a `.md` suffix, and skips code. It leaves `log.md`, `log-archive*.md` and `lint-report-*.md` alone. `wiki-lint` points at it for renamed or folded pages. Tested on a scratch vault. A dry run on vault-a finds 0 links left (they were relinked by hand) and skips its log, archive and lint report.
 3. **Auto mode in `permissions.md`:** checked against the Claude Code docs (`auto-mode-config`, `permissions`). A narrow `permissions.allow` rule is resolved before the classifier, so the template allows `Bash(python3 *skills/wiki/scripts/relink.py *)`. The classifier never reads `autoMode` from project settings, so the template has none. Other wiki maintenance can go in an operator's **user** `autoMode.allow`, which is their call.
 4. **Side finding:** the template no longer has `Write(path)` rules. The allow-list line is gone, deny uses `Edit(//etc/**)`, and the mechanism text says `Edit(path)` governs every file-writing tool.
 
@@ -63,7 +63,7 @@ Built all four, as proposed:
 
 ## Evidence
 
-The vault-a vault, 2026-10-02:
+Vault-a, 2026-10-02:
 - `wiki/log.md`, the entry "S07 CLOSE + EPIC-001 CLOSE";
 - `meta/operator-profile.md`;
 - `planning/EPIC-001 As-built.md` (the fold).

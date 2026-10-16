@@ -59,10 +59,10 @@ Gap C of [[Parallel builder and tester revert each other's edits]] ("distill onl
 
 ## First log
 
-The vault-a vault (`wiki/meta/adlc-upstream.md`, uncommitted there) was seeded with UP-001 to UP-004 (status `sent`, by hand) and one occurrence row: this channel's own gap. `upstream-shipped.md` already lists the four entries for 1.0.7, so they close when that release reaches the vault.
+Vault-a (`wiki/meta/adlc-upstream.md`, uncommitted there) was seeded with UP-001 to UP-004 (status `sent`, by hand) and one occurrence row: this channel's own gap. `upstream-shipped.md` already lists the four entries for 1.0.7, so they close when that release reaches the vault.
 
 ## Open
 
 - Field test: the first `/adlc upstream` export, checking that the cleaning holds on real ledger text.
-- The other co-located vault (the service checkout is a service checkout, not a product wiki) has no log; one is created at its first plugin lesson.
+- The other co-located vault (a service checkout, not a product wiki) has no log; one is created at its first plugin lesson.
 - No eval case yet. A natural-language case ("the dispatcher approved a plugin-level design; where does it go?") could reuse the `adlc-vault` fixture.

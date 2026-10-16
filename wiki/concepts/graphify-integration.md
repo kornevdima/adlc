@@ -128,7 +128,7 @@ This is documented in [[maintenance-triggers]] (§negative triggers) and `skills
 
 ## Cost reality
 
-Tested on a 169-file Next.js codebase (a Next.js site):
+Tested on a 169-file Next.js codebase:
 
 | Operation | Cost | Time |
 |---|---|---|

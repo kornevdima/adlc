@@ -18,7 +18,7 @@ related:
 
 # Parallel builder and tester revert each other's edits
 
-**Opened from live use** (the vault-a vault, S07 wave 5, story US-058, 2026-10-02). It is a lost-edit bug: a worker's change disappeared and no worker reported it.
+**Opened from live use** (vault-a, S07 wave 5, story US-058, 2026-10-02). It is a lost-edit bug: a worker's change disappeared and no worker reported it.
 
 ## What happened
 
@@ -67,5 +67,5 @@ Not yet field-tested. Ships with the next plugin version bump.
 
 ## Evidence
 
-- The vault-a vault: `wiki/planning/EPIC-001 As-built.md`, the entry "Dispatch lesson (2026-10-02, US-058 …)".
+- Vault-a: `wiki/planning/EPIC-001 As-built.md`, the entry "Dispatch lesson (2026-10-02, US-058 …)".
 - `<service>/.claude/agents/feature-tester.md:196`, `feature-verifier.md:191`, `feature-reviewer.md:169`.

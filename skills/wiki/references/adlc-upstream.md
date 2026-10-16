@@ -23,7 +23,7 @@ This is target **upstream** in `operator-profile.md` rule 8. When a local fix wa
 ---
 type: adlc-upstream
 title: "ADLC upstream log"
-vault_key: <short name for this vault, e.g. the repo directory name>
+vault_key: <opaque alias, e.g. vault-a; never the repo, directory, client or product name>
 plugin_version_seen: 1.0.6
 created: YYYY-MM-DD
 updated: YYYY-MM-DD
@@ -68,10 +68,11 @@ status: evergreen
 Run on demand, at `/adlc distill` (Step 4.4), or when `wrap-up` reports ratified entries.
 
 1. **Export.** For each `ratified` entry, write `.raw/exports/upstream/<vault_key>-UP-nnn.md`. It is a self-contained report: title, kind, target, plugin version, what happened, the proposed fix and the evidence.
-   - **Clean it:** no client, product or people names, no domains, URLs, secrets or customer content.
+   - **Clean it:** no client, product or people names, no repo or directory names (this vault's or its services'), no domains, URLs, secrets or customer content.
+   - No pointers into private repos: no commit hashes, no page titles that name product features; say "the run ledger" or "a sprint page".
    - Turn wikilinks into short quotes with a role ("the run ledger, 2026-10-04: …"), and generic paths (`src/db/<module>.ts`).
    - The plugin repository may be public.
-   - The report's key is `<vault_key>/UP-nnn`.
+   - The report's key is `<vault_key>/UP-nnn`. The key is an opaque alias (`vault-a`), because it travels into every plugin page and release note that cites the report.
 2. **The operator reads the export.** Sending is an outward action: show it, and send only on their word.
 3. **Send. Use GitHub when it works; otherwise hand it over manually.**
    - **GitHub:** only when `gh auth status` passes, and the operator says to send it.
@@ -94,3 +95,5 @@ They remove them, or approve the removal.
 ## On the plugin side
 
 The plugin repo takes reports in `.raw/upstream/` (manual), and from issues titled `[upstream]`. Each one becomes, or joins, a page in its `wiki/questions/` with `upstream: [<vault_key>/UP-nnn]` in the frontmatter. When a release ships the fix, it adds a row to `upstream-shipped.md`.
+
+The plugin wiki, its commits and its release notes follow the same cleaning as the export. A vault is named only by its `vault_key`, a service as `<service>`, and paths stay generic. This holds when a plugin session works with a co-located vault and can read its real names: what it learns there is filed under the key.

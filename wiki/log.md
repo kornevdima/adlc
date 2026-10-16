@@ -21,6 +21,13 @@ Append-only. New entries go at the TOP. Never edit past entries.
 
 Entry format: `## [YYYY-MM-DD] operation | Title`
 
+## [2026-10-16] maintenance | Project names removed from the plugin repo
+- **Bug:** `vault_key` defaulted to the repo directory name, so upstream keys, filed pages and this log carried a co-located vault's and its services' names, plus private commit hashes and page titles.
+- Every vault is now named by its key only (`vault-a`), a service as `<service>`; the hashes and titles are gone. Past entries in this log were edited for this reason only.
+- `skills/wiki/references/adlc-upstream.md`: `vault_key` is an opaque alias; the export cleaning also bans repo and directory names, commit hashes and feature page titles; the plugin wiki, commits and release notes follow the same cleaning.
+- Intake `.raw/upstream/vault-a-UP-005` to `-012` renamed and re-keyed before commit. The vault side switched its key to `vault-a` and renamed its exports.
+- History rewritten with `git filter-repo --replace-text` and force-pushed (operator, 2026-10-16).
+
 ## [2026-10-04] release | 1.0.7; ruling questions, build snapshot, upstream channel
 - **Trigger:** operator "bump version, wrap-up and push". Scope: the plugin repo; one vault-side file in vault-a.
 - **Shipped in 1.0.7:**
@@ -49,7 +56,7 @@ Entry format: `## [YYYY-MM-DD] operation | Title`
 ## [2026-10-04] fix | Dispatcher rules for writing ruling questions
 - [[Dispatcher rules for writing ruling questions]] is resolved (unreleased). Added `/adlc` Step 2 § Writing a ruling question: source every premise, outcome first, one decision per question. Pointers from `technical-planning.md` grilling, Step 4.4 distill and `scope-analyst`.
 - Page corrections:
-  - the 2026-09-16 evidence is now cited from `the earlier profile`;
+  - the 2026-09-16 evidence is now cited from the profile before the cleanup;
   - lesson 2 recounted from 3× to 2×, because US-139 was a premise error;
   - mirroring the rule in `wrap-up` dropped, since it asks nothing.
 - New eval fixture layer `adlc-vault` and two cases, `adlc/ruling-cites-record` and `adlc/ruling-outcome-first`. Both pass, and so does the no-plugin baseline (Δ 0.00, two rounds). Kept as regression pins.
@@ -68,7 +75,7 @@ Entry format: `## [YYYY-MM-DD] operation | Title`
 - **Shipped:** 1.0.5 `b2b1d45` (worker edit safety, epic-close relink, manual mode) and 1.0.6 `8a23c39` (playbook rulings 2–8, the `devops` worker). Not pushed.
 - **Uncommitted:** the evals conversion (`evals/`, 12 `evals.json` removed, README, wiki).
 - **Rollups:** the index Open tasks list now holds only open work; resolved items moved under "Resolved". `index.json` regenerated (120 pages); `meta/usage.md` refreshed; hot rewritten.
-- **Follow-ups:** the evals backlog; field-eval N4–N14; vault-side clean-ups (the vault-a profile, redeploying workers, allow rules).
+- **Follow-ups:** the evals backlog; field-eval N4–N14; vault-side clean-ups (vault-a's profile, redeploying workers, allow rules).
 
 ## [2026-10-02] evals | Skill evals converted to claude plugin eval
 
@@ -94,7 +101,7 @@ Entry format: `## [YYYY-MM-DD] operation | Title`
 ## [2026-10-02] decision | Playbook review ruling 5: distill targets; standing rulings are cross-story
 
 - [[Review the ADLC flow against the AI-Native SDLC Playbook]] ruling 5 adopted, extended to the operator profile: distill proposes only repeats and names a target per lesson; Standing rulings hold cross-story rules only; the correction log records events without "Pattern:" verdicts. `operator-profile.md` rules 7–8, `adlc` Step 2 + 4.4.
-- Evidence from the vault-a vault: 120 single-story lines in Standing rulings (all ride in every dispatch packet), 45 one-off "Pattern:" lines; that project's Claude memory is empty. Its profile clean-up is a vault-side follow-up.
+- Evidence from vault-a: 120 single-story lines in Standing rulings (all ride in every dispatch packet), 45 one-off "Pattern:" lines; that project's Claude memory is empty. Its profile clean-up is a vault-side follow-up.
 
 ## [2026-10-02] decision | Playbook review ruling 4: local evals only
 
@@ -133,7 +140,7 @@ Entry format: `## [YYYY-MM-DD] operation | Title`
 
 ## [2026-10-02] question | Parallel builder and tester revert each other's edits
 
-- Filed [[Parallel builder and tester revert each other's edits]] (open), from the vault-a vault's US-058 (S07 wave 5).
+- Filed [[Parallel builder and tester revert each other's edits]] (open), from vault-a's US-058 (S07 wave 5).
 - **What happened:** builder and tester ran at once; the tester restored `render.ts` from a pre-run copy and silently undid the builder's edit. The dispatcher caught it.
 - **Proposed:**
   - sequential builder/tester dispatch when files overlap (also in fix rounds);
@@ -143,7 +150,7 @@ Entry format: `## [YYYY-MM-DD] operation | Title`
 
 ## [2026-10-02] question | Wiki maintenance edits blocked in ADLC vaults
 
-- Filed [[Wiki maintenance edits blocked in ADLC vaults]] (open), from the vault-a vault's EPIC-001 close.
+- Filed [[Wiki maintenance edits blocked in ADLC vaults]] (open), from vault-a's EPIC-001 close.
 - **What happened:** the Step 4.3 ledger delete left 23 dead `[[_run EPIC-001]]` links on 13 pages. A bulk `sed -i` relink was denied by the auto-mode classifier, so the relink was done by hand, page by page.
 - **Proposed:**
   - relink at the epic close;
@@ -499,7 +506,7 @@ Parse recent entries: `grep "^## \[" wiki/log.md | head -10`
 - Built: `graphify-ingest` + `graphify-update` skills, `graphify-extract` subagent, `/graphify-ingest` + `/graphify-update` commands, `bin/setup-graphify.sh`
 - Extended: `wiki-query` (graph routing), `wiki-lint` (9 graph-layer checks via `scripts/lint_graph.py`), `wiki-ingest` (parallel batch dispatch)
 - Removed: `_templates/`, `.windsurf/`
-- Test target: `a local Next.js site` (Next.js, 169 code files) — full E2E validated
+- Test target: a local Next.js site (169 code files) — full E2E validated
 - Key concept pages: [[graphify-integration]], [[maintenance-triggers]]
 - Key lessons: labels.json poisoning is not self-healing; Jaccard 0.6 threshold preserves cluster identity across small touches; AST-ID hints fix the edge-drop issue; graphifyy excludes Python 3.14
 - Plugin manifest: bumped to v0.2.0 with new keywords
