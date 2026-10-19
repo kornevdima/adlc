@@ -144,7 +144,7 @@ Steps:
 5. Create domain pages + `_index.md` sub-indexes (for applicable modes), and `_index.md` files for every mode-specific and concern-specific folder created in step 4.
 6. Create `wiki/index.md`, `wiki/log.md`, `wiki/hot.md`, `wiki/overview.md`.
 7. Create the vault `AGENTS.md` using the template below.
-8. Initialize git. Read `references/git-setup.md`. For **Mode ADLC**, also scaffold `.claude/settings.json` from `references/permissions.md` so routine project work runs without prompts while destructive operations stay gated, and seed `wiki/meta/mission-control.md` + `wiki/meta/ba-activity.md` with empty tables per `references/mission-control.md` (the metrics seam), plus `wiki/meta/operator-profile.md` from the template in `references/operator-profile.md` — ask the one engagement question ("business-input: you rule on product and design and we checkpoint at story boundaries — or fully-managed: the agent rules within stated principles and checkpoints at epic boundaries?").
+8. Initialize git. Read `references/git-setup.md`. For **Mode ADLC**, also scaffold `.claude/settings.json` from `references/permissions.md` so routine project work runs without prompts while destructive operations stay gated (copy `skills/wiki/scripts/guard_env.py` to `.claude/hooks/guard_env.py`: the settings hook that keeps env files out of every transcript points there), and seed `wiki/meta/mission-control.md` + `wiki/meta/ba-activity.md` with empty tables per `references/mission-control.md` (the metrics seam), plus `wiki/meta/operator-profile.md` from the template in `references/operator-profile.md` — ask the one engagement question ("business-input: you rule on product and design and we checkpoint at story boundaries — or fully-managed: the agent rules within stated principles and checkpoints at epic boundaries?").
 9. Present the structure and ask: "Want to adjust anything before we start?"
 
 > Visual customization (theme, color snippets, plugin recommendations) is **not** applied automatically. The default scaffold leaves Obsidian's stock appearance untouched — users pick their own theme and plugins from Obsidian's community marketplace.
@@ -228,6 +228,10 @@ Workers and skills look this table up before writing a record: it makes filing a
 - wiki/index.md is the master catalog: update on every ingest
 - wiki/log.md is append-only: never edit past entries
 - New log entries go at the TOP of the file
+
+## Writing
+
+Every document for a human reader (a client brief, a help page, a story or requirement, a report or a reply to the operator) follows the plugin's `skills/wiki/references/writing-style.md`; `meta/operator-profile.md` § Writing names this vault's reference document and exceptions. An identifier never stands alone: plain words first, the id in brackets. Every table has a lead-in. Links land on what they name, checked on the deployed page.
 
 ## Operations
 

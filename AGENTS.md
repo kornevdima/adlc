@@ -56,6 +56,10 @@ Skills handle orchestration; subagents handle isolated work.
 - **Manifest**: `.raw/.manifest.json` tracks ingested sources (delta tracking)
 - **Upstream intake**: reports from vaults that use the plugin arrive in `.raw/upstream/` (hand-delivered) or as GitHub issues titled `[upstream]`. When reviewing new proposals, check there, and in the co-located vaults' `wiki/meta/adlc-upstream.md`, not only this repo. File each report as a `wiki/questions/` page with `upstream: [<vault_key>/UP-nnn]`; a release that ships one adds a row to `skills/adlc/references/upstream-shipped.md`.
 
+## Writing for the operator
+
+Every reply, change report and wiki page a person reads in this repo follows `skills/wiki/references/writing-style.md`, the same method the plugin gives its vaults (`technical-writer` skill, `doc-writer`, the `/adlc` and `wrap-up` reports). In short: lead with the answer; say what changed and where, in plain words, with the id in brackets after the words, never an id alone and never a string of sprint, epic and ticket codes the reader has to translate; every code explained where it first appears; a lead-in before every table; totals as numbers; one line for what is assumed or unverified; no recap of the request and no filler. The operator should understand a report without the board, the ledger or a ticket open.
+
 ## Bootstrap
 
 When the user opens this project for the first time:

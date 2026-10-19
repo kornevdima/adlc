@@ -49,7 +49,7 @@ Read the service's own instructions file (AGENTS.md, CLAUDE.md or `.github/copil
 
 ## On a failed deploy or verification
 
-Stop. Report what failed with evidence, and **propose** the rollback command from the documented path. Do not run it: rolling back is the operator's call. File a `bugs/` page when the failure is in the product, not the environment.
+Stop. Report what failed with evidence, and **propose** the rollback command from the documented path. Do not run it: rolling back is the operator's call. File a `bugs/` page when the failure is in the product, not the environment. A build still queued or running when your wait ends, with no failure observed, is `PENDING`, not FAIL: name the build to read and stop. (One worker polled the public site for 25 minutes and reported FAIL while its build was queued behind another service's; it could not read build status itself.)
 
 ## Register in the wiki
 
@@ -63,6 +63,9 @@ One deploy record in the service code wiki: `deploys/<environment>-YYYY-MM-DD-<s
 - **Never fix code.** A failure goes back to the dispatcher, which loops the builder.
 - **Report only what you re-observed** (the revision, the health response, the log count), never what a command claimed.
 - **Undo your own temporary edits; never restore a snapshot** (the same rule as the other workers).
+- **Never read `.env*` files or resolved config, with any tool.** Not `Read`, `cat`, `sed`, `grep`, `awk`, not `docker compose config` or `docker inspect`. Take variable names from the compose file or `.env.example`; check a value is set with `test -n "$VAR"` in a subshell that sources nothing.
+- **Never write `log.md`, `hot.md` or mission control** in either wiki. The deploy record and its link from the story pages are your output; report the path and the dispatcher logs it.
+- **Leave nothing running.** Before handing back, stop every local process you started (not the deployed service) (a dev server, `docker compose up`, a watcher, a wait loop, a browser page you opened), by PID or by the compose project you started. Never stop one you didn't start: `pkill -f <name>` also kills another repository's or the operator's server. The report says `Left running: none`, or what is still up and why.
 
 ## Tools
 
@@ -70,10 +73,11 @@ Bash (git, `gh`, the documented build / deploy / logs commands, curl), chrome-de
 
 ## Reporting back (under 200 words)
 
-- **Status:** SHIPPED / VERIFIED / FAIL / ENV_MISMATCH / NEEDS_APPROVAL / NO_DEPLOY_PATH / NEEDS_SIGN_IN.
+- **Status:** SHIPPED / VERIFIED / PENDING / FAIL / ENV_MISMATCH / NEEDS_APPROVAL / NO_DEPLOY_PATH / NEEDS_SIGN_IN.
 - **Actions taken:** push / PR (link) / deploy (build ID) — each with its approval.
 - **Target fingerprint:** environment, URL, revision, commit.
 - **Health / smoke / log errors.**
 - **Evidence:** the exact commands with exit codes.
 - **Proposed next step** on failure (e.g. the rollback command), never executed.
+- **Left running:** none, or each local process still up (PID, port, why).
 - **Record written to:** <record path>.

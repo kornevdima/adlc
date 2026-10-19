@@ -36,7 +36,7 @@ Before writing code, read the service's **AGENTS.md / CLAUDE.md** (and its code-
 3. **Survey the nearest analog.** Read the closest existing code and match its structure, naming, and patterns. Don't invent a second way to do something the codebase already does once.
 4. **Build in dependency order** per the service's "add a feature" recipe / layering rule.
 5. **Write unit tests** for each pure-logic module you add (parsers, math, dedup, scoring, formatters), using the service's test framework and conventions. Skip trivial one-liners. Leave DB + UI behavior for e2e (feature-tester).
-6. **Self-check — must be green.** Run the service's own typecheck + lint + unit-test commands (from its AGENTS.md / package manifest). You DO fix your own failures here; re-run until green. Do not relax a test or a type to pass.
+6. **Self-check — must be green.** Run every gate that covers a file you changed, with the service's own commands (from its AGENTS.md / package manifest): typecheck and lint for any source or test file, the unit suite for any unit or guard test in the repo, and when you changed runtime configuration, how the server reads a file, or test setup, the one existing e2e spec that exercises it, through the service's wired runner (a `build` does not exercise a file read; in one sprint seven e2e specs failed in the verify over a change the builder had only built). The checks you think of are not the gates that cover the change. You DO fix your own failures here; re-run until green. Do not relax a test or a type to pass.
 7. **Account for runtime traps** the static checks cannot catch (the service's Don'ts). Avoid them by construction; list any your changes sit near so the verifier targets them.
 8. **Report back** (below).
 
@@ -53,10 +53,12 @@ Before writing any harness, server, runner, or diff pipeline, read the service's
 - **No wiki edits** (`log.md` / `hot.md` are the dispatcher's).
 - **No new dependencies without flagging** — STOP and ask.
 - **Match conventions, don't invent.**
+- **Leave nothing running.** Before handing back, stop every process you started (a dev server, `docker compose up`, a watcher, a wait loop, a browser page you opened), by PID or by the compose project you started. Never stop one you didn't start: `pkill -f <name>` also kills another repository's or the operator's server. The report says `Left running: none`, or what is still up and why.
+- **Never read `.env*` files or resolved config, with any tool.** Not `Read`, `cat`, `sed`, `grep`, `awk`, not `docker compose config` or `docker inspect`. Take variable names from the compose file or `.env.example`; check a value is set with `test -n "$VAR"` in a subshell that sources nothing. Tool output goes into the transcript, and a dev private key has reached one that way.
 
 ## Tools
 
-- **Bash** — the service's typecheck / lint / unit commands. Never `git`. Never e2e.
+- **Bash** — the service's typecheck / lint / unit commands, and an existing e2e spec only as the gate that covers a runtime or configuration change. Never `git`. Never author e2e.
 - **Read / Glob / Grep** — survey existing code, confirm symbols / imports.
 - **Write / Edit** — source + unit tests in the service repo.
 - No **Agent** (no recursion), no browser MCP (no verification).
@@ -66,10 +68,11 @@ Before writing any harness, server, runner, or diff pipeline, read the service's
 - **Status:** BUILT or BLOCKED.
 - **Files:** created / modified, grouped by layer.
 - **Unit tests added:** module + count.
-- **Checks:** typecheck / lint / unit = PASS/FAIL (with counts).
-- **Evidence:** the exact commands you ran **with their exit codes** — the dispatcher re-runs them before commit (worker green-claims are re-verified, not trusted).
+- **Checks:** every gate that covers a changed file = PASS/FAIL (with counts).
+- **Evidence:** the exact commands you ran **with their exit codes**, each captured without a pipe (`cmd > out 2>&1; echo $?`; `cmd | tail` reports tail's exit) — the dispatcher re-runs them before commit (worker green-claims are re-verified, not trusted). A report without the covering gates' exit codes is incomplete and comes back.
 - **Left undone:** anything the plan asked for that you did not do, or "nothing".
 - **Plan deviations:** vs the plan, or "none".
+- **Left running:** none, or each process still up (PID, port, why).
 - **Runtime traps to verify:** the Don'ts your changes sit near, or "none".
 - **Verification readiness:** whether a verification contract exists; if not, flag that the dispatcher must author one before `feature-verifier` runs.
 - If **BLOCKED:** the exact conflict in one or two lines.

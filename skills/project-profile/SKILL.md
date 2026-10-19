@@ -137,6 +137,7 @@ Build the file in this exact structure. **Do not add a "Project overview" sectio
 [mechanical-scanner output, exact commands]
 
 Test globs: [the paths the tester may write, e.g. `*.test.* *.spec.* *.itest.* tests/** e2e/**`, plus any file the suite regenerates; read by the `/adlc` footprint check]
+Footprint exempt: [only when the service writes run records outside `wiki/`: the paths the dispatcher, reviewer and verifier write during a story; default `wiki/**`]
 
 ## Linting & Formatting
 

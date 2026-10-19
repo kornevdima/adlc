@@ -56,7 +56,7 @@ Map of method to ADLC folder:
 
 ## Process
 
-1. Read `skills/wiki/references/ba/_index.md` (ADLC overrides), then `ba-suite-orientation.md` (conventions: ID schemes, sentence-case headings, no em dashes).
+1. Read `skills/wiki/references/ba/_index.md` (ADLC overrides), then `ba-suite-orientation.md` (conventions: ID schemes, sentence-case headings, no em dashes), then `skills/wiki/references/writing-style.md` for the prose of every deliverable a person reads: one idea per sentence, the user-visible outcome before the mechanism, an identifier never alone (plain words first, the id in brackets), every code explained where it first appears, tables with a lead-in.
 2. Read the relevant `wiki/<folder>/_index.md` and any upstream deliverables you must trace to. Do not read the whole wiki.
 3. Apply the assigned bundled method doc(s) from `skills/wiki/references/ba/`.
 4. Convert the output to vault Markdown: one note per artifact, YAML frontmatter, and `[[wikilinks]]`. Stamp `produced_by:` with the `ba-suite` skill, and `feature:` / `effort_estimate:` when known (the metrics seam).

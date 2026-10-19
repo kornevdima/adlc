@@ -53,6 +53,18 @@ status: evergreen
 <!-- cross-story rules only, one line each, dated, verbatim where possible; these ride in every dispatch packet, so keep the section short (~20 lines). A ruling on one story, bug or decision goes on that record's page, not here. -->
 - YYYY-MM-DD — "re-use the shared component, no per-route rules" (design)
 
+## Writing
+<!-- optional: how documents for a human reader are written here (client briefs, help pages, story and requirement wording, reports to the operator). The generic method is the plugin's wiki/references/writing-style.md, applied by the technical-writer skill; this section holds the vault's reference document (one the operator called good) and its exceptions. Older vaults named this section "Client documents"; the skill reads either. -->
+- Reference document: client-briefs/<file>
+- Shape of a question pack: what we build (no heading) · what there is now · what we propose · what we need from you · assumptions · questions (table with "Your answer")
+- Exceptions to the generic style: none
+
+## Translation
+<!-- optional: source language, target language, glossary (or a pointer to meta/glossary.md), what stays untranslated -->
+- Source: English; sent: Russian; both files change in the same edit
+| Source | Target |
+|---|---|
+
 ## Preferred instruments
 - Visual acceptance: a screenshot in front of the operator is the gate
 - Regression pins: the e2e suite — never a throwaway script

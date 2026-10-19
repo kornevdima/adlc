@@ -17,13 +17,13 @@ related:
 
 # Wiki maintenance edits blocked in ADLC vaults
 
-**Opened from live use** (vault-a, EPIC-001 close, 2026-10-02). The operator asked for this to be fixed in the plugin, so that every vault the plugin scaffolds can do routine wiki maintenance without being blocked.
+**Opened from live use** (vault-a, an epic close, 2026-10-02). The operator asked for this to be fixed in the plugin, so that every vault the plugin scaffolds can do routine wiki maintenance without being blocked.
 
 ## What happened
 
-1. `/adlc` Step 4.3 folded `_run EPIC-001.md` into an as-built page and **deleted the ledger**.
-2. 23 wikilinks on 13 live pages still pointed at `[[_run EPIC-001]]`. These were the overview, the index, six sprint packs, three bug pages, an ADR and the operator profile.
-3. The dispatcher tried a bulk relink with `sed -i '' 's/\[\[_run EPIC-001.../[[EPIC-001 As-built.../g'` over those files.
+1. `/adlc` Step 4.3 folded the run ledger into an as-built page and **deleted the ledger**.
+2. 23 wikilinks on 13 live pages still pointed at the deleted ledger. These were the overview, the index, six sprint packs, three bug pages, an ADR and the operator profile.
+3. The dispatcher tried a bulk relink with `sed -i '' 's/\[\[_run <EPIC>.../[[<EPIC> As-built.../g'` over those files.
 4. The **auto-mode classifier denied it** without an explanation. The vault's `.claude/settings.json` (built from `skills/wiki/references/permissions.md`) allows `Edit(//<vault>/**)` but has no rule for bulk in-place shell edits. Auto mode judges such a command on its own, whatever the file-edit allow rules say.
 5. The denial rules forbid a workaround, so the work was handed back to the operator. They approved a page-by-page fix with the Edit tool: 13 files, 23 links, many tool calls for a mechanical change.
 
@@ -64,6 +64,6 @@ Built all four, as proposed:
 ## Evidence
 
 Vault-a, 2026-10-02:
-- `wiki/log.md`, the entry "S07 CLOSE + EPIC-001 CLOSE";
-- `meta/operator-profile.md`;
-- `planning/EPIC-001 As-built.md` (the fold).
+- the vault's log entry for that sprint and epic close;
+- its operator profile;
+- the epic's as-built page (the fold).

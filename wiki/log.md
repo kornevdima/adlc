@@ -21,6 +21,44 @@ Append-only. New entries go at the TOP. Never edit past entries.
 
 Entry format: `## [YYYY-MM-DD] operation | Title`
 
+## [2026-10-20] maintenance | Upstream pages de-identified; the third vault re-keyed to vault-d
+- **Trigger:** operator asked why a vault's project name stood as its report key, then "upstream should not contain project details".
+- The third co-located vault's key was its directory name, copied verbatim from its ledger (created under the pre-1.0.7 template). Re-keyed to `vault-d` in 8 files and the 1.0.8 commit amended before any push. The vault re-keys its own ledger.
+- The audit then found pointers into the vaults' private repos on five question pages, the index and this log: story, epic, sprint, bug and test-case ids, run-ledger page names with line numbers, one commit hash, a source path with a symbol and a column name, and product nouns (a sharing feature, a settings switcher, an integration's key). All replaced by roles ("a later story", "the run ledger", "a database filter"). Past entries in this log were edited for this reason only, as on 2026-10-17.
+- Two skill examples carried vault text: `build_snapshot.py`'s usage lines named a real service path, story and source file (now `services/<service>`, `US-042`, `src/db/<module>.ts`); `writing-style.md` used a client's form names (now neutral forms).
+- **Left as is:** `.raw/upstream/vault-b-UP-001.md` and `-005.md` name the client's form kinds; `.raw/` is immutable, so the operator decides. Rule for the next intake: identifiers and product nouns are stripped when a report is filed, not only names.
+
+## [2026-10-20] release | 1.0.8; twenty upstream reports from three vaults, the writing method
+- **Trigger:** operator "bump version, wrap-up and push".
+- **Shipped in 1.0.8**, all filed in `upstream-shipped.md`: the footprint exemption and the leave-nothing-running rules (2026-10-17 batch); env files kept out of transcripts, contract rules, covering gates, workers never writing the dispatcher's logs, shared-environment rules (the two 2026-10-20 batches); the writing method, with `technical-writer` in place of the `client-docs` draft.
+- **Version:** the Claude, Cursor and Copilot manifests are at 1.0.8. Fast evals before the bump: 9 of 10 pass; `obsidian-markdown/contradiction-callout` fails on its callout grader as it did before 1.0.7 (that skill is unchanged).
+- **Follow-ups:** the vaults flip their entries to `sent` and then `shipped (1.0.8)` and remove the workarounds each wiki page's Open section names; the second `vault-b` re-keys to `vault-c`; the public-repo records occurrence is still open.
+
+## [2026-10-20] upstream | Writing method: vault-b UP-001 to UP-005 and vault-c UP-001 (unreleased, rows under 1.0.8)
+- **Trigger:** operator, after the first batch: two vaults had reported on translation and reader documentation; the skill drafted as `client-docs` must be neutral, cover the help documentation other vaults keep and the wording of BA stories and requirements, and the agent's own reports must read like a client brief, not like sprint and ticket codes. Name chosen by the operator: `technical-writer`.
+- New `skills/wiki/references/writing-style.md`; `skills/technical-writer/` replaces the untracked `skills/client-docs/`; pointers from `doc-writer`, `ba-suite-subagent`, the `/adlc` Report to User (rewritten), `wrap-up` step 8, the vault AGENTS.md template § Writing, this repo's AGENTS.md § Writing for the operator; operator profile § Client documents renamed § Writing. Filed [[One writing method for every human reader]].
+- Two vaults use the key `vault-b`; the second is listed as `vault-c` and should re-key. `upstream-shipped.md`: 6 more rows under 1.0.8.
+
+## [2026-10-20] upstream | vault-a UP-013 to UP-021 and vault-d UP-001 to UP-003 fixed (unreleased, rows under 1.0.8)
+- **Trigger:** operator "check the upstream log, i have new complaints and run fixes for adlc". The entries were read from the two co-located vaults' `wiki/meta/adlc-upstream.md` (none had been exported to `.raw/upstream/`); all were `proposed`, and the operator's instruction is taken as ratification. vault-a/UP-011 (visual review) stays out: the operator declined it on 2026-10-07.
+- UP-013: worker Don'ts, `permissions.md` deny rules, new `skills/wiki/scripts/guard_env.py` PreToolUse hook (27 payloads checked), the ADLC scaffold copies it. Filed [[Workers print secrets from env files]].
+- UP-014, UP-017, UP-018, vault-d/UP-003: `/adlc` Step 2.2 as a rule list (outcome not mechanism, named facts checked against the code, readers of a moved source, grilling rulings carried), Step 0.3, census items 7 and 8, reviewer dimension 8, `technical-planning.md`. Filed [[Contracts that prescribe mechanisms or skip the code]].
+- UP-015, UP-016: builder and tester run the gates that cover their change with no-pipe exit codes; `/adlc` § Accepting a hand-back, Step 2.6 cheap gates before the verify, Step 2.7 untracked-file diff. Filed [[Hand-backs without the gates that cover the change]].
+- UP-019, UP-020: Findings rule (a bug page only after the cause is read), reproduction request over speculative fix, the run's state read from the ledgers. Joined [[Dispatcher rules for writing ruling questions]].
+- UP-021: workers never write `log.md`, `hot.md` or mission control; the dispatcher logs the record path. Filed [[Workers write to logs the dispatcher owns]].
+- vault-d/UP-001 and the 2026-10-17 shared-environment occurrences: § Shared environment in tester and verifier (no long-lived service as a background child, port check, env carried, never recreate a container you didn't start, narrow cleanup). Joined [[Workers and processes left running after hand-back]].
+- vault-d/UP-002: closed by the UP-005 change. Joined [[Tester edits app code to prove a test bites]]. The UP-007 recurrence (jsdom, real-height content, round trips) joined [[Verification instruments that miss what they measure]].
+- Also folded from occurrence rows: `devops` reports `PENDING` on a queued build; no two e2e suites on one database at once.
+- `upstream-shipped.md`: 13 new rows under 1.0.8. **Follow-ups:** bump to 1.0.8; the vaults flip UP-013 to UP-021 and vault-d UP-001 to UP-003 to `sent`, then `shipped (1.0.8)`; the public-repo records occurrence (2026-10-18) is not addressed.
+
+## [2026-10-17] upstream | vault-a UP-005 to UP-010 and UP-012 fixed (unreleased, rows under 1.0.8)
+- **Trigger:** operator "let's fix reported", on the seven reports in `.raw/upstream/`.
+- UP-005: `build_snapshot.py footprint --exempt`, default `wiki/**`, scratch-tested; `/adlc` Step 2.4a; a "Footprint exempt" line in the project-profile AGENTS.md template. Joined [[Tester edits app code to prove a test bites]].
+- UP-006 and UP-012: "Leave nothing running" in the six Bash workers, `/adlc` Step 2 § After every hand-back, `wrap-up` step 7c, read-only `lsof` / `ps -p` allow rules. Filed [[Workers and processes left running after hand-back]].
+- UP-007 to UP-009: tester and verifier § Check the instrument can see the property, the dev-server connection rule, the direct-runner rule; `/adlc` Step 2.2. Filed [[Verification instruments that miss what they measure]].
+- UP-010: `/adlc` Step 2 § Claiming a cause or a fix. Joined [[Dispatcher rules for writing ruling questions]], along with the 2026-10-16 outcome-first recurrence (an occurrence, not an entry).
+- `upstream-shipped.md`: seven rows under 1.0.8. **Follow-ups:** bump to 1.0.8; vault-a removes the workarounds after installing it.
+
 ## [2026-10-16] maintenance | Project names removed from the plugin repo
 - **Bug:** `vault_key` defaulted to the repo directory name, so upstream keys, filed pages and this log carried a co-located vault's and its services' names, plus private commit hashes and page titles.
 - Every vault is now named by its key only (`vault-a`), a service as `<service>`; the hashes and titles are gone. Past entries in this log were edited for this reason only.
@@ -46,7 +84,7 @@ Entry format: `## [YYYY-MM-DD] operation | Title`
 - vault-a `wiki/meta/adlc-upstream.md` seeded with UP-001 to UP-004 (sent by hand) and one occurrence row (uncommitted in that vault).
 
 ## [2026-10-04] fix | Build snapshot and tester footprint check
-- [[Tester edits app code to prove a test bites]] filed from the vault-a EPIC-002 ledger (the operator said "Good") and resolved (unreleased).
+- [[Tester edits app code to prove a test bites]] filed from a vault-a epic ledger (the operator said "Good") and resolved (unreleased).
   - New `skills/adlc/scripts/build_snapshot.py`.
   - `/adlc` Step 2: 3a snapshot, 4a footprint, 7 clean.
   - `feature-tester`: never edits app code, not even temporarily.
@@ -57,7 +95,7 @@ Entry format: `## [YYYY-MM-DD] operation | Title`
 - [[Dispatcher rules for writing ruling questions]] is resolved (unreleased). Added `/adlc` Step 2 § Writing a ruling question: source every premise, outcome first, one decision per question. Pointers from `technical-planning.md` grilling, Step 4.4 distill and `scope-analyst`.
 - Page corrections:
   - the 2026-09-16 evidence is now cited from the profile before the cleanup;
-  - lesson 2 recounted from 3× to 2×, because US-139 was a premise error;
+  - lesson 2 recounted from 3× to 2×, because one of the rows was a premise error;
   - mirroring the rule in `wrap-up` dropped, since it asks nothing.
 - New eval fixture layer `adlc-vault` and two cases, `adlc/ruling-cites-record` and `adlc/ruling-outcome-first`. Both pass, and so does the no-plugin baseline (Δ 0.00, two rounds). Kept as regression pins.
 
@@ -140,8 +178,8 @@ Entry format: `## [YYYY-MM-DD] operation | Title`
 
 ## [2026-10-02] question | Parallel builder and tester revert each other's edits
 
-- Filed [[Parallel builder and tester revert each other's edits]] (open), from vault-a's US-058 (S07 wave 5).
-- **What happened:** builder and tester ran at once; the tester restored `render.ts` from a pre-run copy and silently undid the builder's edit. The dispatcher caught it.
+- Filed [[Parallel builder and tester revert each other's edits]] (open), from a vault-a story.
+- **What happened:** builder and tester ran at once; the tester restored a source file from a pre-run copy and silently undid the builder's edit. The dispatcher caught it.
 - **Proposed:**
   - sequential builder/tester dispatch when files overlap (also in fix rounds);
   - undo-own-edit + `git diff` restore in the generic tester, verifier, reviewer;
@@ -150,8 +188,8 @@ Entry format: `## [YYYY-MM-DD] operation | Title`
 
 ## [2026-10-02] question | Wiki maintenance edits blocked in ADLC vaults
 
-- Filed [[Wiki maintenance edits blocked in ADLC vaults]] (open), from vault-a's EPIC-001 close.
-- **What happened:** the Step 4.3 ledger delete left 23 dead `[[_run EPIC-001]]` links on 13 pages. A bulk `sed -i` relink was denied by the auto-mode classifier, so the relink was done by hand, page by page.
+- Filed [[Wiki maintenance edits blocked in ADLC vaults]] (open), from a vault-a epic close.
+- **What happened:** the Step 4.3 ledger delete left 23 dead ledger links on 13 pages. A bulk `sed -i` relink was denied by the auto-mode classifier, so the relink was done by hand, page by page.
 - **Proposed:**
   - relink at the epic close;
   - a `relink.py` script to allow-list instead of `sed`;

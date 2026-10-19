@@ -83,6 +83,7 @@ bash bin/setup-graphify.sh /path/to/your-app   # also pin to a specific code pro
 | `/wrap-up` | Session sync: down/up-propagate across wikis, reconcile boards, refresh caches |
 | `/product-management-layer` | Gate 0 governance: tool approval, buy-vs-build TCO, compliance scoping |
 | `/ba-export` | Render wiki BA deliverables to formal Office documents |
+| `/technical-writer` | Documents for a human reader: client briefs and question packs, help pages, the wording of stories and requirements, change reports; source and translation kept in step. Method: [`writing-style.md`](skills/wiki/references/writing-style.md) |
 | `/project-profile` | Scan a repo, generate/augment its AGENTS.md |
 
 Non-engineers bring a need in by dropping a five-heading note (problem, outcome, who is affected, constraints, open questions) into `.raw/intake/`; the next ingest turns it into requirements and stories. Template: [`modes.md` § Intake for non-engineers](skills/wiki/references/modes.md#intake-for-non-engineers).

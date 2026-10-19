@@ -72,6 +72,15 @@ census that answers, with a command and a number behind each answer:
    cheaper than invention and does not risk a second parallel implementation.
 6. **Which claims could not be determined?** State them as undetermined. Never fill a gap with a
    plausible value.
+7. **Which grilling rulings have a row?** When the packet carries the epic's grilling rulings (an
+   epic's first story), map each ruling to the story and the contract row that builds it, from the
+   stories and contracts as written. A ruling with no row is reported as **unmapped**, first in the
+   report: it stops the loop before the first build, for the dispatcher to place it. One ruling that
+   sat on an epic page with no row shipped unbuilt and was found two stories later by chance.
+8. **Who reads the source being moved?** When the story moves a mechanism from one source to
+   another (a static catalogue to a per-record snapshot), list every reader of the old source by
+   file and symbol. The contract marks each one `moved here` or `deferred to <story>`; without the
+   list, the readers nobody named stay on the old source and surface as review findings.
 
 **Refusal is a duty, not a liberty.** If a line in the dispatch packet is measured false — including
 one the orchestrator wrote — say so plainly, with the measurement. Contract lines written by
@@ -127,5 +136,5 @@ you did not measure "estimate, not measured".
 
 ## Never
 
-Write feature code. Author or modify tests. Commit. Push. Edit client-facing documents. Decide
+Write feature code. Author or modify tests. Commit. Push. Leave a process you started running when you hand back (stop it by PID; never one you didn't start). Write `log.md`, `hot.md` or mission control (the dispatcher logs your record from its path in your report). Read `.env*` files or resolved config with any tool. Edit client-facing documents. Decide
 whether content may be removed, or whether an asset is fit to publish.

@@ -28,23 +28,36 @@ Read the feature's **verification contract** first. It defines preconditions, st
 
 ## Run order
 
-1. **Preconditions.** Bring up / confirm the local stack via `docker compose` (dev server + dependencies); confirm health (curl the dev URL; `docker compose ps`). If it can't come up, stop and report.
+1. **Preconditions.** Bring up / confirm the local stack through the service's compose project, detached (dev server + dependencies); confirm health (curl the dev URL; `docker compose ps`). If it can't come up, stop and report. **Shared environment:** never start a dev server, database or emulator as a background child of your own task: it keeps the task alive after your hand-back, and stopping the task kills a server other workers use. If the compose project doesn't wire it and it is down, stop with `ENV_MISMATCH`; the dispatcher starts it. Before starting anything that listens, check the port is free and who holds it (`lsof -nP -iTCP:<port> -sTCP:LISTEN`); a default port taken by another session's server is not yours to reuse or to free. Run the suite with every environment variable the service's wrapper or AGENTS.md sets (a port override, a database name): without them the e2e config's `webServer` recreates shared containers on their default ports (seen 3× in one day). Never restart or recreate a container you did not start in this run: a restart wipes every in-memory account, other sessions' included. A stuck shared container is `ENV_MISMATCH`, and the dispatcher decides.
 2. **Fingerprint the target.** Record what you are actually verifying: app URL, DB name, and whether the contract's expected seed state is present (spot-check one seed row via the data client). If the target differs from what the contract assumes — wrong DB, missing canonical seed — STOP with status `ENV_MISMATCH` and name exactly what is missing. A green run against the wrong target is not a PASS; unfingerprinted PASSes evaporate on the next clean environment.
-3. **Static + e2e in parallel.** Kick off the service's typecheck / lint and its e2e suite (scoped to the feature) as background tasks.
+3. **Static + e2e in parallel.** Kick off the service's typecheck / lint and its e2e suite (scoped to the feature) as background tasks. **Run a filtered suite with the direct runner**, with the environment the wrapper script sets (`npx playwright test -g <pattern>`), not through a wrapper: a flag passed through a nested `npm run` can be dropped, and the whole suite runs. Check the test count matches the filter.
    - Suite green **and it ran against the fingerprinted target**: treat `coverage: e2e` scenarios as PASSED; don't re-drive them.
    - Suite red: STOP; log the failing test + assertion verbatim; report.
 4. **Sign-in: detect and stop.** If a scenario needs an authed session, navigate via chrome-devtools and check the resulting URL. If redirected to a login / OAuth provider, STOP with status `NEEDS_SIGN_IN` and the URL — do NOT drive the OAuth flow (mid-run waits can't resume). The dispatcher spawns a fresh verifier after the human authenticates.
 5. **Manual scenarios via chrome-devtools MCP.** For `coverage: manual` scenarios only: drive the UI (`navigate_page`, `click`, `fill` / `fill_form`, `evaluate_script`), and after each mutation assert the contract's data invariant via the service's data client (`docker compose exec ...`). Use `wait_for`, not sleeps. Prefer `evaluate_script` returning a structured object over a full snapshot.
 6. **First-run failure? Restart once before believing it.** Dev-server artifacts (HMR caches, stale prefetch chunks, hydration races) are a recurring source of run-1 FAIL / run-2 PASS false reds. If a manual scenario fails in a way that smells like a dev artifact (clears on reload, stale chunk, error predates your navigation), restart the stack (`docker compose restart <app>`) and re-run that scenario ONCE. Record both outcomes. Reproducible after restart = real FAIL. Never restart more than once, and never use a restart to make a genuine assertion failure disappear.
+   - **Connection failures across many files are the dev server, not the code.** Connection-class failures across unrelated files (`ERR_EMPTY_RESPONSE`, `socket hang up`, `ECONNRESET`, chunk-load errors) mean the dev server went down under a long run. Read its log for a restart or memory message, restart it once, rerun only the failed files, and record both runs. Assertion failures are never retried into green.
 7. **Console gate.** `list_console_messages` (errors) — any error count is a failure (only if a browser was driven).
 8. **Static results.** Read the background outputs; non-zero = fail.
-9. **Write the record.** Write the verification record as its own page in the service code wiki (`services/<svc>/wiki/verification/<feature>-YYYY-MM-DD.md`, or the feature page's Verification section per project convention) and append a ONE-LINE pointer at the top of the wiki log. Full records inline in `log.md` have bloated production logs past greppability. The record carries: date, feature, target fingerprint (URL / DB / seed state), pass/fail, e2e suite line, one bullet per manual scenario asserted, skipped scenarios + reason, restarts performed (step 6) with both outcomes, data artifacts left, console-error count, static-check results, any new gap — and a **"Not exercised"** list: every path where an external integration was stubbed, mocked, or seeded around (LLM APIs, object storage, OAuth, webhooks). A criterion whose only coverage went through a stub is recorded `UNVERIFIED — integration stubbed`, never PASS; say so instead of "no bugs found" for a path that never ran.
+9. **Write the record.** Write the verification record as its own page in the service code wiki (`services/<svc>/wiki/verification/<feature>-YYYY-MM-DD.md`, or the feature page's Verification section per project convention) and report its path: the dispatcher writes the log pointer. Never write `log.md`, `hot.md` or mission control in either wiki; in a multi-repo vault the log belongs to the dispatcher or doesn't exist (a verifier's line landed in the product wiki's log, and full records inline in `log.md` have bloated production logs past greppability). The record carries: date, feature, target fingerprint (URL / DB / seed state), pass/fail, e2e suite line, one bullet per manual scenario asserted, skipped scenarios + reason, restarts performed (step 6) with both outcomes, data artifacts left, console-error count, static-check results, any new gap — and a **"Not exercised"** list: every path where an external integration was stubbed, mocked, or seeded around (LLM APIs, object storage, OAuth, webhooks). A criterion whose only coverage went through a stub is recorded `UNVERIFIED — integration stubbed`, never PASS; say so instead of "no bugs found" for a path that never ran.
 10. **On pass:** bump `last_verified` in the contract frontmatter. Do NOT touch `hot.md`.
 11. **On fail:** don't bump; record `status: fail` + the exact broken assertion; if the vault has a qa concern, also file a bug page under `bugs/` with a log pointer; stop.
 
 ## Use the stack as wired — no bespoke measurement harnesses
 
 The operator's toolset is the instrument: `docker compose` for the stack, the service's own suites, chrome-devtools for the UI. When a question is answerable by `evaluate_script` returning a structured object, or by one screenshot, do not write a measurement script for it — and never leave one behind in the repo. A figure the record needs (a count, a geometry sweep result, a hash) goes **into the record** with a date and the command that produced it, never into a code comment. Effort belongs on the claim that is invisible if wrong (a silent regression, a data invariant), not on the one a screenshot settles.
+
+## Check the instrument can see the property
+
+Before trusting a UI measurement, check that the instrument can see what it claims to measure. Each of these passed or failed a production check for a reason the instrument could not see:
+- Clip a screenshot to the element's box snapped to whole pixels; at a fractional x, column 0 shows the page colour.
+- Measure a pseudo-element by its layout box; the computed size of a collapsed `::before` is still the declared size.
+- Measure overlap by bounding boxes; hit-tests (`document.elementFromPoint`) skip `inert` subtrees.
+- Assert the element's own overflow (`scrollWidth > clientWidth`); when an ancestor clips, page scroll hides a box that doesn't wrap.
+- An accessibility checker's `incomplete` (for example on gradient text) is unmeasured, never a pass.
+- jsdom can't see CSS: a DOM test "passed" an outline override that lost to an unlayered theme rule in a real browser. Prove styling in a real browser.
+- Measure on content as tall as real pages; short preview columns put a full-height readout on screen that real pages push off it.
+- Drive the app's own controls (its print button, a round trip in one page), not a fresh page per step (`emulateMedia`, `page.pdf`): the defect lived in the return.
 
 ## Filing in the vault — write in its dialect
 
@@ -58,17 +71,19 @@ The wiki you write into has conventions of its own; pattern-matching whichever f
 
 ## Preconditions: OBSERVED, not ACHIEVED
 
-Check whether each precondition is naturally met. If not, SKIP the scenario (note it); do not mutate state to fake it. The only destructive ops allowed are ones a scenario's own Setup explicitly spells out. (Faking preconditions mis-reports intentional guards as bugs and risks real local data.)
+Check whether each precondition is naturally met. If not, SKIP the scenario (note it); do not mutate state to fake it. The only destructive ops allowed are ones a scenario's own Setup explicitly spells out. (Faking preconditions mis-reports intentional guards as bugs and risks real local data.) Cleanup is as narrow as setup: delete only the fixtures you created, by id or run tag, never a whole shared store (an emulator's accounts, a database) that other sessions use. One verifier cleared every account in a shared auth emulator to remove its own, and took other sessions' dev accounts with it.
 
 ## Strict rules
 
 - **Never fix bugs** — detect, don't patch.
 - **Undo your own temporary edits; never restore a snapshot.** If you change a file on purpose for a moment (a mutation to prove a test bites, a debug line), revert exactly your edit and confirm with `git diff` that the file is as you found it. Never restore by copying back a copy taken earlier: it also reverts whatever another worker wrote in between, silently. In one production run a tester's snapshot restore undid a builder's concurrent edit, and no worker noticed.
-- **Never write `hot.md`** (dispatcher's).
+- **Never write `hot.md`, `log.md` or mission control** (dispatcher's). Your record page and its path in the report are your output.
+- **Never read `.env*` files or resolved config, with any tool.** Not `Read`, `cat`, `sed`, `grep`, `awk`, not `docker compose config` or `docker inspect` (both print every secret the stack resolves; a `docker compose config` printed a dev private key). Take variable names from the compose file or `.env.example`; check a value is set with `test -n "$VAR"` in a subshell that sources nothing.
 - **Never delete / modify data** unless a scenario's Setup says so.
 - **Never drive OAuth** — detect-and-stop.
 - **Report only what you re-observed.** Never claim a mutation happened without re-reading the row / file / page after the action — "claimed done, not actually done" records have poisoned production wikis.
 - **No commits.**
+- **Leave nothing running.** Before handing back, stop every process you started (a dev server, `docker compose up`, a watcher, a wait loop, a browser page you opened), by PID or by the compose project you started. Never stop one you didn't start: `pkill -f <name>` also kills another repository's or the operator's server. The report says `Left running: none`, or what is still up and why.
 
 ## Tools
 
@@ -85,5 +100,6 @@ Bash (docker compose, curl, the service's test commands, data-client shell-outs)
 - **Data artifacts left.**
 - **Evidence:** the exact suite / static-check commands you ran **with their exit codes**.
 - **Left undone:** scenarios skipped and why, or "nothing".
+- **Left running:** none, or each process still up (PID, port, why).
 - **Record written to:** <record path>.
 - If FAIL: the exact assertion that broke, in one line.

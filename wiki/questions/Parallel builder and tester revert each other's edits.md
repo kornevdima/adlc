@@ -18,20 +18,20 @@ related:
 
 # Parallel builder and tester revert each other's edits
 
-**Opened from live use** (vault-a, S07 wave 5, story US-058, 2026-10-02). It is a lost-edit bug: a worker's change disappeared and no worker reported it.
+**Opened from live use** (vault-a, one story of one sprint, 2026-10-02). It is a lost-edit bug: a worker's change disappeared and no worker reported it.
 
 ## What happened
 
-1. The dispatcher ran `feature-builder` and `feature-tester` for US-058 **at the same time**.
-2. The tester saved a copy of `render.ts` before mutating it, to check that a test catches the break.
+1. The dispatcher ran `feature-builder` and `feature-tester` for the same story **at the same time**.
+2. The tester saved a copy of a source file before mutating it, to check that a test catches the break.
 3. The builder then edited the same file (a comment rewrap).
-4. The tester restored `render.ts` by copying its saved copy back. That silently undid the builder's edit.
+4. The tester restored the file by copying its saved copy back. That silently undid the builder's edit.
 5. Neither worker reported it. The dispatcher noticed the missing change and re-applied it.
 
 ## Where the fix landed: one service only
 
-- The vault recorded it as a dispatch lesson (`planning/EPIC-001 As-built.md`, S07 waves 4–9).
-- The epic-close distill wrote the rule into three of `<service>/.claude/agents/`: `feature-tester.md:196`, `feature-verifier.md:191` and `feature-reviewer.md:169`. The rule: restore by undoing your own edit, then check `git diff`; never copy back a snapshot taken before the run.
+- The vault recorded it as a dispatch lesson on the epic's as-built page.
+- The epic-close distill wrote the rule into three of the service's local worker bindings under `<service>/.claude/agents/` (tester, verifier, reviewer). The rule: restore by undoing your own edit, then check `git diff`; never copy back a snapshot taken before the run.
 - **The plugin has none of it:**
   - `skills/adlc/SKILL.md` Step 2 lists build (3), then test (4). It never says whether they may run at the same time, so the dispatcher chose to.
   - The generic `agents/feature-tester.md`, `feature-verifier.md` and `feature-reviewer.md` say nothing about how to restore a temporary change.
@@ -67,5 +67,5 @@ Not yet field-tested. Ships with the next plugin version bump.
 
 ## Evidence
 
-- Vault-a: `wiki/planning/EPIC-001 As-built.md`, the entry "Dispatch lesson (2026-10-02, US-058 …)".
-- `<service>/.claude/agents/feature-tester.md:196`, `feature-verifier.md:191`, `feature-reviewer.md:169`.
+- Vault-a: the epic's as-built page, the "Dispatch lesson" entry of 2026-10-02.
+- The service's local worker bindings for the tester, verifier and reviewer.

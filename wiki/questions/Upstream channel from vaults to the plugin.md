@@ -25,7 +25,7 @@ related:
 ## The gap
 
 Gap C of [[Parallel builder and tester revert each other's edits]] ("distill only goes down, never up") was marked resolved on 2026-10-02. The fix was that distill tells the operator a lesson is general, with the proposed text. That's a conversation, not a store. Two days later:
-- The vault-a run's approved design for a tester footprint check sat in its run ledger "for the EPIC-002 distill". The plugin session that reviewed "new proposals" looked only in this repo and missed it. It arrived because the operator pointed at the ledger.
+- The vault-a run's approved design for a tester footprint check sat in its run ledger "for the epic's distill". The plugin session that reviewed "new proposals" looked only in this repo and missed it. It arrived because the operator pointed at the ledger.
 - The cite-the-record lesson took the same path: a `proposed:` line in the vault's profile, then "file these changes in backlog for adlc".
 - From this machine, `gh` can't reach GitHub (`x509: certificate signed by unknown authority`, 2026-10-04). So a GitHub-only channel would fail here.
 

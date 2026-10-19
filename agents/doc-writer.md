@@ -24,7 +24,7 @@ If missing or vague, STOP and ask.
 
 ## Three sources of truth
 
-1. `wiki/user-docs/_index.md` — the conventions. Read first.
+1. `wiki/user-docs/_index.md` — the conventions. Read first. Then the plugin's `skills/wiki/references/writing-style.md` (resolve the plugin root: `$CLAUDE_PLUGIN_ROOT`, or the install under `~/.claude/plugins/cache/`) and the operator profile's § Writing: one audience per page, short sentences, every code explained where it first appears, an identifier never alone, tables with a lead-in, links that land on what they name.
 2. `wiki/hot.md` + `wiki/requirements/_index.md` — what is built + verified now (governs document-as-built).
 3. The service code — real routes, labels, role gates, UI. Every concrete instruction traces here.
 
