@@ -169,10 +169,10 @@ and 7 mutation proofs.
 
 | Spend | Verdict |
 |---|---|
-| Census blast-radius pass | **Earned it.** Found the systemic fix would move `a8912ef`'s 16 instances −32px |
+| Census blast-radius pass | **Earned it.** Found the systemic fix would move an earlier commit's 16 instances −32px |
 | Tester's 21 specs + reorder mutation | **Earned it.** Exposed a shipped fix with no e2e pin at all |
 | Builder's final hour on a throwaway harness | **Waste.** Operator could already see the fix working |
-| S8's dist snapshot/diff pipeline | **Waste.** Proved HTML unchanged for a CSS-only edit — true by construction |
+| one sprint's dist snapshot/diff pipeline | **Waste.** Proved HTML unchanged for a CSS-only edit — true by construction |
 | Census dispatched against a settled ruling | **Waste, and a category error** |
 
 > [!important] **THE RULE IS NOT "SPEND LESS". It is: effort tracks IRREVERSIBILITY and BLAST RADIUS,

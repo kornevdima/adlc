@@ -121,7 +121,7 @@ Concerns add folder kits per SDLC role: `ops`, `qa`, `sec`, `design`, `writing`.
 
 ## Reporting back to the plugin
 
-A vault that uses the plugin records what the plugin itself got wrong in `wiki/meta/adlc-upstream.md`: a skill step, a generic worker rule, a script. Single occurrences are rows; a repeat, a plugin bug, or a design the operator approved becomes an `UP-nnn` entry. `/adlc upstream` exports the ratified entries as cleaned reports. It files them as GitHub issues when `gh` works; otherwise you copy the file into this repo's `.raw/upstream/`. Shipped reports are listed in [`skills/adlc/references/upstream-shipped.md`](skills/adlc/references/upstream-shipped.md), and vaults close their entries from it. Format: [`skills/wiki/references/adlc-upstream.md`](skills/wiki/references/adlc-upstream.md).
+A vault that uses the plugin records what the plugin itself got wrong in `wiki/meta/adlc-upstream.md`: a skill step, a generic worker rule, a script. Single occurrences are rows; a repeat, a plugin bug, or a design the operator approved becomes an `UP-nnn` entry. `/adlc upstream` exports the ratified entries as redacted reports (no names, ids, hashes, paths or links that point back at the vault; `skills/wiki/scripts/upstream_redact_check.py` checks each one). It files them as GitHub issues when `gh` works; otherwise you copy the file into this repo's `.raw/upstream/`. Shipped reports are listed in [`skills/adlc/references/upstream-shipped.md`](skills/adlc/references/upstream-shipped.md), and vaults close their entries from it. Format: [`skills/wiki/references/adlc-upstream.md`](skills/wiki/references/adlc-upstream.md).
 
 ## Sharing and Interop
 

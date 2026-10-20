@@ -33,7 +33,7 @@ The method is not defined here: worker contracts, dispatcher rules, verification
    - `/adlc <epic-or-story-id>` → that epic or story.
    - `/adlc` with no args → the resume marker; else the board's In-flight row; else propose the next epic from the backlog (Musts first) and confirm with the operator.
    - `/adlc distill` → skip the loop, run only Step 4.4 against the current repo.
-   - `/adlc upstream` → skip the loop; export and send the ratified entries of `wiki/meta/adlc-upstream.md` (`skills/wiki/references/adlc-upstream.md` § Sending it upstream).
+   - `/adlc upstream` → skip the loop; export and send the ratified entries of `wiki/meta/adlc-upstream.md` (`skills/wiki/references/adlc-upstream.md` § Sending it upstream). Each export passes `skills/wiki/scripts/upstream_redact_check.py --vault .` before it is shown to the operator: no tracker ids, ledger names, hashes, URLs, concrete paths or this vault's names, and an opaque `vault_key`. A report with hits, or a key that is a directory or product name, is not sent; fix or re-key first.
 4. **Upstream check.** If `wiki/meta/adlc-upstream.md` has `sent` entries, look up their keys in the installed plugin's `skills/adlc/references/upstream-shipped.md`. For each match, mark it `shipped (x.y.z)` and tell the operator which workaround it names can now come out. One line in the first report; never block the run on it.
 
 ---

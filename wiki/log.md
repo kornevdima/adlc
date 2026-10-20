@@ -21,6 +21,12 @@ Append-only. New entries go at the TOP. Never edit past entries.
 
 Entry format: `## [YYYY-MM-DD] operation | Title`
 
+## [2026-10-20] feat | Upstream redaction: one list, a check script, a key rule
+- **Trigger:** operator "is our upstream update skill should be updated to redact project level info?", then "build all four".
+- `skills/wiki/scripts/upstream_redact_check.py` (new): flags tracker ids, sprint tokens, ledger names and line references, hashes, URLs, concrete paths, the vault's own names and a non-opaque key; exit 1 on a hit. Fixtures: the pre-clean pages of this morning (26 hits, all real); current upstream pages, shipped table and raw reports clean; the directory-name key fails, the opaque keys pass.
+- `adlc-upstream.md` § Sending step 1 and § On the plugin side rewritten: the redaction list applies at export and at plugin filing time (the two direct-read paths were skipping it); the key rule is a stop at both ends. `/adlc` Before Starting 3, AGENTS.md § Upstream intake, `permissions.md` allow rule, README sentence. The ledger template's `Seen:` line says ids belong only in the private ledger.
+- Also: one sprint pointer removed from [[Operator profile - learn engagement style from corrections]]. Filed as a follow-up on [[Upstream channel from vaults to the plugin]].
+
 ## [2026-10-20] maintenance | Upstream pages de-identified; the third vault re-keyed to vault-d
 - **Trigger:** operator asked why a vault's project name stood as its report key, then "upstream should not contain project details".
 - The third co-located vault's key was its directory name, copied verbatim from its ledger (created under the pre-1.0.7 template). Re-keyed to `vault-d` in 8 files and the 1.0.8 commit amended before any push. The vault re-keys its own ledger.

@@ -37,6 +37,7 @@ Navigation: [[index]] | [[log]]
 - Two vaults chose the key `vault-b`. The one with five reports in `.raw/upstream/` keeps it; the other is `vault-c` in the plugin and should re-key.
 - The third co-located vault's ledger uses its directory name as the key (ledger created 2026-10-10, before the opaque-key template). The plugin lists it as `vault-d`; the vault should re-key. Never copy a vault's key verbatim when it is not opaque: alias it, and note the alias on its first shipped row.
 - **Upstream pages carry no pointers into a vault's private repo:** no story, epic, sprint, bug or test-case ids, no ledger page names or line numbers, no commit hashes, no source paths or symbols, no product nouns. Say "a later story", "the run ledger", "a database filter". Audited and cleaned 2026-10-20; the two vault-b raw reports still name the client's form kinds (operator's call).
+- **Run `skills/wiki/scripts/upstream_redact_check.py` on every upstream page, log line and reference before a commit** (`--names "<vault dirs>"`, or `--vault <co-located vault>`; never `--vault .` in this repo). Vaults run it with `--vault .` at `/adlc upstream`; a non-opaque key stops the export. Built 2026-10-20, unreleased.
 - The `guard_env.py` hook also blocks the main session (`cp .env.example .env` is the operator's step).
 - `gh` can't reach GitHub from this machine. Auto-mode's Bash classifier failed transiently this session; reads went through the Read tool.
 - `claude plugin eval` takes only the last `--case`; run cases one at a time.

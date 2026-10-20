@@ -37,6 +37,7 @@ Replace `<VAULT_PATH>` with the project root. Trim patterns the project does not
       "Bash(npm test:*)",
       "Bash(npx:*)",
       "Bash(python3 *skills/wiki/scripts/relink.py *)",
+      "Bash(python3 *skills/wiki/scripts/upstream_redact_check.py *)",
       "Bash(python3 *skills/adlc/scripts/build_snapshot.py *)",
       "Task(ba-suite-subagent)",
       "Task(architecture-subagent)",
@@ -107,6 +108,7 @@ Notes:
 - `Task(ba-suite-subagent)` lets the ADLC ingest pass dispatch the BA worker without a prompt. Add other `Task(...)` workers the vault uses.
 - Bash prefix matching cannot express every dangerous shape (for example "rm -rf anywhere outside the project"). `ask` on bare `rm` plus the guard hook below covers the rest.
 - `relink.py` is the wiki-maintenance path: bulk relinks (the epic close, `wiki-lint` dead-link fixes) go through it, not `sed -i`. The rule names the script, not `Bash(sed:*)`, which would allow in-place edits to any path. The `*` before `skills/` matches the versioned plugin install path.
+- `upstream_redact_check.py` reads the files it is given and the vault's ledger frontmatter, prints hits and exits; it writes nothing. `/adlc upstream` runs it on every export before the operator sees it (`adlc-upstream.md` § Sending, step 1).
 - `build_snapshot.py` is the dispatcher's build snapshot and tester footprint check (`/adlc` Step 2.3a / 2.4a). It writes only `refs/adlc/<story>/*` through a throwaway index, and `restore` touches only the paths it is given, so it is safe to allow; it never pushes.
 - `lsof -nP -iTCP` and `ps -p` are read-only: the hand-back check and `wrap-up` step 7c list what is still listening and who owns it. Stopping a process (`kill`, `docker compose stop`) is not allowed here, so it prompts.
 - `Task(devops)` only allows the dispatch. Its outward actions stay gated: `git push` and `gh pr` are in `ask`, `gcloud` is denied by this template. A project that lets `devops` deploy adds its exact deploy command to `ask`, never to `allow`.

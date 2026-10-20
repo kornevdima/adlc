@@ -42,7 +42,7 @@ status: evergreen
 - **Kind:** bug | improvement
 - **Target:** `agents/feature-tester.md` · `/adlc` Step 2
 - **Status:** proposed
-- **Seen:** 2× — YYYY-MM-DD US-175 ([[record]]), YYYY-MM-DD US-179 ([[record]])
+- **Seen:** 2× — YYYY-MM-DD US-175 ([[record]]), YYYY-MM-DD US-179 ([[record]]) <!-- ids and links are right here, in the private ledger; the export replaces them (§ Sending, step 1) -->
 - **What happened:** the event, in two or three lines
 - **Proposed fix:** the plugin text or mechanism, as concrete as the evidence allows
 - **Workaround here:** the local line or worker edit to remove once shipped, or "none"
@@ -67,12 +67,11 @@ status: evergreen
 
 Run on demand, at `/adlc distill` (Step 4.4), or when `wrap-up` reports ratified entries.
 
-1. **Export.** For each `ratified` entry, write `.raw/exports/upstream/<vault_key>-UP-nnn.md`. It is a self-contained report: title, kind, target, plugin version, what happened, the proposed fix and the evidence.
-   - **Clean it:** no client, product or people names, no repo or directory names (this vault's or its services'), no domains, URLs, secrets or customer content.
-   - No pointers into private repos: no commit hashes, no page titles that name product features; say "the run ledger" or "a sprint page".
-   - Turn wikilinks into short quotes with a role ("the run ledger, 2026-10-04: …"), and generic paths (`src/db/<module>.ts`).
-   - The plugin repository may be public.
-   - The report's key is `<vault_key>/UP-nnn`. The key is an opaque alias (`vault-a`), because it travels into every plugin page and release note that cites the report.
+1. **Export.** For each `ratified` entry, write `.raw/exports/upstream/<vault_key>-UP-nnn.md`. It is a self-contained report: title, kind, target, plugin version, what happened, the proposed fix and the evidence. The plugin repository may be public, so the report carries the mechanics of what went wrong and nothing that points back at this vault.
+   - **Redact.** The same list applies to every plugin page later written from the report (§ On the plugin side). Out: client, product, feature and people names; this vault's repo, directory and service names; domains, URLs, secrets and customer content; every tracker id (stories, epics, sprints, bugs, test cases, business rules, questions); run-ledger and record page names, with or without line numbers; commit hashes; source paths beyond the shape `src/<area>/<module>.ts`; function, table and column names; and an operator quote that carries any of these is rephrased. In: dates, counts, the mechanics, the plugin target and the proposed text. Say "a later story", "the run ledger", "a sprint page", "a database filter", `services/<service>`.
+   - Turn wikilinks into short quotes with a role ("the run ledger, 2026-10-04: …").
+   - **Check it:** `python3 <plugin>/skills/wiki/scripts/upstream_redact_check.py --vault . .raw/exports/upstream/<vault_key>-UP-nnn.md`. It flags ids, sprint tokens, ledger names, line references, hashes, URLs, concrete paths, this vault's directory names and a key that is not opaque. A report with hits is not sent. The check cannot see product nouns inside prose: read for those.
+   - **The key.** The report's key is `<vault_key>/UP-nnn`. The key is an opaque alias (`vault-a`), because it travels into every plugin page and release note that cites the report. Export stops when the ledger's `vault_key` is a repo, directory, client or product name, or does not have the form `vault-<letter>` (the check's `KEY` rule): re-key the ledger first, and rename any earlier exports.
 2. **The operator reads the export.** Sending is an outward action: show it, and send only on their word.
 3. **Send. Use GitHub when it works; otherwise hand it over manually.**
    - **GitHub:** only when `gh auth status` passes, and the operator says to send it.
@@ -96,4 +95,9 @@ They remove them, or approve the removal.
 
 The plugin repo takes reports in `.raw/upstream/` (manual), and from issues titled `[upstream]`. Each one becomes, or joins, a page in its `wiki/questions/` with `upstream: [<vault_key>/UP-nnn]` in the frontmatter. When a release ships the fix, it adds a row to `upstream-shipped.md`.
 
-The plugin wiki, its commits and its release notes follow the same cleaning as the export. A vault is named only by its `vault_key`, a service as `<service>`, and paths stay generic. This holds when a plugin session works with a co-located vault and can read its real names: what it learns there is filed under the key.
+The plugin wiki, its commits and its release notes follow the redaction list of § Sending step 1. A vault is named only by its `vault_key`, a service as `<service>`, and paths stay generic.
+
+Two of the three intake paths skip the vault's export step, so the plugin session redacts at filing time:
+1. **Reading a co-located vault's ledger directly** (no export, no issue): what the ledger says is rewritten into the page in redacted form before it is saved. Ledger entries carry ids and wikilinks by design; none of them is copied. This also holds for the plugin's own `log.md` and `hot.md` lines about the batch, and for the operator's words when they are quoted.
+2. **The key.** If the vault's key is not an opaque alias (a directory or product name) or is already used by another vault in `upstream-shipped.md`, the plugin aliases it (`vault-c`, `vault-d`), says so on the report's first shipped row, and tells the vault to re-key. The vault's name is never written down as the reason.
+3. **Before the commit**, run the check on every page, log and reference touched: `python3 skills/wiki/scripts/upstream_redact_check.py --names "<the vault's directory and product names>" <files>`, or `--vault <path to the co-located vault>` when it is on this machine (never `--vault .` in the plugin repo, which is not a vault). A hit is fixed, not allowed, unless it is a placeholder in a template (`--allow 'US-042'`).

@@ -54,7 +54,7 @@ Skills handle orchestration; subagents handle isolated work.
 - **Source documents**: `.raw/` (immutable: agents never modify these)
 - **Generated knowledge**: `wiki/` (agent-owned, links to sources via wikilinks)
 - **Manifest**: `.raw/.manifest.json` tracks ingested sources (delta tracking)
-- **Upstream intake**: reports from vaults that use the plugin arrive in `.raw/upstream/` (hand-delivered) or as GitHub issues titled `[upstream]`. When reviewing new proposals, check there, and in the co-located vaults' `wiki/meta/adlc-upstream.md`, not only this repo. File each report as a `wiki/questions/` page with `upstream: [<vault_key>/UP-nnn]`; a release that ships one adds a row to `skills/adlc/references/upstream-shipped.md`.
+- **Upstream intake**: reports from vaults that use the plugin arrive in `.raw/upstream/` (hand-delivered) or as GitHub issues titled `[upstream]`. When reviewing new proposals, check there, and in the co-located vaults' `wiki/meta/adlc-upstream.md`, not only this repo. File each report as a `wiki/questions/` page with `upstream: [<vault_key>/UP-nnn]`; a release that ships one adds a row to `skills/adlc/references/upstream-shipped.md`. **Redact at filing time** (`skills/wiki/references/adlc-upstream.md` § On the plugin side): a page, log line or shipped row carries no tracker ids, ledger or record page names, line numbers, commit hashes, URLs, concrete source paths, product or feature nouns, or a vault's directory name; a vault is its opaque key only, aliased here when its own key is not opaque. Before committing, run `python3 skills/wiki/scripts/upstream_redact_check.py --names "<the vault's names>" <touched files>` and fix every hit.
 
 ## Writing for the operator
 
