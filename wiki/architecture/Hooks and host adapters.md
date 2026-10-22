@@ -45,7 +45,7 @@ The hooks are a backstop, not the mechanism: the `wrap-up` skill does the real s
 
 Two hooks live in a vault's own `.claude/settings.json`, written by the wiki skill's scaffold from the `permissions.md` template, because a PreToolUse hook has to exist before any plugin skill runs:
 
-- **The env guard**, `guard_env.py`, shipped in the wiki skill's `scripts/` and copied to the vault's `.claude/hooks/`. It blocks any tool call that reads an env file or prints resolved configuration; `.env.example` stays readable ([[Workers print secrets from env files]]).
+- **The env guard**, `guard_env.py`, shipped in the wiki skill's `scripts/` and copied to the vault's `.claude/hooks/`. It blocks any tool call that reads an env file or prints resolved configuration; `.env.example` stays readable ([[Workers print secrets from env files]]). Commit and PR message text and literal heredoc bodies are not checked, unless they can run code ([[Env guard blocks commands that only mention env files]]); `test_guard_env.py` beside it holds the payload tests.
 - **The destructive-ops guard**, `guard.py`, an optional backstop the template wires on `Bash|Write` but does not ship: a vault writes its own pattern list.
 
 Both entries are anchored on `$CLAUDE_PROJECT_DIR` inside `if [ -f … ]; then …; else echo … >&2; fi`: a real block (exit 2 from the hook) still blocks, a missing file warns and passes. A path relative to the working directory once blocked every tool in a vault as soon as the session moved into a subdirectory ([[Env-guard hook path is relative to the working directory]]).

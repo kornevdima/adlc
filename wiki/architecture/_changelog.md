@@ -12,4 +12,5 @@ Change history for pages in this folder. Pages show the current state only; hist
 
 | Date | Page | Change |
 |---|---|---|
+| 2026-10-22 | [[Hooks and host adapters]], [[Scripts]] | Env guard skips message text and literal heredocs; payload tests added (vault-a/UP-024, 1.0.9) |
 | 2026-10-22 | [[Plugin architecture overview]], [[Skills and routing]], [[Shared references]], [[Workers and the dispatch pipeline]], [[Hooks and host adapters]], [[Scripts]], [[Evals]], [[Use cases and modes]], [[Release and upstream flow]] | Folder created at plugin version 1.0.9: as-built description of the plugin, split out of the README |

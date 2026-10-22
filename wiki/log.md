@@ -21,6 +21,12 @@ Append-only. New entries go at the TOP. Never edit past entries.
 
 Entry format: `## [YYYY-MM-DD] operation | Title`
 
+## [2026-10-22] upstream | vault-a/UP-024 env guard blocks prose
+- **Trigger:** operator "we have new upstream item to check"; report hand-delivered to `.raw/upstream/`.
+- **Confirmed:** a commit message or PR body naming an env file or the resolved-config command exited 2 from the hook.
+- **Fixed (1.0.9, same version):** `guard_env.py` splits the command and skips `git -m` / `gh --title` / `--body` values and quoted heredoc bodies fed to `cat` / `tee` / `git` / `gh`. Values with `$(` or a backtick, piped heredocs and unbalanced quotes are still checked. New `skills/wiki/scripts/test_guard_env.py`, 11 tests green.
+- **Filed:** [[Env guard blocks commands that only mention env files]]; [[Hooks and host adapters]] and [[Scripts]] updated. Row added to `upstream-shipped.md` under 1.0.9; the questions index line for an older report lost its epic and story ids (redaction check).
+
 ## [2026-10-22] architecture | wiki/architecture/ created; 1.0.9 committed
 - **Trigger:** operator "let's review our wiki. I think we miss architecture folder. we have only readme explaining the adlc plugin. I want to have a separate doc, because we have evals, different use-cases covered. skills has references and can be used for multiple sources."
 - **Review:** the wiki held research (sources, concepts, entities) and the question pages behind fixes, but no as-built description of the plugin; the README was the only map and mixes install, reference and structure.

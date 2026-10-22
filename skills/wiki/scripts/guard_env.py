@@ -24,9 +24,17 @@ It allows `.env.example`, `.env.sample`, `.env.template` and `.env.dist`: variab
 come from there, and a value's presence is checked with `test -n "$VAR"`.
 Everything else passes (exit 0). It reads the hook payload from stdin and never prints
 the command or the path it blocked in full: the reason names the rule, not the secret.
+
+Prose is not a command. A commit message or PR body that names an env file or the
+resolved-config command is text, not a read, so the Bash check skips it: the value of
+`git -m` / `--message` and `gh -t` / `--title` / `-b` / `--body`, and the body of a quoted
+heredoc (`<<'EOF'`) fed to `cat`, `tee`, `git` or `gh` on a line with no pipe or process
+substitution. A value that holds `$(` or a backtick is checked anyway, since it runs. If the command does not split (unbalanced
+quotes), the whole string is checked as before, so the hook fails closed.
 """
 import json
 import re
+import shlex
 import sys
 
 ALLOWED_SUFFIX = re.compile(r"\.(example|sample|template|dist)$")
@@ -37,6 +45,12 @@ RESOLVED_CONFIG = [
     re.compile(r"\bdocker(?:\s+container)?\s+inspect\b"),
     re.compile(r"(?:^|[;&|]\s*|\bsudo\s+)(?:printenv|env|set|export\s+-p)\s*(?=$|[;&|>])"),
 ]
+# Options whose value is prose, per command.
+MESSAGE_OPTS = {"git": {"-m", "--message"}, "gh": {"-t", "--title", "-b", "--body"}}
+# Consumers that only print, write or store a literal heredoc body; never a shell.
+HEREDOC_CONSUMERS = {"cat", "tee", "git", "gh"}
+HEREDOC = re.compile(r"""<<(-?)[ \t]*(['"])([A-Za-z_][\w-]*)\2[^\n]*\n""")
+SEPARATORS = {";", "&", "&&", "|", "||", "(", ")", "$", "$(", "\n"}
 
 
 def env_file(name):
@@ -44,6 +58,59 @@ def env_file(name):
     if base != ".env" and not base.startswith(".env."):
         return False
     return not ALLOWED_SUFFIX.search(base)
+
+
+def runs_code(value):
+    return "$(" in value or "`" in value
+
+
+def strip_heredocs(cmd):
+    """Drop the bodies of quoted heredocs fed to a consumer that cannot execute them."""
+    out, pos = [], 0
+    for m in HEREDOC.finditer(cmd):
+        if m.start() < pos:
+            continue
+        head = re.split(r"[;&|(\n]", cmd[pos:m.start()])[-1].split()
+        consumer = head[0].rsplit("/", 1)[-1] if head else ""
+        line = cmd[cmd.rfind("\n", 0, m.start()) + 1:m.end()]
+        tabs = r"\t*" if m.group(1) else ""
+        end = re.compile(rf"^{tabs}{re.escape(m.group(3))}[ \t]*$", re.M).search(cmd, m.end())
+        # `cat <<'EOF' | bash` or `tee >(sh)` would run the body: check it.
+        if consumer not in HEREDOC_CONSUMERS or not end or re.search(r"\||[<>]\(", line):
+            continue
+        out.append(cmd[pos:m.end()])
+        pos = end.start()
+    out.append(cmd[pos:])
+    return "".join(out)
+
+
+def command_text(cmd):
+    """The command without its prose: message option values and literal heredoc bodies."""
+    lex = shlex.shlex(strip_heredocs(cmd), posix=True, punctuation_chars=True)
+    lex.whitespace_split = True
+    lex.commenters = ""
+    kept, head, skip = [], None, False
+    for tok in lex:
+        if skip:
+            skip = False
+            if not runs_code(tok):
+                continue
+        elif tok in SEPARATORS:
+            head = None
+        elif head is None:
+            if not re.match(r"^\w+=", tok):
+                head = tok.rsplit("/", 1)[-1]
+        else:
+            opts = MESSAGE_OPTS.get(head, ())
+            name, eq, value = tok.partition("=")
+            if eq and name in opts and name.startswith("--"):
+                if not runs_code(value):
+                    kept.append(name)
+                    continue
+            elif tok in opts or (head == "git" and re.fullmatch(r"-[a-zA-Z]+m", tok)):
+                skip = True
+        kept.append(tok)
+    return " ".join(kept)
 
 
 def main():
@@ -63,6 +130,10 @@ def main():
         return 0
     if tool == "Bash":
         cmd = inp.get("command", "") or ""
+        try:
+            cmd = command_text(cmd)
+        except ValueError:
+            pass
         for m in ENV_TOKEN.finditer(cmd):
             if env_file(m.group(1)):
                 print("guard_env: this command names an env file. Never read `.env*` with any tool; "

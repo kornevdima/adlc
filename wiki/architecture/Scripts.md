@@ -27,7 +27,7 @@ Fifteen Python scripts, standard library only, each beside the skill that owns i
 | `page_history_check.py` | `wiki` | Lists history kept inside pages and folders without a linked changelog; writes nothing | `wiki-lint` 8b and 8c, `wrap-up` 6a, the epic close |
 | `relink.py` | `wiki` | Repoints wikilinks from one page to another across a vault, aliases and anchors kept | the epic close (ledger into as-built page), `wrap-up` |
 | `upstream_redact_check.py` | `wiki` | Flags tracker ids, sprint tokens, ledger names, hashes, URLs, source paths and vault names in an upstream report or a plugin page | `/adlc upstream` before an export; this repo before a commit |
-| `guard_env.py` | `wiki` | PreToolUse hook: blocks any tool call that reads an env file or prints resolved configuration; `.env.example` stays readable | the vault's `.claude/settings.json`, copied there by the scaffold |
+| `guard_env.py` | `wiki` | PreToolUse hook: blocks any tool call that reads an env file or prints resolved configuration; `.env.example` and commit / PR message text stay allowed. Payload tests in `test_guard_env.py` | the vault's `.claude/settings.json`, copied there by the scaffold |
 | `okf_export.py` | `wiki` | Renders the vault as an Open Knowledge Format bundle | by hand, for sharing ([[Open Knowledge Format]]) |
 | `build_snapshot.py` | `adlc` | Snapshots the build as a git ref and checks the tester's footprint against it | the story loop, after builder and after tester |
 | `lint_graph.py` | `wiki-lint` | Graph-layer checks: label and title drift, stale labels, orphan community pages, graph staleness against the source files | `wiki-lint` |
