@@ -1,13 +1,14 @@
 ---
 type: meta
 title: "Entities Index"
-updated: 2026-09-03
+updated: 2026-10-22
 tags:
   - meta
   - index
   - entity
 status: evergreen
 related:
+  - "[[entities/_changelog]]"
   - "[[index]]"
   - "[[Andrej Karpathy]]"
   - "[[hot]]"
@@ -16,7 +17,7 @@ related:
 
 # Entities Index
 
-Navigation: [[index]] | [[concepts/_index|Concepts]] | [[sources/_index|Sources]]
+Navigation: [[index]] | [[concepts/_index|Concepts]] | [[sources/_index|Sources]] | [[entities/_changelog|Changelog]]
 
 All entity pages — people, organizations, products, and tools.
 

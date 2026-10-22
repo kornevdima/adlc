@@ -1,7 +1,7 @@
 ---
 type: meta
 title: "Hot Cache"
-updated: 2026-10-21T22:00:00
+updated: 2026-10-22T12:00:00
 tags:
   - meta
   - hot-cache
@@ -9,6 +9,7 @@ status: evergreen
 related:
   - "[[index]]"
   - "[[log]]"
+  - "[[Plugin architecture overview]]"
   - "[[Upstream channel from vaults to the plugin]]"
   - "[[Pages carry their history inline]]"
   - "[[Identifiers with no glossary]]"
@@ -21,6 +22,8 @@ related:
 Navigation: [[index]] | [[log]]
 
 ## Last Updated
+
+**2026-10-22 (session: architecture folder)**. 1.0.9 committed as `chore(plugin): 1.0.9` (redaction check clean on the added lines; not pushed). New `wiki/architecture/` (9 pages, `_index.md`, `_changelog.md`): the as-built description of the plugin split out of the README: [[Plugin architecture overview]] (six layers, the request path), [[Skills and routing]], [[Shared references]] (61 docs, who reads which), [[Workers and the dispatch pipeline]], [[Hooks and host adapters]], [[Scripts]], [[Evals]] (25 cases), [[Use cases and modes]] (nine cases), [[Release and upstream flow]]. Linked from `index.md` and `overview.md`. Concept pages keep the design reasoning; architecture pages hold the as-built state and link to them. This wiki now passes its own history check: `_changelog.md` in every authored folder, new `_index.md` for `questions/` and `comparisons/`; `AGENTS.md` (Bootstrap step 4) and the README point at the folder.
 
 **2026-10-21 (session: release 1.0.9)**. Three vault-e reports fixed, rows under 1.0.9 in `upstream-shipped.md`:
 - [[Pages carry their history inline]] (UP-002): pages hold the current state only, history in per-folder `_changelog.md` linked from `_index.md`. `writing-style.md` § Pages that stay current; the scaffold creates the changelogs; `wrap-up` steps 5 / 6 / 6a no longer write "as-built diverges" notes or pointer sentences into pages (frontmatter `status: superseded` + `superseded_by:` instead); ingest, save and the BA / architecture / doc workers rewrite and add a changelog row. New `skills/wiki/scripts/page_history_check.py`, run by `wiki-lint` 8b / 8c and `wrap-up` 6a.
@@ -37,6 +40,7 @@ Navigation: [[index]] | [[log]]
 
 ## Active Threads
 
+- **Architecture folder follow-ups:** a release or a wrap-up that changes a plugin part adds a row to `wiki/architecture/_changelog.md` and rewrites the page; a `wiki/code/` graph of this repo was never built.
 - **After 1.0.9 is installed in the vaults:** vault-e adds `_changelog.md` where folders lack one and an `_index.md` for its technical folder, moves its register config into the glossary's `## Registers` table and deletes its local script, keeps its `$CLAUDE_PROJECT_DIR` hook form; all vaults flip their `sent` entries to `shipped (1.0.9)` and remove the workarounds each page's Open section names. Other vaults gain changelogs and a glossary at their next lint or wrap-up.
 - **Not addressed from the ledgers:** the public-repo records occurrence (vault-a, 2026-10-18); the UP-002 "simplest shape first" gap; vault-a UP-011 (declined).
 - **Evals backlog** ([[Plugin eval suites for claude plugin eval]]): the 12 slow cases; the `[!contradiction]` callout case; graphify and pm-layer; `adlc` worker cases.

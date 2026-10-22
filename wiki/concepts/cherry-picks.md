@@ -10,7 +10,7 @@ tags:
   - claude-obsidian
 status: current
 related:
-  - "[[claude-obsidian-ecosystem]]"
+  - "[[claude-obsidian-ecosystem-research]]"
   - "[[LLM Wiki Pattern]]"
 sources:
   - "[[claude-obsidian-ecosystem-research]]"

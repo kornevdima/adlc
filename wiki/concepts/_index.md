@@ -1,7 +1,7 @@
 ---
 type: meta
 title: "Concepts Index"
-updated: 2026-09-03
+updated: 2026-10-22
 tags:
   - meta
   - index
@@ -9,6 +9,7 @@ tags:
 domain: knowledge-management
 status: evergreen
 related:
+  - "[[concepts/_changelog]]"
   - "[[index]]"
   - "[[Hot Cache]]"
   - "[[LLM Wiki Pattern]]"
@@ -17,7 +18,7 @@ related:
 
 # Concepts Index
 
-Navigation: [[index]] | [[entities/_index|Entities]] | [[sources/_index|Sources]]
+Navigation: [[index]] | [[entities/_index|Entities]] | [[sources/_index|Sources]] | [[concepts/_changelog|Changelog]]
 
 All concept pages — ideas, patterns, and frameworks extracted from sources.
 

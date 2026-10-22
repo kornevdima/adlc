@@ -11,7 +11,7 @@ status: current
 related:
   - "[[LLM Wiki Pattern]]"
   - "[[cherry-picks]]"
-  - "[[claude-obsidian-ecosystem]]"
+  - "[[claude-obsidian-ecosystem-research]]"
   - "[[Andrej Karpathy]]"
 sources:
   - "[[claude-obsidian-ecosystem-research]]"

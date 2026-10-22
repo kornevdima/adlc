@@ -11,7 +11,7 @@ This single folder serves three roles simultaneously:
 | Role | What lives here |
 |---|---|
 | Plugin source | `.claude-plugin/`, `agents/`, `hooks/`, `skills/`, `bin/` |
-| Obsidian vault | `wiki/` (knowledge base), `.raw/` (immutable sources), `_attachments/` |
+| Obsidian vault | `wiki/` (knowledge base; `wiki/architecture/` describes the plugin as built), `.raw/` (immutable sources), `_attachments/` |
 | Working repo | git history, `README.md`, `LICENSE`, `ATTRIBUTION.md` |
 
 Open the entire project folder as the Obsidian vault root, not just `wiki/`. The `.obsidian/app.json` `userIgnoreFilters` (set on first open) hides plugin directories (`agents/`, `hooks/`, `skills/`) from the Obsidian sidebar, so the same folder cleanly serves as vault + plugin + repo without UI clutter.
@@ -67,7 +67,8 @@ When the user opens this project for the first time:
 1. Read this file (`AGENTS.md`) for full context.
 2. Read `skills/wiki/SKILL.md` for the orchestration pattern.
 3. If `wiki/hot.md` exists, read it silently to restore recent context.
-4. If the user types `/wiki` (or "set up wiki"), follow the wiki skill's scaffold workflow.
+4. For how the plugin is built (skills, shared references, workers, hooks, scripts, evals), read `wiki/architecture/_index.md` before the source tree.
+5. If the user types `/wiki` (or "set up wiki"), follow the wiki skill's scaffold workflow.
 
 ## Cross-Project Access
 

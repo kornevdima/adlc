@@ -12,7 +12,7 @@ status: current
 related:
   - "[[LLM Wiki Pattern]]"
   - "[[cherry-picks]]"
-  - "[[claude-obsidian-ecosystem]]"
+  - "[[claude-obsidian-ecosystem-research]]"
 sources:
   - "[[claude-obsidian-ecosystem-research]]"
 ---

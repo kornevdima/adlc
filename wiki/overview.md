@@ -2,7 +2,7 @@
 type: overview
 title: "Wiki Overview"
 created: 2026-04-07
-updated: 2026-07-04
+updated: 2026-10-22
 tags:
   - meta
   - overview
@@ -12,6 +12,7 @@ related:
   - "[[hot]]"
   - "[[log]]"
   - "[[LLM Wiki Pattern]]"
+  - "[[Plugin architecture overview]]"
 sources:
 ---
 
@@ -29,14 +30,15 @@ This is the **claude-mem design wiki**: the knowledge base behind the claude-mem
 
 ## Current State
 
-- Wiki pages: 80 (32 concepts, 16 entities, 23 sources, plus comparisons / questions / meta)
+- Wiki pages: 139 (42 concepts, 20 entities, 35 sources, 26 questions, 9 architecture pages, plus comparisons / meta)
 - Raw sources on disk: 8 (`.raw/`), 5 tracked in `.raw/.manifest.json`
-- Last activity: 2026-07-04 — pm-layer evals E1–E8 encoded as runnable fixtures (`skills/product-management-layer/evals/`) and the RLM follow-ups closed (`wiki/index.json` locator + wiki-query sub-answer caching); earlier same day: tier 3 metrics seam / mission-control + graphify grounding for ADLC workers (committed), tier 2 harness backlog (committed)
+- Last activity: 2026-10-22 — `wiki/architecture/` created: the as-built description of the plugin (layers, skills, shared references, workers, hooks, scripts, evals, use cases, release flow), split out of the README. Earlier: 2026-07-04 — pm-layer evals E1–E8 encoded as runnable fixtures (`skills/product-management-layer/evals/`) and the RLM follow-ups closed (`wiki/index.json` locator + wiki-query sub-answer caching); earlier same day: tier 3 metrics seam / mission-control + graphify grounding for ADLC workers (committed), tier 2 harness backlog (committed)
 
 ---
 
 ## What lives here
 
+- **How the plugin is built** — [[architecture/_index|Architecture]]: [[Plugin architecture overview]], [[Skills and routing]], [[Shared references]], [[Workers and the dispatch pipeline]], [[Hooks and host adapters]], [[Scripts]], [[Evals]], [[Use cases and modes]], [[Release and upstream flow]]
 - **Pattern & memory research** — [[LLM Wiki Pattern]], [[Hot Cache]], [[Compounding Knowledge]], [[Context Rot]], [[Recursive Language Models]], [[Contextual Retrieval]], [[Wiki vs RAG]]
 - **Harness & agent design** — [[Generator-Evaluator Pattern]], [[Multi-Agent Communication Taxonomy]], [[Validation Contract]], [[Structured Handoff]], [[Domain-Specific Agents]], [[Vertical Slices for Agent Tasks]], [[Grilling Session]]
 - **Shipped skill designs** — [[Product Management Layer Skill]] (incl. evals E1–E8), [[Project Profile Skill Suite]], [[graphify-integration]], [[SDLC Wiki Concerns]], [[Wiki Sharing Patterns]] (operational protocol: `skills/wiki/references/team-sync.md`), [[RLM-Optimized Wiki Querying]] (wiki-query large-vault mode + `index.json` locator)

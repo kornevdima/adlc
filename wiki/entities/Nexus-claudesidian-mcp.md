@@ -11,7 +11,7 @@ tags:
 status: current
 related:
   - "[[cherry-picks]]"
-  - "[[claude-obsidian-ecosystem]]"
+  - "[[claude-obsidian-ecosystem-research]]"
 sources:
   - "[[claude-obsidian-ecosystem-research]]"
 ---

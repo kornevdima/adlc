@@ -1,7 +1,7 @@
 ---
 type: meta
 title: "Wiki Index"
-updated: 2026-09-03
+updated: 2026-10-22
 tags:
   - meta
   - index
@@ -10,9 +10,12 @@ related:
   - "[[overview]]"
   - "[[log]]"
   - "[[hot]]"
+  - "[[architecture/_index]]"
   - "[[concepts/_index]]"
   - "[[entities/_index]]"
   - "[[sources/_index]]"
+  - "[[questions/_index]]"
+  - "[[comparisons/_index]]"
   - "[[LLM Wiki Pattern]]"
   - "[[Hot Cache]]"
   - "[[Compounding Knowledge]]"
@@ -23,9 +26,9 @@ related:
 
 # Wiki Index
 
-Last updated: 2026-09-03 | Total pages: 115 | Source pages: 35
+Last updated: 2026-10-22 | Total pages: 139 | Source pages: 35
 
-Navigation: [[overview]] | [[log]] | [[hot]] | [[maintenance-triggers]]
+Navigation: [[overview]] | [[log]] | [[hot]] | [[maintenance-triggers]] | [[architecture/_index|Architecture]]
 
 ---
 
@@ -54,6 +57,22 @@ Navigation: [[overview]] | [[log]] | [[hot]] | [[maintenance-triggers]]
 - [[Review the ADLC flow against the AI-Native SDLC Playbook]] — stage-by-stage review of `/adlc` against Anthropic's playbook; 8 rulings: 6 adopted, deploy as an optional `devops` worker, time metrics deferred (status: closed 2026-10-02)
 - [[Wiki maintenance edits blocked in ADLC vaults]] — the epic close deletes the run ledger but leaves 20+ dead `[[_run …]]` links, and the permissions profile has no path for bulk wiki rewrites (auto mode denied a `sed -i` relink). Fix: relink at the epic close, a scripted relink tool to allow-list, auto-mode guidance, and `Write(path)` rules corrected to `Edit(path)` (status: resolved 2026-10-02 — field test pending)
 - [[Parallel builder and tester revert each other's edits]] — the dispatcher ran builder and tester at once; the tester restored a pre-run copy of a source file and silently undid the builder's edit. Fixed only in one service's local workers. Fix: sequential dispatch on overlapping files, undo-own-edit + `git diff` restore in the generic workers, an upstream route in distill (status: resolved 2026-10-02)
+
+## Architecture
+
+How the plugin is built, as-built at 1.0.9. Full catalog: [[architecture/_index]].
+
+- [[Plugin architecture overview]] — one folder as plugin, vault and repo; the six layers and the path a request takes through them (status: active)
+- [[Skills and routing]] — the 20 skills in three families, triggers, what each dispatches (status: active)
+- [[Shared references]] — the 61 reference documents other skills and workers read; the BA and shift-left method libraries (status: active)
+- [[Workers and the dispatch pipeline]] — the 15 subagents, the per-story pipeline, the rules every worker follows (status: active)
+- [[Hooks and host adapters]] — manifests and hooks for Claude Code, Cursor, Copilot; the vault-side guard hooks (status: active)
+- [[Scripts]] — the 15 Python scripts and the installer, who runs each (status: active)
+- [[Evals]] — 25 plugin eval cases, fixtures, graders, what is not covered yet (status: active)
+- [[Use cases and modes]] — the nine things the plugin is used for, lightest to heaviest (status: active)
+- [[Release and upstream flow]] — from a vault's lesson to a question page, a fix, a version, a closed entry (status: active)
+
+---
 
 ## Concepts
 
@@ -168,6 +187,8 @@ Navigation: [[overview]] | [[log]] | [[hot]] | [[maintenance-triggers]]
 
 ## Questions
 
+Full catalog, including the resolved plugin fixes above: [[questions/_index]].
+
 - [[Research Pre-computed Context for Coding Agents]] — 2026-05-09 synthesis: what to pre-compute for coding agents (status: developing)
 - [[Research Feedback-Driven Project Profile]] — 2026-05-09 synthesis: how engineer feedback should update AGENTS.md (status: developing)
 - [[How does the LLM Wiki pattern work]] — how the pattern works and why it outperforms RAG at human scale (status: developing)
@@ -179,8 +200,10 @@ Navigation: [[overview]] | [[log]] | [[hot]] | [[maintenance-triggers]]
 
 ## Comparisons
 
+Catalog: [[comparisons/_index]].
+
 - [[Wiki vs RAG]] — when to use a wiki knowledge base versus RAG; verdict: wiki wins at <1000 pages
-- [[claude-obsidian-ecosystem]] — feature matrix of 16+ Claude+Obsidian projects; where claude-obsidian wins and gaps
+- [[claude-obsidian-ecosystem-research]] — feature matrix of 16+ Claude+Obsidian projects; where claude-obsidian wins and gaps
 - [[AI-Native SDLC Playbook vs ADLC]] — same lifecycle, different substrate; vocabulary map for explaining ADLC; gaps: Stage 6 trigger layer, evals-on-config-change, per-service review policy page
 
 ---

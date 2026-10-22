@@ -135,6 +135,7 @@ A vault that uses the plugin records what the plugin itself got wrong in `wiki/m
 ```
 .raw/           source documents (immutable)
 wiki/           the knowledge base (one page per fact; records are pages)
+                this repo's own: wiki/architecture/ describes the plugin as built
 _attachments/   images and PDFs referenced by wiki pages
 services/       (ADLC vaults) symlinks to service checkouts, machine-local
 ```
