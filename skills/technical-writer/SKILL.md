@@ -64,14 +64,14 @@ Follow `doc-writer`'s document-as-built rule: only built and verified behaviour,
 
 ### A story or a requirement
 
-Keep the ID, the frontmatter, the acceptance criteria and the links untouched. Rewrite the prose for the reader who has to build or accept it: one idea per sentence, the user-visible outcome before the mechanism, every code explained where it first appears. If the rewrite changes what the story means, stop and report it as a BA finding instead of editing.
+Keep the ID, the frontmatter, the acceptance criteria and the links untouched. Rewrite the prose for the reader who has to build or accept it: one idea per sentence, the user-visible outcome before the mechanism, every code explained where it first appears (on a wiki page, the first mention of an id links to its glossary entry or its own page; `glossary.py link --apply` does this mechanically). The page reads as if written today: no dated "Update" block; the change is a row in the folder's `_changelog.md`. If the rewrite changes what the story means, stop and report it as a BA finding instead of editing.
 
 ## Translating
 
 1. **Change the source first, then the translation.** If the operator edits the translation directly (common), port the change back to the source in the same turn.
 2. **Both files in the same edit.** Use one exact-match replace per file, each asserting its old text occurs once. After the edit, compare both files' section headings and question numbers. They must match.
 3. **Meaning, not words.** The translation must read as if it were written in that language: rewrite the sentence, don't map it word for word.
-4. **Glossary.** Keep a two-column glossary in the operator profile's § Translation, or in `wiki/meta/glossary.md` when it grows past about 30 rows. Add every domain term the first time it is translated, and reuse it after that. Also list what stays untranslated: code identifiers, product names, and technical words the client uses as is.
+4. **Glossary.** Keep the translation terms on the vault's `wiki/glossary.md`: a `Translation` column on the Project terms table, or a `## Translation` section above `## Registers` (the page's format and script are in the wiki skill's `references/glossary.md`); the operator profile's § Translation points there. Add every domain term the first time it is translated, and reuse it after that. Also list what stays untranslated: code identifiers, product names, and technical words the client uses as is.
 5. **Local typography.** Decimal separators, units, and page references in the target language's form (for example `0,1-1 с` and `стр. 8` in Russian, `0.1-1 s` and `p.8` in English). Dashes per the style reference: a hyphen, the sentence unchanged.
 
 ## After the edit

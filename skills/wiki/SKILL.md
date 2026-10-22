@@ -141,10 +141,10 @@ Steps:
    - **Base mode folders must match `references/modes.md` for the chosen letter.** For example, Mode B requires `wiki/modules/`, `wiki/components/`, `wiki/decisions/`, `wiki/dependencies/`, and `wiki/flows/`.
    - **For each selected concern, add the folders listed in `references/concerns/<name>.md`** (e.g. `ops` adds `runbooks/`, `incidents/`, `services/`, `observability/`).
    - **Merge with companion layout when useful:** also create `wiki/sources/`, `wiki/questions/`, `wiki/comparisons/`, `wiki/meta/` (and optional `domains/`, `entities/`, `concepts/` if ingest will file taxonomy notes) — but **do not skip mode-specific or concern-specific folders** or replace them with only `domains/entities/concepts`. If you label the vault Mode B with `ops`, the repo-oriented folders from `modes.md` AND the ops folders from `concerns/ops.md` must exist on disk.
-5. Create domain pages + `_index.md` sub-indexes (for applicable modes), and `_index.md` files for every mode-specific and concern-specific folder created in step 4.
-6. Create `wiki/index.md`, `wiki/log.md`, `wiki/hot.md`, `wiki/overview.md`.
+5. Create domain pages + `_index.md` sub-indexes (for applicable modes), and `_index.md` files for every mode-specific and concern-specific folder created in step 4. Beside each `_index.md`, create `_changelog.md` (frontmatter `type: changelog`, an empty `Date | Page | Change` table, lead-in "Pages show the current state only; history goes here, newest first") and link it from the `_index.md`. Pages hold the current state only (`references/writing-style.md` § Pages that stay current); `sources/` and `meta/` are exempt.
+6. Create `wiki/index.md`, `wiki/log.md`, `wiki/hot.md`, `wiki/overview.md`, and `wiki/glossary.md` from the template in `references/glossary.md` (project terms by hand, a `## Registers` row per register the mode keeps; `scripts/glossary.py build` generates the id entries). Link the glossary from `index.md`.
 7. Create the vault `AGENTS.md` using the template below.
-8. Initialize git. Read `references/git-setup.md`. For **Mode ADLC**, also scaffold `.claude/settings.json` from `references/permissions.md` so routine project work runs without prompts while destructive operations stay gated (copy `skills/wiki/scripts/guard_env.py` to `.claude/hooks/guard_env.py`: the settings hook that keeps env files out of every transcript points there), and seed `wiki/meta/mission-control.md` + `wiki/meta/ba-activity.md` with empty tables per `references/mission-control.md` (the metrics seam), plus `wiki/meta/operator-profile.md` from the template in `references/operator-profile.md` — ask the one engagement question ("business-input: you rule on product and design and we checkpoint at story boundaries — or fully-managed: the agent rules within stated principles and checkpoints at epic boundaries?").
+8. Initialize git. Read `references/git-setup.md`. For **Mode ADLC**, also scaffold `.claude/settings.json` from `references/permissions.md` so routine project work runs without prompts while destructive operations stay gated (copy `skills/wiki/scripts/guard_env.py` to `.claude/hooks/guard_env.py`: the settings hook that keeps env files out of every transcript points there, anchored on `$CLAUDE_PROJECT_DIR`, never a cwd-relative path, which blocked every tool once a session's working directory moved), and seed `wiki/meta/mission-control.md` + `wiki/meta/ba-activity.md` with empty tables per `references/mission-control.md` (the metrics seam), plus `wiki/meta/operator-profile.md` from the template in `references/operator-profile.md` — ask the one engagement question ("business-input: you rule on product and design and we checkpoint at story boundaries — or fully-managed: the agent rules within stated principles and checkpoints at epic boundaries?").
 9. Present the structure and ask: "Want to adjust anything before we start?"
 
 > Visual customization (theme, color snippets, plugin recommendations) is **not** applied automatically. The default scaffold leaves Obsidian's stock appearance untouched — users pick their own theme and plugins from Obsidian's community marketplace.
@@ -160,7 +160,7 @@ Steps:
 3. **Components** — For UI-heavy apps, add `wiki/components/_index.md` and either short notes under `wiki/components/` or explicit wikilinks to existing `wiki/concepts/` pages (avoid duplicate filenames unless you merge content).
 4. **Flows** — Write at least **one** end-to-end `wiki/flows/*.md` note for the primary user or request path (e.g. sign-in, checkout, sync) grounded in real entry points (`App`, router, main).
 5. **Decisions** — Add at least **one** `wiki/decisions/*.md` ADR when the architecture is clear from the code (e.g. OAuth grant type, state storage, multi-tenant model).
-6. **Integrate** — Update `wiki/overview.md`, `wiki/index.md` (include a **Mode B** section listing `modules/`, `flows/`, `decisions/`, `dependencies/`), `wiki/hot.md`, and append **top** of `wiki/log.md`. Refresh vault `AGENTS.md` **Structure** so it shows **both** the `modes.md` Mode B tree **and** optional companion folders (`domains/`, `entities/`, `concepts/`, `sources/`, …) used by `wiki-ingest`.
+6. **Integrate** — Update `wiki/overview.md`, `wiki/index.md` (include a **Mode B** section listing `modules/`, `flows/`, `decisions/`, `dependencies/`), `wiki/hot.md`, and append **top** of `wiki/log.md`. Refresh vault `AGENTS.md` **Structure** so it shows **both** the `modes.md` Mode B tree **and** optional companion folders (`domains/`, `entities/`, `concepts/`, `sources/`, …) used by `wiki-ingest`. Run `scripts/glossary.py --vault . build` then `link --apply` so every ADR and bug id links to its page on first mention.
 
 If there is **no** checkout to analyze (empty folder, secrets-only repo), create `_index.md` stubs only and say what raw drops belong in `.raw/` for a later ingest.
 
@@ -177,7 +177,7 @@ If there is **no** checkout to analyze (empty folder, secrets-only repo), create
 5. **Tests** — With the `qa` concern present, generate test cases into `wiki/test-cases/` (test-case-generator), tracing to stories; update `coverage/`.
 6. **Technical specs (per service)** — dispatch an `architecture-subagent` per service to refine the BA requirements into a shift-left spec (Gate 1 / 1.5 / 2 / 3) inside that service's code wiki. No `project-context/` folder. See `references/technical-planning.md`.
 7. **Verify** — run the service locally via `docker compose` and verify features with the chrome-devtools MCP (e2e) plus the service's own test suite; file an execution note. Same toolset as the operator.
-8. **Integrate** — Update `wiki/index.md` (an **ADLC** section listing `requirements/`, `user-stories/`, `gaps/`, `features/`, `sprints/`), `wiki/hot.md`, append the **top** of `wiki/log.md`, and refresh vault `AGENTS.md` **Structure**. Stamp `produced_by` on authored notes and refresh `meta/ba-activity.md` from the frontmatter (the metrics seam, `references/mission-control.md`).
+8. **Integrate** — Update `wiki/index.md` (an **ADLC** section listing `requirements/`, `user-stories/`, `gaps/`, `features/`, `sprints/`), `wiki/hot.md`, append the **top** of `wiki/log.md`, and refresh vault `AGENTS.md` **Structure**. Stamp `produced_by` on authored notes and refresh `meta/ba-activity.md` from the frontmatter (the metrics seam, `references/mission-control.md`). Add a `## Registers` row to `wiki/glossary.md` for each register the pass created (stakeholders, open questions, gaps), then run `scripts/glossary.py --vault . build` and `link --apply` (`references/glossary.md`).
 
 If there is no source context yet, create `_index.md` stubs only and note what belongs in `.raw/` for a later ingest. After feature work each session, run the `wrap-up` skill to keep the code wikis and this wiki in sync.
 
@@ -217,6 +217,8 @@ Workers and skills look this table up before writing a record: it makes filing a
 | `deploys/` (code wiki) | deploy record | `<environment>-YYYY-MM-DD-<short-rev>.md` | story pages |
 | `bugs/` | defect | `BUG-NNN <short title>.md` | verification record, backlog item |
 | `sprints/` | run ledger | `_run <EPIC-ID>.md` (deleted at epic close) | `meta/mission-control.md` |
+| every folder | change history | `_changelog.md` (one per folder; `sources/` and `meta/` exempt) | that folder's `_index.md` |
+| `wiki/` root | glossary | `glossary.md` (terms by hand, id entries generated) | `index.md`, every first mention of an id |
 
 [EXTEND WITH THE MODE / CONCERN FOLDERS THIS VAULT USES]
 
@@ -228,6 +230,8 @@ Workers and skills look this table up before writing a record: it makes filing a
 - wiki/index.md is the master catalog: update on every ingest
 - wiki/log.md is append-only: never edit past entries
 - New log entries go at the TOP of the file
+- **Pages hold the current state only.** No "Update YYYY-MM-DD", "Correction", "Revision", "as filed" or "superseded" sections or notes, and no "was X, now Y" wording in page content. When a fact changes, rewrite the page so it reads as if written today. The history goes in the folder's `_changelog.md` (date, page, change; newest first), linked from the folder's `_index.md`. `sources/` and `meta/` are exempt. Check: `python3 <plugin>/skills/wiki/scripts/page_history_check.py --vault .`
+- **Glossary.** `wiki/glossary.md` defines every identifier (one `### ID` entry each, generated from the registers) and the project terms. A page links an id the first time it appears: `[[glossary#STK-004|STK-004]]` (in a table, `\|`); requirements, features and other pages that carry their id in the filename link to their own pages. A new id gets its glossary entry in the same edit that creates it: run `python3 <plugin>/skills/wiki/scripts/glossary.py --vault . build` after a register changes, then `link --apply` to link first mentions
 
 ## Writing
 

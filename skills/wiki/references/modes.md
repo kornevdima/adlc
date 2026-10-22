@@ -120,7 +120,9 @@ vault/
 │   ├── planning/         # BA approach, governance, information mgmt, performance
 │   ├── comms/            # circulation memos, synthesis exports, meeting notes
 │   ├── sources/          # one summary page per ingested raw source
-│   └── meta/             # mission-control board, ba-activity ledger (metrics seam), lint reports
+│   ├── meta/             # mission-control board, ba-activity ledger (metrics seam), lint reports
+│   └── glossary.md       # project terms + one entry per identifier, generated from the registers (references/glossary.md)
+│   # every folder above carries _index.md (catalog) and _changelog.md (history; pages hold the current state only)
 ├── services/             # symlinks to code checkouts; each service's code wiki holds its specs (no project-context folder)
 └── AGENTS.md
 ```

@@ -38,6 +38,8 @@ Replace `<VAULT_PATH>` with the project root. Trim patterns the project does not
       "Bash(npx:*)",
       "Bash(python3 *skills/wiki/scripts/relink.py *)",
       "Bash(python3 *skills/wiki/scripts/upstream_redact_check.py *)",
+      "Bash(python3 *skills/wiki/scripts/glossary.py *)",
+      "Bash(python3 *skills/wiki/scripts/page_history_check.py *)",
       "Bash(python3 *skills/adlc/scripts/build_snapshot.py *)",
       "Task(ba-suite-subagent)",
       "Task(architecture-subagent)",
@@ -95,7 +97,7 @@ Replace `<VAULT_PATH>` with the project root. Trim patterns the project does not
       {
         "matcher": "Bash|Read|Edit|Write|NotebookEdit",
         "hooks": [
-          { "type": "command", "command": "python3 .claude/hooks/guard_env.py", "statusMessage": "Guarding env files..." }
+          { "type": "command", "command": "if [ -f \"$CLAUDE_PROJECT_DIR/.claude/hooks/guard_env.py\" ]; then python3 \"$CLAUDE_PROJECT_DIR/.claude/hooks/guard_env.py\"; else echo 'guard_env.py missing; env guard off' >&2; fi", "statusMessage": "Guarding env files..." }
         ]
       }
     ]
@@ -109,6 +111,8 @@ Notes:
 - Bash prefix matching cannot express every dangerous shape (for example "rm -rf anywhere outside the project"). `ask` on bare `rm` plus the guard hook below covers the rest.
 - `relink.py` is the wiki-maintenance path: bulk relinks (the epic close, `wiki-lint` dead-link fixes) go through it, not `sed -i`. The rule names the script, not `Bash(sed:*)`, which would allow in-place edits to any path. The `*` before `skills/` matches the versioned plugin install path.
 - `upstream_redact_check.py` reads the files it is given and the vault's ledger frontmatter, prints hits and exits; it writes nothing. `/adlc upstream` runs it on every export before the operator sees it (`adlc-upstream.md` § Sending, step 1).
+- `glossary.py` writes only `wiki/glossary.md` (`build`) and first-mention links in wiki pages (`link --apply`; dry run by default). `page_history_check.py` writes nothing: it lists history kept inside pages and folders without a linked `_changelog.md` (`wiki-lint`, `wrap-up` step 6a). Both are in `allow` for the same reason as `relink.py`: the shipped script is the routine path, so auto mode never has to judge an ad-hoc rewrite.
+- **The hook command is anchored on `$CLAUDE_PROJECT_DIR`.** A cwd-relative `python3 .claude/hooks/guard_env.py` broke in one vault as soon as the session's working directory moved into a subdirectory: Python exited 2 ("can't open file"), Claude Code read exit 2 as a block, and every Bash, Read, Edit and Write call was refused, including the edit that would have fixed the settings. The `if … fi` form keeps a real block (exit 2 from the hook) and lets a missing hook file pass with a warning on stderr, because `if` returns the status of the last command it ran; stdin still reaches Python.
 - `build_snapshot.py` is the dispatcher's build snapshot and tester footprint check (`/adlc` Step 2.3a / 2.4a). It writes only `refs/adlc/<story>/*` through a throwaway index, and `restore` touches only the paths it is given, so it is safe to allow; it never pushes.
 - `lsof -nP -iTCP` and `ps -p` are read-only: the hand-back check and `wrap-up` step 7c list what is still listening and who owns it. Stopping a process (`kill`, `docker compose stop`) is not allowed here, so it prompts.
 - `Task(devops)` only allows the dispatch. Its outward actions stay gated: `git push` and `gh pr` are in `ask`, `gcloud` is denied by this template. A project that lets `devops` deploy adds its exact deploy command to `ask`, never to `allow`.
@@ -136,7 +140,7 @@ Pattern lists miss novel command shapes. For a hard backstop, add a `PreToolUse`
       {
         "matcher": "Bash|Write",
         "hooks": [
-          { "type": "command", "command": "python3 .claude/hooks/guard.py", "statusMessage": "Guarding destructive ops..." }
+          { "type": "command", "command": "if [ -f \"$CLAUDE_PROJECT_DIR/.claude/hooks/guard.py\" ]; then python3 \"$CLAUDE_PROJECT_DIR/.claude/hooks/guard.py\"; else echo 'guard.py missing; guard off' >&2; fi", "statusMessage": "Guarding destructive ops..." }
         ]
       }
     ]

@@ -126,6 +126,7 @@ Steps:
 3. **Create** source summary in `wiki/sources/`. Use the source frontmatter schema from the wiki skill's reference: `../wiki/references/frontmatter.md` (this skill has no local references/ directory). If that file is unreachable, mirror the frontmatter of an existing `wiki/sources/` page.
 4. **Create or update** entity pages for every person, org, product, and repo mentioned. One page per entity.
 5. **Create or update** concept pages for significant ideas and frameworks.
+   - **An update rewrites the page to the current state.** No dated "Update" block, no "was X, now Y": the page reads as if written today, and the change is one row in that folder's `_changelog.md` (date, page, change; newest first). See `../wiki/references/writing-style.md` § Pages that stay current.
 6. **Update** relevant domain page(s) and their `_index.md` sub-indexes.
 7. **Update** `wiki/overview.md` if the big picture changed.
 8. **Update** `wiki/index.md`. Add entries for all new pages.
@@ -143,7 +144,7 @@ Steps:
 
 **Mode B (repository) vaults:** If `wiki/modules/`, `wiki/flows/`, or `wiki/decisions/` exist, link new or updated `concepts/` and `entities/` pages to the best-matching module, flow, or ADR, and add a short paragraph to those pages when the source is about code layout or behavior.
 
-**Mode ADLC vaults:** If the vault is Mode ADLC (`wiki/requirements/`, `wiki/user-stories/`, etc. exist), do NOT flatten BA sources into generic `entities/` + `concepts/`. Still write the raw-source summary to `sources/` as usual, then route the structured deliverables to the BA workers: `ba-suite-subagent` for requirements / stories / gaps / tests, and `architecture-subagent` for per-service technical specs. They preserve stable IDs and traceability. See `skills/wiki/references/ba-suite-pipeline.md` and `technical-planning.md`.
+**Mode ADLC vaults:** If the vault is Mode ADLC (`wiki/requirements/`, `wiki/user-stories/`, etc. exist), do NOT flatten BA sources into generic `entities/` + `concepts/`. Still write the raw-source summary to `sources/` as usual, then route the structured deliverables to the BA workers: `ba-suite-subagent` for requirements / stories / gaps / tests, and `architecture-subagent` for per-service technical specs. They preserve stable IDs and traceability. See `skills/wiki/references/ba-suite-pipeline.md` and `technical-planning.md`. When the workers mint new ids, run the plugin's `skills/wiki/scripts/glossary.py --vault . build` and then `link --apply`, so every new id has its glossary entry and its first mentions link there (`skills/wiki/references/glossary.md`).
 
 ---
 
@@ -222,7 +223,7 @@ On the new source summary, reference it:
 > This source says Y, but existing wiki says X. See [[Existing Page]] for details.
 ```
 
-Do not silently overwrite old claims. Flag and let the user decide.
+Do not silently overwrite old claims. Flag and let the user decide. An unresolved conflict is current state, so the callout stays; once the user resolves it, remove the callout, rewrite the page to the resolved fact, and record the resolution as a row in the folder's `_changelog.md`.
 
 ---
 

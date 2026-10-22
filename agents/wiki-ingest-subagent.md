@@ -30,6 +30,7 @@ You will be given:
 4. Create a source summary page in `wiki/sources/`. Use proper frontmatter.
 5. For each significant person, org, product, or repo mentioned: check the index. Create or update the entity page in `wiki/entities/`.
 6. For each significant concept, idea, or framework: check the index. Create or update the concept page in `wiki/concepts/`.
+   - An update rewrites the page to the current state: no dated "Update" block, no "was X, now Y". Add one row to that folder's `_changelog.md` (date, page, change; newest first) for every page you changed.
 7. Update relevant domain pages. Add a brief mention and wikilink to new pages.
 8. Update `wiki/entities/_index.md` and `wiki/concepts/_index.md`.
 9. Check for contradictions with existing pages. Add `> [!contradiction]` callouts where needed.

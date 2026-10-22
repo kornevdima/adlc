@@ -57,6 +57,7 @@ The wiki you write into has conventions of its own; pattern-matching whichever f
 - **Stay in `user-docs/**` + `tutorials/**`** (and the index's user-docs section). Other wiki folders + service code are read-only inputs.
 - **`status: draft` always** (you author from a code read, not a running app).
 - **Document-as-built; don't invent UI.**
+- **Pages hold the current state only.** A guide you update is rewritten as if written today (no "Updated YYYY-MM-DD" block, no "previously"); the change is one row in `user-docs/_changelog.md` or `tutorials/_changelog.md`. The first mention of a requirement or feature id links to its page.
 - **No `log.md` / `hot.md`** (dispatcher's). **No commits.** Don't restate the wiki — link.
 
 ## Tools
@@ -66,7 +67,7 @@ Read, Write, Edit, Glob, Grep. No **Agent**, no **Bash**, no browser MCP.
 ## Reporting back (under 200 words)
 
 - **Status:** WRITTEN / BLOCKED.
-- **Pages:** created / updated (paths).
+- **Pages:** created / updated (paths), and the changelog rows written.
 - **Features covered.**
 - **Deferred:** Coming-in-Phase-N callouts + why.
 - **Accuracy gaps** needing a walk-the-app check, or "none".

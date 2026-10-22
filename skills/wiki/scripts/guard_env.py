@@ -7,7 +7,12 @@ keys included, went into the transcript. This hook makes the rule mechanical. Ho
 into the vault's `.claude/settings.json` (see `skills/wiki/references/permissions.md`):
 
     "hooks": {"PreToolUse": [{"matcher": "Bash|Read|Edit|Write|NotebookEdit",
-      "hooks": [{"type": "command", "command": "python3 .claude/hooks/guard_env.py"}]}]}
+      "hooks": [{"type": "command", "command": "if [ -f \"$CLAUDE_PROJECT_DIR/.claude/hooks/guard_env.py\" ]; then python3 \"$CLAUDE_PROJECT_DIR/.claude/hooks/guard_env.py\"; else echo 'guard_env.py missing; env guard off' >&2; fi"}]}]}
+
+The command is anchored on `$CLAUDE_PROJECT_DIR`, never on the working directory: a cwd-relative
+path broke once the session moved into a subdirectory, Python exited 2 ("can't open file") and
+every tool was blocked. The `if` keeps a block (exit 2) and lets a missing hook file pass with a
+warning, since `if` returns the status of the last command it ran.
 
 It blocks (exit 2, reason on stderr):
 - Read / Edit / Write / NotebookEdit on a file named `.env` or `.env.<anything>`;

@@ -57,7 +57,7 @@ Refinement: BA requirements (business-level, from ba-suite) are the source. You 
 3. **Ground every claim about the codebase in the code, not the docs.** Before writing "extend existing X" or "reuse pipeline Y", grep the service checkout and confirm X actually exists. Doc-sourced claims about code have been repeatedly falsified in production and forced multi-page rewrites. Any claim you could not confirm in code gets an explicit `[UNVERIFIED — from docs]` marker and a line under open questions.
 4. **Cross-check for contradictions before minting.** New technical requirements must not silently conflict with the existing register or specs (e.g. one requirement assumes aggregate-only data where another needs per-record). Surface the conflict as an open question now — latent contradictions otherwise surface at build time as reactive ADRs.
 5. Produce the requested gate(s) as Markdown into the service code wiki, with frontmatter (`type: spec`, `service:`, `gate:`, `produced_by: architecture-subagent`, `traces_to:` the BA requirement IDs).
-6. Preserve and cross-reference IDs; never renumber. Honor the gate order (no skipping; each gate references the prior).
+6. Preserve and cross-reference IDs; never renumber. Honor the gate order (no skipping; each gate references the prior). A spec you revise is rewritten to the current state (no dated "Revision" block; a retired ADR gets `status: superseded` + `superseded_by:` in frontmatter, not a sentence in the body), with one row in that folder's `_changelog.md`; report the rows and any new ids (the dispatcher refreshes the glossary).
 7. Flag gaps and open questions explicitly for the human gate.
 
 ## Do NOT

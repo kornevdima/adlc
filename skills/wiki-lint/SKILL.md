@@ -56,6 +56,9 @@ Work through these in order:
 7. **Empty sections**. Headings with no content underneath.
 8. **Stale index entries**. Items in `wiki/index.md` pointing to renamed or deleted pages.
 8a. **Stale `index.json`** (only if `wiki/index.json` exists). The generated locator's `generated` stamp predates the newest page under `wiki/` (or `services/*/wiki/` when built with `--services`) — re-run `skills/wiki-query/scripts/build_index_json.py`. Same rule for cached sub-answer pages in `questions/` (frontmatter `scope:`) whose cited pages are newer.
+8b. **History in page bodies (WARN).** Run `python3 <plugin>/skills/wiki/scripts/page_history_check.py --vault .` and paste its output. A `history` hit is a dated "Update" / "Correction" / "Revision" block, an "as filed" marker, a "superseded by" sentence, a "(was …)" or a struck-out value inside a page: pages hold the current state only (`skills/wiki/references/writing-style.md` § Pages that stay current). Fix: rewrite the passage as current content and move the fact of the change to the folder's `_changelog.md`. A hit inside a quoted operator sentence or a page about history itself is reported and left.
+8c. **Changelog drift (WARN).** From the same run: `changelog-missing` (a folder with authored pages and no `_changelog.md`), `changelog-unlinked` (the folder's `_index.md` does not link it, or the folder has no `_index.md`), `changelog-stale` (its `updated:` is older than its newest row). Fix: create the file from the scaffold's shape, link it, bump the date.
+8d. **Glossary drift (WARN).** `python3 <plugin>/skills/wiki/scripts/glossary.py --vault . build --check` exits 1 when a register changed and the glossary was not rebuilt; `… link` (dry run) lists first mentions not yet linked; a `[[glossary#X]]` anchor with no `### X` heading on the page is a dead link (check 2). Fix: `build`, then `link --apply`. A vault with no `wiki/glossary.md` gets one INFO line pointing at `skills/wiki/references/glossary.md`.
 
 ### ADLC / multi-wiki layer (only if Mode ADLC)
 
@@ -144,6 +147,14 @@ status: developing
 
 ## Cross-Reference Gaps
 - [[Entity Name]] mentioned in [[Page A]] without a wikilink.
+
+## History in Pages
+<paste the output of page_history_check.py; one line per hit, with the fix: rewrite and add a changelog row, or create / link the changelog>
+
+## Glossary
+- build --check: in step | DRIFT (run build)
+- link dry run: N first mentions in M pages (run link --apply)
+- dead glossary anchors: [[glossary#X]] in [[Page A]]
 
 ## Graph Layer (if applicable)
 <paste the verbatim output of scripts/lint_graph.py here>

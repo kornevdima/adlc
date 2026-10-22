@@ -41,6 +41,9 @@ You will be given:
 12. If an assertion-coverage ledger exists (`coverage/_index.md` in a service code wiki): cross-check its rows against the contracts' `coverage:` tags and the e2e specs' test titles. A ledger row that disagrees with either is drift — the contract + spec win; flag the row.
 13. In ADLC vaults, check the metrics seam (see `skills/wiki/references/mission-control.md`): (a) deliverable notes in `requirements/`, `user-stories/`, `test-cases/`, `gaps/`, `features/` with an empty or missing `produced_by:` — the rollup silently undercounts; (b) `meta/mission-control.md` rows that contradict the underlying records (a feature marked ✅ whose verification record is FAIL, an open FAIL absent from the defect-route table, an in-flight feature with no row) — the records win; flag the row. A board `updated:` older than the newest verification / review record is staleness even when no row conflicts.
 14. If `wiki/index.json` exists (the generated locator for large vaults): flag it when its `generated` stamp predates the newest `.md` under `wiki/` (or `services/*/wiki/` when it was built with `--services`) — a stale locator misroutes large-vault queries. Fix: re-run `skills/wiki-query/scripts/build_index_json.py`. Also flag cached sub-answer pages in `questions/` (frontmatter `scope:`) whose cited pages have newer `updated:` dates than the cache page.
+15. **History kept inside pages.** Run `python3 <plugin root>/skills/wiki/scripts/page_history_check.py --vault <vault>` (the plugin root is `$CLAUDE_PLUGIN_ROOT`, or the newest `~/.claude/plugins/cache/*/adlc/*/`). Paste its output under "History in Pages". Each `history` line is a WARN: the page keeps a dated update / correction block, an "as filed" marker, a "superseded by" sentence or a struck-out value; the fix is to rewrite the passage as current content and record the change in the folder's `_changelog.md`. A hit in a quoted operator sentence or on a page whose subject is history is reported and left.
+16. **Changelog drift.** From the same output: `changelog-missing`, `changelog-unlinked`, `changelog-stale` lines are WARNs with the fix named (create the file with a `Date | Page | Change` table, link it from `_index.md`, set `updated:` to the newest row's date).
+17. **Glossary drift.** If `wiki/glossary.md` exists: run `glossary.py --vault <vault> build --check` (exit 1 = the registers changed and the page was not rebuilt) and `glossary.py --vault <vault> link` (dry run; lists first mentions not yet linked); report both under "Glossary". A `[[glossary#X]]` link whose `### X` heading does not exist is a dead link (step 2). If the page is missing, one INFO line: create it from `skills/wiki/references/glossary.md`.
 
 ## Output
 
@@ -57,6 +60,12 @@ Use this structure:
 
 ## Warnings (should fix)
 [orphan pages, stale claims, large pages over 300 lines]
+
+## History in Pages
+[page_history_check.py output: history hits, changelog-missing / -unlinked / -stale]
+
+## Glossary
+[build --check result, link dry-run count, dead glossary anchors]
 
 ## Suggestions (worth considering)
 [missing pages for frequently mentioned concepts, cross-reference gaps]

@@ -61,6 +61,7 @@ Map of method to ADLC folder:
 3. Apply the assigned bundled method doc(s) from `skills/wiki/references/ba/`.
 4. Convert the output to vault Markdown: one note per artifact, YAML frontmatter, and `[[wikilinks]]`. Stamp `produced_by:` with the `ba-suite` skill, and `feature:` / `effort_estimate:` when known (the metrics seam).
 5. Preserve stable IDs; never renumber; append new IDs at the end.
+   - **Pages hold the current state only.** A change to an existing page rewrites it (no dated "Update" or "Correction" block, no "as filed", no "was X, now Y") and adds one row to that folder's `_changelog.md` (date, page, change; newest first). A new id gets its glossary entry: the dispatcher runs `glossary.py build` and `link --apply` after you report; say which ids are new. See `skills/wiki/references/writing-style.md` § Pages that stay current.
 6. Build `[[traceability]]` links: requirements to stories to tests, gaps to business cases.
 7. **Reality-check claims about the product.** When the vault has `services/` checkouts, do not assert that a capability exists / is shipped based on PRDs or meeting notes alone — confirm it in the code, or mark the claim `[UNVERIFIED — from docs]`. Cross-check new requirements against the existing register; a contradiction goes under open assumptions, never filed silently alongside what it contradicts.
 8. Do NOT write Office files. That is the export step.
@@ -80,7 +81,8 @@ Task: [what you did]
 Methods applied: [ba-elicitation-synthesizer, ...]
 Created: [[Page 1]], [[Page 2]]
 Updated: [[Page 3]]
-IDs: [e.g. FR-164..171, PROJ-023-017..028]   # generic, no PII
+Changelog: <folder>/_changelog.md (n rows)
+IDs: [e.g. FR-164..171, PROJ-023-017..028]   # generic, no PII; new ids need glossary entries
 Traceability: [N reqs -> M stories -> K tests]
 Open assumptions: [for the dispatcher to decide, or "none"]
 Left undone: [requested deliverables not produced, or "nothing"]

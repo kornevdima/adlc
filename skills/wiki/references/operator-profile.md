@@ -60,7 +60,7 @@ status: evergreen
 - Exceptions to the generic style: none
 
 ## Translation
-<!-- optional: source language, target language, glossary (or a pointer to meta/glossary.md), what stays untranslated -->
+<!-- optional: source language, target language, where the translation terms live (a Translation column or section on wiki/glossary.md, see the wiki skill's references/glossary.md), what stays untranslated -->
 - Source: English; sent: Russian; both files change in the same edit
 | Source | Target |
 |---|---|

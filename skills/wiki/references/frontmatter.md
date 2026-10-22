@@ -10,7 +10,7 @@ Every page, no exceptions:
 
 ```yaml
 ---
-type: <source|entity|concept|domain|comparison|question|overview|meta>
+type: <source|entity|concept|domain|comparison|question|overview|meta|changelog|glossary>
 title: "Human-Readable Title"
 created: 2026-04-07
 updated: 2026-04-07
@@ -34,6 +34,32 @@ sources:
 ---
 
 ## Type-Specific Additions
+
+### changelog
+
+One per folder, `_changelog.md`, linked from the folder's `_index.md`. Pages hold the current state; this page holds their history (`writing-style.md` § Pages that stay current). `updated:` is the date of the newest row.
+
+```yaml
+type: changelog
+title: "Requirements changelog"
+created: 2026-04-07
+updated: 2026-04-07
+tags: [changelog]
+```
+
+### glossary
+
+One per vault, `wiki/glossary.md` (template and script: `glossary.md` in this folder). `link_skip:` lists the folders whose pages `glossary.py link` leaves unlinked (client documents).
+
+```yaml
+type: glossary
+title: "Glossary"
+status: active
+created: 2026-04-07
+updated: 2026-04-07
+tags: [glossary, meta]
+link_skip: [client-briefs/]
+```
 
 ### source
 

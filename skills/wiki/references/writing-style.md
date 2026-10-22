@@ -29,6 +29,7 @@ This is the rule that keeps the reader's head free. Stories, sprints, epics, bug
 - **A string of ids is not a sentence.** "S25-S26 of EPIC-005, bug ASD-123" asks the reader to hold three lookups in their head. Say what happened: "In the last two sprints of the permissions epic, one bug was found and fixed."
 - **Every code or label is explained where it first appears.** Codes a reader must carry across a document (G1, P5, Q3) get a legend at their first table.
 - **In introductory text, plain words over codes** ("the partner request form", not "G2"). A sentence that needs several codes points to an example instead.
+- **On a wiki page, the first mention of an identifier links to its definition:** `[[glossary#OQ-001|OQ-001]]` for an id defined in a register, `[[FR-012]]` for one that has its own page. See § Pages that stay current for the glossary.
 
 ## Structure
 
@@ -47,6 +48,16 @@ This is the rule that keeps the reader's head free. Stories, sprints, epics, bug
 - **Examples must be true for the point they illustrate;** if an example fits only partly, pick another.
 - **Every statement has a source:** the requirements register, a client source, a code read, or an operator statement. Anything else is our inference: mark it as an assumption or leave it out.
 - **Screenshots of third-party tools:** hide personal names and photos before capturing.
+
+## Pages that stay current
+
+A wiki page is read for what is true now. History kept inside the page makes every reader do the reconciliation the writer skipped. The operator of one vault put it as: the content of the page should be up to date; dated update blocks look like meta. Checked by `skills/wiki/scripts/page_history_check.py`.
+
+- **A page holds the current state only.** No "Update YYYY-MM-DD", "Correction", "Revision" or "as filed" sections, no "superseded" sentences, no "was X, now Y" wording, no strikethrough of an old value. When a fact changes, rewrite the page so it reads as if written today.
+- **History goes to the folder's `_changelog.md`:** one table, newest first, columns `Date | Page | Change`, each change as one plain sentence with the pages it touched as wikilinks. Every folder with authored pages has one, linked from the folder's `_index.md`; the scaffold creates both. `sources/` is exempt (a summary describes its source as of its date), as are `log.md` and the ledgers and boards in `meta/`: those are records by design.
+- **The only in-page history is frontmatter:** `status: superseded` with `superseded_by: "[[New page]]"` (or `status: delivered` for a plan that shipped). The body still reads as current, with a changelog row for the flip.
+- **An unresolved conflict is current state**, so a `[!contradiction]` callout stays until it is resolved; then it is removed and the resolution becomes a changelog row.
+- **Every identifier has a glossary entry.** `wiki/glossary.md` holds the project terms by hand and one `### ID` entry per identifier, generated from the registers by `skills/wiki/scripts/glossary.py build`. A new id gets its entry in the same edit that creates it (run `build` after a register changes), and `link --apply` links the first mention of each id on every page (`\|` inside a table cell). Identifiers with their own pages (requirements, features, bugs, stories) link to those pages, not to the glossary.
 
 ## Questions to the reader
 

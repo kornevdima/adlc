@@ -126,6 +126,7 @@ A vault that uses the plugin records what the plugin itself got wrong in `wiki/m
 ## Sharing and Interop
 
 - **Format, not platform.** The vault is plain Markdown + YAML frontmatter + git — readable by humans and agents in any tool. Frontmatter is OKF-compatible (`type` is the one required field); `skills/wiki/scripts/okf_export.py` renders the vault as a portable OKF bundle.
+- **Pages stay current.** A page holds the current state only; its history lives in the folder's `_changelog.md`, and every identifier has an entry in `wiki/glossary.md` that pages link on first mention. `skills/wiki/scripts/page_history_check.py` and `glossary.py` keep both honest (`wiki-lint` runs them; format in [`writing-style.md`](skills/wiki/references/writing-style.md) § Pages that stay current and [`glossary.md`](skills/wiki/references/glossary.md)).
 - **Git is the state bus.** Team protocol in [`team-sync.md`](skills/wiki/references/team-sync.md); branch topology (session wiki branches, code-only PRs, auto-merge when a feature lands) in [`git-flow.md`](skills/wiki/references/git-flow.md).
 - **Cross-project access.** Point any repo's AGENTS.md at the vault: read `wiki/hot.md` first, then `wiki/index.md`, then drill in. An MCP interop server for non-Claude consumers is on the roadmap; inside Claude Code, file reads stay cheaper than tool round-trips.
 

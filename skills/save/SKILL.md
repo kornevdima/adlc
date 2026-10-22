@@ -112,4 +112,4 @@ Skip:
 - Temporary debugging sessions with no lasting insight
 - Anything already in the wiki
 
-If it's already in the wiki, update the existing page instead of creating a duplicate.
+If it's already in the wiki, update the existing page instead of creating a duplicate: rewrite it to the current state (no dated "Update" block, see `../wiki/references/writing-style.md` § Pages that stay current) and add one row to that folder's `_changelog.md`.
