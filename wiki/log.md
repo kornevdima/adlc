@@ -21,6 +21,12 @@ Append-only. New entries go at the TOP. Never edit past entries.
 
 Entry format: `## [YYYY-MM-DD] operation | Title`
 
+## [2026-10-23] upstream | vault-d/UP-004 glossary links ids to the wrong pages
+- **Trigger:** operator "I've added a new upstream item"; ratified in the co-located vault's ledger, redacted export copied to `.raw/upstream/`.
+- **Confirmed:** on a scratch copy of the reporting vault, 9 ids were claimed by two or three filenames (6 stories, 2 epics, 1 decision) and the first in path order won; `ADR-NNN-slug` filenames were not read; owners resolved by basename.
+- **Fixed (1.0.9, same version):** `glossary.py` gives a shared id to the page matching its family's folder and `type:`, prints `id-clash` lines, leaves an unsettled id unlinked with exit 1; slug filenames count; owners resolve by path, an ambiguous bare name exits 2. Scratch run: all 9 to the right page, 541 links in 157 pages, none to a work page. New `test_glossary.py`, 5 tests green.
+- **Filed:** [[Glossary links ids to work pages that share them]]; [[Scripts]], `references/glossary.md`, `wiki-lint` 8d and the `scope-analyst` census naming updated. Row added to `upstream-shipped.md` under 1.0.9.
+
 ## [2026-10-22] upstream | vault-a/UP-024 env guard blocks prose
 - **Trigger:** operator "we have new upstream item to check"; report hand-delivered to `.raw/upstream/`.
 - **Confirmed:** a commit message or PR body naming an env file or the resolved-config command exited 2 from the hook.

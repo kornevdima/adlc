@@ -23,7 +23,7 @@ Fifteen Python scripts, standard library only, each beside the skill that owns i
 
 | Script | Owner | Does | Run by |
 |---|---|---|---|
-| `glossary.py` | `wiki` | `build` regenerates the glossary's id entries from the Registers table in the page; `link --apply` links first mentions; `build --check` is the lint | the scaffold, the ADLC and Mode B passes, `wrap-up`, `wiki-lint` 8d |
+| `glossary.py` | `wiki` | `build` regenerates the glossary's id entries from the Registers table in the page; `link --apply` links first mentions; `build --check` is the lint. Own-page ids take `ID Title` and `ID-slug` filenames; an id two pages start with goes to the one that matches its family's folder and `type:`, with an `id-clash` line, else it is not linked (exit 1). Vault tests in `test_glossary.py` | the scaffold, the ADLC and Mode B passes, `wrap-up`, `wiki-lint` 8d |
 | `page_history_check.py` | `wiki` | Lists history kept inside pages and folders without a linked changelog; writes nothing | `wiki-lint` 8b and 8c, `wrap-up` 6a, the epic close |
 | `relink.py` | `wiki` | Repoints wikilinks from one page to another across a vault, aliases and anchors kept | the epic close (ledger into as-built page), `wrap-up` |
 | `upstream_redact_check.py` | `wiki` | Flags tracker ids, sprint tokens, ledger names, hashes, URLs, source paths and vault names in an upstream report or a plugin page | `/adlc upstream` before an export; this repo before a commit |

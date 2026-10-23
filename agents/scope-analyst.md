@@ -122,7 +122,7 @@ measure, and write in the vault's dialect.**
 
 ## Output
 
-- A record in the vault: a census page, or a reconciliation note appended to the run ledger. Default convention when the vault's `AGENTS.md` filing table names none: census pages go to the **service code wiki** at `wiki/census/<STORY-ID>-census-YYYY-MM-DD.md` (beside `verification/` and `reviews/`), linked from the ledger row and the story page; a reconciliation is a dated block under the run ledger's **Notes**, never a separate page.
+- A record in the vault: a census page, or a reconciliation note appended to the run ledger. Default convention when the vault's `AGENTS.md` filing table names none: census pages go to the **service code wiki** at `wiki/census/<STORY-ID>-census-YYYY-MM-DD.md` (beside `verification/` and `reviews/`, with `type: census`, so the glossary script never takes a census for the story page: never name one `<STORY-ID> <Title>.md` beside the stories), linked from the ledger row and the story page; a reconciliation is a dated block under the run ledger's **Notes**, never a separate page.
 - A structured report to the orchestrator: findings, each with its measurement; claims refuted, with
   evidence; claims undetermined; and for `reconcile`, the proposed plan changes.
 

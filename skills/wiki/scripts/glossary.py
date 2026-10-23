@@ -23,8 +23,11 @@ of the first cell, `{1}`, `{2}`, `{-1}` the other cells; `{n:status}` keeps the 
 word of a cell ("Partial" from "**Partial** - API …"), `{n:lower}` lowercases it.
 
 `build` also writes one lookup table per family of pages that carry their ID in the filename
-(`FR-001.md`, `FEAT-003 Title.md`, `BUG-012 Short title.md`): those link to their own pages, not
-to the glossary. If `meta/adlc-upstream.md` exists, a "Plugin issues" section lists its UP-nnn
+(`FR-001.md`, `FEAT-003 Title.md`, `ADR-005-short-title.md`): those link to their own pages, not
+to the glossary. When two pages start with the same ID (`US-007 Sign-in.md` and
+`US-007 Census 2026-01-15.md`), the ID belongs to the one that sits in the same folder with the
+same frontmatter `type:` as most pages of its family; both commands print an `id-clash` line for
+every shared ID, and one that cannot be settled that way is left out and makes them exit 1. If `meta/adlc-upstream.md` exists, a "Plugin issues" section lists its UP-nnn
 entries. The page's `updated:` is set to today when the content changes.
 
 `link` turns the first mention of each known ID on a page into `[[glossary#ID|ID]]`, or into
@@ -33,7 +36,7 @@ headings, code, existing links, URLs, `log.md`, log archives, lint reports, `glo
 `sources/`, `meta/operator-profile.md`, `meta/adlc-upstream.md` (verbatim records), the folders
 listed under `link_skip:` in the glossary frontmatter (client documents, usually), the ID cell of
 a register's own row, and a page's own ID. Standard library only. Exit 0 on success, 1 when
-`--check` finds drift, 2 on bad input.
+`--check` finds drift or an ID clash is unresolved, 2 on bad input.
 """
 import argparse
 import collections
@@ -42,7 +45,8 @@ import pathlib
 import re
 import sys
 
-OWN_PAGE_ID = re.compile(r"^([A-Z]{1,5}-\d{2,4})(?:\s+(.*))?$")
+OWN_PAGE_ID = re.compile(r"^([A-Z]{1,5}-\d{2,4})(?:(?:\s+|-)(.*))?$")
+OWNER_LINK = re.compile(r"\[\[([^\]|#\\]+)")
 SKIP_FILES = {"log.md", "glossary.md"}
 SKIP_GLOBS = ("log-archive*.md", "lint-report-*.md")
 SKIP_PATHS = ("sources/", "meta/operator-profile.md", "meta/adlc-upstream.md")
@@ -80,6 +84,12 @@ def frontmatter_list(text, key):
     return []
 
 
+def page_type(path):
+    m = re.match(r"---\s*\n(.*?)\n---", path.read_text(encoding="utf-8"), re.S)
+    t = re.search(r"^type:\s*(.+?)\s*$", m.group(1), re.M) if m else None
+    return t.group(1).strip("\"'") if t else ""
+
+
 class Vault:
     def __init__(self, root):
         self.root = pathlib.Path(root).resolve()
@@ -90,6 +100,7 @@ class Vault:
         if not self.glossary.is_file():
             fail(f"{self.glossary.relative_to(self.root)} not found; create it from the wiki skill's references/glossary.md")
         self._pages = None
+        self._own = None
 
     def pages(self):
         if self._pages is None:
@@ -97,24 +108,72 @@ class Vault:
         return self._pages
 
     def find_page(self, name):
-        """Resolve a wikilink target by basename, as Obsidian does."""
-        name = name.rsplit("/", 1)[-1]
+        """Resolve a wikilink target: by path when the link has one, else by basename."""
+        name = name.strip().rstrip("\\").strip()
         name = name[:-3] if name.lower().endswith(".md") else name
-        hits = [p for p in self.pages() if p.stem.lower() == name.lower()]
+        key = name.lower().lstrip("/")
+        if "/" in key:
+            hits = [p for p in self.pages()
+                    if any(r == key or r.endswith("/" + key) for r in
+                           (p.relative_to(self.wiki).with_suffix("").as_posix().lower(),
+                            p.relative_to(self.root).with_suffix("").as_posix().lower()))]
+        else:
+            hits = [p for p in self.pages() if p.stem.lower() == key]
         if not hits:
             fail(f"register page [[{name}]] not found under wiki/")
+        if len(hits) > 1:
+            fail(f"[[{name}]] matches {len(hits)} pages ("
+                 + ", ".join(p.relative_to(self.wiki).as_posix() for p in hits)
+                 + "); write the folder in the Owner link")
         return hits[0]
 
+    def owner_page(self, owner_cell):
+        m = OWNER_LINK.search(owner_cell)
+        return self.find_page(m.group(1)) if m else None
+
     def own_page_ids(self):
-        """{ID: page stem} for pages whose filename starts with an ID."""
-        out = {}
-        for p in self.pages():
-            if p.name.startswith("_"):
-                continue
-            m = OWN_PAGE_ID.match(p.stem)
-            if m:
-                out.setdefault(m.group(1), p.stem)
-        return out
+        """({ID: page path}, clashes) for pages whose filename starts with an ID.
+
+        An ID claimed by several pages goes to the one in the folder and with the frontmatter
+        `type:` most pages of its family share; `clashes` lists (ID, owner or None, all claimants).
+        """
+        if self._own is None:
+            claims = collections.defaultdict(list)
+            for p in self.pages():
+                m = None if p.name.startswith("_") else OWN_PAGE_ID.match(p.stem)
+                if m:
+                    claims[m.group(1)].append(p)
+            home = collections.defaultdict(collections.Counter)
+            for ident, paths in claims.items():
+                for p in paths:
+                    home[ident.rsplit("-", 1)[0]][(p.parent, page_type(p))] += 1
+            own, clashes = {}, []
+            for ident, paths in claims.items():
+                if len(paths) == 1:
+                    own[ident] = paths[0]
+                    continue
+                ranked = home[ident.rsplit("-", 1)[0]].most_common()
+                top = [key for key, n in ranked if n == ranked[0][1]]
+                fits = [p for p in paths if (p.parent, page_type(p)) in top]
+                owner = fits[0] if len(top) == 1 and len(fits) == 1 else None
+                if owner:
+                    own[ident] = owner
+                clashes.append((ident, owner, paths))
+            self._own = own, sorted(clashes, key=lambda c: c[0])
+        return self._own
+
+    def report_clashes(self):
+        """Print one id-clash line per shared ID; True when any is unresolved."""
+        _, clashes = self.own_page_ids()
+        rel = lambda p: p.relative_to(self.wiki).as_posix()
+        for ident, owner, paths in clashes:
+            others = ", ".join(rel(p) for p in paths if p != owner)
+            if owner:
+                print(f"id-clash: {ident} -> {rel(owner)} (also starts with it: {others})")
+            else:
+                print(f"id-clash: {ident} unresolved, not linked ({others}); "
+                      "rename the work pages so only the page the ID belongs to starts with it")
+        return any(owner is None for _, owner, _ in clashes)
 
 
 # ---------------------------------------------------------------- build
@@ -187,10 +246,9 @@ def build(vault, check):
     lines, counts = [head], collections.OrderedDict()
 
     for reg in registers:
-        link = re.search(r"\[\[([^\]|#]+)", reg["owner"])
-        if not link:
+        page = vault.owner_page(reg["owner"])
+        if not page:
             fail(f"Registers row '{reg['section']}' has no [[Owner]] wikilink")
-        page = vault.find_page(link.group(1))
         rows = register_rows(page, reg["pattern"])
         counts[reg["section"]] = len(rows)
         lines.append(f"## {reg['section']}\n\n{reg['lead']} Owned by {reg['owner']}.\n")
@@ -213,19 +271,19 @@ def build(vault, check):
                                 in (("Status", state), ("Sent", sent)) if m)
                 lines.append(f"### {ident}\n\n{title.strip().rstrip('.')}.{extra}\n")
 
-    own = vault.own_page_ids()
+    own, _ = vault.own_page_ids()
     if own:
         families = collections.OrderedDict()
-        for ident, stem in own.items():
-            families.setdefault(ident.rsplit("-", 1)[0], []).append((ident, stem))
+        for ident in sorted(own):
+            families.setdefault(ident.rsplit("-", 1)[0], []).append((ident, own[ident]))
         lines.append("## Pages with their own IDs\n\nThese have their own pages; link them directly, not here. "
                      "The tables list them for lookup.\n")
         for prefix, items in families.items():
             lines.append(f"| {prefix} | Title |\n|---|---|")
-            for ident, stem in sorted(items):
-                page = next(p for p in vault.pages() if p.stem == stem)
+            for ident, page in items:
+                stem = page.stem
                 h1 = [l for l in page.read_text(encoding="utf-8").splitlines() if l.startswith("# ")]
-                title = (h1[0][2:] if h1 else stem).replace(ident, "", 1).strip(" :-")
+                title = (h1[0][2:] if h1 else stem).replace(ident, "", 1).strip(" :-—–")
                 target = f"[[{stem}]]" if stem == ident else f"[[{stem}\\|{ident}]]"
                 lines.append(f"| {target} | {title} |")
             lines.append("")
@@ -237,12 +295,14 @@ def build(vault, check):
     changed = new != current
     total = len(re.findall(r"^### ", new, re.M))
     summary = ", ".join(f"{k} {v}" for k, v in counts.items())
+    unresolved = vault.report_clashes()
     if check:
         print(f"glossary: {total} ID entries ({summary}); {'DRIFT: build would change the page' if changed else 'in step'}")
-        sys.exit(1 if changed else 0)
+        sys.exit(1 if changed or unresolved else 0)
     if changed:
         vault.glossary.write_text(new, encoding="utf-8")
     print(f"glossary: {total} ID entries ({summary}); {'updated' if changed else 'unchanged'}")
+    sys.exit(1 if unresolved else 0)
 
 
 # ---------------------------------------------------------------- link
@@ -253,18 +313,21 @@ PROTECT = re.compile(r"`[^`]*`|\[\[[^\]]*\]\]|\[[^\]]*\]\([^)]*\)|<[^>]+>|https?
 def link(vault, apply):
     text = vault.glossary.read_text(encoding="utf-8")
     registers, _ = parse_registers(text)
-    own = vault.own_page_ids()
-    glossary_ids = [i for i in re.findall(r"^### (\S+)", text, re.M) if i not in own]
+    own, clashes = vault.own_page_ids()
+    unresolved = {ident for ident, owner, _ in clashes if owner is None}
+    glossary_ids = [i for i in re.findall(r"^### (\S+)", text, re.M) if i not in own and i not in unresolved]
     ids = sorted(set(glossary_ids) | set(own), key=len, reverse=True)
     if not ids:
+        if vault.report_clashes():
+            sys.exit(1)
         fail("no IDs to link: run `build` first")
     pat = re.compile(r"(?<![A-Za-z0-9\-\[#/_])(" + "|".join(map(re.escape, ids)) + r")(?![A-Za-z0-9\-_])")
     already = re.compile(r"\[\[(?:glossary#)?(" + "|".join(map(re.escape, ids)) + r")(?![A-Za-z0-9\-_])")
     defining = set()
     for reg in registers:
-        m = re.search(r"\[\[([^\]|#]+)", reg["owner"])
-        if m:
-            defining.add(vault.find_page(m.group(1)))
+        page = vault.owner_page(reg["owner"])
+        if page:
+            defining.add(page)
     skip_dirs = tuple(SKIP_PATHS) + tuple(d.rstrip("/") + "/" for d in frontmatter_list(text, "link_skip"))
     counts, changed_files = collections.Counter(), []
 
@@ -276,7 +339,7 @@ def link(vault, apply):
         src = path.read_text(encoding="utf-8")
         seen = set(already.findall(src))
         own_match = OWN_PAGE_ID.match(path.stem)
-        if own_match:
+        if own_match and own.get(own_match.group(1)) == path:
             seen.add(own_match.group(1))
         out, in_frontmatter, in_code = [], False, False
         for n, line in enumerate(src.split("\n")):
@@ -308,7 +371,7 @@ def link(vault, apply):
                 if ident == first_cell or ident in seen:
                     return ident
                 if ident in own:
-                    stem = own[ident]
+                    stem = own[ident].stem
                     target = f"[[{ident}]]" if stem == ident else f"[[{stem}{bar}{ident}]]"
                 else:
                     target = f"[[glossary#{ident}{bar}{ident}]]"
@@ -335,6 +398,7 @@ def link(vault, apply):
         print("  ", rel)
     if len(changed_files) > 20:
         print(f"   … and {len(changed_files) - 20} more")
+    sys.exit(1 if vault.report_clashes() else 0)
 
 
 def main():

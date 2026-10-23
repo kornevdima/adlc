@@ -1,7 +1,7 @@
 ---
 type: meta
 title: "Hot Cache"
-updated: 2026-10-22T12:00:00
+updated: 2026-10-23T12:00:00
 tags:
   - meta
   - hot-cache
@@ -22,6 +22,8 @@ related:
 Navigation: [[index]] | [[log]]
 
 ## Last Updated
+
+**2026-10-23 (session: vault-d/UP-004)**. [[Glossary links ids to work pages that share them]]: `glossary.py` settles an id that two filenames start with by the family's folder and `type:` (`id-clash` lines; unsettled ids are not linked, exit 1), reads `ID-slug` filenames, resolves register owners by path. New `test_glossary.py` (5 green); shipped under 1.0.9 like UP-024. Not committed. The reporting vault already synced 1.0.9 and has to re-sync before `link --apply`.
 
 **2026-10-22 (session: architecture folder)**. 1.0.9 committed as `chore(plugin): 1.0.9` (redaction check clean on the added lines; not pushed). New `wiki/architecture/` (9 pages, `_index.md`, `_changelog.md`): the as-built description of the plugin split out of the README: [[Plugin architecture overview]] (six layers, the request path), [[Skills and routing]], [[Shared references]] (61 docs, who reads which), [[Workers and the dispatch pipeline]], [[Hooks and host adapters]], [[Scripts]], [[Evals]] (25 cases), [[Use cases and modes]] (nine cases), [[Release and upstream flow]]. Linked from `index.md` and `overview.md`. Concept pages keep the design reasoning; architecture pages hold the as-built state and link to them. This wiki now passes its own history check: `_changelog.md` in every authored folder, new `_index.md` for `questions/` and `comparisons/`; `AGENTS.md` (Bootstrap step 4) and the README point at the folder.
 

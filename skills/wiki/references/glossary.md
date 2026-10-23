@@ -18,11 +18,17 @@ Everything down to and including the `## Registers` table is written by hand: fr
 
 - one section per Registers row, with a `### ID` entry per register row (the anchor pages link to);
 - `## Plugin issues`, when `meta/adlc-upstream.md` has `UP-nnn` entries;
-- `## Pages with their own IDs`: lookup tables for pages whose filename starts with an id (`FR-001.md`, `FEAT-003 Title.md`, `BUG-012 Short title.md`). These link to their own pages, never to the glossary.
+- `## Pages with their own IDs`: lookup tables for pages whose filename starts with an id followed by a space, a hyphen or nothing (`FR-001.md`, `FEAT-003 Title.md`, `ADR-005-short-title.md`). These link to their own pages, never to the glossary.
+
+## When two pages start with the same id
+
+A work page named after the item it serves (`US-007 Census 2026-01-15.md` next to `US-007 Sign-in.md`) also starts with the id. The script gives the id to the page that sits in the same folder and has the same frontmatter `type:` as most pages of its family (most `US-` pages are `type: user-story` in `user-stories/`), and prints an `id-clash` line naming both. When no page fits that way (two stories in two folders, or a family split evenly), the id is left out of the lookup table and not linked, and `build` and `link` exit 1.
+
+The naming that never clashes: only the page an id belongs to starts its filename with it. A census, copy table, plan or as-built page puts the id after a word (`Census US-007 2026-01-15.md`) or keeps its own folder and `type:` so the family rule settles it. Run `build` and read the `id-clash` lines before the first `link --apply`.
 
 ## The Registers table
 
-One row per register the vault keeps. The `ID pattern` is a regex the first token of a table row's first cell must match in full; `Owner` is the page holding the table (text after the wikilink, such as "§ 13", is kept in the section lead). `Entry` is the template for each entry: `{id}` the id, `{0}` the rest of the first cell, `{1}`, `{2}`, `{-1}` the other cells; `{n:status}` keeps the leading status word of a cell ("Partial" from "**Partial** - API …"), `{n:lower}` lowercases it. Register pages are named by their wikilink, so renaming a page is a one-cell change here.
+One row per register the vault keeps. The `ID pattern` is a regex the first token of a table row's first cell must match in full; `Owner` is the page holding the table (text after the wikilink, such as "§ 13", is kept in the section lead). `Entry` is the template for each entry: `{id}` the id, `{0}` the rest of the first cell, `{1}`, `{2}`, `{-1}` the other cells; `{n:status}` keeps the leading status word of a cell ("Partial" from "**Partial** - API …"), `{n:lower}` lowercases it. Register pages are named by their wikilink, so renaming a page is a one-cell change here. A link with a folder (`[[decisions/_index|catalog]]`) resolves by that path; a bare name that matches two pages (every folder has an `_index`) stops `build` with exit 2 and names them.
 
 ## Linking rules `link` applies
 
