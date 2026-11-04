@@ -1,7 +1,7 @@
 {
   "name": "adlc",
-  "version": "1.0.9",
-  "description": "Agentic Development Life Cycle harness. A persistent Obsidian wiki as the knowledge substrate (Karpathy LLM-wiki pattern, OKF-aligned), an optional structural code graph (via graphify), role skills for BA / product / architecture work, and a plan-driven delivery loop that dispatches build / test / review / verify workers story by story. AGENTS.md project profiling calibrates the harness to each repo. Formerly claude-mem.",
+  "version": "1.1.0",
+  "description": "Agentic Development Life Cycle harness. A persistent Markdown wiki as the knowledge substrate (Karpathy LLM-wiki pattern, OKF-aligned; Obsidian-flavoured, read in Obsidian or wiki-renderer), optional code navigation (a graphify code graph, or the Semble and Serena MCP servers), an optional design worker (impeccable, taste-skill, a design-system folder), role skills for BA / product / architecture work, and a plan-driven delivery loop that dispatches build / test / review / verify workers story by story. The vault's Toolset block picks the tools; AGENTS.md project profiling calibrates the harness to each repo. Formerly claude-mem.",
   "author": {
     "name": "dmytro"
   },
@@ -30,6 +30,13 @@
     "context-engineering",
     "shift-left",
     "business-analysis",
-    "brownfield"
+    "brownfield",
+    "toolset",
+    "wiki-renderer",
+    "semble",
+    "serena",
+    "impeccable",
+    "taste-skill",
+    "design-system"
   ]
 }

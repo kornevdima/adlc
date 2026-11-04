@@ -1,8 +1,10 @@
 ---
 name: wiki
 description: >
-  Obsidian knowledge companion for coding agents. Sets up a persistent wiki vault, scaffolds
-  structure from a one-sentence description, and routes to specialized sub-skills.
+  Knowledge companion for coding agents: a persistent Markdown wiki vault (Obsidian-flavoured,
+  read in Obsidian, wiki-renderer or any editor). Sets up the vault, scaffolds structure from a
+  one-sentence description, records the vault's toolset (reader, code navigation, design tools),
+  and routes to specialized sub-skills.
   Use for setup, scaffolding, cross-project referencing, and hot cache management.
   Also loads project context for work done by hand ("/adlc:wiki implement US-042").
   Triggers on: "set up wiki", "scaffold vault", "create knowledge base", "/wiki",
@@ -10,9 +12,9 @@ description: >
   "running notetaker", "persistent memory", "llm wiki".
 ---
 
-# wiki: Obsidian Knowledge Companion
+# wiki: Knowledge Companion
 
-You are a knowledge architect. You build and maintain a persistent, compounding wiki inside an Obsidian vault. You don't just answer questions. You write, cross-reference, file, and maintain a structured knowledge base that gets richer with every source added and every question asked.
+You are a knowledge architect. You build and maintain a persistent, compounding wiki in a Markdown vault. The pages are Obsidian-flavoured Markdown; the operator reads them in Obsidian, in wiki-renderer or in any editor, as the vault's `Toolset:` block says (`references/toolset.md`). You don't just answer questions. You write, cross-reference, file, and maintain a structured knowledge base that gets richer with every source added and every question asked.
 
 The wiki is the product. Chat is just the interface.
 
@@ -51,7 +53,7 @@ wiki/
 └── meta/               # dashboards, lint reports, conventions
 ```
 
-Dot-prefixed folders (`.raw/`) are hidden in Obsidian's file explorer and graph view. Use this for source documents.
+Dot-prefixed folders (`.raw/`) are hidden in Obsidian's file explorer and graph view and in wiki-renderer's navigation. Use this for source documents.
 
 ---
 
@@ -137,6 +139,7 @@ Steps:
 1. Determine the wiki mode. Ask: "Is this vault for a code project (Mode B), product / business documentation (Mode C), an agent-operated delivery lifecycle where AI agents cover the BA / QA / PM roles (Mode ADLC), or a combination (B+C)?" Read `references/modes.md` for the folder maps and details. ADLC is additive: it does not replace B or C, pairs with the `qa` (and often `ops`) concern, and integrates `ba-suite` via `references/ba-suite-pipeline.md`. The reference also points to the original Karpathy six-mode pattern at `.raw/llm-wiki-pattern-spec.md` if a user explicitly wants Mode A/D/E/F (rare).
 2. Determine concerns. Ask: "Does the team include any of these roles producing structured artifacts? Pick any of: ops (DevOps/SRE), qa (testing), sec (security), design (UX), writing (user docs). Or 'none'." See `references/modes.md` § Concerns for when each applies; per-concern folder maps live in `references/concerns/<name>.md`. Skip concerns where the role is informal — concerns are about **artifacts**, not roles.
 3. Ask the purpose: "In one sentence, what is this vault for?" (captured into `AGENTS.md`'s `Purpose:` field).
+3a. **Determine the toolset.** Run `python3 <plugin>/skills/wiki/scripts/toolset.py --vault . detect` and show the proposed block. Ask the operator to confirm or change three choices and one path: the reader (`obsidian`, `wiki-renderer`, `none`), the code navigation (`graphify`, `semble`, `serena`, `none`; several allowed) and the design tools (`impeccable`, `taste-skill`, `none`) with the folder of the design system they follow. Write the answers as the `Toolset:` block below `Concerns:` in `AGENTS.md`, then run `toolset.py --vault . check` and report each missing tool with its install line. Keys, options, defaults and what each choice changes: `references/toolset.md`. A vault created before this block existed behaves as `reader: obsidian`, graphify when a graph exists, no design tool.
 4. Create full folder structure under `wiki/` based on the mode and selected concerns.
    - **Base mode folders must match `references/modes.md` for the chosen letter.** For example, Mode B requires `wiki/modules/`, `wiki/components/`, `wiki/decisions/`, `wiki/dependencies/`, and `wiki/flows/`.
    - **For each selected concern, add the folders listed in `references/concerns/<name>.md`** (e.g. `ops` adds `runbooks/`, `incidents/`, `services/`, `observability/`).
@@ -144,10 +147,10 @@ Steps:
 5. Create domain pages + `_index.md` sub-indexes (for applicable modes), and `_index.md` files for every mode-specific and concern-specific folder created in step 4. Beside each `_index.md`, create `_changelog.md` (frontmatter `type: changelog`, an empty `Date | Page | Change` table, lead-in "Pages show the current state only; history goes here, newest first") and link it from the `_index.md`. Pages hold the current state only (`references/writing-style.md` § Pages that stay current); `sources/` and `meta/` are exempt.
 6. Create `wiki/index.md`, `wiki/log.md`, `wiki/hot.md`, `wiki/overview.md`, and `wiki/glossary.md` from the template in `references/glossary.md` (project terms by hand, a `## Registers` row per register the mode keeps; `scripts/glossary.py build` generates the id entries). Link the glossary from `index.md`.
 7. Create the vault `AGENTS.md` using the template below.
-8. Initialize git. Read `references/git-setup.md`. For **Mode ADLC**, also scaffold `.claude/settings.json` from `references/permissions.md` so routine project work runs without prompts while destructive operations stay gated (copy `skills/wiki/scripts/guard_env.py` to `.claude/hooks/guard_env.py`: the settings hook that keeps env files out of every transcript points there, anchored on `$CLAUDE_PROJECT_DIR`, never a cwd-relative path, which blocked every tool once a session's working directory moved), and seed `wiki/meta/mission-control.md` + `wiki/meta/ba-activity.md` with empty tables per `references/mission-control.md` (the metrics seam), plus `wiki/meta/operator-profile.md` from the template in `references/operator-profile.md` — ask the one engagement question ("business-input: you rule on product and design and we checkpoint at story boundaries — or fully-managed: the agent rules within stated principles and checkpoints at epic boundaries?").
-9. Present the structure and ask: "Want to adjust anything before we start?"
+8. Initialize git. Read `references/git-setup.md`. For **Mode ADLC**, also scaffold `.claude/settings.json` from `references/permissions.md` so routine project work runs without prompts while destructive operations stay gated (copy `skills/wiki/scripts/guard_env.py` to `.claude/hooks/guard_env.py`: the settings hook that keeps env files out of every transcript points there, anchored on `$CLAUDE_PROJECT_DIR`, never a cwd-relative path, which blocked every tool once a session's working directory moved; add the allow lines `references/toolset.md` § Permissions lists for the tools the `Toolset:` block names, and `Task(feature-designer)` when it names a design tool), and seed `wiki/meta/mission-control.md` + `wiki/meta/ba-activity.md` with empty tables per `references/mission-control.md` (the metrics seam), plus `wiki/meta/operator-profile.md` from the template in `references/operator-profile.md` — ask the one engagement question ("business-input: you rule on product and design and we checkpoint at story boundaries — or fully-managed: the agent rules within stated principles and checkpoints at epic boundaries?").
+9. Present the structure and ask: "Want to adjust anything before we start?" Then say how to open the vault for the chosen reader: `obsidian`, open the project folder in Obsidian; `wiki-renderer`, `wiki-renderer add <vault root>` then `wiki-renderer` (it opens `http://127.0.0.1:4700`); `none`, nothing to open.
 
-> Visual customization (theme, color snippets, plugin recommendations) is **not** applied automatically. The default scaffold leaves Obsidian's stock appearance untouched — users pick their own theme and plugins from Obsidian's community marketplace.
+> Visual customization is **not** applied automatically. With `reader: obsidian` the scaffold leaves Obsidian's stock appearance untouched (no theme, no plugins; users pick their own). With `reader: wiki-renderer` the renderer's own theme applies. Nothing in `wiki/` depends on the reader.
 
 ### Mode B: initial repository pass (co-located codebase)
 
@@ -190,6 +193,11 @@ Create this file in the vault root when scaffolding a new project vault (not thi
 
 Mode: [B / C / B+C / ADLC]
 Concerns: [comma-separated subset of: ops, qa, sec, design, writing — or "none"]
+Toolset:
+  reader: [obsidian / wiki-renderer / none]
+  code-nav: [graphify / semble, serena / none]
+  design: [impeccable, taste-skill / none]
+  design-system: [folder path / none]
 Purpose: [ONE SENTENCE]
 Owner: [NAME]
 Created: YYYY-MM-DD
@@ -214,6 +222,8 @@ Workers and skills look this table up before writing a record: it makes filing a
 | `reviews/` (code wiki) | review record | `<feature>-review-YYYY-MM-DD.md` | feature page |
 | `reviews/` (code wiki) | review policy (one per service) | `_policy.md` | service AGENTS.md |
 | `census/` (code wiki) | scope census | `<STORY-ID>-census-YYYY-MM-DD.md` | run ledger row, story page |
+| `designs/` (product wiki with the `design` concern, else code wiki) | design brief (`feature-designer`, shape) | `<STORY-ID>-design.md` | story page |
+| `designs/` (same) | design review record (`feature-designer`, review) | `<STORY-ID>-design-review-YYYY-MM-DD.md` | story page, run ledger row |
 | `deploys/` (code wiki) | deploy record | `<environment>-YYYY-MM-DD-<short-rev>.md` | story pages |
 | `bugs/` | defect | `BUG-NNN <short title>.md` | verification record, backlog item |
 | `sprints/` | run ledger | `_run <EPIC-ID>.md` (deleted at epic close) | `meta/mission-control.md` |

@@ -21,6 +21,12 @@ Append-only. New entries go at the TOP. Never edit past entries.
 
 Entry format: `## [YYYY-MM-DD] operation | Title`
 
+## [2026-11-04] feature | Configurable toolset: reader, code navigation, design worker (1.1.0)
+- **Trigger:** operator "we have hardcoded graphify and obsidian. Instead of obsidian I have my own wiki reader … we don't need to install graphify every time, I'm testing serena + semble … create a design sub-agent that uses impeccable and tasteskill."
+- **Measured:** Obsidian named in 34 plugin files, graphify in 40; the graph build ran its installer on every run; a co-located vault's five repo-local worker bindings already carried a Semble and Serena playbook (operator ruling 2026-11-01); a design-system repo built with impeccable ranks its dated rulings above the tool's heuristics.
+- **Built:** `Toolset:` block in the vault AGENTS.md (`reader`, `code-nav`, `design`, `design-system`; defaults reproduce the old behaviour); `skills/wiki/references/toolset.md`; `skills/wiki/scripts/toolset.py` (`show`, `check`, `detect`) with 8 tests green; `agents/feature-designer.md` (modes `shape` and `review`, tools include Skill and chrome-devtools, never edits code); seven workers orient with the toolset's tool and list `mcp__semble__*`, `mcp__serena__*`; `wiki` scaffold step 3a, `/adlc` Steps 0.4a, 2.2b, 2.3, 2.5a, 4.2, `wrap-up`, `wiki-query`, `wiki-lint` (Markdown dashboard outside Obsidian), `graphify-ingest` (toolset gate, installer only when no pin imports graphify), `graphify-update`, `autoresearch`, FAQ skill and its four references, `modes.md`, `permissions.md`, `technical-planning.md`, `concerns/design.md`, `mission-control.md`, `mcp-setup.md`, README, this repo's AGENTS.md, four manifests at 1.1.0. New eval case `evals/wiki/scaffold-toolset` (not run).
+- **Filed:** [[Configurable toolset for reader, code navigation and design]]; architecture pages and indexes updated (16 workers, 62 references, 16 scripts). Not committed.
+
 ## [2026-10-23] upstream | vault-d/UP-004 glossary links ids to the wrong pages
 - **Trigger:** operator "I've added a new upstream item"; ratified in the co-located vault's ledger, redacted export copied to `.raw/upstream/`.
 - **Confirmed:** on a scratch copy of the reporting vault, 9 ids were claimed by two or three filenames (6 stories, 2 epics, 1 decision) and the first in path order won; `ADR-NNN-slug` filenames were not read; owners resolved by basename.

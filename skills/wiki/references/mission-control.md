@@ -115,9 +115,9 @@ Differences from the other two pages:
 
 Reading the numbers: **output** and **cache write** are the expensive token classes; **cache read** is high-volume but roughly 10× cheaper than input; a high **sub %** means subagent fan-out, not the main context, drove the spend.
 
-## Obsidian Bases (optional, for humans)
+## Obsidian Bases (optional, for humans, `reader: obsidian` only)
 
-For a live, self-maintaining view, add `meta/ba-activity.base` with views grouped by `produced_by` and by `feature` (see the `obsidian-bases` skill). Bases render for humans inside Obsidian; the Markdown pages above remain the agent-readable artifacts — keep both, don't replace one with the other.
+When the vault's `Toolset:` block has `reader: obsidian`, a live, self-maintaining view is one `.base` file away: add `meta/ba-activity.base` with views grouped by `produced_by` and by `feature` (see the `obsidian-bases` skill). Bases render for humans inside Obsidian only; wiki-renderer and plain editors show the Markdown pages above, which remain the agent-readable artifacts in every reader. Keep both, don't replace one with the other.
 
 ## Scaffold
 

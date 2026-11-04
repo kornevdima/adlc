@@ -43,6 +43,7 @@ Subagents (in `agents/<name>.md`) are dispatched by skills via the Agent tool wi
 | `ba-export-subagent` | `ba-export` skill | Render one wiki deliverable to Office / PlantUML under `.raw/exports/` |
 | `scope-analyst` | `adlc` loop (census before the contract when scope is unknown; reconcile after review) | Measure a story's real scope against the code; propose plan revisions. Never rules, never writes feature code |
 | `feature-builder` → `feature-tester` → `feature-reviewer` → `feature-verifier` → `doc-writer` | `adlc` loop, per story | The per-service build pipeline: build → test → review → verify → document |
+| `feature-designer` | `adlc` loop, only when the vault's `Toolset:` block names a design tool | `shape`: a design brief from the design system before the build; `review`: impeccable / taste-skill review of the built UI after the code review. Never edits code, never rules on taste |
 | `devops` | `adlc` loop, optional, only on the operator's word | Push, PR, deploy through the service's documented path, then verify the deployed revision. Never touches infra or secrets, never rolls back on its own |
 
 Skills handle orchestration; subagents handle isolated work.
@@ -50,6 +51,7 @@ Skills handle orchestration; subagents handle isolated work.
 ## Key Conventions
 
 - **Vault root**: the directory containing `wiki/` and `.raw/`
+- **Toolset**: a vault's `AGENTS.md` carries a `Toolset:` block (reader, code navigation, design tools, design-system folder); Obsidian and graphify are defaults, not requirements. Reference: `skills/wiki/references/toolset.md`; script: `skills/wiki/scripts/toolset.py`
 - **Hot cache**: `wiki/hot.md` (read at session start, updated at session end)
 - **Source documents**: `.raw/` (immutable: agents never modify these)
 - **Generated knowledge**: `wiki/` (agent-owned, links to sources via wikilinks)

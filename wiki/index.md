@@ -41,6 +41,7 @@ Navigation: [[overview]] | [[log]] | [[hot]] | [[maintenance-triggers]] | [[arch
 
 ### Resolved
 
+- [[Configurable toolset for reader, code navigation and design]] — Obsidian in 34 and graphify in 40 plugin files, assumed rather than chosen; the operator reads vaults in wiki-renderer, navigates code with Semble and Serena, reviews design with impeccable and taste-skill. Fix: a `Toolset:` block in the vault AGENTS.md (reader, code-nav, design, design-system), `toolset.md` and `toolset.py`, every skill and worker conditional on it, the `feature-designer` worker. 1.1.0, unreleased (status: resolved 2026-11-04)
 - [[One writing method for every human reader]] — vault-b/UP-001 to UP-005 and vault-c/UP-001: client packs that read as note dumps, drifting translations, dashes rewritten instead of swapped, corrections applied to one line, links that missed the deployed page. Fix: `writing-style.md` for every writer (identifiers never alone, change reports that read without the board), the `technical-writer` skill in place of `client-docs`, the `/adlc` and `wrap-up` reports reshaped. Unreleased (status: resolved 2026-10-20)
 - [[Workers print secrets from env files]] — vault-a/UP-013: a `docker compose config` and a `sed` over `.env.local` put a dev private key into transcripts despite a packet rule. Fix: a worker Don't, `permissions.md` deny rules, and the `guard_env.py` PreToolUse hook that blocks env-file reads by any tool. Unreleased (status: resolved 2026-10-20)
 - [[Contracts that prescribe mechanisms or skip the code]] — vault-a/UP-014, UP-017, UP-018 and vault-d/UP-003: packets that prescribe a mechanism, scenarios naming states and labels nobody checked, a moved source with unlisted readers, a grilling ruling with no row. Fix: four contract rules in `/adlc` Step 2.2, census items 7 and 8, reviewer dimension 8. Unreleased (status: resolved 2026-10-20)
@@ -60,7 +61,7 @@ Navigation: [[overview]] | [[log]] | [[hot]] | [[maintenance-triggers]] | [[arch
 
 ## Architecture
 
-How the plugin is built, as-built at 1.0.9. Full catalog: [[architecture/_index]].
+How the plugin is built, as-built at 1.1.0. Full catalog: [[architecture/_index]].
 
 - [[Plugin architecture overview]] — one folder as plugin, vault and repo; the six layers and the path a request takes through them (status: active)
 - [[Skills and routing]] — the 20 skills in three families, triggers, what each dispatches (status: active)

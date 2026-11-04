@@ -37,6 +37,35 @@ Opt-in folder kits added on top of the base mode for specific SDLC roles. Five a
 
 Each adds 2–4 folders with their own frontmatter shapes. See [[SDLC Wiki Concerns]] for design rationale and `skills/wiki/references/concerns/<name>.md` for per-concern detail.
 
+## Toolset
+
+**Toolset block**
+Four lines in a vault's `AGENTS.md`, beside `Mode:` and `Concerns:`: `reader`, `code-nav`, `design`, `design-system`. Names the tools the skills and workers use; absent, the vault behaves as before 1.1.0 (Obsidian, graphify when a graph exists, no design tool). Reference `skills/wiki/references/toolset.md`; script `toolset.py show|check|detect`.
+
+**Reader**
+What shows the pages to a person: Obsidian, wiki-renderer or nothing. The Markdown dialect is the same for all three; Bases, Canvas and Dataview are Obsidian-only.
+
+**wiki-renderer**
+A local web app (MIT) that renders Obsidian-flavoured Markdown wikis from their folders, with search, PDF export and in-browser saves. `wiki-renderer add <vault>` then `wiki-renderer`, port 4700, localhost only.
+
+**Code navigation (`code-nav`)**
+How workers find and read code: `graphify` (a per-project graph), `semble` (search by meaning through an MCP server, cached index), `serena` (symbol-level reads and edits through the language server), or `none` (Grep). The tool finds; the code asserts; reports say which instrument found each claim.
+
+**Semble**
+MCP server and CLI for code search by intent: `search(query, repo, content=code|docs|config|all)` returns file and line; `find_related(file, line, repo)` returns siblings and callers.
+
+**Serena**
+MCP server over a language server: `initial_instructions` once, then `serena_repl` with `s.lsp.find_symbol`, `find_referencing_symbols`, `get_symbols_overview` and the `s.edit.*` symbol edits. Lines are 0-based.
+
+**Design tools (`design`)**
+`impeccable` (shape, critique, audit, the detect scan, `DESIGN.md`) and `taste-skill` (brief inference, the AI-tell list, the redesign audit). Both are Claude Code plugins the `feature-designer` worker runs.
+
+**Design system (`design-system`)**
+The folder holding a brand book with dated rulings, tokens, component specs and `DESIGN.md`. The designer reads its rulings as law; a tool heuristic that disagrees is reported, not filed.
+
+**feature-designer**
+The optional design worker of the ADLC loop: `shape` writes a design brief before the build, `review` judges the built UI after the code review. Never edits code, never rules on taste.
+
 ## Graph layer
 
 **graphify**

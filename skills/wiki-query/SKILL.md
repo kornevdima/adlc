@@ -1,6 +1,6 @@
 ---
 name: wiki-query
-description: "Answer questions using the Obsidian wiki vault and (when present) the graphify code graph. Reads hot cache first, routes code-structural questions to graphify-out/graph.json via graphify CLI, narrative questions to wiki pages. Synthesizes answers with citations. Files good answers back as wiki pages. Supports quick, standard, and deep modes, and auto-scales to large / ADLC vaults with grep-first + bounded-recursion reads (RLM-style). Triggers on: what do you know about, query:, what is, explain, summarize, find in wiki, search the wiki, based on the wiki, wiki query quick, wiki query deep, what calls X, where is X defined, how does A connect to B."
+description: "Answer questions using the Markdown wiki vault and the code-navigation tool the vault's toolset names (the graphify code graph, or Semble search). Reads hot cache first, routes code-structural questions to the graph CLI or to Semble, narrative questions to wiki pages. Synthesizes answers with citations. Files good answers back as wiki pages. Supports quick, standard, and deep modes, and auto-scales to large / ADLC vaults with grep-first + bounded-recursion reads (RLM-style). Triggers on: what do you know about, query:, what is, explain, summarize, find in wiki, search the wiki, based on the wiki, wiki query quick, wiki query deep, what calls X, where is X defined, how does A connect to B."
 ---
 
 # wiki-query: Query the Wiki
@@ -39,9 +39,11 @@ When the count is large or service wikis exist, prefer grep-first.
 
 ---
 
-## Code-Structural Questions: Consult the Graph First
+## Code-Structural Questions: Consult the Code-Navigation Tool First
 
-**If `graphify-out/graph.json` exists in the project AND the question is code-structural, route to graphify before reading wiki pages.**
+**If the question is code-structural, route it to the tool the vault's `Toolset:` block names (`code-nav`; `skills/wiki/references/toolset.md`) before reading wiki pages: graphify when the block names it, or when there is no block and `graphify-out/graph.json` exists; Semble when the block names `semble`.**
+
+With **Semble**: call `mcp__semble__search` with `repo` set to the service checkout and `content="code"` (`"all"` to include templates and docs), read the function at the returned file and line, and use `mcp__semble__find_related` for its siblings and callers; cite `file:line` in the answer. The graph CLI below does not apply then.
 
 The graph carries the truth about *what calls what* — at a fraction of the token cost of reading source files. The wiki carries the truth about *why decisions were made*. Both layers, different purposes.
 
@@ -131,10 +133,13 @@ Do not open individual wiki pages in quick mode.
 
 1. **Read** `wiki/hot.md` first. It may already have the answer, AND its graph snapshot tells you which entities exist in the code graph.
 2. **Decide**: code-structural or narrative? (See routing decision above.)
-3a. If **code-structural** AND `graphify-out/graph.json` exists:
+3a. If **code-structural** and the toolset names graphify (`graphify-out/graph.json` present):
     - Run the appropriate `graphify explain | query | path` command
     - Read the relevant `wiki/code/_COMMUNITY_*.md` for cluster context
     - Read `wiki/decisions/` only if the question asks *why*, not *what*
+3a'. If **code-structural** and the toolset names Semble:
+    - `mcp__semble__search` on the service repo; read the file at the returned line; `find_related` for neighbours
+    - Cite `file:line`; read `wiki/decisions/` only for *why*
 3b. If **narrative**:
     - Read `wiki/index.md`, scan for relevant pages
     - Read 3–5 wiki pages, follow wikilinks to depth 2 for key entities
@@ -221,6 +226,7 @@ Read the minimum needed:
 | `graphify explain "X"` | ~50–200 tokens | For "what is X / what touches X" — almost always enough |
 | `graphify path "A" "B"` | ~100 tokens | When the question is about a specific dependency chain |
 | `graphify query "..."` | up to `--budget` (default 2000) | For broader code-structural questions; lower budget when possible |
+| `mcp__semble__search` | ~200–500 tokens | For "where is X / what does Y" when the toolset names Semble: the file and line, then one function read |
 | index.md | ~1000 tokens | If you can identify 3-5 relevant pages |
 | `wiki/code/_COMMUNITY_*.md` | ~200 tokens each | After a graph query, for cluster context |
 | 3-5 narrative wiki pages | ~300 tokens each | Usually sufficient for *why* questions |

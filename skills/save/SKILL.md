@@ -1,7 +1,7 @@
 ---
 name: save
 description: >
-  Save the current conversation, answer, or insight into the Obsidian wiki vault as a
+  Save the current conversation, answer, or insight into the Markdown wiki vault as a
   structured note. Analyzes the chat, determines the right note type, creates frontmatter,
   files it in the correct wiki folder, and updates index, log, and hot cache.
   Triggers on: "save this", "save that answer", "/save", "file this",

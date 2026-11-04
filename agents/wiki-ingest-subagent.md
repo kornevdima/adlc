@@ -3,7 +3,7 @@ name: wiki-ingest-subagent
 description: >
   INTERNAL: Task-only worker — invoked via the Agent/Task tool by the wiki-ingest skill,
   not as a slash command.
-  Parallel batch ingestion agent for the Obsidian wiki vault. Dispatched when multiple
+  Parallel batch ingestion agent for the Markdown wiki vault (Obsidian-flavoured). Dispatched when multiple
   sources need to be ingested simultaneously. Processes one source fully (read, extract,
   file entities and concepts, update index) then reports what was created and updated.
   Use when the user says "ingest all", "batch ingest", or provides multiple files at once.

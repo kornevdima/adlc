@@ -55,7 +55,7 @@ Statuses: `[ ]` not started | `[→]` in progress | `[✓]` done | `[!]` blocked
 <!-- one line per completed/blocked question: what was found or why blocked -->
 ```
 
-The plan is live in Obsidian — the user watches statuses flip as research progresses.
+The plan is live in the operator's reader (Obsidian or wiki-renderer, per the vault's toolset) — the user watches statuses flip as research progresses.
 
 ---
 

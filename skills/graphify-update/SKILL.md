@@ -45,6 +45,8 @@ if [ ! -f "$TARGET/graphify-out/graph.json" ]; then
 fi
 ```
 
+Also read the vault's `Toolset:` block: when it names a `code-nav` without `graphify` (`python3 "$PLUGIN_ROOT/skills/wiki/scripts/toolset.py" --vault "$TARGET" show --key code-nav`, with `PLUGIN_ROOT` resolved as in `graphify-ingest` Step 1), the graph is a leftover from an earlier choice: stop, say so, and let the user add `graphify` back or delete `graphify-out/` (`skills/wiki/references/toolset.md` § Changing the toolset).
+
 ### Step 1 — Resolve Python interpreter
 
 The pinned interpreter from the previous run usually still works. Validate it; if missing or stale, run the bundled installer to repin.

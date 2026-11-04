@@ -2,7 +2,7 @@
 type: changelog
 title: "Architecture changelog"
 created: 2026-10-22
-updated: 2026-10-22
+updated: 2026-11-04
 tags: [changelog, architecture]
 ---
 
@@ -12,6 +12,7 @@ Change history for pages in this folder. Pages show the current state only; hist
 
 | Date | Page | Change |
 |---|---|---|
+| 2026-11-04 | [[Plugin architecture overview]], [[Skills and routing]], [[Shared references]], [[Workers and the dispatch pipeline]], [[Scripts]], [[Use cases and modes]] | 1.1.0: the vault `Toolset:` block (reader, code navigation, design tools); `toolset.md` and `toolset.py` added; sixteenth worker `feature-designer`; Obsidian and graphify become defaults the skills read, not requirements |
 | 2026-10-23 | [[Scripts]] | `glossary.py` settles ids shared by two filenames, reads `ID-slug` filenames, resolves register owners by path; vault tests added (vault-d/UP-004, 1.0.9) |
 | 2026-10-22 | [[Hooks and host adapters]], [[Scripts]] | Env guard skips message text and literal heredocs; payload tests added (vault-a/UP-024, 1.0.9) |
 | 2026-10-22 | [[Plugin architecture overview]], [[Skills and routing]], [[Shared references]], [[Workers and the dispatch pipeline]], [[Hooks and host adapters]], [[Scripts]], [[Evals]], [[Use cases and modes]], [[Release and upstream flow]] | Folder created at plugin version 1.0.9: as-built description of the plugin, split out of the README |

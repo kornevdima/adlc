@@ -13,7 +13,7 @@ This skill is the **structural layer** of adlc. It produces:
 - `graphify-out/GRAPH_REPORT.md` — god nodes, surprising connections, suggested questions, audit trail
 - `graphify-out/graph.html` — interactive viz, open in browser
 - `wiki/code/_COMMUNITY_NN_<slug>.md` — one summary page per meaningful cluster
-- `wiki/code/graph.canvas` — visual layer for Obsidian
+- `wiki/code/graph.canvas` — visual layer for Obsidian (other readers open `graphify-out/graph.html`)
 - `wiki/hot.md` — rewritten with the graph snapshot at the top
 
 The **narrative layer** (`wiki/decisions/`, `wiki/concepts/`, `wiki/sources/`) stays human-owned. Use `/save` and `wiki-ingest` for that.
@@ -57,19 +57,33 @@ mkdir -p "$TARGET/wiki/code" "$TARGET/wiki/decisions" "$TARGET/wiki/concepts" "$
 
 If the user has not yet seen the wiki layer, briefly tell them what you're about to create and where.
 
-### Step 1 — Ensure graphify is installed and pin the interpreter
+### Step 1 — Check the toolset, then make sure graphify is installed (once, not every run)
 
-Delegate to the bundled installer. It detects the best Python (>=3.10,<3.14), installs `graphifyy` via the right strategy (pip, --user, --break-system-packages), verifies the import, and pins the interpreter for this project.
+Read the vault's `Toolset:` block first: graphify runs only when `code-nav` lists it, or when the vault has no block yet (the pre-toolset default). Then reuse the pinned interpreter when it still imports `graphify`; call the bundled installer only when there is no working pin. The installer detects the best Python (>=3.10,<3.14), installs `graphifyy` via the right strategy (pip, --user, --break-system-packages), verifies the import, and pins the interpreter for this project.
 
 ```bash
 PLUGIN_ROOT="${CLAUDE_PLUGIN_ROOT:-$(ls -d "$HOME"/.claude/plugins/cache/*/adlc/*/ 2>/dev/null | sort -V | tail -1 | sed 's:/$::')}"
 [ -z "$PLUGIN_ROOT" ] && PLUGIN_ROOT="$HOME/.claude/plugins/adlc"
-SETUP="$PLUGIN_ROOT/bin/setup-graphify.sh"
-bash "$SETUP" "$TARGET"
-PYTHON=$(cat "$TARGET/graphify-out/.graphify_python")
+
+TS=$(python3 "$PLUGIN_ROOT/skills/wiki/scripts/toolset.py" --vault "$TARGET" show 2>/dev/null)
+NAV=$(printf '%s\n' "$TS" | sed -n 's/^code-nav=//p'); SRC=$(printf '%s\n' "$TS" | sed -n 's/^source=//p')
+READER=$(printf '%s\n' "$TS" | sed -n 's/^reader=//p')
+if [ "$SRC" = block ] && ! printf '%s' "$NAV" | grep -q graphify; then
+    echo "This vault's Toolset block navigates code with: $NAV. graphify runs only when code-nav lists it (skills/wiki/references/toolset.md)."; exit 1
+fi
+
+PYTHON=""
+if [ -f "$TARGET/graphify-out/.graphify_python" ]; then
+    _PIN=$(cat "$TARGET/graphify-out/.graphify_python")
+    [ -x "$_PIN" ] && "$_PIN" -c "import graphify" 2>/dev/null && PYTHON="$_PIN"
+fi
+if [ -z "$PYTHON" ]; then
+    bash "$PLUGIN_ROOT/bin/setup-graphify.sh" "$TARGET"
+    PYTHON=$(cat "$TARGET/graphify-out/.graphify_python")
+fi
 ```
 
-`PLUGIN_ROOT` is reused in later steps. If `CLAUDE_PLUGIN_ROOT` is unset (it should be set by Claude Code at skill invocation, but isn't always), the snippet locates the newest install under `~/.claude/plugins/cache/*/adlc/*/`.
+When the block names another tool, stop and surface that message: the user adds `graphify` to `code-nav` if they want both. `PLUGIN_ROOT` and `READER` are reused in later steps. If `CLAUDE_PLUGIN_ROOT` is unset (it should be set by Claude Code at skill invocation, but isn't always), the snippet locates the newest install under `~/.claude/plugins/cache/*/adlc/*/`.
 
 If the script exits non-zero (no compatible Python, install failure), it tells the user exactly what to do next (install Python 3.13 via pyenv or Homebrew). Stop here and surface that message — don't try to recover automatically.
 
@@ -219,9 +233,9 @@ wiki/.needs_graph_update
 .obsidian/cache
 ```
 
-## .obsidian/app.json (only if not yet configured)
+## .obsidian/app.json (only with `reader: obsidian`, and only if not yet configured)
 
-If `$TARGET/.obsidian/app.json` is `{}` or missing, write a sensible default that hides non-wiki content from the Obsidian sidebar. Pick paths that exist in the project — at minimum: `src/`, `node_modules/`, `.next/`, `.git/`, `graphify-out/`, top-level config files.
+Skip this section when `$READER` is `wiki-renderer` or `none`: those readers ignore `.obsidian/`. Otherwise, if `$TARGET/.obsidian/app.json` is `{}` or missing, write a sensible default that hides non-wiki content from the Obsidian sidebar. Pick paths that exist in the project — at minimum: `src/`, `node_modules/`, `.next/`, `.git/`, `graphify-out/`, top-level config files.
 
 ## Known limitations
 

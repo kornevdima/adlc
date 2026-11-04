@@ -42,14 +42,18 @@ Each service is its own service: its own repo, its own Mode B code wiki, its own
 
 The dispatcher (ADLC agent) authors the per-feature verification contract, sequences (census ->) build -> test -> review -> verify (-> reconcile), and commits. The `adlc` skill is this dispatcher made invocable: a resumable epic loop with a `_run` ledger, checkpoint policy, and end-of-epic distillation into repo-local workers. The product wiki `features/` page links to the service spec; the `wrap-up` skill keeps both sides in sync at session end.
 
-### Code graph grounding (when the service has one)
+### Code navigation grounding (the vault's toolset)
 
-When a service checkout carries a graphify graph (`graphify-out/graph.json` + `wiki/code/` community pages, built by `/graphify-ingest`), workers ground their structural questions there **before** raw grep — one CLI call answers "what's connected to X", "who calls Y", "blast radius of Z" at zero LLM cost, and the `wiki/code/_COMMUNITY_*.md` pages give Bash-less workers a readable map. Two rules make this safe:
+Workers ground their structural questions ("what's connected to X", "who calls Y", "blast radius of Z") in the code-navigation tool the vault's `Toolset:` block names (`code-nav`; [`toolset.md`](toolset.md)) **before** raw grep. With **graphify**, a service checkout carries `graphify-out/graph.json` and the `wiki/code/` community pages, one CLI call answers at zero LLM cost, and the community pages give Bash-less workers a readable map. With **Semble and Serena**, Semble finds the file and line by meaning and Serena reads and edits symbols through the language server; nothing is built per project beyond Semble's cached index. With **none**, Grep. Two rules make every option safe:
 
-- **Map, not territory.** The graph is for *finding* things, never for *asserting* them. Any claim that lands in a spec, review finding, or test must still be confirmed in the code (Read / Grep). If the graph and the code disagree, the code wins — and the worker reports the mismatch so the dispatcher refreshes the graph.
-- **Freshness is the dispatcher's job.** After each shipped feature (post-verify, pre-commit), run `/graphify-update` on the changed service so the graph and `wiki/code/` stay current for the next worker. A stale graph silently degrades every downstream dispatch; `wiki-lint` checks graph staleness against source files.
+- **Map, not territory.** The tool is for *finding* things, never for *asserting* them. Any claim that lands in a spec, review finding, or test must still be confirmed in the code (Read / Grep). If the tool and the code disagree, the code wins, and the worker reports the mismatch (for graphify, so the dispatcher refreshes the graph). Reports say which instrument found each claim.
+- **Freshness is the dispatcher's job (graphify only).** After each shipped feature (post-verify, pre-commit), run `/graphify-update` on the changed service so the graph and `wiki/code/` stay current for the next worker. A stale graph silently degrades every downstream dispatch; `wiki-lint` checks graph staleness against source files. Semble re-indexes on its own; Serena reads the live tree.
 
-Mention the graph in the dispatch packet when it exists ("this service has `graphify-out/` — orient there first"); workers skip silently when it doesn't.
+The dispatch packet carries the `code-nav` line and, for Semble and Serena, the service `AGENTS.md`'s `## Code navigation` section (what each tool indexes or parses, the repo path to pass). For graphify it says "this service has `graphify-out/`, orient there first". Workers fall back to Grep when the packet names nothing.
+
+### Design grounding (when the toolset names a design tool)
+
+When the block's `design` names impeccable or taste-skill, a story that changes a user-facing surface gets the `feature-designer` worker twice: `shape` after the contract, before the build (a brief from the design system named in `design-system`: components and tokens to reuse, every state, copy pending acceptance, the accessibility floor, the visual scenario rows the contract takes), and `review` after the code review, before the verifier (impeccable `detect`, `audit`, `critique`, taste-skill's tell list, judged under the design system's dated rulings). It never edits code; its findings loop to `feature-builder` like a code review's. Visual acceptance stays the operator's.
 
 ### Model split: workers draft, the dispatcher orchestrates
 

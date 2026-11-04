@@ -1,7 +1,7 @@
 ---
 type: meta
 title: "Hot Cache"
-updated: 2026-10-23T12:00:00
+updated: 2026-11-04T12:00:00
 tags:
   - meta
   - hot-cache
@@ -10,11 +10,9 @@ related:
   - "[[index]]"
   - "[[log]]"
   - "[[Plugin architecture overview]]"
+  - "[[Configurable toolset for reader, code navigation and design]]"
   - "[[Upstream channel from vaults to the plugin]]"
-  - "[[Pages carry their history inline]]"
-  - "[[Identifiers with no glossary]]"
-  - "[[Env-guard hook path is relative to the working directory]]"
-  - "[[Workers print secrets from env files]]"
+  - "[[Glossary links ids to work pages that share them]]"
 ---
 
 # Recent Context
@@ -23,28 +21,26 @@ Navigation: [[index]] | [[log]]
 
 ## Last Updated
 
-**2026-10-23 (session: vault-d/UP-004)**. [[Glossary links ids to work pages that share them]]: `glossary.py` settles an id that two filenames start with by the family's folder and `type:` (`id-clash` lines; unsettled ids are not linked, exit 1), reads `ID-slug` filenames, resolves register owners by path. New `test_glossary.py` (5 green); shipped under 1.0.9 like UP-024. Not committed. The reporting vault already synced 1.0.9 and has to re-sync before `link --apply`.
+**2026-11-04 (session: configurable toolset, 1.1.0)**. [[Configurable toolset for reader, code navigation and design]]: a vault's `AGENTS.md` now carries a `Toolset:` block (`reader`, `code-nav`, `design`, `design-system`); Obsidian and graphify are defaults the skills read, not requirements. New `skills/wiki/references/toolset.md`, `skills/wiki/scripts/toolset.py` (`show` / `check` / `detect`, 8 tests green) and the sixteenth worker `agents/feature-designer.md` (`shape` before the build, `review` after the code review, on impeccable and taste-skill against a design-system folder; never edits code). Seven code-touching workers orient with the toolset's tool and list `mcp__semble__*`, `mcp__serena__*`. The scaffold asks the toolset (step 3a); `/adlc` reads it at Step 0 and dispatches the designer at 2.2b and 2.5a; `graphify-ingest` runs the installer only when no pinned interpreter imports graphify and refuses when the block names another tool; `wiki-lint` writes a Markdown dashboard outside Obsidian. Four manifests at 1.1.0. **Not committed.** Eval case `evals/wiki/scaffold-toolset` written, not run.
 
-**2026-10-22 (session: architecture folder)**. 1.0.9 committed as `chore(plugin): 1.0.9` (redaction check clean on the added lines; not pushed). New `wiki/architecture/` (9 pages, `_index.md`, `_changelog.md`): the as-built description of the plugin split out of the README: [[Plugin architecture overview]] (six layers, the request path), [[Skills and routing]], [[Shared references]] (61 docs, who reads which), [[Workers and the dispatch pipeline]], [[Hooks and host adapters]], [[Scripts]], [[Evals]] (25 cases), [[Use cases and modes]] (nine cases), [[Release and upstream flow]]. Linked from `index.md` and `overview.md`. Concept pages keep the design reasoning; architecture pages hold the as-built state and link to them. This wiki now passes its own history check: `_changelog.md` in every authored folder, new `_index.md` for `questions/` and `comparisons/`; `AGENTS.md` (Bootstrap step 4) and the README point at the folder.
+**2026-10-23 (session: vault-d/UP-004)**. [[Glossary links ids to work pages that share them]]: `glossary.py` settles an id that two filenames start with by the family's folder and `type:`; 5 tests green; shipped under 1.0.9. Committed as `fix(glossary)`.
 
-**2026-10-21 (session: release 1.0.9)**. Three vault-e reports fixed, rows under 1.0.9 in `upstream-shipped.md`:
-- [[Pages carry their history inline]] (UP-002): pages hold the current state only, history in per-folder `_changelog.md` linked from `_index.md`. `writing-style.md` § Pages that stay current; the scaffold creates the changelogs; `wrap-up` steps 5 / 6 / 6a no longer write "as-built diverges" notes or pointer sentences into pages (frontmatter `status: superseded` + `superseded_by:` instead); ingest, save and the BA / architecture / doc workers rewrite and add a changelog row. New `skills/wiki/scripts/page_history_check.py`, run by `wiki-lint` 8b / 8c and `wrap-up` 6a.
-- [[Identifiers with no glossary]] (UP-003): `wiki/glossary.md` in every vault. New `skills/wiki/scripts/glossary.py`: `build [--check]` from a `## Registers` table inside the page (owner wikilink, id regex, entry template), `link [--apply]` for first mentions; template `references/glossary.md`; translation terms move to the same page; `wiki-lint` 8d.
-- [[Env-guard hook path is relative to the working directory]] (UP-001): the hook entry is `if [ -f "$CLAUDE_PROJECT_DIR/.claude/hooks/guard_env.py" ]; then …; else echo … >&2; fi`, a block still blocks, a missing file warns.
+**2026-10-22 (session: architecture folder)**. `wiki/architecture/` created (9 pages) and 1.0.9 committed as `chore(plugin): 1.0.9`; the three vault-e reports (changelogs, glossary, hook path) and vault-a/UP-024 shipped under 1.0.9.
 
 ## Key Recent Facts
 
-- **Two of the three were filed from the co-located vault's ledger and standing ruling, not from an export.** The vault has to add UP-002 and UP-003 to its own `adlc-upstream.md` before it can close them; UP-001 came through `.raw/upstream/` and is already `sent` there.
-- `glossary.py` was checked on a scratch copy of the reporting vault: 82 entries identical to the vault's own script, 0 first mentions left, every anchor resolving. `page_history_check.py` on the same copy: 0 history hits, the two structural gaps (a client-documents folder without a changelog, a changelog with no index to link it). On this repo's wiki it reports 2 prose hits on concept pages about rule supersession; left.
-- **Read both co-located vaults' `wiki/meta/adlc-upstream.md`**, and now the third vault's, not only `.raw/upstream/`. Keys in use: vault-a to vault-e (plus vault-g, -m, -r, -s, -v, -w reserved by the vaults).
-- Upstream pages carry no pointers into a vault's private repo; run `skills/wiki/scripts/upstream_redact_check.py --vault <vault>` on every touched page, log line and reference before a commit (never `--vault .` here).
+- **The toolset's defaults keep old vaults working**: no block means `reader: obsidian`, graphify when `graphify-out/graph.json` exists, no design tool. `toolset.py detect` on this machine proposes wiki-renderer, Semble and Serena, impeccable and taste-skill; `check` finds every tool plus the design-system folder.
+- **Documented, not tested:** a worker whose `tools:` names an MCP server the session lacks. The docs say a launch fails only when no entry resolves; the built-ins always resolve.
+- **Field models for the generic text**: a co-located vault's repo-local Semble and Serena bindings (operator ruling 2026-11-01) and a design-system repo built with impeccable whose `AGENTS.md` ranks dated rulings above tool heuristics. Neither is named in plugin pages (redaction rule).
+- `.raw/upstream/vault-f-UP-001.md` is still unfiled: `glossary.py`'s `OWN_PAGE_ID` misses two-part prefixes (`ADR-XX-05`), and the "Plugin issues" section lands in a shared glossary when `meta/` is untracked.
 - `gh` can't reach GitHub from this machine. `claude plugin eval` takes only the last `--case`.
 
 ## Active Threads
 
-- **Architecture folder follow-ups:** a release or a wrap-up that changes a plugin part adds a row to `wiki/architecture/_changelog.md` and rewrites the page; a `wiki/code/` graph of this repo was never built.
-- **After 1.0.9 is installed in the vaults:** vault-e adds `_changelog.md` where folders lack one and an `_index.md` for its technical folder, moves its register config into the glossary's `## Registers` table and deletes its local script, keeps its `$CLAUDE_PROJECT_DIR` hook form; all vaults flip their `sent` entries to `shipped (1.0.9)` and remove the workarounds each page's Open section names. Other vaults gain changelogs and a glossary at their next lint or wrap-up.
+- **Release 1.1.0:** run the eval fast set (and the new `wiki/scaffold-toolset` case), commit, then set the `Toolset:` block in the co-located vaults (`toolset.py detect`), add the Semble and Serena allow lines and `Task(feature-designer)` to their settings, and give each service `AGENTS.md` a `## Code navigation` section (`/project-profile`).
+- **Follow-ups from the toolset work:** `/project-profile` does not yet write the `## Code navigation` section itself (the reference describes it); `impeccable critique` runs degraded inside the designer (no sub-agents); a `wiki/code/` graph of this repo was never built.
+- **vault-f/UP-001** (glossary two-part prefixes): confirm on a scratch copy, fix `OWN_PAGE_ID`, add a test, decide the "Plugin issues" opt-in.
 - **Not addressed from the ledgers:** the public-repo records occurrence (vault-a, 2026-10-18); the UP-002 "simplest shape first" gap; vault-a UP-011 (declined).
-- **Evals backlog** ([[Plugin eval suites for claude plugin eval]]): the 12 slow cases; the `[!contradiction]` callout case; graphify and pm-layer; `adlc` worker cases.
-- **Open tasks:** [[Integrate the wiki toolset into the ADLC workers]]; [[Operator profile - learn engagement style from corrections]].
+- **Evals backlog** ([[Plugin eval suites for claude plugin eval]]): the 12 slow cases; graphify and pm-layer; `adlc` worker cases.
+- **Open tasks:** [[Integrate the wiki toolset into the ADLC workers]]; [[Operator profile - learn engagement style from corrections]]; [[Configurable subagent models per host]] (postponed).
 - **Deferred:** vault MCP server; `/project-profile --refresh`; the Stage 6 trigger; K8; the Cursor plugin load check; the sharing pilot; the OKF exporter; renaming the repo.

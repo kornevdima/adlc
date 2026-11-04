@@ -1,14 +1,14 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "adlc-marketplace",
-  "description": "Local marketplace for the adlc plugin (Agentic Development Life Cycle harness: Obsidian wiki knowledge substrate, role skills, plan-driven delivery loop, optional code graph via graphify).",
+  "description": "Local marketplace for the adlc plugin (Agentic Development Life Cycle harness: Markdown wiki knowledge substrate read in Obsidian or wiki-renderer, role skills, plan-driven delivery loop, optional code navigation via graphify or Semble and Serena, optional design worker via impeccable and taste-skill).",
   "owner": {
     "name": "dmytro"
   },
   "plugins": [
     {
       "name": "adlc",
-      "description": "Agentic Development Life Cycle harness. Obsidian wiki knowledge substrate + role skills + plan-driven delivery loop with build/test/review/verify workers. 19 skills, 14 subagents.",
+      "description": "Agentic Development Life Cycle harness. Markdown wiki knowledge substrate (Obsidian-flavoured) + role skills + plan-driven delivery loop with design/build/test/review/verify workers; the vault's Toolset block picks the reader, code navigation and design tools. 20 skills, 16 subagents.",
       "category": "productivity",
       "source": "./",
       "homepage": "https://github.com/kornevdima/adlc"

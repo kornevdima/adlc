@@ -2,6 +2,32 @@
 
 Common errors and what to do about them. Each entry: symptom → cause → fix.
 
+## Toolset
+
+### "graphify runs only when code-nav lists it"
+
+**Symptom**: `/graphify-ingest` or `/graphify-update` stops with this message.
+
+**Cause**: the vault's `AGENTS.md` `Toolset:` block names `semble`, `serena` or `none` for `code-nav`, so the graph skills stand down.
+
+**Fix**: if you want the graph as well, add `graphify` to that line (`code-nav: semble, serena, graphify`). If not, delete `graphify-out/` and `wiki/code/` (`skills/wiki/references/toolset.md` § Changing the toolset).
+
+### "mcp__semble__search is not available" (or `mcp__serena__*`)
+
+**Symptom**: a worker or `wiki-query` falls back to Grep and says the Semble or Serena tool was not found.
+
+**Cause**: the MCP server is not configured in this host, or its CLI is missing (`uvx` for Semble, `serena` for Serena).
+
+**Fix**: `python3 <plugin>/skills/wiki/scripts/toolset.py --vault . check` prints the exact `claude mcp add` line; restart the session after adding a server.
+
+### "design-system … is not a folder"
+
+**Symptom**: `toolset.py check` flags the `design-system` path, or `feature-designer` reports the design system missing.
+
+**Cause**: the folder is not on this machine, or it holds no `DESIGN.md` or tokens file.
+
+**Fix**: point `design-system` at the folder with the brand book and tokens, or run `impeccable document` in that repo to generate `DESIGN.md`, or set `none` and let the designer work from the service's own `DESIGN.md`.
+
 ## graphify
 
 ### "graphifyy not installed"

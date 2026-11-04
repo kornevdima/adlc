@@ -2,7 +2,7 @@
 type: overview
 title: "Plugin architecture overview"
 created: 2026-10-22
-updated: 2026-10-22
+updated: 2026-11-04
 tags:
   - architecture
   - plugin
@@ -20,11 +20,12 @@ related:
   - "[[Release and upstream flow]]"
   - "[[LLM Wiki Pattern]]"
   - "[[Harness Engineering]]"
+  - "[[Configurable toolset for reader, code navigation and design]]"
 ---
 
 # Plugin architecture overview
 
-adlc is a harness for agentic delivery: a persistent Obsidian wiki as the knowledge substrate, role skills that read and write it, a plan-driven loop that dispatches workers story by story, and the hooks, scripts and evals that keep all of that honest. Version 1.0.9. This page is the map; each part has its own page.
+adlc is a harness for agentic delivery: a persistent Markdown wiki (Obsidian-flavoured, read in Obsidian or wiki-renderer) as the knowledge substrate, role skills that read and write it, a plan-driven loop that dispatches workers story by story, and the hooks, scripts and evals that keep all of that honest. Version 1.1.0. This page is the map; each part has its own page.
 
 ## One folder, three roles
 
@@ -44,9 +45,9 @@ From the outside in:
 
 1. **Host adapters.** A manifest per host (Claude Code, Cursor, GitHub Copilot) points at the same `skills/` and `agents/` folders; Codex CLI and OpenCode reach the skills through a symlink. Each host gets its own hook file with the same two hooks: print the hot cache at session start, nudge for a hot-cache update at stop. See [[Hooks and host adapters]].
 2. **Skills.** Twenty Agent Skills, each a `SKILL.md` with a trigger phrase in its description. They are the only entry points a person uses. Three families: the knowledge substrate, the code graph, roles and delivery. See [[Skills and routing]].
-3. **Shared references.** Sixty-one documents under the wiki skill's `references/` folder that other skills and the workers read at run time: the bundled business-analysis method, the shift-left method, the vault modes and concerns, the writing method, the permission profile, the templates. A skill folder of its own holds a reference only when no one else needs it. See [[Shared references]].
-4. **Workers.** Fifteen subagents in `agents/`, dispatched by skills through the Agent tool with a packet of inputs, never invoked by a person. They run in their own context and return one report. See [[Workers and the dispatch pipeline]].
-5. **Scripts.** Fifteen standard-library Python scripts beside the skills that own them, plus one shell installer. They do the deterministic work a prompt should not: lint checks, the glossary, the tester footprint, the upstream redaction check, the OKF export. See [[Scripts]].
+3. **Shared references.** Sixty-two documents under the wiki skill's `references/` folder that other skills and the workers read at run time: the bundled business-analysis method, the shift-left method, the vault modes and concerns, the writing method, the permission profile, the templates. A skill folder of its own holds a reference only when no one else needs it. See [[Shared references]].
+4. **Workers.** Sixteen subagents in `agents/`, dispatched by skills through the Agent tool with a packet of inputs, never invoked by a person. They run in their own context and return one report. See [[Workers and the dispatch pipeline]].
+5. **Scripts.** Sixteen standard-library Python scripts beside the skills that own them, plus one shell installer. They do the deterministic work a prompt should not: lint checks, the glossary, the tester footprint, the upstream redaction check, the OKF export. See [[Scripts]].
 6. **Evals.** Cases for `claude plugin eval` under `evals/`, run locally before each version bump, with layered fixtures and deterministic graders. See [[Evals]].
 
 ## How a request moves through the layers
@@ -58,7 +59,7 @@ A session starts: the host's SessionStart hook prints `wiki/hot.md`, so the agen
 - **Hot cache** (`wiki/hot.md`): about 500 words of recent context, read at session start, rewritten at session end. [[Hot Cache]].
 - **Index and log** (`wiki/index.md`, `wiki/log.md`): the catalog and the chronological record. Pages hold the current state; history goes to each folder's `_changelog.md`; every identifier has a glossary entry ([[Pages carry their history inline]], [[Identifiers with no glossary]]).
 - **Sources** (`.raw/`): immutable; agents never edit them. `.raw/.manifest.json` tracks what has been ingested.
-- **Code graph** (optional, `graphify-out/` and `wiki/code/`): the structural layer for code projects. [[graphify-integration]].
+- **Code navigation** (optional): the graphify graph (`graphify-out/` and `wiki/code/`) or the Semble and Serena servers, as the vault's `Toolset:` block says. [[graphify-integration]], [[Configurable toolset for reader, code navigation and design]].
 - **Per-vault instruments** (`wiki/meta/`): mission control, the operator profile, the upstream ledger, lint reports, the usage rollup.
 
 ## Design principles the parts follow
@@ -67,6 +68,7 @@ A session starts: the host's SessionStart hook prints `wiki/hot.md`, so the agen
 - **Skills orchestrate, workers do isolated work, scripts do mechanical work.** A worker never writes the dispatcher's logs; a prompt never does what a script can check ([[Workers write to logs the dispatcher owns]]).
 - **Every harness rule traces to a real failure.** Rules enter through the upstream channel from the vaults, with a question page here and a shipped row in the plugin ([[Release and upstream flow]]).
 - **No hardcoded stack.** Workers read the service's own `AGENTS.md` for commands and conventions; `/project-profile` writes that file.
+- **Tools are declared, not assumed.** The vault's `AGENTS.md` carries a `Toolset:` block naming its reader, code-navigation and design tools; skills and workers read it and fall back to Grep and plain Markdown. Obsidian and graphify are defaults, not requirements ([[Configurable toolset for reader, code navigation and design]]).
 - **Writing for a human reader is one method everywhere**: skills, worker reports and the wiki pages they produce follow the writing-style reference ([[One writing method for every human reader]]).
 
 ## Related design pages

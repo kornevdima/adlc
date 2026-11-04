@@ -262,7 +262,13 @@ Add a `Concerns:` line below `Mode:`. Example:
 ```markdown
 Mode: B+C
 Concerns: ops, qa, sec
+Toolset:
+  reader: wiki-renderer
+  code-nav: semble, serena
+  design: none
 Purpose: Internal billing platform, dev + product + ops + QA + security all use this vault.
 ```
+
+The `Toolset:` block names the reader that shows the pages, the code-navigation tool the workers use and the design tools the designer runs; every skill that used to assume Obsidian or graphify reads it. Keys, options and defaults: [`toolset.md`](toolset.md).
 
 When a concern's folders exist, the corresponding reference doc applies. The `wiki-ingest` and `wiki-query` skills cross-link new pages into concern folders automatically when matches exist.

@@ -3,7 +3,7 @@ type: module
 title: "Skills and routing"
 path: "skills/"
 created: 2026-10-22
-updated: 2026-10-22
+updated: 2026-11-04
 tags:
   - architecture
   - module
@@ -27,16 +27,16 @@ Twenty skills in `skills/<name>/SKILL.md`, following the cross-platform Agent Sk
 
 | Skill | Does | Dispatches | Own references or scripts |
 |---|---|---|---|
-| `wiki` | Set up and scaffold a vault (modes, concerns, ADLC topology); load context for work done by hand; route to the sub-skills | `architecture-subagent` (ADLC initial pass) | `references/` (61 docs, shared), `scripts/` (6) |
+| `wiki` | Set up and scaffold a vault (modes, concerns, the toolset, ADLC topology); load context for work done by hand; route to the sub-skills | `architecture-subagent` (ADLC initial pass) | `references/` (62 docs, shared), `scripts/` (7) |
 | `wiki-ingest` | File one source or a batch into pages, cross-reference, log | `wiki-ingest-subagent` (3+ sources) | none |
-| `wiki-query` | Answer from the wiki, hot cache first; large-vault mode with `index.json`; routes structural questions to the code graph | none | `build_index_json.py` |
-| `wiki-lint` | Health check: 28 numbered checks, from orphans and dead links to history markers, changelog and glossary drift, graph staleness | `wiki-lint-subagent` (vaults of 20+ pages) | `lint_graph.py` |
+| `wiki-query` | Answer from the wiki, hot cache first; large-vault mode with `index.json`; routes structural questions to the graph or to Semble, per the toolset | none | `build_index_json.py` |
+| `wiki-lint` | Health check: 28 numbered checks, from orphans and dead links to history markers, changelog and glossary drift, graph staleness (graphify only); a Dataview or Markdown dashboard per the reader | `wiki-lint-subagent` (vaults of 20+ pages) | `lint_graph.py` |
 | `save` | File the current conversation as a typed note | none | none |
 | `autoresearch` | Plan-driven research loop, one subagent per question, resumable plan | `research-subagent` | `program.md` |
 | `wiki-faq` | In-session help: requirements, workflow, troubleshooting, terminology | none | four help documents |
-| `obsidian-markdown`, `obsidian-bases` | Obsidian-flavoured Markdown and `.base` database files, from the Obsidian creator's skills | none | none |
+| `obsidian-markdown`, `obsidian-bases` | Obsidian-flavoured Markdown (the dialect every reader renders) and `.base` database files (`reader: obsidian` only), from the Obsidian creator's skills | none | none |
 
-**Code graph**, the optional structural layer for code projects:
+**Code graph**, the optional structural layer for code projects, run only when the vault's toolset names graphify (with Semble and Serena the workers call the MCP servers and no skill runs):
 
 | Skill | Does | Dispatches | Scripts |
 |---|---|---|---|
@@ -48,7 +48,7 @@ Twenty skills in `skills/<name>/SKILL.md`, following the cross-platform Agent Sk
 
 | Skill | Does | Dispatches | Own references or scripts |
 |---|---|---|---|
-| `adlc` | The delivery loop: readiness gate, run ledger, story loop, epic close, distill, upstream export | `scope-analyst`, `feature-builder`, `feature-tester`, `feature-reviewer`, `feature-verifier`, `doc-writer`, `devops` | `upstream-shipped.md`, `build_snapshot.py` |
+| `adlc` | The delivery loop: readiness gate, run ledger, story loop, epic close, distill, upstream export | `scope-analyst`, `feature-designer` (when the toolset names a design tool), `feature-builder`, `feature-tester`, `feature-reviewer`, `feature-verifier`, `doc-writer`, `devops` | `upstream-shipped.md`, `build_snapshot.py` |
 | `wrap-up` | Session sync across the product wiki and the code wikis, boards reconciled, caches refreshed | `ba-suite-subagent` for BA catch-up | `usage_report.py` |
 | `product-management-layer` | Gate 0 governance: tool approval, buy-versus-build, compliance scoping | none | `reference.md`, its own eval runner |
 | `ba-export` | Render wiki deliverables to Office files and PlantUML | `ba-export-subagent` (one per deliverable) | none |
@@ -61,6 +61,7 @@ Twenty skills in `skills/<name>/SKILL.md`, following the cross-platform Agent Sk
 - **Mode decides the ingest path.** In a Mode ADLC vault, `wiki-ingest` writes the source summary and then routes the structured deliverables to the BA and architecture workers instead of flattening them into entities and concepts.
 - **Skills own the logs.** Only the dispatching skill writes `log.md`, `hot.md` and the board; workers report paths.
 - **Orchestration never leaves the skill.** A skill that needs parallel or isolated work dispatches a worker; it does not call another skill's worker through a side channel.
+- **The toolset gates the tool-specific steps.** The vault's `Toolset:` block decides whether the graph skills run, whether `wiki-query` and the workers call graphify or Semble, whether `wiki-lint` writes Dataview or Markdown, and whether the designer is dispatched ([[Configurable toolset for reader, code navigation and design]]).
 - **When to run which skill** is the subject of [[maintenance-triggers]].
 
 ## Where the tests are

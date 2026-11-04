@@ -1,10 +1,10 @@
 ---
 name: wiki-lint
 description: >
-  Health check the Obsidian wiki vault. Finds orphan pages, dead wikilinks, stale claims,
+  Health check the Markdown wiki vault. Finds orphan pages, dead wikilinks, stale claims,
   missing cross-references, frontmatter gaps, empty sections, AND graph-layer drift
   (label/title mismatches, stale labels.json, orphan community pages, graph staleness vs
-  source files). Creates or updates Dataview dashboards. Generates canvas maps.
+  source files). Creates or updates a dashboard: Dataview queries and a canvas map with `reader: obsidian`, a Markdown page for other readers.
   Triggers on: "lint", "health check", "clean up wiki", "check the wiki", "wiki maintenance",
   "find orphans", "wiki audit", "lint the graph".
 ---
@@ -70,9 +70,9 @@ Work through these in order:
 12b. **Stale denominators**. Any percentage or `N/M` total on a rollup page (readiness dashboards, `coverage/_index.md`, `meta/mission-control.md`, `meta/ba-activity.md`, feature notes) whose denominator no longer matches the register it summarises — `106/106 (100%)` against a register that has grown to 108 rows; a staleness marker naming 14 absent rows when 17 are absent. Re-derive both numbers from the source folder (grep, never increment) and report the denominator beside the ratio in the lint report; a percentage with a stale denominator reads as complete.
 12c. **Ambiguous record names**. Two or more pages sharing a basename across folders (ten per-story evidence folders each holding `census.md`). `[[name]]` resolves to one of them arbitrarily, so every link meant for the others silently points at the wrong record. Rename with the story / feature identifier and rewrite the inbound links; workers are told to read two siblings before naming a file (see `technical-planning.md` § dispatcher rules).
 
-### Graph layer (only if `graphify-out/graph.json` exists)
+### Graph layer (only if the toolset names graphify and `graphify-out/graph.json` exists)
 
-Run the dedicated graph-lint helper. It cross-references `graph.json`, `labels.json`, and `wiki/code/_COMMUNITY_*.md` for consistency:
+The vault's `Toolset:` block decides (`code-nav`; `skills/wiki/references/toolset.md`): with Semble or Serena there is no graph to lint, so skip this layer and say so in one line of the report. Otherwise run the dedicated graph-lint helper. It cross-references `graph.json`, `labels.json`, and `wiki/code/_COMMUNITY_*.md` for consistency:
 
 ```bash
 PYTHON=$(cat graphify-out/.graphify_python 2>/dev/null || echo python3)
@@ -188,9 +188,9 @@ During lint, flag pages that violate the style guide:
 
 ---
 
-## Dataview Dashboard
+## Dashboard
 
-Create or update `wiki/meta/dashboard.md` with these queries:
+With `reader: obsidian` in the vault's `Toolset:` block (or no block), create or update `wiki/meta/dashboard.md` with these Dataview queries (they render with Obsidian's Dataview plugin):
 
 ````markdown
 ---
@@ -221,11 +221,13 @@ LIST FROM "wiki/questions" WHERE answer_quality = "draft" SORT created DESC
 ```
 ````
 
+With `reader: wiki-renderer` or `none`, write the same four sections into `wiki/meta/dashboard.md` as plain Markdown tables computed from the frontmatter during this lint run (recent activity, seed pages, entities missing sources, open questions), with the run date in the lead-in: a Dataview block outside Obsidian renders as an empty code fence.
+
 ---
 
-## Canvas Map
+## Canvas Map (`reader: obsidian` only)
 
-Create or update `wiki/meta/overview.canvas` for a visual domain map:
+With `reader: obsidian`, create or update `wiki/meta/overview.canvas` for a visual domain map. Other readers do not render `.canvas` files; skip this section for them.
 
 ```json
 {

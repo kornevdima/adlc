@@ -5,13 +5,13 @@
   },
   "metadata": {
     "description": "Local marketplace for the adlc plugin (Agentic Development Life Cycle harness).",
-    "version": "1.0.9"
+    "version": "1.1.0"
   },
   "plugins": [
     {
       "name": "adlc",
       "source": "./",
-      "description": "Agentic Development Life Cycle harness. Obsidian wiki, role skills, and the plan-driven delivery loop."
+      "description": "Agentic Development Life Cycle harness. Markdown wiki, role skills, and the plan-driven delivery loop."
     }
   ]
 }

@@ -2,7 +2,7 @@
 name: wiki-faq
 description: >
   In-session guided help for adlc. Answers questions about requirements
-  (host tools, Python, Obsidian), the workflow (which skill when, end-to-end
+  (host tools, the toolset: reader, code navigation, design tools), the workflow (which skill when, end-to-end
   flows), troubleshooting (common errors and fixes), and terminology
   (glossary of adlc concepts). Reference docs hold canonical content;
   this skill routes the user's question to the right one and synthesizes a
@@ -13,7 +13,8 @@ description: >
   "why is X broken", "graphify isn't working", "hot cache not loading",
   "skills not appearing", "edge drop", "labels.json mismatch", "what is hot cache",
   "what is .raw", "what is a vault", "explain mode B", "explain mode ADLC", "what are concerns", "what is wrap-up", "agentic mode",
-  "what is graphify", "wiki-faq", "adlc faq".
+  "what is graphify", "what is the toolset", "do I need obsidian", "use semble instead of graphify",
+  "wiki-renderer", "design tools", "what is feature-designer", "wiki-faq", "adlc faq".
 ---
 
 # wiki-faq: Guided Help for adlc
@@ -27,6 +28,7 @@ Map the question to ONE of these reference files (or two for an open-ended overv
 | Question shape | Reference file |
 |---|---|
 | "How do I get started?", "what do I need?", "Python version?", "host tools?", "Obsidian setup?" | [`references/requirements.md`](references/requirements.md) |
+| "Do I need Obsidian?", "what is the toolset?", "use Semble / Serena instead of graphify", "wiki-renderer", "which design tools", "what does feature-designer do" | [`../wiki/references/toolset.md`](../wiki/references/toolset.md), with `requirements.md` for the install lines |
 | "What's the workflow?", "which skill when?", "end-to-end example", "how does this fit together?", "explain the layers" | [`references/workflow.md`](references/workflow.md) |
 | "Why is graphify broken?", "hot cache not loading", "graphifyy not installed", "edge drop too high", "labels.json mismatch", "Python 3.14 issue" | [`references/troubleshooting.md`](references/troubleshooting.md) |
 | "What is X?" where X is a adlc term (vault, .raw, hot cache, base mode, concerns, ADLC, wrap-up, community, label, AST, subagent, skill) | [`references/glossary.md`](references/glossary.md) |
@@ -46,7 +48,7 @@ If the question doesn't fit any of these, fall back to `wiki-query` for content 
 
 - Don't ingest content into the wiki (that's `wiki-ingest`).
 - Don't search the wiki for project-specific answers (that's `wiki-query`).
-- Don't run diagnostic commands. Each operational skill (`/graphify-ingest`, `/graphify-update`, etc.) does its own checks; this skill is content-only. If a user asks "is graphify installed on this machine?", suggest they run `/graphify-ingest` or `bash bin/setup-graphify.sh` — those tools check and report.
+- Don't run diagnostic commands. Each operational skill (`/graphify-ingest`, `/graphify-update`, etc.) does its own checks; this skill is content-only. If a user asks "is graphify installed on this machine?" or "is my toolset complete?", suggest `python3 <plugin>/skills/wiki/scripts/toolset.py --vault . check` — it reports each chosen tool with its install line.
 
 ## Output style
 

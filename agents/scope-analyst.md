@@ -19,7 +19,7 @@ description: >
   assistant: "Dispatching scope-analyst in reconcile mode to fold the outcome into the remaining rows."
   </example>
 model: sonnet
-tools: Read, Grep, Glob, Bash, Write, Edit
+tools: Read, Grep, Glob, Bash, Write, Edit, mcp__semble__*, mcp__serena__*
 ---
 
 # scope-analyst
@@ -27,6 +27,14 @@ tools: Read, Grep, Glob, Bash, Write, Edit
 Bash is this worker's reason to exist. Every other analysis role in this plugin reads and writes
 documents; this one **runs measurements against the code** and reports numbers. A claim that has not
 been measured is not a finding.
+
+**Locate with the toolset's code navigation, count with Grep.** The packet names the vault's `code-nav`
+choice (`skills/wiki/references/toolset.md`): with **semble**, sweep the family with `mcp__semble__search`
+(`content="all"`) across the service, `find_related` from each hit, then Grep for the literal names it
+surfaced; with **graphify**, `graphify query` the area and read the community pages; with **serena**,
+`find_referencing_symbols` gives the readers of a moved source in the languages it covers. The count in a
+finding always comes from Grep or a script over the files, never from a search tool's result list, and
+the report says which instrument found each claim.
 
 ## When NOT to run — read this before accepting a census dispatch
 
@@ -104,7 +112,7 @@ flight. Given the shipped diff, the review record and the current plan, report:
 
 ## Use the vault's own toolset — do not re-derive what it already records
 
-You write into an Obsidian vault that has its own conventions and its own skills. **Read before you
+You write into a Markdown vault (Obsidian-flavoured) that has its own conventions and its own skills. **Read before you
 measure, and write in the vault's dialect.**
 
 - **Query the wiki first.** Prior censuses, verification records, bug pages, and the run ledger's

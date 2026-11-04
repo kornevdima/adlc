@@ -9,16 +9,16 @@ adlc has **two parallel layers** in every project:
 | Layer | What it captures | Lives in | Owned by |
 |---|---|---|---|
 | **Narrative** | Decisions, rationale, sources, concepts, meeting notes — the "why" | `wiki/` | Humans + skills (`wiki-ingest`, `save`, `wiki-lint`) |
-| **Structural** (optional) | Code structure, calls, imports, communities — the "what" | `graphify-out/` | The `graphify-*` skills |
+| **Structural** (optional) | Code structure, calls, imports, communities — the "what" | `graphify-out/` with graphify; nothing in the repo with Semble (a cached index) and Serena (the language server) | The `graphify-*` skills, or the Semble and Serena MCP servers the workers call |
 
-Use the narrative layer for any project (code, product docs, BA workflows). Add the structural layer only for code projects that benefit from a graph.
+Use the narrative layer for any project (code, product docs, BA workflows). Add the structural layer only for code projects that benefit from it, and pick the tool in the vault's `Toolset:` block (`code-nav`; `skills/wiki/references/toolset.md`). The same block names the reader (Obsidian, wiki-renderer or none) and the design tools.
 
 ## The skills, grouped by purpose
 
 ### Setup / scaffolding
 
-- **`/wiki`** — first-time scaffold. Asks the base mode (B / C / B+C / ADLC) and which concerns apply (`ops`, `qa`, `sec`, `design`, `writing`). Creates folder structure + vault `AGENTS.md`. Run once per project. See [[SDLC Wiki Concerns]] for the mode/concern model, and `skills/wiki/references/modes.md` § Mode ADLC for the agentic-delivery mode.
-- **`/graphify-ingest`** — first-time code-graph build. AST + parallel semantic extraction via subagents. ~$1–3 in Sonnet tokens. Writes `graphify-out/` and `wiki/code/`.
+- **`/wiki`** — first-time scaffold. Asks the base mode (B / C / B+C / ADLC), which concerns apply (`ops`, `qa`, `sec`, `design`, `writing`) and the toolset (reader, code navigation, design tools; proposed by `toolset.py detect`). Creates folder structure + vault `AGENTS.md` with the `Toolset:` block. Run once per project. See [[SDLC Wiki Concerns]] for the mode/concern model, and `skills/wiki/references/modes.md` § Mode ADLC for the agentic-delivery mode.
+- **`/graphify-ingest`** — first-time code-graph build (`code-nav: graphify` only). AST + parallel semantic extraction via subagents. ~$1–3 in Sonnet tokens. Writes `graphify-out/` and `wiki/code/`.
 - **`/graphify-update`** — incremental graph rebuild after a feature lands. Pennies (often $0 if changes are code-only). Preserves community labels via Jaccard matching.
 
 ### Knowledge management
@@ -33,7 +33,7 @@ Use the narrative layer for any project (code, product docs, BA workflows). Add 
 
 ### Querying
 
-- **`wiki-query`** — general "answer questions from the wiki." Reads hot cache → index → relevant pages. Routes code-structural questions to graphify when a graph exists. Auto-scales on large / ADLC vaults to grep-first + bounded recursion.
+- **`wiki-query`** — general "answer questions from the wiki." Reads hot cache → index → relevant pages. Routes code-structural questions to the graph CLI or to Semble search, per the toolset. Auto-scales on large / ADLC vaults to grep-first + bounded recursion.
 - **`/graphify-explain "X"`** — single-node lookup with full edge list. Cheapest first-step query when graph exists.
 - **`/graphify-path "A" "B"`** — shortest path between two nodes.
 - **`/graphify-query "..."`** — open-ended BFS/DFS traversal anchored at term-matched nodes.
@@ -51,14 +51,15 @@ Use the narrative layer for any project (code, product docs, BA workflows). Add 
 Not skills — the ADLC agent dispatches these at the service level during the per-service build pipeline:
 
 - **`scope-analyst`** — `census` mode before the contract, only when a story's scope is unknown or claimed without evidence: measures the story's claims, sweeps for the family, computes the blast radius; refutes stories and dispatcher lines alike. `reconcile` mode after review: what the shipped outcome changed about the remaining plan. Measures and proposes; never rules, never writes feature code.
-- **`feature-builder`** — implements code + unit tests from the spec (reads the service's own AGENTS.md for commands).
+- **`feature-designer`** (optional, when the toolset names impeccable or taste-skill) — `shape` before the build: a design brief from the design system (components and tokens to reuse, states, copy pending acceptance, visual scenario rows); `review` after the code review: impeccable detect / audit / critique and taste-skill's tell list under the design system's dated rulings. Never edits code; visual acceptance stays the operator's.
+- **`feature-builder`** — implements code + unit tests from the spec (reads the service's own AGENTS.md for commands; navigates code with the toolset's tool).
 - **`feature-tester`** — authors e2e specs from the feature's verification contract.
 - **`feature-reviewer`** — reviews the diff (correctness, reuse, efficiency, test coverage); registers a review record in the wiki; returns APPROVED or CHANGES_REQUESTED.
 - **`feature-verifier`** — runs the contract via `docker compose` + chrome-devtools MCP; logs pass/fail; never fixes bugs.
 - **`doc-writer`** — writes user docs for built + verified features.
 - **`devops`** (optional) — only when the operator asks: pushes, opens the PR, deploys through the service's documented path, then verifies the deployed revision (health, smoke, logs). Never changes infra or secrets, never rolls back on its own.
 
-Sequenced (census ->) build -> test -> review -> verify (-> reconcile) -> document; the agent commits. Shipping (`devops`) is a separate optional stage after the commit. On CHANGES_REQUESTED the review loops back to builder + tester, then re-reviews (capped rounds). Stack-neutral (no hardcoded framework).
+Sequenced (census ->) (design shape ->) build -> test -> review (-> design review) -> verify (-> reconcile) -> document; the agent commits. Shipping (`devops`) is a separate optional stage after the commit. On CHANGES_REQUESTED the review loops back to builder + tester, then re-reviews (capped rounds). Stack-neutral (no hardcoded framework).
 
 ### Project context
 
@@ -67,7 +68,7 @@ Sequenced (census ->) build -> test -> review -> verify (-> reconcile) -> docume
 ### Reference / authoring helpers
 
 - **`obsidian-markdown`** — Obsidian Flavored Markdown reference (wikilinks, callouts, embeds, properties).
-- **`obsidian-bases`** — `.base` files (Obsidian's database layer). For dynamic tables / dashboards.
+- **`obsidian-bases`** — `.base` files (Obsidian's database layer). For dynamic tables / dashboards; `reader: obsidian` only.
 - **`wiki-faq`** — this skill.
 
 ## End-to-end example: new code project

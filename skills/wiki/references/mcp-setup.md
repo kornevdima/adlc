@@ -2,6 +2,8 @@
 
 MCP lets a coding agent read and write vault notes directly without copy-paste. Four options ordered from simplest to most featureful.
 
+This page applies when the vault's `Toolset:` block has `reader: obsidian` ([`toolset.md`](toolset.md)). With `reader: wiki-renderer` or `none` there is nothing to set up: the agent writes the Markdown files and the renderer re-reads the folder on its recheck interval (`WIKI_RECHECK_MS`, default 1000 ms). The skills themselves never need an MCP server for the vault.
+
 > [!tip] Recommendation
 > If you have **Obsidian v1.12 or newer**, start with **Option D: Obsidian CLI**. It needs no MCP server, no plugins, and no TLS workarounds. Use Options A or B only if you need persistent MCP integration or are on an older Obsidian version.
 

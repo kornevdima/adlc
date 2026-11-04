@@ -2,15 +2,15 @@
 
 **Agentic Development Life Cycle harness.** Agent = Model + Harness — this is the harness: a persistent knowledge substrate, role skills that work it, and a delivery loop that ships verified stories through it. Formerly `claude-mem`.
 
-Built on [Andrej Karpathy's LLM Wiki pattern](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) — the same pattern Google has since standardized as the [Open Knowledge Format](https://github.com/GoogleCloudPlatform/knowledge-catalog/tree/main/okf) (OKF). Code-graph layer powered by [graphify](https://github.com/safishamsi/graphify).
+Built on [Andrej Karpathy's LLM Wiki pattern](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) — the same pattern Google has since standardized as the [Open Knowledge Format](https://github.com/GoogleCloudPlatform/knowledge-catalog/tree/main/okf) (OKF). The vault is plain Markdown; read it in Obsidian or in [wiki-renderer](https://github.com/kornevdima/wiki-renderer). Code navigation through [graphify](https://github.com/safishamsi/graphify) or the Semble and Serena MCP servers; an optional design worker on [impeccable](https://github.com/pbakaus/impeccable) and [taste-skill](https://www.tasteskill.dev/). The vault's `Toolset:` block picks them ([`toolset.md`](skills/wiki/references/toolset.md)).
 
 ## The Stack
 
 | Layer | What it is | Key pieces |
 |---|---|---|
-| **Knowledge substrate** | A compounding Obsidian wiki vault, OKF-aligned, plus an optional structural code graph. Every source ingested, every question answered from it, zero manual filing. | `wiki`, `wiki-ingest`, `wiki-query`, `wiki-lint`, `save`, `autoresearch`, `graphify-*` |
+| **Knowledge substrate** | A compounding Markdown wiki vault (Obsidian-flavoured; Obsidian or wiki-renderer reads it), OKF-aligned, plus optional code navigation: a graphify graph, or Semble and Serena. Every source ingested, every question answered from it, zero manual filing. | `wiki`, `wiki-ingest`, `wiki-query`, `wiki-lint`, `save`, `autoresearch`, `graphify-*` |
 | **Role skills** | BA, product, and architecture methods that read and write the substrate — requirements, stories, specs, governance. Methods are bundled; no external plugins. | `product-management-layer`, `ba-export`, bundled BA + shift-left references |
-| **Delivery orchestration** | Mode ADLC: a plan-driven loop that works an epic story by story, dispatching build → test → review → verify workers, committing with trace IDs, keeping a live mission-control board. | `adlc`, `wrap-up`, 14 subagents |
+| **Delivery orchestration** | Mode ADLC: a plan-driven loop that works an epic story by story, dispatching (design →) build → test → review → verify workers, committing with trace IDs, keeping a live mission-control board. | `adlc`, `wrap-up`, 16 subagents |
 | **Project bindings** | Per-repo calibration: AGENTS.md profiling, repo-local worker specializations distilled from each run. | `project-profile`, `/adlc distill` |
 
 The operator model: the engineer refines and plans in a **grilling session** (the one stage that never runs unattended), then delegates to the loop and reviews evidence — records, boards, and diffs, not a 700k-token transcript.
@@ -42,13 +42,26 @@ Before a version bump, run the eval suites locally (no CI): `claude plugin eval 
 
 ### Vault setup
 
-Open the project folder in Obsidian, then run `/wiki` (or `/adlc:wiki` when installed as a plugin) inside Claude Code. The wiki skill scaffolds the vault structure on first use.
+Run `/wiki` (or `/adlc:wiki` when installed as a plugin) inside Claude Code. The wiki skill scaffolds the vault structure on first use and asks which tools the vault uses; the answer is a `Toolset:` block in the vault's `AGENTS.md`, beside `Mode:` and `Concerns:`:
 
-### Code-graph setup (optional, for code projects)
+```markdown
+Toolset:
+  reader: wiki-renderer             # obsidian | wiki-renderer | none
+  code-nav: semble, serena          # graphify | semble | serena | none
+  design: impeccable, taste-skill   # impeccable | taste-skill | none
+  design-system: ~/work/design-system
+```
+
+Then open the vault in the reader you chose: the project folder in Obsidian, or `wiki-renderer add <vault> && wiki-renderer`. `python3 skills/wiki/scripts/toolset.py --vault <vault> check` lists what is still missing with its install line. Options, defaults and what each choice changes: [`toolset.md`](skills/wiki/references/toolset.md). A vault without the block behaves as before: Obsidian, graphify when a graph exists, no design tool.
+
+### Code navigation and design tools (optional, per the toolset)
 
 ```bash
-bash bin/setup-graphify.sh                     # install graphifyy globally (requires Python >=3.10,<3.14)
-bash bin/setup-graphify.sh /path/to/your-app   # also pin to a specific code project
+bash bin/setup-graphify.sh /path/to/your-app                                  # code-nav: graphify (Python >=3.10,<3.14), once per project
+claude mcp add -s user semble -- uvx --from "semble[mcp]==0.7.0" semble       # code-nav: semble (needs uv)
+claude mcp add -s user serena -- serena start-mcp-server --context=claude-code --project-from-cwd   # code-nav: serena (needs the serena CLI)
+claude plugin marketplace add pbakaus/impeccable && claude plugin install impeccable@impeccable      # design: impeccable
+claude plugin marketplace add leonxlnx/taste-skill && claude plugin install taste-skill@taste-skill  # design: taste-skill
 ```
 
 ## Skills
@@ -64,9 +77,11 @@ bash bin/setup-graphify.sh /path/to/your-app   # also pin to a specific code pro
 | `/save` | File the current conversation as a wiki note |
 | `/autoresearch [topic]` | Plan-driven autonomous research: resumable question plan, one subagent per question |
 | `/wiki-faq` | In-session help: requirements, workflow, troubleshooting, glossary |
-| `obsidian-markdown` / `obsidian-bases` | Obsidian Flavored Markdown and `.base` database files |
+| `obsidian-markdown` / `obsidian-bases` | The Markdown dialect every reader renders; `.base` database files (`reader: obsidian` only) |
 
-### Code graph
+### Code graph (`code-nav: graphify`)
+
+With `code-nav: semble, serena` the workers and `wiki-query` call the two MCP servers instead, and there is no skill to run.
 
 | Skill | Trigger |
 |---|---|
@@ -88,7 +103,7 @@ bash bin/setup-graphify.sh /path/to/your-app   # also pin to a specific code pro
 
 Non-engineers bring a need in by dropping a five-heading note (problem, outcome, who is affected, constraints, open questions) into `.raw/intake/`; the next ingest turns it into requirements and stories. Template: [`modes.md` § Intake for non-engineers](skills/wiki/references/modes.md#intake-for-non-engineers).
 
-Worker subagents (dispatched by the loop, not invoked directly): `scope-analyst`, `feature-builder`, `feature-tester`, `feature-reviewer`, `feature-verifier`, `devops` (optional: push / deploy / deployed-revision check, only on the operator's word), `doc-writer`, `architecture-subagent`, `ba-suite-subagent`, `ba-export-subagent`, `research-subagent`, `wiki-ingest-subagent`, `wiki-lint-subagent`, `graphify-extract-subagent`, `mechanical-scanner-subagent`.
+Worker subagents (dispatched by the loop, not invoked directly): `scope-analyst`, `feature-designer` (optional: a design brief before the build and a design review after the code review, when the toolset names impeccable or taste-skill), `feature-builder`, `feature-tester`, `feature-reviewer`, `feature-verifier`, `devops` (optional: push / deploy / deployed-revision check, only on the operator's word), `doc-writer`, `architecture-subagent`, `ba-suite-subagent`, `ba-export-subagent`, `research-subagent`, `wiki-ingest-subagent`, `wiki-lint-subagent`, `graphify-extract-subagent`, `mechanical-scanner-subagent`.
 
 ### Coming from the AI-Native SDLC Playbook
 

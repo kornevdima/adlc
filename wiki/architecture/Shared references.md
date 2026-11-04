@@ -3,7 +3,7 @@ type: module
 title: "Shared references"
 path: "skills/wiki/references/"
 created: 2026-10-22
-updated: 2026-10-22
+updated: 2026-11-04
 tags:
   - architecture
   - module
@@ -19,7 +19,7 @@ related:
 
 # Shared references
 
-The wiki skill's `references/` folder holds 61 documents that are read at run time by other skills, by the workers, and by the repo's own `AGENTS.md`. They are the plugin's method library: a skill prompt says what to do, a reference says how, and one reference serves every skill that needs it. The rule for placement: a document lives under the wiki skill when more than one skill or worker reads it; a skill keeps a private `references/` folder only for what nobody else needs (the adlc skill's shipped-reports table, the autoresearch program, the product-management layer's reference, the four help documents of `wiki-faq`).
+The wiki skill's `references/` folder holds 62 documents that are read at run time by other skills, by the workers, and by the repo's own `AGENTS.md`. They are the plugin's method library: a skill prompt says what to do, a reference says how, and one reference serves every skill that needs it. The rule for placement: a document lives under the wiki skill when more than one skill or worker reads it; a skill keeps a private `references/` folder only for what nobody else needs (the adlc skill's shipped-reports table, the autoresearch program, the product-management layer's reference, the four help documents of `wiki-faq`).
 
 ## The conventions every writer reads
 
@@ -31,12 +31,13 @@ The wiki skill's `references/` folder holds 61 documents that are read at run ti
 | `modes.md` | The vault modes (B, C, B plus C, ADLC): folder maps, frontmatter, pipelines, the intake note | `wiki`, `wiki-faq`, README |
 | `concerns/` (five files) | Opt-in folder kits per role: `ops`, `qa`, `sec`, `design`, `writing`, each with its "add when" rule | `wiki` (scaffold) |
 | `operator-profile.md` | The operator's engagement pole, standing rulings, corrections, translation pointer | `adlc`, `technical-writer`, `wiki`, `wiki-faq`, `wrap-up` |
-| `permissions.md` | The `.claude/settings.json` profile for ADLC vaults: allow-listed scripts, denied env reads, the guard hooks | `adlc`, `wiki` (scaffold) |
+| `permissions.md` | The `.claude/settings.json` profile for ADLC vaults: allow-listed scripts, denied env reads, the guard hooks, the optional toolset lines | `adlc`, `wiki` (scaffold) |
+| `toolset.md` | The vault's `Toolset:` block: reader, code navigation, design tools, design-system folder; what each option changes in which skill, the Semble and Serena playbook workers follow, install and permission lines | `wiki` (scaffold), `adlc`, `wiki-query`, `wiki-lint`, `wrap-up`, `graphify-ingest`, `graphify-update`, `wiki-faq`; every code-touching worker and `feature-designer` |
 | `mission-control.md` | The board and the activity ledger: the metrics seam | `adlc`, `wiki`, `wiki-lint`, `wrap-up`; `wiki-lint-subagent` |
 | `adlc-upstream.md` | The per-vault ledger of plugin lessons and the export rules | `adlc`, `wiki`, `wiki-faq`, `wrap-up`; `AGENTS.md` |
 | `review-policy.md` | The per-service review policy page | `project-profile`; `feature-reviewer` |
 | `git-setup.md`, `git-flow.md`, `team-sync.md` | Vault git init; session wiki branches and code-only PRs; git as the team's state bus | `wiki`, `adlc`, `wrap-up`, README |
-| `mcp-setup.md` | Obsidian and tracker MCP configuration | `ba-export`, `wiki-faq`, `AGENTS.md` |
+| `mcp-setup.md` | Obsidian MCP configuration (`reader: obsidian` only) and tracker MCP notes | `ba-export`, `wiki-faq`, `AGENTS.md` |
 | `technical-planning.md`, `ba-suite-pipeline.md` | The two ADLC pipelines: requirements into per-service specs; raw context into BA deliverables | `adlc`, `wiki`, `wiki-ingest`, `wiki-lint`, `wrap-up`, `ba-export`; `ba-suite-subagent` |
 | `rest-api.md` | Obsidian REST API notes | kept for the MCP work; no skill reads it today |
 
