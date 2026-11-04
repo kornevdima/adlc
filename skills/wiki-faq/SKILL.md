@@ -14,7 +14,7 @@ description: >
   "skills not appearing", "edge drop", "labels.json mismatch", "what is hot cache",
   "what is .raw", "what is a vault", "explain mode B", "explain mode ADLC", "what are concerns", "what is wrap-up", "agentic mode",
   "what is graphify", "what is the toolset", "do I need obsidian", "use semble instead of graphify",
-  "wiki-renderer", "design tools", "what is feature-designer", "wiki-faq", "adlc faq".
+  "wiki-renderer", "jetbrains mcp", "idea mcp", "serena or idea", "design tools", "what is feature-designer", "wiki-faq", "adlc faq".
 ---
 
 # wiki-faq: Guided Help for adlc
@@ -28,7 +28,7 @@ Map the question to ONE of these reference files (or two for an open-ended overv
 | Question shape | Reference file |
 |---|---|
 | "How do I get started?", "what do I need?", "Python version?", "host tools?", "Obsidian setup?" | [`references/requirements.md`](references/requirements.md) |
-| "Do I need Obsidian?", "what is the toolset?", "use Semble / Serena instead of graphify", "wiki-renderer", "which design tools", "what does feature-designer do" | [`../wiki/references/toolset.md`](../wiki/references/toolset.md), with `requirements.md` for the install lines |
+| "Do I need Obsidian?", "what is the toolset?", "use Semble / Serena instead of graphify", "JetBrains or Serena", "idea mcp", "wiki-renderer", "which design tools", "what does feature-designer do" | [`../wiki/references/toolset.md`](../wiki/references/toolset.md), with `requirements.md` for the install lines |
 | "What's the workflow?", "which skill when?", "end-to-end example", "how does this fit together?", "explain the layers" | [`references/workflow.md`](references/workflow.md) |
 | "Why is graphify broken?", "hot cache not loading", "graphifyy not installed", "edge drop too high", "labels.json mismatch", "Python 3.14 issue" | [`references/troubleshooting.md`](references/troubleshooting.md) |
 | "What is X?" where X is a adlc term (vault, .raw, hot cache, base mode, concerns, ADLC, wrap-up, community, label, AST, subagent, skill) | [`references/glossary.md`](references/glossary.md) |

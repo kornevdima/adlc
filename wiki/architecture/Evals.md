@@ -24,7 +24,7 @@ Cases for `claude plugin eval` under `evals/`, run locally before each version b
 
 `evals/<skill>/<case>/` holds `prompt.md` (frontmatter plus the user prompt), `graders/*.md`, and, when the case needs a starting vault or repo, `case.yaml` naming a `scaffold.sh`. The prompt's frontmatter carries the expected outcome, the tags, the allowed tools and the turn and time budgets.
 
-Twenty-five cases across thirteen skills:
+Twenty-six cases across thirteen skills:
 
 | Skill | Cases |
 |---|---|

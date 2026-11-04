@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "adlc-marketplace",
-  "description": "Local marketplace for the adlc plugin (Agentic Development Life Cycle harness: Markdown wiki knowledge substrate read in Obsidian or wiki-renderer, role skills, plan-driven delivery loop, optional code navigation via graphify or Semble and Serena, optional design worker via impeccable and taste-skill).",
+  "description": "Local marketplace for the adlc plugin (Agentic Development Life Cycle harness: Markdown wiki knowledge substrate read in Obsidian or wiki-renderer, role skills, plan-driven delivery loop, optional code navigation via graphify, Semble and Serena or the JetBrains IDE server, optional design worker via impeccable and taste-skill).",
   "owner": {
     "name": "dmytro"
   },

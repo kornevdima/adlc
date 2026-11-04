@@ -10,7 +10,7 @@ The block lives in the vault's AGENTS.md, beside `Mode:` and `Concerns:`:
 
     Toolset:
       reader: wiki-renderer
-      code-nav: semble, serena
+      code-nav: semble, serena        # graphify | semble | serena | idea | none
       design: impeccable, taste-skill
       design-system: ~/work/design-system
 
@@ -33,11 +33,13 @@ import re
 import shutil
 import subprocess
 import sys
+import urllib.error
+import urllib.request
 
 KEYS = ("reader", "code-nav", "design", "design-system")
 OPTIONS = {
     "reader": {"obsidian", "wiki-renderer", "none"},
-    "code-nav": {"graphify", "semble", "serena", "none"},
+    "code-nav": {"graphify", "semble", "serena", "idea", "none"},
     "design": {"impeccable", "taste-skill", "none"},
 }
 MULTI = {"code-nav", "design"}
@@ -151,6 +153,47 @@ def project_mcp_names(vault):
     return names
 
 
+def mcp_server_entry(name, vault):
+    """The config dict of one MCP server (project .mcp.json first, then ~/.claude.json), or None."""
+    f = vault / ".mcp.json"
+    if f.is_file():
+        try:
+            e = (json.loads(f.read_text(encoding="utf-8")).get("mcpServers") or {}).get(name)
+            if e:
+                return e
+        except (OSError, ValueError):
+            pass
+    cfg = home() / ".claude.json"
+    if cfg.is_file():
+        try:
+            d = json.loads(cfg.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            return None
+        for proj in (d.get("projects") or {}).values():
+            e = ((proj or {}).get("mcpServers") or {}).get(name)
+            if e:
+                return e
+        return (d.get("mcpServers") or {}).get(name)
+    return None
+
+
+def idea_server_answers(url, timeout=3.0):
+    """POST an MCP initialize to the IDE server; True when a JSON-RPC result with serverInfo comes back."""
+    payload = json.dumps({"jsonrpc": "2.0", "id": 1, "method": "initialize",
+                          "params": {"protocolVersion": "2025-03-26", "capabilities": {},
+                                     "clientInfo": {"name": "adlc-toolset-check", "version": "1"}}}).encode()
+    req = urllib.request.Request(url, data=payload, method="POST",
+                                 headers={"Content-Type": "application/json",
+                                          "Accept": "application/json, text/event-stream"})
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as r:
+            body = r.read(20000).decode("utf-8", errors="replace")
+    except (urllib.error.URLError, OSError, ValueError):
+        return False, ""
+    m = re.search(r'"serverInfo"\s*:\s*\{[^}]*"name"\s*:\s*"([^"]+)"[^}]*?"version"\s*:\s*"([^"]+)"', body)
+    return True, (f"{m.group(1)} {m.group(2)}" if m else "answered")
+
+
 def plugin_present(marketplace, plugin, probe):
     pattern = str(home() / ".claude" / "plugins" / "cache" / marketplace / plugin / "*" / probe)
     return bool(glob.glob(pattern))
@@ -202,6 +245,19 @@ def check_tool(name, vault):
         return ("serena" in mcp and bool(cli)), (
             f"MCP server {'configured' if 'serena' in mcp else 'missing'}, CLI {'on PATH' if cli else 'missing'}"
         ), "install Serena (https://github.com/oraios/serena), then: claude mcp add -s user serena -- serena start-mcp-server --context=claude-code --project-from-cwd"
+    if name == "idea":
+        hint = ("IntelliJ 2025.2+: Settings | Tools | MCP Server | Auto-Configure for Claude Code, then keep the IDE running "
+                "with the project open (or: claude mcp add --transport http -s user idea http://127.0.0.1:<port>/stream)")
+        entry = mcp_server_entry("idea", vault)
+        if not entry:
+            return False, "MCP server `idea` not configured", hint
+        url = entry.get("url") or ""
+        if not url:
+            return True, "MCP server configured (stdio); IDE reachability not checked", ""
+        up, info = idea_server_answers(url)
+        if up:
+            return True, f"MCP server configured, IDE answering ({info})", ""
+        return False, f"MCP server configured at {url}, but the IDE is not answering", "start IntelliJ with the project open; the IDE server runs only while the IDE does"
     if name == "impeccable":
         ok = plugin_present("impeccable", "impeccable", "skills/impeccable/scripts/impeccable")
         return ok, "impeccable plugin", "claude plugin marketplace add pbakaus/impeccable && claude plugin install impeccable@impeccable"
@@ -226,7 +282,7 @@ def detect(vault):
     reader = "obsidian" if check_tool("obsidian", vault)[0] else ("wiki-renderer" if check_tool("wiki-renderer", vault)[0] else "none")
     if check_tool("wiki-renderer", vault)[0] and reader == "obsidian":
         reader = "wiki-renderer"  # a renderer install is a deliberate choice; Obsidian is often just present
-    nav = [t for t in ("semble", "serena") if check_tool(t, vault)[0]]
+    nav = [t for t in ("semble", "serena", "idea") if check_tool(t, vault)[0]]
     if not nav and check_tool("graphify", vault)[0]:
         nav = ["graphify"]
     design = [t for t in ("impeccable", "taste-skill") if check_tool(t, vault)[0]]

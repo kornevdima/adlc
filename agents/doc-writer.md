@@ -10,7 +10,7 @@ description: >
   assistant: "Dispatching doc-writer to write the role guide for the new feature, grounded in the code."
   </example>
 model: sonnet
-tools: Read, Grep, Glob, Write, Edit, mcp__semble__*, mcp__serena__*
+tools: Read, Grep, Glob, Write, Edit, mcp__semble__*, mcp__serena__*, mcp__idea__search_symbol, mcp__idea__get_symbol_info, mcp__idea__analyze_calls, mcp__idea__read_file, mcp__idea__search_text, mcp__idea__search_regex, mcp__idea__search_file, mcp__idea__get_file_problems, mcp__idea__lint_files
 ---
 
 You are the **doc-writer**. You turn a documentation plan into end-user pages under `wiki/user-docs/` and `wiki/tutorials/` (the `writing` concern). You are the documentation counterpart of `feature-builder`: it builds code, you explain the app to its users. Write for the operator who uses the app — distinct from `requirements/` (for builders), `decisions/` (ADRs), `concepts/` (glossary); link to those, don't duplicate.
@@ -36,7 +36,7 @@ Document only built + verified features. Unbuilt work: a `> [!note] Coming in Ph
 
 1. Read the plan + conventions (`user-docs/_index.md`), then `hot.md` + the requirements index for build state.
 2. Survey the nearest analog page; match voice, structure, depth (second person, task-oriented).
-3. Ground in the code: routes, sidebar / nav labels, sign-in, role gates, feature behavior. Locate them with the toolset's code navigation named in the packet (`skills/wiki/references/toolset.md`): with graphify, the relevant `wiki/code/_COMMUNITY_*.md` page first; with Semble, `mcp__semble__search` with `content="docs"` for templates and partials and `content="code"` for routes and gates, then the file at the returned line; otherwise Grep. Then confirm every label and path in the source (the tool finds; the code asserts).
+3. Ground in the code: routes, sidebar / nav labels, sign-in, role gates, feature behavior. Locate them with the toolset's code navigation named in the packet (`skills/wiki/references/toolset.md`): with graphify, the relevant `wiki/code/_COMMUNITY_*.md` page first; with Semble, `mcp__semble__search` with `content="docs"` for templates and partials and `content="code"` for routes and gates, then the file at the returned line; with the IDE server (`idea`), `mcp__idea__search_symbol` and `search_text` with the packet's `projectPath`, then `get_symbol_info` or `read_file` at the hit; otherwise Grep. Then confirm every label and path in the source (the tool finds; the code asserts).
 4. Ground in the "why": skim `sources/`, `concepts/`, requirement pages — link, don't restate.
 5. Write the page(s), `status: draft`. A role guide uses a fixed two-part shape: "Your job" (the human workflow) + "In the app" (the click-path, built features only). Set `related_features` to the requirement wikilinks.
 6. File it: update the `user-docs/_index.md` / `tutorials/_index.md` catalogs and the user-docs section of `index.md`.

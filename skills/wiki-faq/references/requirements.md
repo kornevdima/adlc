@@ -42,6 +42,10 @@ claude mcp add -s user serena -- serena start-mcp-server --context=claude-code -
 
 Semble needs `uv` (`uvx` on `PATH`); it indexes a repository on first search and caches the index. Serena needs its CLI on `PATH` (install per https://github.com/oraios/serena) and reads code through the language server of each language it supports. Add the `mcp__semble__*` and `mcp__serena__*` allow lines from `toolset.md` § Permissions to the vault's `.claude/settings.json`.
 
+### The JetBrains IDE server (`code-nav: idea`)
+
+IntelliJ IDEA 2025.2 and later ship an MCP server, bundled and on by default. In the IDE: Settings | Tools | MCP Server, then **Auto-Configure** for Claude Code; it registers the server as `idea` (HTTP stream on the IDE's built-in web server port). It answers only while the IDE runs with the project open, and every call carries `projectPath`; a delivery vault that symlinks its services into `services/` is one open project that covers them all. It gives signatures with resolved types and doc comments, the call hierarchy, the IDE's inspections and a reference-aware rename, and it reads the scripts inside HTML files; it has no file overview and no Python call hierarchy, so vaults that need those, or that sometimes run without the IDE, keep `serena` beside it. Add the read-set allow lines from `toolset.md` § Permissions, never a bare `mcp__idea__*`.
+
 ### graphify (`code-nav: graphify`): Python
 
 graphify is a Python library (`graphifyy` on PyPI) that powers the structural code-graph layer. Required only if you use:

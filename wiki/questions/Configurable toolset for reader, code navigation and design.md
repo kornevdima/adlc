@@ -18,6 +18,7 @@ related:
   - "[[graphify-integration]]"
   - "[[Integrate the wiki toolset into the ADLC workers]]"
   - "[[Configurable subagent models per host]]"
+  - "[[JetBrains MCP server vs Serena for code navigation]]"
 ---
 
 # Configurable toolset for reader, code navigation and design
@@ -39,7 +40,7 @@ One block, four keys, read by every skill and worker that used to assume a tool:
 ```markdown
 Toolset:
   reader: wiki-renderer             # obsidian | wiki-renderer | none
-  code-nav: semble, serena          # graphify | semble | serena | none
+  code-nav: semble, serena          # graphify | semble | serena | idea | none
   design: impeccable, taste-skill   # impeccable | taste-skill | none
   design-system: ~/work/design-system
 ```
@@ -56,6 +57,10 @@ Why the vault `AGENTS.md` and not a settings file or the operator profile: every
 - **Design**: a sixteenth worker, `feature-designer`, with two modes. `shape` runs after the contract and before the build: a brief from the design system (surface and mode, components and tokens to reuse, every state, copy pending acceptance, the accessibility floor, the contract's visual rows, open questions for the operator). `review` runs after the code review and before the verifier: impeccable `detect`, `audit` and `critique`, taste-skill's redesign audit and tell list, judged under the design system's dated rulings; a review record with a verdict that loops to the builder. It never edits code and never rules on taste; a tool that disagrees with a ruling is reported, not filed. `/adlc` dispatches it at Steps 2.2b and 2.5a only when the block names a design tool and the story changes a user-facing surface. The `design` concern reference gains the two record shapes.
 - **Documentation**: the README's install section, the FAQ's requirements, workflow, troubleshooting and glossary, this repo's `AGENTS.md`, the four manifests (1.1.0, "Markdown wiki" in the descriptions, new keywords), and the architecture pages.
 
+## The fourth code-navigation option: the JetBrains IDE server
+
+The operator asked whether Serena is still needed when IntelliJ's own MCP server is configured. The two were measured on the same code ([[JetBrains MCP server vs Serena for code navigation]]): the IDE server answers with the IDE's precision (signatures with resolved types, call hierarchy, inspections, the scripts inside HTML files) and covers every service open in the IDE, but only while the IDE runs, and it has no file overview and no Python call hierarchy; Serena is headless and has both. So `idea` joined `code-nav` as a value beside `serena` rather than replacing it: the reference carries its playbook (`projectPath` on every call, `search_symbol` then `get_symbol_info`, `analyze_calls` with the exact signature and `search_text` to confirm, `lint_files` before hand-back, a closed project is `ENV_MISMATCH`), the workers list its nine read tools (the builder also the rename) and never the bare server, `toolset.py check` probes whether the IDE answers, and the permission template puts the rename in `ask` and leaves the terminal, run, patch and database tools out.
+
 ## Field evidence
 
 - A co-located delivery vault's repo-local bindings for five workers carried the Semble and Serena playbook since the operator's ruling of 2026-11-01: find with Semble, read and edit TypeScript symbols with Serena, Grep for literal sweeps, say which instrument found each claim. The generic text in `toolset.md` is that playbook without the repo's specifics (which file types Semble indexes, which language Serena's server parses), which stay in the binding and in the service `AGENTS.md`.
@@ -65,9 +70,10 @@ Why the vault `AGENTS.md` and not a settings file or the operator profile: every
 ## Assumed or unverified
 
 - A worker whose `tools:` lists an MCP server the session has not configured: the Claude Code documentation says a subagent fails to launch only when **no** entry resolves, and does not describe the partial case. The built-in tools always resolve, so the workers are expected to launch with the MCP entries dropped. Not tested on a machine without the servers.
-- The new eval case `evals/wiki/scaffold-toolset` was written, not run; the fast set is the operator's pre-release check.
+- Evals run on 2026-11-04 before the commit: the fast set (11 cases), the new `wiki/scaffold-toolset` case and `wiki/scaffold-mode-b`, all 1.00; about 5 dollars in total.
 - `impeccable critique` asks for two isolated sub-agents; the designer has no Agent tool and runs the two assessments inline with the degraded banner the reference prescribes.
 
 ## Resolution log
 
-- 2026-11-04: requested by the operator ("instead of obsidian I have my own wiki reader"; "we don't need to install graphify every time, I'm testing serena + semble"; "create a design sub-agent that uses impeccable and tasteskill"); designed and built in one session; version 1.1.0, not committed.
+- 2026-11-04: requested by the operator ("instead of obsidian I have my own wiki reader"; "we don't need to install graphify every time, I'm testing serena + semble"; "create a design sub-agent that uses impeccable and tasteskill"); designed and built in one session; version 1.1.0, committed.
+- 2026-11-04: the operator asked whether Serena is needed beside the JetBrains IDE's MCP server; measured ([[JetBrains MCP server vs Serena for code navigation]]), then `idea` added as a fourth `code-nav` value without replacing Serena ("so user can have options. Maybe someone doesn't have an idea").

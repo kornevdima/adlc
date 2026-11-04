@@ -41,7 +41,7 @@ Navigation: [[overview]] | [[log]] | [[hot]] | [[maintenance-triggers]] | [[arch
 
 ### Resolved
 
-- [[Configurable toolset for reader, code navigation and design]] — Obsidian in 34 and graphify in 40 plugin files, assumed rather than chosen; the operator reads vaults in wiki-renderer, navigates code with Semble and Serena, reviews design with impeccable and taste-skill. Fix: a `Toolset:` block in the vault AGENTS.md (reader, code-nav, design, design-system), `toolset.md` and `toolset.py`, every skill and worker conditional on it, the `feature-designer` worker. 1.1.0, unreleased (status: resolved 2026-11-04)
+- [[Configurable toolset for reader, code navigation and design]] — Obsidian in 34 and graphify in 40 plugin files, assumed rather than chosen; the operator reads vaults in wiki-renderer, navigates code with Semble and Serena, reviews design with impeccable and taste-skill. Fix: a `Toolset:` block in the vault AGENTS.md (reader, code-nav, design, design-system), `toolset.md` and `toolset.py`, every skill and worker conditional on it, the `feature-designer` worker; `idea` (the JetBrains IDE's MCP server) added as a fourth `code-nav` value. 1.1.0 (status: resolved 2026-11-04)
 - [[One writing method for every human reader]] — vault-b/UP-001 to UP-005 and vault-c/UP-001: client packs that read as note dumps, drifting translations, dashes rewritten instead of swapped, corrections applied to one line, links that missed the deployed page. Fix: `writing-style.md` for every writer (identifiers never alone, change reports that read without the board), the `technical-writer` skill in place of `client-docs`, the `/adlc` and `wrap-up` reports reshaped. Unreleased (status: resolved 2026-10-20)
 - [[Workers print secrets from env files]] — vault-a/UP-013: a `docker compose config` and a `sed` over `.env.local` put a dev private key into transcripts despite a packet rule. Fix: a worker Don't, `permissions.md` deny rules, and the `guard_env.py` PreToolUse hook that blocks env-file reads by any tool. Unreleased (status: resolved 2026-10-20)
 - [[Contracts that prescribe mechanisms or skip the code]] — vault-a/UP-014, UP-017, UP-018 and vault-d/UP-003: packets that prescribe a mechanism, scenarios naming states and labels nobody checked, a moved source with unlisted readers, a grilling ruling with no row. Fix: four contract rules in `/adlc` Step 2.2, census items 7 and 8, reviewer dimension 8. Unreleased (status: resolved 2026-10-20)
@@ -203,6 +203,7 @@ Full catalog, including the resolved plugin fixes above: [[questions/_index]].
 
 Catalog: [[comparisons/_index]].
 
+- [[JetBrains MCP server vs Serena for code navigation]] — measured on the same code; the IDE server's precision needs the IDE running, Serena is headless with file overviews and symbol edits; both stay `code-nav` options (status: current)
 - [[Wiki vs RAG]] — when to use a wiki knowledge base versus RAG; verdict: wiki wins at <1000 pages
 - [[claude-obsidian-ecosystem-research]] — feature matrix of 16+ Claude+Obsidian projects; where claude-obsidian wins and gaps
 - [[AI-Native SDLC Playbook vs ADLC]] — same lifecycle, different substrate; vocabulary map for explaining ADLC; gaps: Stage 6 trigger layer, evals-on-config-change, per-service review policy page

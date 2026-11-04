@@ -1,6 +1,6 @@
 # Toolset: the reader, code navigation and design tools a vault uses
 
-A vault declares which reader shows its pages, which tool its workers navigate code with, and which design tools its design worker runs. The plugin ships defaults (Obsidian, graphify, no design tool) but requires none of them: a vault read in wiki-renderer, navigated with Semble and Serena, and reviewed with impeccable works the same way. The declaration is a `Toolset:` block in the vault's `AGENTS.md`, beside `Mode:` and `Concerns:`. Every skill and worker that used to assume Obsidian or graphify reads this block first.
+A vault declares which reader shows its pages, which tool its workers navigate code with, and which design tools its design worker runs. The plugin ships defaults (Obsidian, graphify, no design tool) but requires none of them: a vault read in wiki-renderer, navigated with Semble and Serena or with the JetBrains IDE's own MCP server, and reviewed with impeccable works the same way. The declaration is a `Toolset:` block in the vault's `AGENTS.md`, beside `Mode:` and `Concerns:`. Every skill and worker that used to assume Obsidian or graphify reads this block first.
 
 ## The block
 
@@ -31,7 +31,7 @@ The slots and what each one decides:
 | Slot | Options | Default when absent | Decides |
 |---|---|---|---|
 | `reader` | `obsidian`, `wiki-renderer`, `none` | `obsidian` | Which reader-only artefacts the skills write (Bases, Canvas, Dataview, `.obsidian/app.json`), what the scaffold tells the operator to open, whether the Obsidian MCP notes apply |
-| `code-nav` | `graphify`, `semble`, `serena`, `none` (several allowed) | `graphify` when the service has `graphify-out/graph.json`, else `none` | How workers find and read code, how `wiki-query` answers structural questions, whether the graph skills and the graph refresh run |
+| `code-nav` | `graphify`, `semble`, `serena`, `idea`, `none` (several allowed) | `graphify` when the service has `graphify-out/graph.json`, else `none` | How workers find and read code, how `wiki-query` answers structural questions, whether the graph skills and the graph refresh run |
 | `design` | `impeccable`, `taste-skill`, `none` (several allowed) | `none` | Whether the `feature-designer` worker is dispatched and which design skills it runs |
 | `design-system` | a folder path, `none` | `none` | Where the designer reads the brand book, tokens and dated rulings |
 
@@ -56,15 +56,17 @@ wiki-renderer (https://github.com/kornevdima/wiki-renderer, MIT) is a local web 
 
 What changes with each option:
 
-| Where | `graphify` | `semble` and/or `serena` | `none` |
+| Where | `graphify` | `semble`, `serena`, `idea` (MCP servers, any mix) | `none` |
 |---|---|---|---|
-| Install | `bash <plugin>/bin/setup-graphify.sh <project>` once; the skills skip the installer when the pinned interpreter imports `graphify` | the MCP servers below, once per machine; Semble indexes a repository on first search and caches it | nothing |
+| Install | `bash <plugin>/bin/setup-graphify.sh <project>` once; the skills skip the installer when the pinned interpreter imports `graphify` | the MCP servers below, once per machine; Semble indexes a repository on first search and caches it; the IDE server needs IntelliJ running with a project open that contains the service | nothing |
 | `graphify-ingest`, `graphify-update`, `graphify-query` / `-path` / `-explain` | run | refuse with a pointer to this block (add `graphify` to run them) | refuse |
-| Workers' orientation step | one `graphify query` call before reading code | Semble to find, Serena to read and edit symbols (the playbook below) | Grep, Glob, Read |
-| `wiki-query` structural questions | the graph CLI | `mcp__semble__search` on the service repo, then the file at the returned line | wiki pages, then Grep |
+| Workers' orientation step | one `graphify query` call before reading code | Semble to find by meaning, Serena or the IDE server to read symbols, callers and diagnostics (the playbooks below) | Grep, Glob, Read |
+| `wiki-query` structural questions | the graph CLI | `mcp__semble__search` on the service repo, or `mcp__idea__search_symbol` then `get_symbol_info`, then the file at the returned line | wiki pages, then Grep |
 | `wiki-lint` graph layer | runs when `graphify-out/graph.json` exists | skipped | skipped |
 | `/adlc` epic close, `wrap-up` | `/graphify-update` on every changed service | nothing to refresh | nothing |
-| Dispatch packet | "this service has `graphify-out/`, orient there first" | the service's `## Code navigation` lines (below) | nothing |
+| Dispatch packet | "this service has `graphify-out/`, orient there first" | the service's `## Code navigation` lines (below); for `idea`, the `projectPath` of the open IDE project | nothing |
+
+Which MCP server for which vault: **Semble** finds code by meaning and is the first call in every mix. **Serena** runs headless from the working directory with no IDE, gives a file's symbol overview and symbol-level edits, and covers 40 languages through language servers. **The JetBrains server** (`idea`) is free with IntelliJ 2025.2 and later, answers from the IDE's own index (signatures with resolved types and doc comments, call hierarchy, inspections, rename), reads the scripts inside HTML files that a TypeScript language server does not see, and indexes every service at once when they are symlinked into the open project; it needs the IDE running, has no file overview, and its call hierarchy is uneven (none for Python functions; an aliased import call site was missing from one tree in a test). A vault may name both `serena` and `idea`; the worker uses whichever answers, Serena first when both do. The measured comparison is in the plugin wiki ([[JetBrains MCP server vs Serena for code navigation]]).
 
 Grep is right in every option for every occurrence of a literal across the repo (all callers of one function, every `onclick=`). Count with Grep; locate with the navigation tool.
 
@@ -78,9 +80,20 @@ This text is what the generic workers do when the block names `semble` or `seren
 - **Say which instrument found each claim** (Semble, Serena, Grep) in the report, so the dispatcher can re-check it.
 - **What neither tool sees** (file types Semble does not index, languages Serena does not parse) is found with Grep and read at the function. The service's `## Code navigation` lines list them.
 
+### The playbook workers follow with the JetBrains IDE server (`idea`)
+
+The IDE server is IntelliJ's built-in MCP server (2025.2 and later, bundled and on by default). It answers only for projects open in the IDE and needs `projectPath` on every call: the open project that contains the service, which in a delivery vault is the vault root when services are symlinked into `services/`, else the service checkout itself. The service's `## Code navigation` lines name it.
+
+- **Find**: `mcp__idea__search_symbol` with `q` (an identifier fragment) and, to narrow, `paths` (project-relative globs). It returns files and coordinates only, no names or kinds, so follow each hit with `mcp__idea__get_symbol_info` at the position (the signature with resolved types, the doc comment, the declaring file) or `mcp__idea__read_file` at the line. For "where is this literal", `mcp__idea__search_text` and `search_regex` are indexed and fast, with the same `paths` filter; `search_file` for globs.
+- **Callers and callees**: `mcp__idea__analyze_calls` with `symbolFqn` and `INCOMING_CALLS` or `OUTGOING_CALLS`. A short name usually comes back as an ambiguity error listing exact signatures; pass one back verbatim. Confirm a caller list with `search_text` before relying on it: the tree can miss a call made through an aliased import, and it has no entries for Python functions.
+- **Gates**: `mcp__idea__get_file_problems` on a file, `mcp__idea__lint_files` on every file you changed, before hand-back. These are the IDE's inspections (errors and warnings), a cheap check beside the service's own lint and typecheck; they do not replace them.
+- **Rename** through `mcp__idea__rename_refactoring` when a worker's rules allow the edit; it updates every reference. Other edits stay in the worker's own Edit and Write tools: never `apply_patch`, never `execute_terminal_command`, `execute_run_configuration`, `build_project` or the database tools in place of Bash and the service's wired commands, since they run inside the IDE and outside the vault's permission profile.
+- **No open project** ("Unable to determine the target project", or the path "doesn't correspond to any open project") is `ENV_MISMATCH`: report it and stop; the dispatcher asks the operator to open the project in the IDE. Never fall back to guessing a path.
+- **Say which instrument found each claim**, as with Semble and Serena.
+
 ### What the service `AGENTS.md` adds
 
-`/project-profile` writes a `## Code navigation` section when the vault's block names `semble` or `serena`; the dispatcher inlines it into every packet. Four lines are enough:
+`/project-profile` writes a `## Code navigation` section when the vault's block names `semble`, `serena` or `idea`; the dispatcher inlines it into every packet. Four or five lines are enough:
 
 ```markdown
 ## Code navigation
@@ -88,6 +101,7 @@ This text is what the generic workers do when the block names `semble` or `seren
 - Semble `repo`: the path of this checkout. `content="code"` covers `.ts`, `.tsx`, `.mjs`; `content="docs"` covers the HTML partials and `wiki/`.
 - Semble does not index `.gs`: find those files with Grep, then read at the function.
 - Serena's language server: TypeScript only; it does not parse the scripts inside HTML files.
+- IDE server `projectPath`: the vault root (this service is `services/<name>` inside it); the IDE understands the TypeScript and the scripts inside the HTML partials, not `.gs`.
 - Grep for every occurrence of a literal (all callers of `appsScriptRequest`).
 ```
 
@@ -100,7 +114,9 @@ claude mcp add -s user semble -- uvx --from "semble[mcp]==0.7.0" semble
 claude mcp add -s user serena -- serena start-mcp-server --context=claude-code --project-from-cwd
 ```
 
-Semble needs `uv` (`uvx` on `PATH`). Serena needs its own CLI on `PATH`; install it per its README (https://github.com/oraios/serena) and check with `which serena`. `toolset.py check` reports both.
+Semble needs `uv` (`uvx` on `PATH`). Serena needs its own CLI on `PATH`; install it per its README (https://github.com/oraios/serena) and check with `which serena`.
+
+The JetBrains IDE server is part of IntelliJ 2025.2 and later: in the IDE, Settings | Tools | MCP Server, then **Auto-Configure** for Claude Code, which writes the server (named `idea`, HTTP stream on the IDE's built-in web server port) into the client config; or copy the config and add it by hand with `claude mcp add --transport http -s user idea http://127.0.0.1:<port>/stream`. Each running IDE instance has its own port, so a second IDE window needs its own entry. `toolset.py check` reports all three, and for `idea` whether the IDE is answering.
 
 ## Design
 
@@ -138,15 +154,17 @@ Add to the vault's `.claude/settings.json` `allow` list the lines for the tools 
 |---|---|
 | Semble | `mcp__semble__search`, `mcp__semble__find_related` |
 | Serena | `mcp__serena__initial_instructions`, `mcp__serena__serena_repl` |
+| JetBrains IDE server | allow the read set: `mcp__idea__search_symbol`, `mcp__idea__get_symbol_info`, `mcp__idea__analyze_calls`, `mcp__idea__read_file`, `mcp__idea__search_text`, `mcp__idea__search_regex`, `mcp__idea__search_file`, `mcp__idea__get_file_problems`, `mcp__idea__lint_files`; put `mcp__idea__rename_refactoring` in `ask`; leave `mcp__idea__execute_terminal_command`, `execute_run_configuration`, `build_project`, `apply_patch` and the database tools out (never `mcp__idea__*`, which would allow them all) |
 | impeccable | `Bash(*/skills/impeccable/scripts/impeccable *)` |
 | the designer | `Task(feature-designer)` |
 
-The generic workers list `mcp__semble__*` and `mcp__serena__*` in their `tools:` so they can use the servers when a vault has them; a vault without the servers loses nothing, the entries resolve to no tool and the worker runs with the rest.
+The generic workers list `mcp__semble__*`, `mcp__serena__*` and the IDE server's read set (plus `rename_refactoring` for the builder) in their `tools:` so they can use the servers when a vault has them; a vault without the servers loses nothing, the entries resolve to no tool and the worker runs with the rest.
 
 ## Changing the toolset
 
 Edit the block, run `toolset.py check`, then:
 
+- **Adding or dropping the IDE server:** nothing in the repo changes; the service `AGENTS.md` gains or loses its `projectPath` line, and the vault's permission lines follow. A vault whose operators sometimes work without the IDE keeps `serena` beside `idea`.
 - **graphify to Semble and Serena:** the graph skills stop running. `graphify-out/` and `wiki/code/` can stay as a dated snapshot or be deleted; `wiki/code/` is graphify-owned, so remove its `_index.md` link from `index.md` if you delete it. Run `/project-profile` on each service so its `AGENTS.md` gains the `## Code navigation` lines, and let `/adlc distill` fold repo specifics into the local bindings.
 - **Obsidian to wiki-renderer:** nothing in `wiki/` changes. `.base` and `.canvas` files stop rendering; keep them for teammates on Obsidian or delete them. `.obsidian/` can stay git-ignored as before.
 - **Adding a design tool:** install the plugin, set `design-system`, and the next `/adlc` story that touches a UI surface dispatches the designer.

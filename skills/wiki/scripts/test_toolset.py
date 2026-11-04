@@ -82,6 +82,18 @@ def test_unknown_values_are_dropped_with_a_warning():
     assert any("unknown key `colour`" in w for w in warnings)
 
 
+def test_idea_is_a_code_nav_option_in_any_mix():
+    res, warnings = toolset.resolve({"code-nav": "semble, idea"}, _vault())
+    assert res["code-nav"] == ["semble", "idea"] and warnings == []
+    res, _ = toolset.resolve({"code-nav": "idea"}, _vault())
+    assert res["code-nav"] == ["idea"]
+
+
+def test_idea_server_answers_rejects_a_closed_port():
+    up, info = toolset.idea_server_answers("http://127.0.0.1:9/stream", timeout=0.5)
+    assert up is False and info == ""
+
+
 def test_none_beside_a_tool_is_dropped():
     res, _ = toolset.resolve({"code-nav": "none, semble"}, _vault())
     assert res["code-nav"] == ["semble"]

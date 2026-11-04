@@ -9,7 +9,7 @@ adlc has **two parallel layers** in every project:
 | Layer | What it captures | Lives in | Owned by |
 |---|---|---|---|
 | **Narrative** | Decisions, rationale, sources, concepts, meeting notes — the "why" | `wiki/` | Humans + skills (`wiki-ingest`, `save`, `wiki-lint`) |
-| **Structural** (optional) | Code structure, calls, imports, communities — the "what" | `graphify-out/` with graphify; nothing in the repo with Semble (a cached index) and Serena (the language server) | The `graphify-*` skills, or the Semble and Serena MCP servers the workers call |
+| **Structural** (optional) | Code structure, calls, imports, communities — the "what" | `graphify-out/` with graphify; nothing in the repo with Semble (a cached index), Serena (the language server) or the JetBrains IDE server (the IDE's index) | The `graphify-*` skills, or the Semble, Serena and IDE MCP servers the workers call |
 
 Use the narrative layer for any project (code, product docs, BA workflows). Add the structural layer only for code projects that benefit from it, and pick the tool in the vault's `Toolset:` block (`code-nav`; `skills/wiki/references/toolset.md`). The same block names the reader (Obsidian, wiki-renderer or none) and the design tools.
 

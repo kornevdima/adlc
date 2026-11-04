@@ -21,6 +21,11 @@ Append-only. New entries go at the TOP. Never edit past entries.
 
 Entry format: `## [YYYY-MM-DD] operation | Title`
 
+## [2026-11-04] research | JetBrains IDE MCP server vs Serena; `idea` added as a code-nav option
+- **Trigger:** operator "do a research if serena mcp is needed if I have jetbrains idea MCP and run some tests", then "add a new option to use idea mcp. Do not replace Serena, so user can have options."
+- **Measured:** the same lookups through both servers (symbol find, signature and docs, file overview, callers in TypeScript and Python, diagnostics, HTML-embedded scripts, `.gs`), timed; the IDE server covered six services through one open vault project but missed an aliased-import caller and has no Python call hierarchy; Serena ran headless with file overviews and symbol edits. Filed as [[JetBrains MCP server vs Serena for code navigation]].
+- **Built (1.1.0):** `code-nav: idea` in `toolset.md` (playbook, install, permission read set) and `toolset.py` (option, `check` probes the IDE with an MCP initialize, 10 tests green); the IDE branch in eight workers with the nine read tools (the builder adds `rename_refactoring`); `wiki` scaffold, `/adlc` Step 0.4a and the packet, `wiki-query` route, `permissions.md`, `technical-planning.md`, the FAQ skill and references, README, manifests, architecture pages. Evals before the commit: fast set 11/11 at 1.00, `wiki/scaffold-toolset` 1.00, `wiki/scaffold-mode-b` 1.00.
+
 ## [2026-11-04] feature | Configurable toolset: reader, code navigation, design worker (1.1.0)
 - **Trigger:** operator "we have hardcoded graphify and obsidian. Instead of obsidian I have my own wiki reader … we don't need to install graphify every time, I'm testing serena + semble … create a design sub-agent that uses impeccable and tasteskill."
 - **Measured:** Obsidian named in 34 plugin files, graphify in 40; the graph build ran its installer on every run; a co-located vault's five repo-local worker bindings already carried a Semble and Serena playbook (operator ruling 2026-11-01); a design-system repo built with impeccable ranks its dated rulings above the tool's heuristics.

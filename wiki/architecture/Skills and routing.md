@@ -61,7 +61,7 @@ Twenty skills in `skills/<name>/SKILL.md`, following the cross-platform Agent Sk
 - **Mode decides the ingest path.** In a Mode ADLC vault, `wiki-ingest` writes the source summary and then routes the structured deliverables to the BA and architecture workers instead of flattening them into entities and concepts.
 - **Skills own the logs.** Only the dispatching skill writes `log.md`, `hot.md` and the board; workers report paths.
 - **Orchestration never leaves the skill.** A skill that needs parallel or isolated work dispatches a worker; it does not call another skill's worker through a side channel.
-- **The toolset gates the tool-specific steps.** The vault's `Toolset:` block decides whether the graph skills run, whether `wiki-query` and the workers call graphify or Semble, whether `wiki-lint` writes Dataview or Markdown, and whether the designer is dispatched ([[Configurable toolset for reader, code navigation and design]]).
+- **The toolset gates the tool-specific steps.** The vault's `Toolset:` block decides whether the graph skills run, whether `wiki-query` and the workers call graphify, Semble, Serena or the JetBrains IDE server, whether `wiki-lint` writes Dataview or Markdown, and whether the designer is dispatched ([[Configurable toolset for reader, code navigation and design]]).
 - **When to run which skill** is the subject of [[maintenance-triggers]].
 
 ## Where the tests are

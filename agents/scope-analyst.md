@@ -19,7 +19,7 @@ description: >
   assistant: "Dispatching scope-analyst in reconcile mode to fold the outcome into the remaining rows."
   </example>
 model: sonnet
-tools: Read, Grep, Glob, Bash, Write, Edit, mcp__semble__*, mcp__serena__*
+tools: Read, Grep, Glob, Bash, Write, Edit, mcp__semble__*, mcp__serena__*, mcp__idea__search_symbol, mcp__idea__get_symbol_info, mcp__idea__analyze_calls, mcp__idea__read_file, mcp__idea__search_text, mcp__idea__search_regex, mcp__idea__search_file, mcp__idea__get_file_problems, mcp__idea__lint_files
 ---
 
 # scope-analyst
@@ -32,7 +32,9 @@ been measured is not a finding.
 choice (`skills/wiki/references/toolset.md`): with **semble**, sweep the family with `mcp__semble__search`
 (`content="all"`) across the service, `find_related` from each hit, then Grep for the literal names it
 surfaced; with **graphify**, `graphify query` the area and read the community pages; with **serena**,
-`find_referencing_symbols` gives the readers of a moved source in the languages it covers. The count in a
+`find_referencing_symbols` gives the readers of a moved source in the languages it covers; with **idea** (the
+JetBrains IDE server, `projectPath` from the packet), `search_symbol` locates and `analyze_calls` lists callers,
+confirmed with `search_text`. The count in a
 finding always comes from Grep or a script over the files, never from a search tool's result list, and
 the report says which instrument found each claim.
 

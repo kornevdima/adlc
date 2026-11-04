@@ -2,7 +2,7 @@
 
 **Agentic Development Life Cycle harness.** Agent = Model + Harness — this is the harness: a persistent knowledge substrate, role skills that work it, and a delivery loop that ships verified stories through it. Formerly `claude-mem`.
 
-Built on [Andrej Karpathy's LLM Wiki pattern](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) — the same pattern Google has since standardized as the [Open Knowledge Format](https://github.com/GoogleCloudPlatform/knowledge-catalog/tree/main/okf) (OKF). The vault is plain Markdown; read it in Obsidian or in [wiki-renderer](https://github.com/kornevdima/wiki-renderer). Code navigation through [graphify](https://github.com/safishamsi/graphify) or the Semble and Serena MCP servers; an optional design worker on [impeccable](https://github.com/pbakaus/impeccable) and [taste-skill](https://www.tasteskill.dev/). The vault's `Toolset:` block picks them ([`toolset.md`](skills/wiki/references/toolset.md)).
+Built on [Andrej Karpathy's LLM Wiki pattern](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) — the same pattern Google has since standardized as the [Open Knowledge Format](https://github.com/GoogleCloudPlatform/knowledge-catalog/tree/main/okf) (OKF). The vault is plain Markdown; read it in Obsidian or in [wiki-renderer](https://github.com/kornevdima/wiki-renderer). Code navigation through [graphify](https://github.com/safishamsi/graphify), the Semble and Serena MCP servers, or the JetBrains IDE's built-in MCP server; an optional design worker on [impeccable](https://github.com/pbakaus/impeccable) and [taste-skill](https://www.tasteskill.dev/). The vault's `Toolset:` block picks them ([`toolset.md`](skills/wiki/references/toolset.md)).
 
 ## The Stack
 
@@ -47,7 +47,7 @@ Run `/wiki` (or `/adlc:wiki` when installed as a plugin) inside Claude Code. The
 ```markdown
 Toolset:
   reader: wiki-renderer             # obsidian | wiki-renderer | none
-  code-nav: semble, serena          # graphify | semble | serena | none
+  code-nav: semble, serena          # graphify | semble | serena | idea | none
   design: impeccable, taste-skill   # impeccable | taste-skill | none
   design-system: ~/work/design-system
 ```
@@ -60,6 +60,7 @@ Then open the vault in the reader you chose: the project folder in Obsidian, or 
 bash bin/setup-graphify.sh /path/to/your-app                                  # code-nav: graphify (Python >=3.10,<3.14), once per project
 claude mcp add -s user semble -- uvx --from "semble[mcp]==0.7.0" semble       # code-nav: semble (needs uv)
 claude mcp add -s user serena -- serena start-mcp-server --context=claude-code --project-from-cwd   # code-nav: serena (needs the serena CLI)
+# code-nav: idea: IntelliJ 2025.2+, Settings | Tools | MCP Server | Auto-Configure for Claude Code (the IDE must be running with the project open)
 claude plugin marketplace add pbakaus/impeccable && claude plugin install impeccable@impeccable      # design: impeccable
 claude plugin marketplace add leonxlnx/taste-skill && claude plugin install taste-skill@taste-skill  # design: taste-skill
 ```
@@ -81,7 +82,7 @@ claude plugin marketplace add leonxlnx/taste-skill && claude plugin install tast
 
 ### Code graph (`code-nav: graphify`)
 
-With `code-nav: semble, serena` the workers and `wiki-query` call the two MCP servers instead, and there is no skill to run.
+With `code-nav: semble, serena` or `idea` the workers and `wiki-query` call the MCP servers instead (Semble, Serena, the JetBrains IDE server), and there is no skill to run.
 
 | Skill | Trigger |
 |---|---|

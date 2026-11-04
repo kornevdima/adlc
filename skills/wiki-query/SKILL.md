@@ -41,7 +41,9 @@ When the count is large or service wikis exist, prefer grep-first.
 
 ## Code-Structural Questions: Consult the Code-Navigation Tool First
 
-**If the question is code-structural, route it to the tool the vault's `Toolset:` block names (`code-nav`; `skills/wiki/references/toolset.md`) before reading wiki pages: graphify when the block names it, or when there is no block and `graphify-out/graph.json` exists; Semble when the block names `semble`.**
+**If the question is code-structural, route it to the tool the vault's `Toolset:` block names (`code-nav`; `skills/wiki/references/toolset.md`) before reading wiki pages: graphify when the block names it, or when there is no block and `graphify-out/graph.json` exists; Semble when the block names `semble`; the JetBrains IDE server when it names `idea`.**
+
+With the **IDE server** (`idea`): `mcp__idea__search_symbol` with the open project's `projectPath` (the service's `## Code navigation` lines name it), `get_symbol_info` at the hit for the signature and docs, `analyze_calls` for "what calls X" with the exact signature it returns; cite `file:line`.
 
 With **Semble**: call `mcp__semble__search` with `repo` set to the service checkout and `content="code"` (`"all"` to include templates and docs), read the function at the returned file and line, and use `mcp__semble__find_related` for its siblings and callers; cite `file:line` in the answer. The graph CLI below does not apply then.
 
@@ -140,6 +142,9 @@ Do not open individual wiki pages in quick mode.
 3a'. If **code-structural** and the toolset names Semble:
     - `mcp__semble__search` on the service repo; read the file at the returned line; `find_related` for neighbours
     - Cite `file:line`; read `wiki/decisions/` only for *why*
+3a''. If **code-structural** and the toolset names the IDE server (`idea`):
+    - `mcp__idea__search_symbol` with `projectPath`; `get_symbol_info` at the hit; `analyze_calls` for callers
+    - Cite `file:line`; an IDE that is not running means: say so and fall back to the wiki pages and Grep
 3b. If **narrative**:
     - Read `wiki/index.md`, scan for relevant pages
     - Read 3–5 wiki pages, follow wikilinks to depth 2 for key entities
@@ -227,6 +232,7 @@ Read the minimum needed:
 | `graphify path "A" "B"` | ~100 tokens | When the question is about a specific dependency chain |
 | `graphify query "..."` | up to `--budget` (default 2000) | For broader code-structural questions; lower budget when possible |
 | `mcp__semble__search` | ~200–500 tokens | For "where is X / what does Y" when the toolset names Semble: the file and line, then one function read |
+| `mcp__idea__get_symbol_info` | ~300–600 tokens | When the toolset names the IDE server: the signature with resolved types and the doc comment, often enough without a file read |
 | index.md | ~1000 tokens | If you can identify 3-5 relevant pages |
 | `wiki/code/_COMMUNITY_*.md` | ~200 tokens each | After a graph query, for cluster context |
 | 3-5 narrative wiki pages | ~300 tokens each | Usually sufficient for *why* questions |

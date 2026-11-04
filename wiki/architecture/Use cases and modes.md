@@ -62,7 +62,7 @@ Every vault keeps a ledger of what the plugin got wrong; the ratified entries tr
 
 ## 10. A vault chooses its tools
 
-A vault's `AGENTS.md` carries a `Toolset:` block naming the reader that shows its pages (Obsidian, wiki-renderer or none), the code-navigation tool its workers use (graphify, Semble and Serena, or none) and the design tools its designer runs (impeccable, taste-skill) with the design-system folder they follow. The scaffold proposes the block from what the machine has (`toolset.py detect`), the skills and workers read it, and a vault without the block behaves as before: Obsidian, graphify when a graph exists, no design tool. The reasoning and the field evidence: [[Configurable toolset for reader, code navigation and design]].
+A vault's `AGENTS.md` carries a `Toolset:` block naming the reader that shows its pages (Obsidian, wiki-renderer or none), the code-navigation tool its workers use (graphify, Semble, Serena, the JetBrains IDE's MCP server, or none) and the design tools its designer runs (impeccable, taste-skill) with the design-system folder they follow. The scaffold proposes the block from what the machine has (`toolset.py detect`), the skills and workers read it, and a vault without the block behaves as before: Obsidian, graphify when a graph exists, no design tool. The reasoning and the field evidence: [[Configurable toolset for reader, code navigation and design]].
 
 ## Coming from the AI-Native SDLC Playbook
 

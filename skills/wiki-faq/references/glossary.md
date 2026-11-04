@@ -57,6 +57,9 @@ MCP server and CLI for code search by intent: `search(query, repo, content=code|
 **Serena**
 MCP server over a language server: `initial_instructions` once, then `serena_repl` with `s.lsp.find_symbol`, `find_referencing_symbols`, `get_symbols_overview` and the `s.edit.*` symbol edits. Lines are 0-based.
 
+**JetBrains IDE MCP server (`idea`)**
+IntelliJ's built-in MCP server (2025.2+), configured from Settings | Tools | MCP Server: `search_symbol` (coordinates), `get_symbol_info` (signature and docs), `analyze_calls` (call hierarchy by exact signature), `get_file_problems` / `lint_files` (inspections), `rename_refactoring`. Answers only for projects open in the running IDE, with `projectPath` on every call. Free with the IDE; distinct from Serena's paid JetBrains plugin backend.
+
 **Design tools (`design`)**
 `impeccable` (shape, critique, audit, the detect scan, `DESIGN.md`) and `taste-skill` (brief inference, the AI-tell list, the redesign audit). Both are Claude Code plugins the `feature-designer` worker runs.
 

@@ -20,6 +20,14 @@ Common errors and what to do about them. Each entry: symptom → cause → fix.
 
 **Fix**: `python3 <plugin>/skills/wiki/scripts/toolset.py --vault . check` prints the exact `claude mcp add` line; restart the session after adding a server.
 
+### "Unable to determine the target project" or "doesn't correspond to any open project" (IDE server)
+
+**Symptom**: an `mcp__idea__*` call fails with one of these, or `toolset.py check` says the IDE is not answering.
+
+**Cause**: the JetBrains server answers only for projects open in a running IDE, and only with a `projectPath` that matches an open project's root. A service checkout that is not open, and not inside an open project (a vault with `services/` symlinks counts), is invisible to it.
+
+**Fix**: open the project in IntelliJ (the vault root in a delivery vault), pass that path as `projectPath` (the service `AGENTS.md` `## Code navigation` line names it), and re-run. Workers report it as `ENV_MISMATCH`; the dispatcher asks the operator to open the project rather than guessing. A vault that sometimes runs without the IDE keeps `serena` beside `idea`.
+
 ### "design-system … is not a folder"
 
 **Symptom**: `toolset.py check` flags the `design-system` path, or `feature-designer` reports the design system missing.
