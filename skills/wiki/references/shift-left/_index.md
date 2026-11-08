@@ -8,7 +8,7 @@ Source: the shift-left-engineering-advisor skill (see `ATTRIBUTION.md` at the pl
 
 The advisor describes gates 1 / 1.5 / 2 / 3 (/ 4). In adlc Mode ADLC:
 
-1. **Per-service specs, not a project-context folder.** Write gate outputs as Markdown into each service's own code wiki (`services/<svc>/wiki/specs/`), not a separate `project-context/` folder.
+1. **Per-service specs, not a project-context folder.** Write gate outputs as Markdown into each service's own code wiki (`services/<svc>/wiki/specs/`, or `service-wikis/<svc>/specs/` under `layout: worktrees`), not a separate `project-context/` folder.
 2. **Trace down from BA.** Each technical requirement traces to a BA requirement ID (from the bundled BA method set in `../ba/`).
 3. **Diagrams: Mermaid** in the living spec; PlantUML reserved for formal export.
 4. **Human gate between gates** (no skipping).

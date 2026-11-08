@@ -45,7 +45,7 @@ Refinement: BA requirements (business-level, from ba-suite) are the source. You 
 
 ## Where specs go
 
-- Write specs into the service code wiki: `services/<svc>/wiki/specs/GATE-{N}-<SVC>.md` (or the repo's existing `plans/` convention). This is the impl spec the repo agent builds from.
+- Write specs into the service code wiki the packet names: `<code wiki>/specs/GATE-{N}-<SVC>.md`, where the code wiki is `services/<svc>/wiki/` under `layout: symlinks` and `service-wikis/<svc>/` under `layout: worktrees` (or the repo's existing `plans/` convention). This is the impl spec the repo agent builds from.
 - Do NOT create a `project-context/` folder in the product wiki. Technical planning lives with the service.
 - Cross-link up: leave a one-line pointer + wikilink from the product wiki `features/` page to the service spec.
 - Diagrams: use Mermaid inline in the spec Markdown (renders natively in Obsidian, wiki-renderer and HTML). For a shareable rendered copy, HTML-export the doc to `.raw/exports/`. Reserve PlantUML for the formal export bundle (with the ba-suite Office docs).
@@ -73,7 +73,7 @@ Refinement: BA requirements (business-level, from ba-suite) are the source. You 
 ```
 Service: [svc]
 Gates produced: [1, 1.5, 2, ...]
-Specs written: [[services/<svc>/wiki/specs/GATE-2-<SVC>]]
+Specs written: [[GATE-2-<SVC>]] (path: <code wiki>/specs/GATE-2-<SVC>.md)
 IDs: [FR-..., ADR-...]
 Refined from: [BA requirement IDs]
 Open questions / gaps: [for the human, or "none"]

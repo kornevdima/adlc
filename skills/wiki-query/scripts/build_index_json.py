@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Generate wiki/index.json — a machine-readable locator mirror of the wiki.
 
-Walks wiki/**/*.md (and services/*/wiki/**/*.md when --services is passed),
+Walks wiki/**/*.md (and the code wikis, services/*/wiki/**/*.md or
+service-wikis/*/**/*.md, when --services is passed),
 extracts a small frontmatter subset per page, and writes wiki/index.json.
 Zero dependencies: parses only the flat YAML subset the wiki conventions use
 (scalar `key: value` lines and block lists of `- item` / - "[[item]]").
@@ -87,7 +88,9 @@ def main():
 
     pages = index_wiki(wiki, root)
     if include_services:
-        for svc_wiki in sorted(root.glob("services/*/wiki")):
+        code_wikis = sorted(root.glob("services/*/wiki")) + \
+            sorted(p for p in root.glob("service-wikis/*") if p.is_dir())
+        for svc_wiki in code_wikis:
             pages.extend(index_wiki(svc_wiki, root))
 
     out = {

@@ -26,13 +26,13 @@ Three depths. Choose based on the question complexity.
 The modes above choose **depth**. Vault **size** chooses *how* to read. Calibrate automatically, no flag needed:
 
 - **Small vault (under ~50 pages, single wiki):** the tiered load is fine. Read `hot.md` then `index.md` then a few pages directly. Do not recurse.
-- **Large vault (50+ pages, or an ADLC vault with `services/*/wiki/` code wikis):** do not load the index plus pages into context (that invites context rot). Switch to **grep-first + bounded recursion** (see the large-vault section below). This applies the Recursive Language Model pattern: the vault is the environment, bash is the REPL.
+- **Large vault (50+ pages, or an ADLC vault with code wikis under `services/*/wiki/` or `service-wikis/*/`):** do not load the index plus pages into context (that invites context rot). Switch to **grep-first + bounded recursion** (see the large-vault section below). This applies the Recursive Language Model pattern: the vault is the environment, bash is the REPL.
 
 Detect scale cheaply before deciding:
 
 ```bash
 find wiki -name '*.md' | wc -l          # page count
-ls -d services/*/wiki 2>/dev/null         # ADLC code wikis present?
+ls -d services/*/wiki service-wikis/* 2>/dev/null   # ADLC code wikis present? (symlink or worktree layout)
 ```
 
 When the count is large or service wikis exist, prefer grep-first.
@@ -172,9 +172,9 @@ Use for synthesis questions, comparisons, or "tell me everything about X."
 For large or ADLC vaults, treat the wiki filesystem as the context environment and program over it instead of loading it. The agent already has bash, which is the precondition. (Basis: Recursive Language Models; calibrate per the reproduction critique that warns against over-recursion.)
 
 1. **Peek.** Read `wiki/hot.md`. If it answers, stop.
-2. **Locate (grep, do not load).** `rg` the query terms across `wiki/` and any `services/*/wiki/`, targeting greppable frontmatter and `_index.md` files. Collect a bounded candidate set; do not read every match.
+2. **Locate (grep, do not load).** `rg` the query terms across `wiki/` and any code wiki (`services/*/wiki/`, or `service-wikis/*/` under `layout: worktrees`), targeting greppable frontmatter and `_index.md` files. Collect a bounded candidate set; do not read every match.
    ```bash
-   rg -l -i "term1|term2" wiki services/*/wiki 2>/dev/null | head -40
+   rg -l -i "term1|term2" wiki services/*/wiki service-wikis 2>/dev/null | head -40
    rg -i "^(type|status|req_id|traces_to):" wiki/<folder> 2>/dev/null
    ```
    **Check the answer cache first:** `rg -l -i "term1|term2" wiki/questions` — past filed answers and cached sub-answers are the cheapest hits. Cite the page's `updated:` date; if the underlying area changed since, treat the cache as a lead, not the answer (records win).
@@ -214,7 +214,7 @@ for cand in \
     [ -n "$cand" ] && [ -d "$cand" ] && { SKILL_DIR="$cand"; break; }
 done
 python3 "$SKILL_DIR/scripts/build_index_json.py" .            # product wiki only
-python3 "$SKILL_DIR/scripts/build_index_json.py" . --services # + services/*/wiki
+python3 "$SKILL_DIR/scripts/build_index_json.py" . --services # + the code wikis (services/*/wiki, service-wikis/*)
 ```
 
 Ship it only when the vault is actually large (50+ pages or multi-wiki); small vaults don't need the moving part. Once it exists, `wrap-up` refreshes it each session and `wiki-lint` flags it when stale.

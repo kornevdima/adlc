@@ -1,7 +1,7 @@
 ---
 type: meta
 title: "Hot Cache"
-updated: 2026-11-04T12:00:00
+updated: 2026-11-08T18:30:00
 tags:
   - meta
   - hot-cache
@@ -22,27 +22,23 @@ Navigation: [[index]] | [[log]]
 
 ## Last Updated
 
-**2026-11-04 (session: configurable toolset, 1.1.0)**. [[Configurable toolset for reader, code navigation and design]]: a vault's `AGENTS.md` now carries a `Toolset:` block (`reader`, `code-nav`, `design`, `design-system`); Obsidian and graphify are defaults the skills read, not requirements. New `skills/wiki/references/toolset.md`, `skills/wiki/scripts/toolset.py` (`show` / `check` / `detect`, 8 tests green) and the sixteenth worker `agents/feature-designer.md` (`shape` before the build, `review` after the code review, on impeccable and taste-skill against a design-system folder; never edits code). Seven code-touching workers orient with the toolset's tool and list `mcp__semble__*`, `mcp__serena__*`. The scaffold asks the toolset (step 3a); `/adlc` reads it at Step 0 and dispatches the designer at 2.2b and 2.5a; `graphify-ingest` runs the installer only when no pinned interpreter imports graphify and refuses when the block names another tool; `wiki-lint` writes a Markdown dashboard outside Obsidian. Four manifests at 1.1.0. Committed (`feat(toolset)`). Eval case `evals/wiki/scaffold-toolset` added. **Later the same day:** the JetBrains IDE's MCP server measured against Serena ([[JetBrains MCP server vs Serena for code navigation]]) and added as a fourth `code-nav` value `idea` without replacing Serena: playbook in `toolset.md`, nine read tools in the workers, `toolset.py check` probes the IDE, 10 tests green. Evals before the commit: fast set (11 cases), `wiki/scaffold-toolset` and `wiki/scaffold-mode-b`, all 1.00.
+**2026-11-08 (session: review of the 1.2.0 branch, PR 3 closed, the loop wired to the new keys)**. The branch `feat/toolset-layout-engineering-cost` (`layout`, `engineering` and `cost` keys; the AI-tells pass) was reviewed on macOS, all 29 tests green, and its gaps fixed on the branch: `/adlc` reads the two keys and its packets carry the code wiki path and the ub-mode definition of done, Step 2.7 makes two commits under worktrees; `wrap-up`, `wiki-query`, `wiki-lint`, the architecture worker and three references know `service-wikis/`; `tells_check.py` skips `log.md`. Detail in the log entry. PR 3 is closed and its remote branch deleted; the work is on the local branch and **not yet committed**.
 
-**2026-10-23 (session: vault-d/UP-004)**. [[Glossary links ids to work pages that share them]]: `glossary.py` settles an id that two filenames start with by the family's folder and `type:`; 5 tests green; shipped under 1.0.9. Committed as `fix(glossary)`.
+**2026-11-04**: the `Toolset:` block (reader, code-nav, design, design-system), `toolset.py`, the `feature-designer` worker, 1.1.0; `idea` added as a fourth code-nav value ([[Configurable toolset for reader, code navigation and design]], [[JetBrains MCP server vs Serena for code navigation]]).
 
-**2026-10-22 (session: architecture folder)**. `wiki/architecture/` created (9 pages) and 1.0.9 committed as `chore(plugin): 1.0.9`; the three vault-e reports (changelogs, glossary, hook path) and vault-a/UP-024 shipped under 1.0.9.
+**2026-10-23 and 10-22**: glossary shared ids (vault-d/UP-004), `wiki/architecture/` created, 1.0.9.
 
 ## Key Recent Facts
 
-- **The toolset's defaults keep old vaults working**: no block means `reader: obsidian`, graphify when `graphify-out/graph.json` exists, no design tool. `toolset.py detect` on this machine proposes wiki-renderer, Semble and Serena, impeccable and taste-skill; `check` finds every tool plus the design-system folder.
-- **The IDE server needs the IDE.** `idea` answers only for projects open in a running IntelliJ, with `projectPath` on every call; a vault that sometimes runs without the IDE keeps `serena` beside it. Its call tree missed an aliased-import caller and has no Python entries, so `search_text` confirms it.
-- **Documented, not tested:** a worker whose `tools:` names an MCP server the session lacks. The docs say a launch fails only when no entry resolves; the built-ins always resolve.
-- **Field models for the generic text**: a co-located vault's repo-local Semble and Serena bindings (operator ruling 2026-11-01) and a design-system repo built with impeccable whose `AGENTS.md` ranks dated rulings above tool heuristics. Neither is named in plugin pages (redaction rule).
-- `.raw/upstream/vault-f-UP-001.md` is still unfiled: `glossary.py`'s `OWN_PAGE_ID` misses two-part prefixes (`ADR-XX-05`), and the "Plugin issues" section lands in a shared glossary when `meta/` is untracked.
-- `gh` can't reach GitHub from this machine. `claude plugin eval` takes only the last `--case`.
+- **The checker is loud on old pages by design.** On this repo's wiki it lists 1,502 `fix` findings, 1,408 of them dashes and 90 title-case headings. The operator ruled the dash sweep intended and the first-run scope accepted; the sweep is its own commit.
+- **Not run on macOS:** `setup-ub-mode.sh`. The auto-mode sandbox refuses an installer that clones external code; the operator runs it with `!`. Its pins exist: ub-mode at its HEAD holds only SKILL.md, README and LICENSE; crapper, dryer and mutator each carry a `pyproject.toml` and a `__main__.py`.
+- `gh` reaches GitHub again. Two accounts are logged in; `kornevdima` owns this repo and was needed to close the PR; `dmytro-esg` is active again.
+- `.raw/upstream/vault-f-UP-001.md` is still unfiled (glossary two-part prefixes).
 
 ## Active Threads
 
-- **Release 1.1.0:** evals green and committed; next set the `Toolset:` block in the co-located vaults (`toolset.py detect` proposes `semble, serena, idea`), add the Semble and Serena allow lines and `Task(feature-designer)` to their settings, and give each service `AGENTS.md` a `## Code navigation` section (`/project-profile`).
-- **Follow-ups from the toolset work:** `/project-profile` does not yet write the `## Code navigation` section itself (the reference describes it); `impeccable critique` runs degraded inside the designer (no sub-agents); a `wiki/code/` graph of this repo was never built.
-- **vault-f/UP-001** (glossary two-part prefixes): confirm on a scratch copy, fix `OWN_PAGE_ID`, add a test, decide the "Plugin issues" opt-in.
-- **Not addressed from the ledgers:** the public-repo records occurrence (vault-a, 2026-10-18); the UP-002 "simplest shape first" gap; vault-a UP-011 (declined).
-- **Evals backlog** ([[Plugin eval suites for claude plugin eval]]): the 12 slow cases; graphify and pm-layer; `adlc` worker cases.
-- **Open tasks:** [[Integrate the wiki toolset into the ADLC workers]]; [[Operator profile - learn engagement style from corrections]]; [[Configurable subagent models per host]] (postponed).
-- **Deferred:** vault MCP server; `/project-profile --refresh`; the Stage 6 trigger; K8; the Cursor plugin load check; the sharing pilot; the OKF exporter; renaming the repo.
+- **1.2.0 branch:** commit the follow-up fixes, run the fast eval set plus `wiki/scaffold-toolset`, merge to main, push. Then set the new keys in the co-located vaults (`toolset.py detect`), add the Semble and Serena allow lines and `Task(feature-designer)` to their settings, and give each service `AGENTS.md` a `## Code navigation` section.
+- **Dash sweep** across `wiki/`, `skills/` and `agents/`, about 3,000 `fix` findings, one dedicated commit; the hot-cache headings in the `wiki` skill's template go with it.
+- **EGM as 1.3.0, plan agreed in outline, decisions open.** The Elephant-Goldfish Model (Google, Apache-2.0) adds fresh-context reviewers for documents; adlc's workers are already fresh for code, so the gap is the spec. Plan: a `spec-review: egm | none` key; a `spec-reviewer` worker mirroring `feature-designer` that dispatches the `egm:egm-*` reviewers directly (three nesting levels, no synthesizer) on each gate page before its human approval, stages 5 to 8 on Gates 1 to 2 and stage 9 on Gate 3, record in the code wiki's `reviews/`; `egm-drift-report` in `wiki-lint`; the comprehension Goldfish on technical-writer pages; brainstorm operator-run; bootstrap and draft not adopted. Spike first: a worker with `Agent` in `tools:` spawning `egm:egm-comprehension`. Open: the key name and the phase 1 scope. EGM skills are `disable-model-invocation`, read as files; reviewers need Claude Code 2.1.271 or later (this machine: 2.1.319).
+- **Follow-ups from 1.2.0:** evals for the scaffold's new questions; `/project-profile` writes `How we change code` on a fresh run only; `impeccable critique` runs degraded inside the designer; no `wiki/code/` graph of this repo.
+- **Carried over unchanged:** vault-f/UP-001; the ledger items not addressed (vault-a public-repo records, UP-002, UP-011); the evals backlog ([[Plugin eval suites for claude plugin eval]]); the open tasks [[Integrate the wiki toolset into the ADLC workers]], [[Operator profile - learn engagement style from corrections]], [[Configurable subagent models per host]]; deferred: vault MCP server, `/project-profile --refresh`, Stage 6 trigger, K8, Cursor load check, sharing pilot, OKF exporter, repo rename.

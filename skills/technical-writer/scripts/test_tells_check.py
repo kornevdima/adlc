@@ -80,6 +80,14 @@ def test_raw_folders_are_not_walked():
     assert [p.name for p in tells_check.iter_files([d])] == ["page.md"]
 
 
+def test_log_files_are_skipped_as_append_only():
+    d = pathlib.Path(tempfile.mkdtemp())
+    (d / "log.md").write_text("# Log\n\nIt serves as a testament.\n", encoding="utf-8")
+    (d / "page.md").write_text("# A\n\nPlain.\n", encoding="utf-8")
+    assert [p.name for p in tells_check.iter_files([d])] == ["page.md"]
+    assert list(tells_check.iter_files([d / "log.md"])) == []
+
+
 if __name__ == "__main__":
     failures = 0
     for name, fn in sorted(globals().items()):

@@ -11,6 +11,8 @@ Exit code 1 when any "fix" finding exists (or any finding with --strict).
 
 Skips YAML frontmatter, fenced code blocks, inline code and text in double
 quotes (a quoted phrase is a mention; use --include-quotes to check it).
+Files named log.md are skipped: a log is append-only and its past entries are
+never edited; read the entry you add against the catalogue instead.
 A page whose first ten lines contain <!-- tells-check: off --> is skipped; only
 pages that catalogue the patterns as examples carry it. The catalogue
 behind each check is references/ai-tells.md.
@@ -205,8 +207,8 @@ def iter_files(paths):
     for p in paths:
         p = Path(p)
         if p.is_dir():
-            yield from sorted(x for x in p.rglob("*.md") if ".raw" not in x.parts)
-        elif p.suffix.lower() == ".md":
+            yield from sorted(x for x in p.rglob("*.md") if ".raw" not in x.parts and x.name != "log.md")
+        elif p.suffix.lower() == ".md" and p.name != "log.md":
             yield p
 
 

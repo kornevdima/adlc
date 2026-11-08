@@ -12,6 +12,7 @@ Change history for pages in this folder. Pages show the current state only; hist
 
 | Date | Page | Change |
 |---|---|---|
+| 2026-11-08 | [[Workers and the dispatch pipeline]], [[Scripts]] | The delivery loop, `wrap-up`, `wiki-query` and `wiki-lint` follow the `layout` and `engineering` keys: the code wiki path and the ub-mode definition of done ride in the packets, a story makes two commits under worktrees, `build_index_json.py` walks `service-wikis/*` beside `services/*/wiki` (2 tests); `tells_check.py` skips `log.md` |
 | 2026-11-08 | [[Scripts]], [[Shared references]] | 1.2.0: three new `Toolset:` keys (`layout`, `engineering`, `cost`) in `toolset.py` with `code-wiki`; `tells_check.py` in `technical-writer`; `bin/add-service-worktree.sh`, `bin/setup-ub-mode.sh`, `bin/ub-tool.sh`; references `service-worktrees.md` and `engineering-ub-mode.md` |
 | 2026-11-04 | [[Skills and routing]], [[Workers and the dispatch pipeline]], [[Scripts]], [[Shared references]], [[Use cases and modes]] | `idea` (the JetBrains IDE's MCP server) as a fourth `code-nav` value: worker read tools, `toolset.py check` probes the IDE, playbook in `toolset.md` |
 | 2026-11-04 | [[Plugin architecture overview]], [[Skills and routing]], [[Shared references]], [[Workers and the dispatch pipeline]], [[Scripts]], [[Use cases and modes]] | 1.1.0: the vault `Toolset:` block (reader, code navigation, design tools); `toolset.md` and `toolset.py` added; sixteenth worker `feature-designer`; Obsidian and graphify become defaults the skills read, not requirements |

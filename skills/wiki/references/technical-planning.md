@@ -17,7 +17,7 @@ The `architecture-subagent` (`agents/architecture-subagent.md`) is the worker. I
 | Gate 2 | Architecture Decision Records + design rationale |
 | Gate 3 | Engineering workflow: CI/CD, test pyramid, deployment, incidents |
 
-Gates are sequential with a human approval between each (no skipping). Refinement traces every technical requirement back to a BA requirement ID. Specs are written to `services/<svc>/wiki/specs/` (or the repo's `plans/` convention), one set per service.
+Gates are sequential with a human approval between each (no skipping). Refinement traces every technical requirement back to a BA requirement ID. Specs are written to the service's code wiki, `services/<svc>/wiki/specs/` or `service-wikis/<svc>/specs/` under `layout: worktrees` ([`toolset.md`](toolset.md) § Layout; or the repo's `plans/` convention), one set per service.
 
 ### Grilling gate (before Gate 1 is approved)
 

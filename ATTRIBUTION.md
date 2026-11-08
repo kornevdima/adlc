@@ -29,7 +29,7 @@ adlc is an original work. The following third-party patterns, tools, and creator
 ## ub-mode, crapper, dryer, mutator
 
 **Author:** Robert C. Martin ([unclebob](https://github.com/unclebob))
-**Source:** https://github.com/unclebob/ub-mode (MIT) and the crapper, dryer and mutator repositories
+**Source:** https://github.com/unclebob/ub-mode (MIT) and the crapper, dryer and mutator repositories (0BSD)
 **Use:** Not bundled. `bin/setup-ub-mode.sh` clones them at pinned commits into a vault that chooses `engineering: ub-mode`; the skill is copied unchanged with its LICENSE. `skills/wiki/references/engineering-ub-mode.md` describes how the delivery loop applies them.
 
 ---

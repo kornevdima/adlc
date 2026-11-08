@@ -1,6 +1,6 @@
 # Review policy (per service)
 
-One typed record per service, `services/<svc>/wiki/reviews/_policy.md` (in a Mode B repo, `wiki/reviews/_policy.md`). It states what `feature-reviewer` checks and where the bar sits, so every review of that service uses the same bar instead of one re-assembled in each dispatch packet.
+One typed record per service, `<code wiki>/reviews/_policy.md` (`services/<svc>/wiki/` under `layout: symlinks`, `service-wikis/<svc>/` under `layout: worktrees`; in a Mode B repo, `wiki/reviews/_policy.md`). It states what `feature-reviewer` checks and where the bar sits, so every review of that service uses the same bar instead of one re-assembled in each dispatch packet.
 
 - **Who writes it:** `project-profile` seeds it from the template below when the repo has a wiki and no policy yet. The operator owns it after that; workers never edit it.
 - **Who reads it:** the `adlc` dispatcher passes it verbatim in the reviewer's packet (Step 2.5). If it was not passed, `feature-reviewer` reads it itself. No policy → the reviewer uses the defaults below and says so in its record.
