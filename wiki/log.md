@@ -1,7 +1,7 @@
 ---
 type: meta
 title: "Operation Log"
-updated: 2026-09-16
+updated: 2026-11-08
 tags:
   - meta
   - log
@@ -20,6 +20,16 @@ Navigation: [[index]] | [[hot]] | [[overview]]
 Append-only. New entries go at the TOP. Never edit past entries.
 
 Entry format: `## [YYYY-MM-DD] operation | Title`
+
+## [2026-11-08] autoresearch | How work is organized
+- **Trigger:** the brief `.raw/briefs/2026-11-08 How work is organized.md`, written after a product-owner review of a project run through adlc 1.2.0 (the case study, stated in general terms as findings F1 to F12).
+- Questions: 9 total (Q0 answered from this repository, Q1 to Q8 by one research worker each on Sonnet), 9 answered, 0 blocked
+- Sources found: 15 | Pages created: 25. Sources: [[scrum-guide-2020]], [[shape-up-basecamp]], [[atlassian-what-is-an-epic]], [[backlog-md-readme]], [[nygard-documenting-architecture-decisions]], [[madr-markdown-decision-records]], [[backstage-system-model]], [[fowler-bounded-context]], [[claude-code-common-workflows-worktrees]], [[github-code-owners-and-push-protection]], [[dora-metrics-guide]], [[getdx-flow-metrics]], [[aws-ai-dlc-workflows]], [[anthropic-building-effective-agents]], [[cooper-stage-gate-systems-1990]]. Concepts: [[Software Lifecycle Inputs and Handoffs]], [[Knowledge Layer and Work Tracker Split]], [[Lifecycle Artifacts and Decision Levels]], [[Project Within a Larger System]], [[Shared Remote Collaboration for Agent Teams]], [[Delivery Metrics and Their Data Sources]], [[Agentic Lifecycle Methods Compared]], [[Gates as Checkpoints Without Documents]], [[Disciplines Bodies of Knowledge and Boundaries]].
+- Synthesis: [[Research How work is organized]]
+- Key finding: adlc governs the story loop well and has almost nothing around it: no product layer (PRD, domains, releases, a stakeholder view), no team or machine record, no spike record, no measurement fields, and no defined step for work that is not a story. The frameworks converge on stable inputs, two layers linked by id, one remote with reviewed PRs, gates as decision lines, and a main thread that talks to the human while workers do bounded work. No surveyed agentic method has a spike or setup step either.
+- Budgets: `max_questions` raised 7 to 8 and `max_pages` 15 to 30 in `skills/autoresearch/references/program.md` (the skill text and the autoresearch eval follow); 24 of 30 content pages used by the workers, 3 per question; the plan recorded both changes and was deleted at close.
+- Checks: every page passed `upstream_redact_check.py` (only the public source URLs hit); `tells_check.py` found 16 title-case headings on the worker pages, set to sentence case; two empty stray files a worker left in `wiki/concepts/` were removed.
+- Next: the operator's planning step on the changes to adlc; not part of this research.
 
 ## [2026-11-08] fix | The loop, wrap-up, wiki-query and wiki-lint follow the layout and engineering keys
 - **Trigger:** review of the 1.2.0 branch before merging. The two new references promised dispatcher behaviour the dispatcher did not have, and three skills still walked `services/*/wiki` only.

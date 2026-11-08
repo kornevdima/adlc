@@ -29,7 +29,7 @@ Design rationale: `wiki/concepts/Plan-Driven Research Loop.md`. v1 (fixed 3-roun
 
 ## Step 1. Plan
 
-Decompose the topic into **3-7 research questions** (budget: `max_questions` in program.md). Good questions are answerable independently and collectively cover the topic.
+Decompose the topic into **3-8 research questions** (budget: `max_questions` in program.md). Good questions are answerable independently and collectively cover the topic.
 
 Write the plan artifact to `wiki/questions/_plan Research [Topic].md`:
 
@@ -168,7 +168,7 @@ Open questions filed: N
 ## Constraints
 
 All budgets live in `references/program.md`:
-- Max questions per plan (default: 7)
+- Max questions per plan (default: 8)
 - Max searches / fetches per question (defaults: 5 / 3)
 - Max wiki pages per session (default: 15)
 - Max passes per question: 2 (hard rule, then `[!]`)

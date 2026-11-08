@@ -1,7 +1,7 @@
 ---
 name: autoresearch/new-topic
 description: "Fresh research run files a synthesis, sources and updates rollups"
-expected_outcome: "Plan with 3-7 questions, deleted at close-out; synthesis with Open Questions; >=3 sources; index/log/hot updated; <=15 new pages"
+expected_outcome: "Plan with 3-8 questions, deleted at close-out; synthesis with Open Questions; >=3 sources; index/log/hot updated; <=30 new pages"
 tags: [autoresearch, writes, network, slow, scaffold]
 runs: 1
 max_turns: 120

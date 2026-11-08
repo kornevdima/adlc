@@ -1,7 +1,7 @@
 ---
 type: meta
 title: "Concepts Index"
-updated: 2026-10-22
+updated: 2026-11-08
 tags:
   - meta
   - index
@@ -61,6 +61,22 @@ All concept pages — ideas, patterns, and frameworks extracted from sources.
 - [[Obsidian Vault Portability]] — portability tiers, build rules, Confluence-expectation map (Source: [[obsidian-vault-site-generators]])
 - [[One-Way Publish vs Round-Trip Wiki Sync]] — lowering-step spec and decision tree for a git-canonical wiki (Source: [[git-backed-wiki-platforms-comparison]])
 - [[Cross-Repo Wiki Access]] — agent routes into a sibling vault and convention breakage per GitHub surface (Source: [[claude-code-large-codebases-docs]], [[github-docs-markdown-wikis-pages]])
+
+---
+
+## Organizing the Work
+
+Filed 2026-11-08 by the research [[Research How work is organized]].
+
+- [[Software Lifecycle Inputs and Handoffs]] — the stable inputs and the four handoffs between them (Source: [[scrum-guide-2020]], [[shape-up-basecamp]])
+- [[Knowledge Layer and Work Tracker Split]] — pages against work items, linked by id; epic and sprint as independent fields (Source: [[atlassian-what-is-an-epic]], [[backlog-md-readme]])
+- [[Lifecycle Artifacts and Decision Levels]] — one record per stage, four decision levels, what is not a decision (Source: [[nygard-documenting-architecture-decisions]], [[madr-markdown-decision-records]])
+- [[Project Within a Larger System]] — C4, interaction modes, catalog descriptor, bounded contexts (Source: [[backstage-system-model]], [[fowler-bounded-context]])
+- [[Shared Remote Collaboration for Agent Teams]] — worktrees, CODEOWNERS, single-writer files, secret defences, joining (Source: [[claude-code-common-workflows-worktrees]], [[github-code-owners-and-push-protection]])
+- [[Delivery Metrics and Their Data Sources]] — DORA, flow, SPACE; git against work-item data (Source: [[dora-metrics-guide]], [[getdx-flow-metrics]])
+- [[Agentic Lifecycle Methods Compared]] — AI-DLC, Spec Kit, Kiro, BMAD, Anthropic guidance (Source: [[aws-ai-dlc-workflows]], [[anthropic-building-effective-agents]], [[spec-kit-research]])
+- [[Gates as Checkpoints Without Documents]] — criteria in, one decision line out (Source: [[cooper-stage-gate-systems-1990]], [[scrum-guide-2020]])
+- [[Disciplines Bodies of Knowledge and Boundaries]] — bodies of knowledge per input; where analysis ends and architecture begins (Source: search summaries; primaries unreachable)
 
 ---
 

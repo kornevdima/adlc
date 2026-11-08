@@ -1,7 +1,7 @@
 ---
 type: meta
 title: "Hot Cache"
-updated: 2026-11-08T18:30:00
+updated: 2026-11-08T21:30:00
 tags:
   - meta
   - hot-cache
@@ -14,6 +14,7 @@ related:
   - "[[JetBrains MCP server vs Serena for code navigation]]"
   - "[[Upstream channel from vaults to the plugin]]"
   - "[[Glossary links ids to work pages that share them]]"
+  - "[[Research How work is organized]]"
 ---
 
 # Recent Context
@@ -21,6 +22,8 @@ related:
 Navigation: [[index]] | [[log]]
 
 ## Last Updated
+
+**2026-11-08 (later session: the operating-model research)**. `/autoresearch` ran on the brief `.raw/briefs/2026-11-08 How work is organized.md`: Q0 from this repository, Q1 to Q8 by Sonnet workers, 25 pages, synthesis [[Research How work is organized]]. The result: adlc governs the story loop well and has almost nothing around it (no product layer, no team or machine record, no spike record, no measurement fields, no step for non-story work); the twelve findings are mapped to a seven-part model with alternatives and trade-offs, and the gaps in adlc as built are listed. `max_questions` is 8 and `max_pages` 30 in program.md now. Nothing committed; the brief, the pages and the budget edits are all uncommitted.
 
 **2026-11-08 (session: review of the 1.2.0 branch, PR 3 closed, the loop wired to the new keys)**. The branch `feat/toolset-layout-engineering-cost` (`layout`, `engineering` and `cost` keys; the AI-tells pass) was reviewed on macOS, all 29 tests green, and its gaps fixed on the branch: `/adlc` reads the two keys and its packets carry the code wiki path and the ub-mode definition of done, Step 2.7 makes two commits under worktrees; `wrap-up`, `wiki-query`, `wiki-lint`, the architecture worker and three references know `service-wikis/`; `tells_check.py` skips `log.md`. Detail in the log entry. PR 3 is closed and its remote branch deleted; the work is merged to main and pushed after the evals (the log entry has the scores).
 
@@ -37,6 +40,7 @@ Navigation: [[index]] | [[log]]
 
 ## Active Threads
 
+- **Operating-model research filed, planning step open.** [[Research How work is organized]] maps F1 to F12 to the model and lists the gaps; the operator decides the adlc changes in a separate planning step. The research proposed no plugin changes. Open questions on the page name what the page cap left unsourced (RACI, Team Topologies and SAFe primaries, TOGAF and the other bodies, the 2025 DORA report, Kiro and BMAD detail).
 - **1.2.0 shipped.** Next: set the new keys in the co-located vaults (`toolset.py detect`), add the Semble and Serena allow lines and `Task(feature-designer)` to their settings, and give each service `AGENTS.md` a `## Code navigation` section.
 - **Dash sweep** across `wiki/`, `skills/` and `agents/`, about 3,000 `fix` findings, one dedicated commit; the hot-cache headings in the `wiki` skill's template go with it.
 - **EGM as 1.3.0, plan agreed in outline, decisions open.** The Elephant-Goldfish Model (Google, Apache-2.0) adds fresh-context reviewers for documents; adlc's workers are already fresh for code, so the gap is the spec. Plan: a `spec-review: egm | none` key; a `spec-reviewer` worker mirroring `feature-designer` that dispatches the `egm:egm-*` reviewers directly (three nesting levels, no synthesizer) on each gate page before its human approval, stages 5 to 8 on Gates 1 to 2 and stage 9 on Gate 3, record in the code wiki's `reviews/`; `egm-drift-report` in `wiki-lint`; the comprehension Goldfish on technical-writer pages; brainstorm operator-run; bootstrap and draft not adopted. Spike first: a worker with `Agent` in `tools:` spawning `egm:egm-comprehension`. Open: the key name and the phase 1 scope. EGM skills are `disable-model-invocation`, read as files; reviewers need Claude Code 2.1.271 or later (this machine: 2.1.319).

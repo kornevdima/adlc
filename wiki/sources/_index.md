@@ -1,7 +1,7 @@
 ---
 type: meta
 title: "Sources Index"
-updated: 2026-09-03
+updated: 2026-11-08
 tags:
   - meta
   - index
@@ -43,6 +43,12 @@ All source pages — summaries of ingested documents, transcripts, articles, and
 - [[github-docs-markdown-wikis-pages]] — 2026-09-03 | GitHub Docs | markdown rendering, repository Wiki, Pages as vault-sharing surfaces
 - [[claude-code-large-codebases-docs]] — 2026-09-03 | Claude Code Docs | additional directories, add-dir, sparse worktrees for cross-repo access
 
+- [[fowler-bounded-context]] — 2014-01-15 | Martin Fowler | bounded context and context map
+- [[nygard-documenting-architecture-decisions]] — 2011-11-15 | Michael Nygard | the original ADR post
+- [[shape-up-basecamp]] — 2019 | Ryan Singer, Basecamp | Shape Up, from search excerpts
+- [[getdx-flow-metrics]] — 2025-09-09 | DX after Mik Kersten | the five flow metrics
+- [[aws-ai-dlc-workflows]] — 2025-11-29 | AWS DevOps blog | AI-DLC open-sourced workflows
+- [[anthropic-building-effective-agents]] — 2024-12-19 | Anthropic | building effective agents
 ---
 
 ## Code Repositories
@@ -51,11 +57,25 @@ All source pages — summaries of ingested documents, transcripts, articles, and
 - [[okf-spec-and-reference-repo]] — 2026-06 | GoogleCloudPlatform/open-knowledge-format | OKF v0.2 spec + reference visualizer; the knowledge-catalog copy is frozen
 - [[kovetskiy-mark-readme]] — 2026 | kovetskiy/mark | one-way markdown → Confluence publisher README
 
+- [[backlog-md-readme]] — undated | MrLesk and contributors | Backlog.md, a Markdown-native task manager in the repo
 ---
 
 ## Papers
 
 - [[vibe-coding-new-sdlc-day1]] — 2026-05 | Osmani, Saboo, Kartakis (Google) | Day 1, vibe-coding course | syntax→intent thesis; vibe/structured/agentic spectrum; Agent = Model + Harness; factory model; CapEx/OpEx economics; eval-not-demo checklists
+
+- [[cooper-stage-gate-systems-1990]] — 1990 | Robert G. Cooper | Stage-Gate systems; read via a third-party mirror
+---
+
+## Documentation and standards
+
+- [[scrum-guide-2020]] — 2020-11 | Schwaber and Sutherland | the Scrum Guide: accountabilities, events, artifacts, Definition of Done
+- [[atlassian-what-is-an-epic]] — undated | Atlassian | epic, sprint and board definitions; linking pages to work items
+- [[madr-markdown-decision-records]] — 2024-09-17 | MADR project | MADR 4.0.0 template and rules
+- [[backstage-system-model]] — undated | Backstage project | the software catalog system model
+- [[claude-code-common-workflows-worktrees]] — fetched 2026-11-08 | Anthropic | parallel Claude Code sessions with git worktrees
+- [[github-code-owners-and-push-protection]] — fetched 2026-11-08 | GitHub | code owners, required review, push protection
+- [[dora-metrics-guide]] — 2026-01-05 | Nathen Harvey, DORA | the five DORA measures
 
 ---
 

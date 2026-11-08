@@ -1,7 +1,7 @@
 ---
 type: meta
 title: "Wiki Index"
-updated: 2026-10-22
+updated: 2026-11-08
 tags:
   - meta
   - index
@@ -26,7 +26,7 @@ related:
 
 # Wiki Index
 
-Last updated: 2026-10-22 | Total pages: 139 | Source pages: 35
+Last updated: 2026-11-08 | Total pages: 164 | Source pages: 50
 
 Navigation: [[overview]] | [[log]] | [[hot]] | [[maintenance-triggers]] | [[architecture/_index|Architecture]]
 
@@ -119,6 +119,15 @@ How the plugin is built, as-built at 1.1.0. Full catalog: [[architecture/_index]
 - [[Obsidian Vault Portability]] — portability tiers 0–3, three build rules, Confluence-expectation map for rendering a vault outside Obsidian (status: developing)
 - [[One-Way Publish vs Round-Trip Wiki Sync]] — sub-modes, the lowering-step spec (wikilinks, callouts, `_index.md`), decision tree for a git-canonical wiki (status: developing)
 - [[Cross-Repo Wiki Access]] — how an agent in another repo reaches the vault (add-dir, additionalDirectories, submodule / subtree / sibling clone); which conventions break on each GitHub surface (status: developing)
+- [[Software Lifecycle Inputs and Handoffs]] — the stable inputs (product, design, development, QA, DevOps, facilitation), what each produces and consumes, the four handoffs; no framework names a deploy owner (status: draft)
+- [[Knowledge Layer and Work Tracker Split]] — pages for what stays true, items for what moves through states, linked by id both ways; epic and sprint as independent fields (status: draft)
+- [[Lifecycle Artifacts and Decision Levels]] — one record type per stage; ADRs for costly-to-reverse choices only; four decision levels; conventions, tool selections, setup and briefs are not decisions (status: draft)
+- [[Project Within a Larger System]] — C4 context and landscape, Team Topologies interaction modes, a Backstage-style catalog descriptor, bounded contexts and a context map (status: draft)
+- [[Shared Remote Collaboration for Agent Teams]] — a worktree per agent, PRs with CODEOWNERS for docs, single-writer shared files, layered secret defences, what joining adds (status: draft)
+- [[Delivery Metrics and Their Data Sources]] — the five DORA measures, flow metrics and SPACE; which data git gives and which the work item must carry (status: draft)
+- [[Agentic Lifecycle Methods Compared]] — AI-DLC, Spec Kit, Kiro, BMAD and Anthropic guidance on workers, human gates, approval records and bookkeeping; none has a spike step (status: draft)
+- [[Gates as Checkpoints Without Documents]] — Cooper's shape: deliverables in, criteria applied, one decision line out; the Definition of Done as the in-sprint form (status: draft)
+- [[Disciplines Bodies of Knowledge and Boundaries]] — BABOK, TOGAF, ISO 42010, SEI ADD and the others per input; the analyst owns requirements, the architect adds drivers and scenarios (status: draft)
 ---
 
 ## Entities
@@ -183,6 +192,21 @@ How the plugin is built, as-built at 1.1.0. Full catalog: [[architecture/_index]
 - [[kovetskiy-mark-readme]] — 2026 | kovetskiy/mark README | one-way markdown → Confluence sync; GitHub alerts converted, wikilinks unsupported; slow cadence
 - [[github-docs-markdown-wikis-pages]] — 2026-09-03 | GitHub Docs | repo markdown rendering (frontmatter table, 5 alert types, no wikilinks), repository Wiki (`[[Page]]` by title, flat namespace, CI-fillable), Pages (Jekyll drops `_`/dot files; private only on Enterprise Cloud)
 - [[claude-code-large-codebases-docs]] — 2026-09-03 | Claude Code Docs | `--add-dir` (per-session, loads skills) vs `permissions.additionalDirectories` (committable, no skills) vs sparse worktrees (same repo only)
+- [[scrum-guide-2020]] — 2020-11 | Schwaber and Sutherland | the three accountabilities, the Definition of Done, Sprint Review as the loop back to product
+- [[shape-up-basecamp]] — 2019 | Ryan Singer, Basecamp | shaping, betting, six-week cycles; from search excerpts, medium confidence
+- [[atlassian-what-is-an-epic]] — undated | Atlassian | epic as a body of work across sprints; linking pages to work items
+- [[backlog-md-readme]] — undated | MrLesk and contributors | one Markdown file per task in the repo, boards as views
+- [[nygard-documenting-architecture-decisions]] — 2011-11-15 | Michael Nygard | the ADR form: context, decision, status, consequences
+- [[madr-markdown-decision-records]] — 2024-09-17 | MADR project | MADR 4.0.0; considered options mandatory
+- [[backstage-system-model]] — undated | Backstage project | Component, API, Resource, System, Domain, Group, User
+- [[fowler-bounded-context]] — 2014-01-15 | Martin Fowler | bounded contexts and context maps
+- [[claude-code-common-workflows-worktrees]] — fetched 2026-11-08 | Anthropic | parallel sessions with worktrees
+- [[github-code-owners-and-push-protection]] — fetched 2026-11-08 | GitHub | CODEOWNERS, required review, push protection and bypass
+- [[dora-metrics-guide]] — 2026-01-05 | Nathen Harvey, DORA | the five DORA measures and their definitions
+- [[getdx-flow-metrics]] — 2025-09-09 | DX after Mik Kersten | flow time, velocity, efficiency, load, distribution
+- [[aws-ai-dlc-workflows]] — 2025-11-29 | AWS DevOps blog, awslabs | AI-DLC phases, gates, state file and audit log
+- [[anthropic-building-effective-agents]] — 2024-12-19 | Anthropic | workflows against agents; orchestrator-workers; checkpoints
+- [[cooper-stage-gate-systems-1990]] — 1990 | Robert G. Cooper | stage-gate: deliverables, criteria, go / kill / hold / recycle; via a mirror
 
 ---
 
@@ -196,6 +220,7 @@ Full catalog, including the resolved plugin fixes above: [[questions/_index]].
 - [[Research Recursive Language Models]] — 2026-06-28 synthesis: RLM mechanics, results, limits, and the wiki-query/structure application for ADLC (status: developing)
 - [[Research OpenManus for claude-mem]] — 2026-07-08 synthesis: reject OpenManus as runtime, adopt its planning patterns; SDK for headless branch, MCP for interop (status: developing)
 - [[Research Sharing the Wiki with People]] — 2026-09-03 synthesis: how to share the git-canonical vault with people (OKF preview is a PoC; Quartz v5 for Confluence-like nav; CI-mirrored GitHub Wiki as the free-private fallback; one-way Confluence publish; round-trip only if UI editing is required) (status: developing)
+- [[Research How work is organized]] — 2026-11-08 synthesis: the operating model around the delivery loop (inputs, two layers, decision levels, one remote, measurement, governance) and the twelve case-study findings mapped to it; the gaps in adlc as built (status: developing)
 
 ---
 
