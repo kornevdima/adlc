@@ -5,6 +5,7 @@
     python3 toolset.py --vault . check     # is each chosen tool installed on this machine
     python3 toolset.py --vault . detect    # propose a Toolset block from what the machine has
     python3 toolset.py --vault . show --key code-nav   # one value (for shell tests)
+    python3 toolset.py --vault . code-wiki <service>   # where that service's code wiki lives
 
 The block lives in the vault's AGENTS.md, beside `Mode:` and `Concerns:`:
 
@@ -13,14 +14,19 @@ The block lives in the vault's AGENTS.md, beside `Mode:` and `Concerns:`:
       code-nav: semble, serena        # graphify | semble | serena | idea | none
       design: impeccable, taste-skill
       design-system: ~/work/design-system
+      layout: worktrees               # symlinks | worktrees
+      engineering: ub-mode            # ub-mode | none
+      cost: tokeneconomizer           # tokeneconomizer | none
 
 The one-line form `Toolset: reader=wiki-renderer; code-nav=semble,serena` is read too.
 A missing key takes its default; a missing block takes every default (the pre-1.1.0
-behaviour: Obsidian, graphify when a graph exists, no design tool).
+behaviour: Obsidian, graphify when a graph exists, no design tool; services symlinked in,
+no engineering method, no cost plugin).
 
 `show` prints `key=value` lines plus `source=block|default` (exit 0; exit 1 when AGENTS.md
 has no block, after printing the defaults). `check` prints one `ok|missing  tool  hint` line
 per chosen tool (exit 0 all present, 1 something missing). `detect` prints a block (exit 0).
+`code-wiki` prints the path of one service's code wiki for the vault's layout (exit 0).
 Exit 2 on bad input. Standard library only; reads `~/.claude.json` for MCP server *names*
 only and never prints a server's env or args; writes nothing.
 """
@@ -36,12 +42,18 @@ import sys
 import urllib.error
 import urllib.request
 
-KEYS = ("reader", "code-nav", "design", "design-system")
+KEYS = ("reader", "code-nav", "design", "design-system", "layout", "engineering", "cost")
 OPTIONS = {
     "reader": {"obsidian", "wiki-renderer", "none"},
     "code-nav": {"graphify", "semble", "serena", "idea", "none"},
     "design": {"impeccable", "taste-skill", "none"},
+    "layout": {"symlinks", "worktrees"},
+    "engineering": {"ub-mode", "none"},
+    "cost": {"tokeneconomizer", "none"},
 }
+# single-valued keys added in 1.2.0, with their defaults
+SINGLE = {"layout": "symlinks", "engineering": "none", "cost": "none"}
+UB_TOOLS = ("crapper", "dryer", "mutator")
 MULTI = {"code-nav", "design"}
 BLOCK_KEY = re.compile(r"^\s{2,}([a-z-]+)\s*:\s*(.*?)\s*$")
 ONE_LINE = re.compile(r"^Toolset:\s*(\S.*)$")
@@ -110,7 +122,21 @@ def resolve(values, vault):
 
     ds = values.get("design-system", "none").strip() or "none"
     out["design-system"] = ds if ds.lower() == "none" else os.path.expanduser(ds)
+
+    for key, default in SINGLE.items():
+        v = values.get(key, default).strip().lower() or default
+        if v not in OPTIONS[key]:
+            warnings.append(f"{key} `{v}` is not one of {sorted(OPTIONS[key])}; using {default}")
+            v = default
+        out[key] = v
     return out, warnings
+
+
+def code_wiki_path(res, vault, service):
+    """The folder of one service's code wiki: inside the checkout (symlinks) or on the main branch (worktrees)."""
+    if res.get("layout") == "worktrees":
+        return vault / "service-wikis" / service
+    return vault / "services" / service / "wiki"
 
 
 def load(vault):
@@ -261,10 +287,41 @@ def check_tool(name, vault):
     if name == "impeccable":
         ok = plugin_present("impeccable", "impeccable", "skills/impeccable/scripts/impeccable")
         return ok, "impeccable plugin", "claude plugin marketplace add pbakaus/impeccable && claude plugin install impeccable@impeccable"
+    if name == "ub-mode":
+        skill = (vault / ".claude" / "skills" / "ub-mode" / "SKILL.md").is_file()
+        tools = [t for t in UB_TOOLS if (vault / "tools" / t / ".venv").is_dir()]
+        detail = f"skill {'present' if skill else 'missing'}, tools {', '.join(tools) or 'none'} of {', '.join(UB_TOOLS)}"
+        return skill and len(tools) == len(UB_TOOLS), detail, "sh <plugin>/bin/setup-ub-mode.sh <vault>"
+    if name == "tokeneconomizer":
+        ok = plugin_present("tokeneconomizer", "tokeneconomizer", "hooks")
+        return ok, "TokenEconomizer plugin", ("git clone https://github.com/microsoft/TokenEconomizer && "
+                                              "claude plugin marketplace add \"$PWD/TokenEconomizer\" && "
+                                              "claude plugin install tokeneconomizer@tokeneconomizer")
     if name == "taste-skill":
         ok = plugin_present("taste-skill", "taste-skill", "skills/taste-skill/SKILL.md")
         return ok, "taste-skill plugin", "claude plugin marketplace add leonxlnx/taste-skill && claude plugin install taste-skill@taste-skill"
     return False, "unknown tool", ""
+
+
+def check_layout(layout, vault):
+    """(ok, detail, hint) for the layout: worktrees needs services/ ignored on the main branch."""
+    if layout != "worktrees":
+        return True, "services/ holds symlinks to separate checkouts", ""
+    gi = vault / ".gitignore"
+    lines = gi.read_text(encoding="utf-8", errors="replace").split("\n") if gi.is_file() else []
+    ignored = any(line.strip() in ("/services/", "services/", "/services") for line in lines)
+    if not ignored:
+        return False, ".gitignore does not ignore /services/", "sh <plugin>/bin/add-service-worktree.sh <vault> <service>"
+    services = vault / "services"
+    trees = sorted(p.name for p in services.glob("*") if (p / ".git").is_file()) if services.is_dir() else []
+    return True, f"/services/ ignored; worktrees: {', '.join(trees) or 'none yet'}", ""
+
+
+def detect_layout(vault):
+    services = vault / "services"
+    if services.is_dir() and any((p / ".git").is_file() for p in services.glob("*")):
+        return "worktrees"
+    return "symlinks"
 
 
 def check_design_system(path):
@@ -286,19 +343,24 @@ def detect(vault):
     if not nav and check_tool("graphify", vault)[0]:
         nav = ["graphify"]
     design = [t for t in ("impeccable", "taste-skill") if check_tool(t, vault)[0]]
-    return {"reader": reader, "code-nav": nav or ["none"], "design": design or ["none"], "design-system": "none"}
+    return {"reader": reader, "code-nav": nav or ["none"], "design": design or ["none"], "design-system": "none",
+            "layout": detect_layout(vault),
+            "engineering": "ub-mode" if check_tool("ub-mode", vault)[0] else "none",
+            "cost": "tokeneconomizer" if check_tool("tokeneconomizer", vault)[0] else "none"}
 
 
 def fmt_block(res):
     lines = ["Toolset:", f"  reader: {res['reader']}", f"  code-nav: {', '.join(res['code-nav'])}",
              f"  design: {', '.join(res['design'])}", f"  design-system: {res['design-system']}"]
+    lines += [f"  {k}: {res[k]}" for k in SINGLE]
     return "\n".join(lines)
 
 
 def main():
     ap = argparse.ArgumentParser(description="Read, check or propose the vault's Toolset block.")
     ap.add_argument("--vault", default=".", help="vault root (the directory holding AGENTS.md and wiki/)")
-    ap.add_argument("command", choices=["show", "check", "detect"])
+    ap.add_argument("command", choices=["show", "check", "detect", "code-wiki"])
+    ap.add_argument("service", nargs="?", help="code-wiki: the service name")
     ap.add_argument("--key", choices=KEYS, help="show: print one value only")
     args = ap.parse_args()
     vault = pathlib.Path(args.vault).resolve()
@@ -316,6 +378,13 @@ def main():
     res, warnings = resolve(values, vault)
     for w in warnings:
         print(f"warning: {w}", file=sys.stderr)
+
+    if args.command == "code-wiki":
+        if not args.service:
+            print("error: code-wiki needs a service name", file=sys.stderr)
+            return 2
+        print(code_wiki_path(res, vault, args.service).as_posix())
+        return 0
 
     if args.command == "show":
         if args.key:
@@ -335,14 +404,18 @@ def main():
     # check
     missing = 0
     tools = ([res["reader"]] if res["reader"] != "none" else []) + \
-            [t for t in res["code-nav"] if t != "none"] + [t for t in res["design"] if t != "none"]
+            [t for t in res["code-nav"] if t != "none"] + [t for t in res["design"] if t != "none"] + \
+            [res[k] for k in ("engineering", "cost") if res[k] != "none"]
     for t in tools:
         ok, detail, hint = check_tool(t, vault)
-        print(f"{'ok     ' if ok else 'missing'}  {t:<13} {detail}" + ("" if ok else f"  -> {hint}"))
+        print(f"{'ok     ' if ok else 'missing'}  {t:<15} {detail}" + ("" if ok else f"  -> {hint}"))
         missing += 0 if ok else 1
+    ok, detail, hint = check_layout(res["layout"], vault)
+    print(f"{'ok     ' if ok else 'missing'}  {'layout':<15} {res['layout']}: {detail}" + ("" if ok else f"  -> {hint}"))
+    missing += 0 if ok else 1
     if res["design-system"] != "none":
         ok, detail, hint = check_design_system(res["design-system"])
-        print(f"{'ok     ' if ok else 'missing'}  {'design-system':<13} {detail}" + ("" if ok else f"  -> {hint}"))
+        print(f"{'ok     ' if ok else 'missing'}  {'design-system':<15} {detail}" + ("" if ok else f"  -> {hint}"))
         missing += 0 if ok else 1
     elif res["design"] != ["none"]:
         print("note     design-system none: the designer works from the service's own DESIGN.md or asks for one")

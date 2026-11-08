@@ -179,7 +179,15 @@ Filenames must be unique across the vault. Wikilinks work without paths only if 
 
 ## Writing Style Check
 
-During lint, flag pages that violate the style guide:
+Run the AI-tells checker on the product wiki and every code wiki, and paste the `fix` findings with their file and line:
+
+```bash
+python3 <plugin>/skills/technical-writer/scripts/tells_check.py --fix-only wiki/ service-wikis/
+```
+
+(Name `services/<svc>/wiki/` instead of `service-wikis/` under `layout: symlinks`.) A `fix` finding is a WARN; the fix is the technical-writer skill's § The AI-tells pass. Report the `review` count without listing each one.
+
+Also flag pages that violate the style guide:
 
 - Not declarative present tense ("X basically does Y" instead of "X does Y")
 - Missing source citations where claims are made

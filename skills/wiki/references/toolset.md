@@ -1,6 +1,6 @@
-# Toolset: the reader, code navigation and design tools a vault uses
+# Toolset: the reader, code navigation, design tools, layout, engineering method and cost plugin a vault uses
 
-A vault declares which reader shows its pages, which tool its workers navigate code with, and which design tools its design worker runs. The plugin ships defaults (Obsidian, graphify, no design tool) but requires none of them: a vault read in wiki-renderer, navigated with Semble and Serena or with the JetBrains IDE's own MCP server, and reviewed with impeccable works the same way. The declaration is a `Toolset:` block in the vault's `AGENTS.md`, beside `Mode:` and `Concerns:`. Every skill and worker that used to assume Obsidian or graphify reads this block first.
+A vault declares which reader shows its pages, which tool its workers navigate code with, which design tools its design worker runs, where its services' code and code wikis live, which engineering method gates a code change, and whether a cost plugin trims its sessions. The plugin ships defaults (Obsidian, graphify, no design tool) but requires none of them: a vault read in wiki-renderer, navigated with Semble and Serena or with the JetBrains IDE's own MCP server, and reviewed with impeccable works the same way. The declaration is a `Toolset:` block in the vault's `AGENTS.md`, beside `Mode:` and `Concerns:`. Every skill and worker that used to assume Obsidian or graphify reads this block first.
 
 ## The block
 
@@ -14,15 +14,18 @@ Toolset:
   code-nav: semble, serena
   design: impeccable, taste-skill
   design-system: ~/work/design-system
+  layout: worktrees
+  engineering: ub-mode
+  cost: tokeneconomizer
 ```
 
 Rules:
 
-- Four keys, all optional: `reader`, `code-nav`, `design`, `design-system`. A missing key takes the default from the table below; a missing block takes every default, which is how vaults created before 1.1.0 behave.
+- Seven keys, all optional: `reader`, `code-nav`, `design`, `design-system`, `layout`, `engineering`, `cost`. A missing key takes the default from the table below; a missing block takes every default, which is how vaults created before 1.1.0 behave. The last three came in 1.2.0, and their defaults are what every vault did before.
 - `code-nav` and `design` take one or more values, comma-separated. `none` is a value.
 - `design-system` is a folder path (`~` allowed) or `none`. Everything else is a word from the options list.
 - The one-line form `Toolset: reader=wiki-renderer; code-nav=semble,serena` is accepted too, for vaults that keep the header compact.
-- `python3 <plugin>/skills/wiki/scripts/toolset.py --vault . show` prints the resolved choices; `check` tells you which chosen tools are installed; `detect` proposes a block from what the machine has.
+- `python3 <plugin>/skills/wiki/scripts/toolset.py --vault . show` prints the resolved choices; `check` tells you which chosen tools are installed; `detect` proposes a block from what the machine has; `code-wiki <service>` prints where that service's code wiki is for the vault's layout.
 
 ## Slots, options and defaults
 
@@ -34,6 +37,9 @@ The slots and what each one decides:
 | `code-nav` | `graphify`, `semble`, `serena`, `idea`, `none` (several allowed) | `graphify` when the service has `graphify-out/graph.json`, else `none` | How workers find and read code, how `wiki-query` answers structural questions, whether the graph skills and the graph refresh run |
 | `design` | `impeccable`, `taste-skill`, `none` (several allowed) | `none` | Whether the `feature-designer` worker is dispatched and which design skills it runs |
 | `design-system` | a folder path, `none` | `none` | Where the designer reads the brand book, tokens and dated rulings |
+| `layout` | `symlinks`, `worktrees` | `symlinks` | Whether services are separate repositories linked into `services/` with their code wiki inside, or branches of the vault's repository checked out as worktrees with their code wikis in `service-wikis/` |
+| `engineering` | `ub-mode`, `none` | `none` | Whether code changes follow the ub-mode skill and its three tool gates, which the service `AGENTS.md` then lists as its definition of done |
+| `cost` | `tokeneconomizer`, `none` | `none` | Whether the TokenEconomizer plugin trims the operator's sessions (unused tools, learned repository facts, stuck-turn notes) |
 
 The Markdown dialect does not change with the reader. Pages stay Obsidian-flavoured Markdown (`[[wikilinks]]`, `![[embeds]]`, `> [!note]` callouts, Mermaid blocks, YAML frontmatter), which Obsidian and wiki-renderer both render and which any editor shows as plain text. The `obsidian-markdown` skill stays the dialect reference for every reader.
 
@@ -146,6 +152,41 @@ claude plugin marketplace add leonxlnx/taste-skill && claude plugin install tast
 
 A design-system folder is any folder that holds a `DESIGN.md` in impeccable's format (frontmatter with the colours and type ramp, then the rules), or a brand book with tokens. `impeccable document` generates `DESIGN.md` from an existing codebase when a project has none.
 
+## Layout
+
+What changes with each layout:
+
+| Where | `symlinks` | `worktrees` |
+|---|---|---|
+| A service's code | its own repository, linked at `services/<svc>` (machine-local, per `team-sync.md`) | branch `<svc>` of the vault's repository, a git worktree at `services/<svc>`; `services/` is ignored on the main branch |
+| A service's code wiki | `services/<svc>/wiki/` in the service repository | `service-wikis/<svc>/` on the vault's main branch |
+| Adding a service | clone it and link it | `sh <plugin>/bin/add-service-worktree.sh <vault> <svc>` |
+| Commits per story | code in the service repository, wiki on the session's wiki branch | code on branch `<svc>`, every wiki change on the main branch; never in one commit |
+| Workers and the dispatcher | the code wiki path `services/<svc>/wiki/` | the path `toolset.py code-wiki <svc>` prints, passed in the packet |
+
+The procedure, the commit rule and the line-ending setting are in [`service-worktrees.md`](service-worktrees.md).
+
+## Engineering
+
+`engineering: ub-mode` installs Robert C. Martin's ub-mode skill and its three measuring tools (crapper, dryer, mutator) into the vault with `sh <plugin>/bin/setup-ub-mode.sh <vault>`. `/project-profile` writes the tools' commands and the four-point definition of done into each service's `AGENTS.md`; `feature-builder` follows the skill and runs the gates, and `feature-reviewer` re-runs them on the diff. With `none`, the service `AGENTS.md` alone says how code is changed. The gates, the template and the three places where an ADLC rule overrides the skill (push, glossary, log) are in [`engineering-ub-mode.md`](engineering-ub-mode.md).
+
+## Cost
+
+`cost: tokeneconomizer` records that the operator runs [TokenEconomizer](https://github.com/microsoft/TokenEconomizer) (Microsoft Research and UC Berkeley, Apache-2.0), a Claude Code plugin that learns from a repository's past session logs. It has three mechanisms, each switched on its own in `~/.tokeneconomizer/config.json`: tool pruning (leaves out tools a repository's sessions have not used), micro-skills (repository facts learned from repeated failures, added at session start) and a loop guard (one note to a turn that keeps hitting the same failure). Nothing in the vault changes with this key; it tells the scaffold and `toolset.py check` to expect the plugin, and it tells the dispatcher two things:
+
+- Tool pruning writes deny rules to `.claude/settings.local.json`, which the scaffold's `.gitignore` already excludes. Set pruning to `propose` (lists tools, changes nothing until `toolprune apply`) rather than `on` in a delivery vault, because a worker type the loop dispatches rarely, such as `devops` or `feature-designer`, can look unused for many sessions.
+- Subagent sessions are logged with their parent, so the workers' calls count towards the plugin's numbers and its pruning decisions.
+
+Install, once per machine at user scope:
+
+```bash
+git clone https://github.com/microsoft/TokenEconomizer
+claude plugin marketplace add "$PWD/TokenEconomizer"
+claude plugin install tokeneconomizer@tokeneconomizer
+```
+
+Claude Code runs the plugin from the clone, so the clone must stay where it is.
+
 ## Permissions
 
 Add to the vault's `.claude/settings.json` `allow` list the lines for the tools the block names (`permissions.md` lists them in the template as optional):
@@ -157,6 +198,8 @@ Add to the vault's `.claude/settings.json` `allow` list the lines for the tools 
 | JetBrains IDE server | allow the read set: `mcp__idea__search_symbol`, `mcp__idea__get_symbol_info`, `mcp__idea__analyze_calls`, `mcp__idea__read_file`, `mcp__idea__search_text`, `mcp__idea__search_regex`, `mcp__idea__search_file`, `mcp__idea__get_file_problems`, `mcp__idea__lint_files`; put `mcp__idea__rename_refactoring` in `ask`; leave `mcp__idea__execute_terminal_command`, `execute_run_configuration`, `build_project`, `apply_patch` and the database tools out (never `mcp__idea__*`, which would allow them all) |
 | impeccable | `Bash(*/skills/impeccable/scripts/impeccable *)` |
 | the designer | `Task(feature-designer)` |
+| ub-mode | `Bash(sh scripts/tool.sh *)`, `Bash(sh ../../scripts/tool.sh *)` |
+| worktree layout | `Bash(git worktree list:*)`, `Bash(git -C services/*)`; leave `git worktree remove` to the operator |
 
 The generic workers list `mcp__semble__*`, `mcp__serena__*` and the IDE server's read set (plus `rename_refactoring` for the builder) in their `tools:` so they can use the servers when a vault has them; a vault without the servers loses nothing, the entries resolve to no tool and the worker runs with the rest.
 
@@ -168,3 +211,6 @@ Edit the block, run `toolset.py check`, then:
 - **graphify to Semble and Serena:** the graph skills stop running. `graphify-out/` and `wiki/code/` can stay as a dated snapshot or be deleted; `wiki/code/` is graphify-owned, so remove its `_index.md` link from `index.md` if you delete it. Run `/project-profile` on each service so its `AGENTS.md` gains the `## Code navigation` lines, and let `/adlc distill` fold repo specifics into the local bindings.
 - **Obsidian to wiki-renderer:** nothing in `wiki/` changes. `.base` and `.canvas` files stop rendering; keep them for teammates on Obsidian or delete them. `.obsidian/` can stay git-ignored as before.
 - **Adding a design tool:** install the plugin, set `design-system`, and the next `/adlc` story that touches a UI surface dispatches the designer.
+- **Symlinks to worktrees:** for each service, push its repository's history into a branch of the vault's repository (`git fetch <service-repo> main:<svc>`), move the code wiki's pages from `services/<svc>/wiki/` to `service-wikis/<svc>/`, replace the symlink with `add-service-worktree.sh`, and set `layout: worktrees`. Links inside the moved pages keep working, because wikilinks resolve by file name.
+- **Adding ub-mode:** run `setup-ub-mode.sh`, then `/project-profile` on each service so its `AGENTS.md` gains the commands and the definition of done. Existing code is measured at the next story that touches it, not all at once.
+- **Adding or dropping TokenEconomizer:** install or uninstall the plugin; nothing in the vault changes.

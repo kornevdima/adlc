@@ -37,6 +37,7 @@ Replace `<VAULT_PATH>` with the project root. Trim patterns the project does not
       "Bash(npm test:*)",
       "Bash(npx:*)",
       "Bash(python3 *skills/wiki/scripts/relink.py *)",
+      "Bash(python3 *skills/technical-writer/scripts/tells_check.py *)",
       "Bash(python3 *skills/wiki/scripts/upstream_redact_check.py *)",
       "Bash(python3 *skills/wiki/scripts/glossary.py *)",
       "Bash(python3 *skills/wiki/scripts/page_history_check.py *)",

@@ -60,8 +60,51 @@ def test_missing_block_gives_defaults():
     agents, values, found = toolset.load(v)
     assert not found and values == {}
     res, warnings = toolset.resolve(values, v)
-    assert res == {"reader": "obsidian", "code-nav": ["none"], "design": ["none"], "design-system": "none"}
+    assert res == {"reader": "obsidian", "code-nav": ["none"], "design": ["none"], "design-system": "none",
+                   "layout": "symlinks", "engineering": "none", "cost": "none"}
     assert warnings == []
+
+
+def test_layout_engineering_and_cost_are_read():
+    values, found = toolset.parse_block(
+        "Toolset:\n  reader: wiki-renderer\n  layout: worktrees\n  engineering: ub-mode\n  cost: tokeneconomizer\n")
+    assert found
+    res, warnings = toolset.resolve(values, _vault())
+    assert warnings == []
+    assert (res["layout"], res["engineering"], res["cost"]) == ("worktrees", "ub-mode", "tokeneconomizer")
+
+
+def test_unknown_layout_engineering_and_cost_fall_back_with_warnings():
+    res, warnings = toolset.resolve({"layout": "submodules", "engineering": "tdd", "cost": "cheap"}, _vault())
+    assert (res["layout"], res["engineering"], res["cost"]) == ("symlinks", "none", "none")
+    assert len(warnings) == 3
+
+
+def test_code_wiki_path_follows_the_layout():
+    v = _vault()
+    assert toolset.code_wiki_path({"layout": "symlinks"}, v, "api") == v / "services" / "api" / "wiki"
+    assert toolset.code_wiki_path({"layout": "worktrees"}, v, "api") == v / "service-wikis" / "api"
+
+
+def test_worktree_check_needs_services_ignored():
+    v = _vault()
+    ok, detail, _ = toolset.check_layout("worktrees", v)
+    assert not ok and "/services/" in detail
+    (v / ".gitignore").write_text("/services/\n/tools/\n", encoding="utf-8")
+    ok, _, _ = toolset.check_layout("worktrees", v)
+    assert ok
+
+
+def test_ub_mode_check_needs_the_skill_and_the_tools():
+    v = _vault()
+    ok, detail, hint = toolset.check_tool("ub-mode", v)
+    assert not ok and "setup-ub-mode.sh" in hint
+    (v / ".claude" / "skills" / "ub-mode").mkdir(parents=True)
+    (v / ".claude" / "skills" / "ub-mode" / "SKILL.md").write_text("x", encoding="utf-8")
+    for name in ("crapper", "dryer", "mutator"):
+        (v / "tools" / name / ".venv").mkdir(parents=True)
+    ok, _, _ = toolset.check_tool("ub-mode", v)
+    assert ok
 
 
 def test_default_code_nav_is_graphify_when_a_graph_exists():
@@ -100,12 +143,14 @@ def test_none_beside_a_tool_is_dropped():
 
 
 def test_fmt_block_round_trips():
-    res = {"reader": "wiki-renderer", "code-nav": ["semble", "serena"], "design": ["impeccable"], "design-system": "none"}
+    res = {"reader": "wiki-renderer", "code-nav": ["semble", "serena"], "design": ["impeccable"], "design-system": "none",
+           "layout": "worktrees", "engineering": "ub-mode", "cost": "tokeneconomizer"}
     text = toolset.fmt_block(res)
     values, found = toolset.parse_block(text)
     assert found
-    back, _ = toolset.resolve(values, _vault())
-    assert back["code-nav"] == ["semble", "serena"] and back["design"] == ["impeccable"]
+    back, warnings = toolset.resolve(values, _vault())
+    assert warnings == []
+    assert back == res
 
 
 if __name__ == "__main__":

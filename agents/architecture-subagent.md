@@ -23,7 +23,7 @@ You are a shift-left architecture worker for a Mode ADLC vault. You turn require
 
 ## You will be given
 
-- The vault path, the target service, and the path to that service's code wiki (under `services/<svc>/wiki/`).
+- The vault path, the target service, and the path to that service's code wiki (`services/<svc>/wiki/`, or `service-wikis/<svc>/` when the vault's `Toolset:` block says `layout: worktrees`). Write every spec there, never inside a worktree checkout, where it would land on the service's code branch.
 - The ingested inputs: BA requirements (from the ba-suite layer, with stable IDs), `sources/` pages, and the existing code wiki (modules / flows / decisions).
 - Which gate(s) to produce (1 requirements, 1.5 domain model, 2 ADRs, 3 engineering workflow), or "refine the spec for feature X".
 

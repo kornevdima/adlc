@@ -3,7 +3,7 @@ type: module
 title: "Shared references"
 path: "skills/wiki/references/"
 created: 2026-10-22
-updated: 2026-11-04
+updated: 2026-11-08
 tags:
   - architecture
   - module
@@ -32,7 +32,9 @@ The wiki skill's `references/` folder holds 62 documents that are read at run ti
 | `concerns/` (five files) | Opt-in folder kits per role: `ops`, `qa`, `sec`, `design`, `writing`, each with its "add when" rule | `wiki` (scaffold) |
 | `operator-profile.md` | The operator's engagement pole, standing rulings, corrections, translation pointer | `adlc`, `technical-writer`, `wiki`, `wiki-faq`, `wrap-up` |
 | `permissions.md` | The `.claude/settings.json` profile for ADLC vaults: allow-listed scripts, denied env reads, the guard hooks, the optional toolset lines | `adlc`, `wiki` (scaffold) |
-| `toolset.md` | The vault's `Toolset:` block: reader, code navigation, design tools, design-system folder; what each option changes in which skill, the Semble, Serena and JetBrains IDE server playbooks workers follow, install and permission lines | `wiki` (scaffold), `adlc`, `wiki-query`, `wiki-lint`, `wrap-up`, `graphify-ingest`, `graphify-update`, `wiki-faq`; every code-touching worker and `feature-designer` |
+| `toolset.md` | The vault's `Toolset:` block: reader, code navigation, design tools, design-system folder, layout, engineering method, cost plugin; what each option changes in which skill, the Semble, Serena and JetBrains IDE server playbooks workers follow, install and permission lines | `wiki` (scaffold), `adlc`, `wiki-query`, `wiki-lint`, `wrap-up`, `graphify-ingest`, `graphify-update`, `wiki-faq`; every code-touching worker and `feature-designer` |
+| `service-worktrees.md` | The `layout: worktrees` topology: a branch per service checked out at `services/<svc>`, code wikis in `service-wikis/` on the main branch, the two-commit rule, line endings | `wiki` (scaffold), `adlc`, `project-profile`; `architecture-subagent`, `feature-reviewer`, `feature-verifier` |
+| `engineering-ub-mode.md` | The `engineering: ub-mode` method: the three tool gates, the service `AGENTS.md` template, where an ADLC rule overrides the skill | `wiki` (scaffold), `project-profile`; `feature-builder`, `feature-reviewer` |
 | `mission-control.md` | The board and the activity ledger: the metrics seam | `adlc`, `wiki`, `wiki-lint`, `wrap-up`; `wiki-lint-subagent` |
 | `adlc-upstream.md` | The per-vault ledger of plugin lessons and the export rules | `adlc`, `wiki`, `wiki-faq`, `wrap-up`; `AGENTS.md` |
 | `review-policy.md` | The per-service review policy page | `project-profile`; `feature-reviewer` |

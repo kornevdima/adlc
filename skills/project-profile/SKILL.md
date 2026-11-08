@@ -193,6 +193,8 @@ The seven headings above are the **skill-owned sections** — the only ones this
 4. **Every other `##` section** — anything not in the skill-owned set (e.g. `wiki/` topology, ADLC, project-specific sections) — **preserve verbatim, in its original position and order.** These are the sections the scan can't reproduce; losing them is the defect. When unsure whether a heading is skill-owned, treat it as foreign and preserve it.
 5. Keep the preamble; if the existing preamble differs from the template's one-line banner, keep the existing one.
 
+**Engineering method.** When the vault's `Toolset:` block says `engineering: ub-mode` (`python3 <plugin>/skills/wiki/scripts/toolset.py --vault <vault> show --key engineering`), add the quality-tool rows to `Build & Test` and a `## How we change code` section with the four-point definition of done, from the template in `skills/wiki/references/engineering-ub-mode.md` § The service AGENTS.md. Treat `How we change code` as skill-owned. When the block says `layout: worktrees`, add one line under the title: this folder is branch `<service>`, checked out as a worktree, and its documentation is in `service-wikis/<service>/` on the main branch.
+
 Target length: under 2K tokens total for the **skill-owned** content. If the file exceeds 3K tokens, push back: AGENTbench shows costs ramping without benefits beyond ~2K. On the augment path the cap applies to skill-owned sections only — never truncate a preserved foreign section to hit a token target.
 
 ### Step 6 — Create .agents/rules/ scaffolding

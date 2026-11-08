@@ -40,7 +40,7 @@ Each adds 2–4 folders with their own frontmatter shapes. See [[SDLC Wiki Conce
 ## Toolset
 
 **Toolset block**
-Four lines in a vault's `AGENTS.md`, beside `Mode:` and `Concerns:`: `reader`, `code-nav`, `design`, `design-system`. Names the tools the skills and workers use; absent, the vault behaves as before 1.1.0 (Obsidian, graphify when a graph exists, no design tool). Reference `skills/wiki/references/toolset.md`; script `toolset.py show|check|detect`.
+Up to seven lines in a vault's `AGENTS.md`, beside `Mode:` and `Concerns:`: `reader`, `code-nav`, `design`, `design-system`, `layout`, `engineering`, `cost`. Names the tools the skills and workers use, where the services' code and code wikis live, the engineering method and the cost plugin; absent, the vault behaves as before 1.1.0 (Obsidian, graphify when a graph exists, no design tool, services symlinked in, no engineering method, no cost plugin). Reference `skills/wiki/references/toolset.md`; script `toolset.py show|check|detect|code-wiki`.
 
 **Reader**
 What shows the pages to a person: Obsidian, wiki-renderer or nothing. The Markdown dialect is the same for all three; Bases, Canvas and Dataview are Obsidian-only.

@@ -21,6 +21,11 @@ Append-only. New entries go at the TOP. Never edit past entries.
 
 Entry format: `## [YYYY-MM-DD] operation | Title`
 
+## [2026-11-08] feature | Worktree layout, ub-mode, TokenEconomizer and the AI-tells pass (1.2.0)
+- **Trigger:** operator, from a delivery vault: move the setup applied there into the plugin (how the worktrees were made, the extra skills, the tools beside Serena and Semble).
+- **Built:** `Toolset:` keys `layout` (`symlinks` | `worktrees`), `engineering` (`ub-mode` | `none`) and `cost` (`tokeneconomizer` | `none`) in `toolset.md` and `toolset.py` (`code-wiki <svc>`, checks, detect; 15 tests green); `bin/add-service-worktree.sh`, `bin/setup-ub-mode.sh`, `bin/ub-tool.sh`, both run on a scratch vault; references `service-worktrees.md` and `engineering-ub-mode.md`; the AI-tells catalogue and `tells_check.py` (10 tests) in `technical-writer`, run by `wrap-up` 6b and `wiki-lint`; scaffold step 3a and the vault template ask the new keys; workers resolve the code wiki path from the packet.
+- **Follow-ups:** evals for the new scaffold questions; `/project-profile` writes the `How we change code` section only on a fresh run so far.
+
 ## [2026-11-04] research | JetBrains IDE MCP server vs Serena; `idea` added as a code-nav option
 - **Trigger:** operator "do a research if serena mcp is needed if I have jetbrains idea MCP and run some tests", then "add a new option to use idea mcp. Do not replace Serena, so user can have options."
 - **Measured:** the same lookups through both servers (symbol find, signature and docs, file overview, callers in TypeScript and Python, diagnostics, HTML-embedded scripts, `.gs`), timed; the IDE server covered six services through one open vault project but missed an aliased-import caller and has no Python call hierarchy; Serena ran headless with file overviews and symbol edits. Filed as [[JetBrains MCP server vs Serena for code navigation]].

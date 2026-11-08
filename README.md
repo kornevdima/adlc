@@ -50,9 +50,12 @@ Toolset:
   code-nav: semble, serena          # graphify | semble | serena | idea | none
   design: impeccable, taste-skill   # impeccable | taste-skill | none
   design-system: ~/work/design-system
+  layout: worktrees                 # symlinks | worktrees
+  engineering: ub-mode              # ub-mode | none
+  cost: tokeneconomizer             # tokeneconomizer | none
 ```
 
-Then open the vault in the reader you chose: the project folder in Obsidian, or `wiki-renderer add <vault> && wiki-renderer`. `python3 skills/wiki/scripts/toolset.py --vault <vault> check` lists what is still missing with its install line. Options, defaults and what each choice changes: [`toolset.md`](skills/wiki/references/toolset.md). A vault without the block behaves as before: Obsidian, graphify when a graph exists, no design tool.
+Then open the vault in the reader you chose: the project folder in Obsidian, or `wiki-renderer add <vault> && wiki-renderer`. `python3 skills/wiki/scripts/toolset.py --vault <vault> check` lists what is still missing with its install line. Options, defaults and what each choice changes: [`toolset.md`](skills/wiki/references/toolset.md). A vault without the block behaves as before: Obsidian, graphify when a graph exists, no design tool, services symlinked into `services/`, no engineering method, no cost plugin.
 
 ### Code navigation and design tools (optional, per the toolset)
 
@@ -63,7 +66,12 @@ claude mcp add -s user serena -- serena start-mcp-server --context=claude-code -
 # code-nav: idea: IntelliJ 2025.2+, Settings | Tools | MCP Server | Auto-Configure for Claude Code (the IDE must be running with the project open)
 claude plugin marketplace add pbakaus/impeccable && claude plugin install impeccable@impeccable      # design: impeccable
 claude plugin marketplace add leonxlnx/taste-skill && claude plugin install taste-skill@taste-skill  # design: taste-skill
+sh bin/add-service-worktree.sh /path/to/vault <service>                      # layout: worktrees, once per service
+sh bin/setup-ub-mode.sh /path/to/vault                                       # engineering: ub-mode (git, Python >=3.10)
+# cost: tokeneconomizer: clone microsoft/TokenEconomizer, then claude plugin marketplace add "$PWD/TokenEconomizer" && claude plugin install tokeneconomizer@tokeneconomizer
 ```
+
+With `layout: worktrees` every service is a branch of the vault's own repository, checked out at `services/<service>`, and its code wiki is `service-wikis/<service>/` on the main branch, so code and documentation never share a commit ([`service-worktrees.md`](skills/wiki/references/service-worktrees.md)). With `engineering: ub-mode` every code change follows Robert C. Martin's ub-mode skill and passes crapper, dryer and mutator ([`engineering-ub-mode.md`](skills/wiki/references/engineering-ub-mode.md)).
 
 ## Skills
 
@@ -99,7 +107,7 @@ With `code-nav: semble, serena` or `idea` the workers and `wiki-query` call the 
 | `/wrap-up` | Session sync: down/up-propagate across wikis, reconcile boards, refresh caches |
 | `/product-management-layer` | Gate 0 governance: tool approval, buy-vs-build TCO, compliance scoping |
 | `/ba-export` | Render wiki BA deliverables to formal Office documents |
-| `/technical-writer` | Documents for a human reader: client briefs and question packs, help pages, the wording of stories and requirements, change reports; source and translation kept in step. Method: [`writing-style.md`](skills/wiki/references/writing-style.md) |
+| `/technical-writer` | Documents for a human reader: client briefs and question packs, help pages, the wording of stories and requirements, change reports; source and translation kept in step; an AI-tells pass with a checker (`tells_check.py`) on every page. Method: [`writing-style.md`](skills/wiki/references/writing-style.md), [`ai-tells.md`](skills/technical-writer/references/ai-tells.md) |
 | `/project-profile` | Scan a repo, generate/augment its AGENTS.md |
 
 Non-engineers bring a need in by dropping a five-heading note (problem, outcome, who is affected, constraints, open questions) into `.raw/intake/`; the next ingest turns it into requirements and stories. Template: [`modes.md` § Intake for non-engineers](skills/wiki/references/modes.md#intake-for-non-engineers).

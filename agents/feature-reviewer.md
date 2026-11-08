@@ -43,7 +43,7 @@ Ground every finding in `file:line`. Default to high-signal findings; don't nitp
 
 ## Run order
 
-1. Read the service's AGENTS.md + the spec / contract for intent.
+1. Read the service's AGENTS.md + the spec / contract for intent. When it has a `How we change code` section from ub-mode (`engineering: ub-mode`), re-run crapper and dryer on the changed files with the commands it lists; a failed gate is a finding with severity high.
 2. Get the diff (`git diff` for the feature's files / range). Read the changed files in context.
 3. **Blast-radius check with the toolset's code navigation** (the packet names it: the vault's `Toolset:` block, key `code-nav`; `skills/wiki/references/toolset.md`). The point is callers and dependents **outside the diff**, the missed-call-site class of bug the diff alone can't show. **graphify**: `PY=$(cat graphify-out/.graphify_python 2>/dev/null || echo python3); "$PY" -m graphify query "<changed symbol>" --budget 1500`. **semble, serena**: `mcp__semble__find_related` on each new or changed function for an existing one that already does it (reuse findings), and Serena's `find_referencing_symbols` for callers, dead and duplicated symbols in the languages its server covers. **idea** (the JetBrains IDE server): `mcp__idea__analyze_calls` with `INCOMING_CALLS` on each changed symbol (the exact signature from its ambiguity list, the packet's `projectPath`), confirmed with `search_text` since an aliased import can be missing from the tree, and `mcp__idea__lint_files` over the diff's files for the IDE's inspections. **none**: Grep for the changed symbol names. Confirm any finding in the code before filing it (the tool finds; the code asserts), and say which instrument found it.
 4. Review on the dimensions above. Assign each finding a severity (blocker / major / minor), a concrete fix, and the owner (`feature-builder` for code, `feature-tester` for tests).
@@ -53,7 +53,7 @@ Ground every finding in `file:line`. Default to high-signal findings; don't nitp
 
 ## Register in the wiki
 
-Write a review record (Markdown) to the service code wiki (`services/<svc>/wiki/reviews/<feature>-review-YYYY-MM-DD.md`, or the project's convention) and report its path: the dispatcher writes the log pointer. Frontmatter: `type: review`, `feature`, `verdict`, `reviewer`, `date`. Body: a findings table (`file:line`, severity, dimension, finding, fix, owner) and the verdict. Link it from the feature's wiki page. Never create or write `log.md`, `hot.md` or mission control in either wiki: in a multi-repo vault the log belongs to the dispatcher or doesn't exist, and a reviewer created one in a code wiki that keeps none, twice.
+Write a review record (Markdown) to the service code wiki (`<code wiki>/reviews/<feature>-review-YYYY-MM-DD.md`, or the project's convention (the code wiki path comes in the packet: `services/<svc>/wiki/` with `layout: symlinks`, `service-wikis/<svc>/` with `layout: worktrees`; `toolset.py code-wiki <svc>` prints it)) and report its path: the dispatcher writes the log pointer. Frontmatter: `type: review`, `feature`, `verdict`, `reviewer`, `date`. Body: a findings table (`file:line`, severity, dimension, finding, fix, owner) and the verdict. Link it from the feature's wiki page. Never create or write `log.md`, `hot.md` or mission control in either wiki: in a multi-repo vault the log belongs to the dispatcher or doesn't exist, and a reviewer created one in a code wiki that keeps none, twice.
 
 ## The loop
 

@@ -10,14 +10,14 @@ description: >
   Triggers on: "write this for the client", "client questions", "question pack", "client brief",
   "scope of work", "write the help page", "user guide", "rewrite this story", "make the
   requirement readable", "change report", "translate this", "sync the translation",
-  "make it readable", "/technical-writer".
+  "make it readable", "check for AI tells", "de-slop", "/technical-writer".
 ---
 
 # technical-writer: documents for a human reader, and their translations
 
 A document a person reads is where the vault meets its readers: a client who decides, a user who follows a help page, a stakeholder who reads a story or a requirement, the operator who reads a change report. Two things go wrong with such documents most: they read like a dump of the agent's notes, and a translation drifts from its source. This skill covers both. Translation counts as a deliverable here, not a last step.
 
-The style is in `skills/wiki/references/writing-style.md`: audience, sentences, identifiers, structure, facts, questions, tasks, change reports, corrections. This skill is the procedure around it.
+The style is in `skills/wiki/references/writing-style.md`: audience, sentences, identifiers, structure, facts, questions, tasks, change reports, corrections. This skill is the procedure around it, plus a pass against the patterns that mark text as machine-written (§ The AI-tells pass).
 
 ## Before writing
 
@@ -73,6 +73,22 @@ Keep the ID, the frontmatter, the acceptance criteria and the links untouched. R
 3. **Meaning, not words.** The translation must read as if it were written in that language: rewrite the sentence, don't map it word for word.
 4. **Glossary.** Keep the translation terms on the vault's `wiki/glossary.md`: a `Translation` column on the Project terms table, or a `## Translation` section above `## Registers` (the page's format and script are in the wiki skill's `references/glossary.md`); the operator profile's § Translation points there. Add every domain term the first time it is translated, and reuse it after that. Also list what stays untranslated: code identifiers, product names, and technical words the client uses as is.
 5. **Local typography.** Decimal separators, units, and page references in the target language's form (for example `0,1-1 с` and `стр. 8` in Russian, `0.1-1 s` and `p.8` in English). Dashes per the style reference: a hyphen, the sentence unchanged.
+
+## The AI-tells pass
+
+Pages that agents write fail in one way above the rest: they have the shape of documentation (headings, bold labels, a summary at the end) around sentences that announce importance instead of stating facts. `references/ai-tells.md` catalogues those patterns, adapted from the English Wikipedia guide "Signs of AI writing": claims of significance instead of facts, stock vocabulary, "serves as" for "is", negative parallelism, the rule of three, elegant variation, title-case headings, bold everywhere, dashes, closing summaries, chat residue, placeholders, and change reports that promise clarity instead of saying what changed. `scripts/tells_check.py` finds the ones a regular expression can see.
+
+Run it on every page you created or changed, before reporting the work as done:
+
+```bash
+python3 <plugin>/skills/technical-writer/scripts/tells_check.py <page or folder>
+```
+
+It skips frontmatter, code, and text in double quotes (a quoted phrase is a mention; `--include-quotes` checks it too). A `fix` finding is removed before filing; exit code 1 means one remains. A `review` finding is read in context: a literal "landscape" (page orientation) or "robust" (statistics) stays. Then read for what the script cannot see: vague attributions, three items where the facts give two, one thing called by four names, a "challenges" section that follows a formula, headings for every two sentences. Then the deletion test: for each sentence, ask what it adds to the one before, and delete it if the answer is nothing.
+
+Don't over-correct. A page that dodges every listed word with synonyms is worse: the synonyms become the next tells and the sentence still says nothing. The fix for a tell is almost always a specific fact or a deletion. Plain constructions ("there is", "in order to") and clean grammar are fine; the catalogue's § What is not a sign lists them.
+
+A page that lists the patterns as examples (a style guide, this catalogue) carries `<!-- tells-check: off -->` in its first ten lines.
 
 ## After the edit
 

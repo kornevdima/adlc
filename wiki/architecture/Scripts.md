@@ -3,7 +3,7 @@ type: module
 title: "Scripts"
 path: "skills/*/scripts/, bin/"
 created: 2026-10-22
-updated: 2026-11-04
+updated: 2026-11-08
 tags:
   - architecture
   - module
@@ -29,13 +29,16 @@ Sixteen Python scripts, standard library only, each beside the skill that owns i
 | `upstream_redact_check.py` | `wiki` | Flags tracker ids, sprint tokens, ledger names, hashes, URLs, source paths and vault names in an upstream report or a plugin page | `/adlc upstream` before an export; this repo before a commit |
 | `guard_env.py` | `wiki` | PreToolUse hook: blocks any tool call that reads an env file or prints resolved configuration; `.env.example` and commit / PR message text stay allowed. Payload tests in `test_guard_env.py` | the vault's `.claude/settings.json`, copied there by the scaffold |
 | `okf_export.py` | `wiki` | Renders the vault as an Open Knowledge Format bundle | by hand, for sharing ([[Open Knowledge Format]]) |
-| `toolset.py` | `wiki` | `show` resolves the vault's `Toolset:` block with its defaults (one `key=value` per line, or `--key` for one); `check` says which chosen tools are installed, each with its install line, and for the IDE server whether the IDE answers an MCP initialize; `detect` proposes a block from what the machine has. Reads MCP server names and the IDE server's URL only. Parser tests in `test_toolset.py` | the scaffold (step 3a), `/adlc` Step 0, the `graphify-ingest` and `graphify-update` gates, `wiki-faq` answers |
+| `toolset.py` | `wiki` | `show` resolves the vault's `Toolset:` block with its defaults (one `key=value` per line, or `--key` for one); `check` says which chosen tools are installed, each with its install line, and for the IDE server whether the IDE answers an MCP initialize; `detect` proposes a block from what the machine has; `code-wiki <svc>` prints a service's code wiki path for the vault's layout (`services/<svc>/wiki/` or `service-wikis/<svc>/`). `check` also covers the layout (`/services/` ignored, worktrees present), ub-mode (skill and three tool virtualenvs) and TokenEconomizer. Reads MCP server names and the IDE server's URL only. Parser tests in `test_toolset.py` | the scaffold (step 3a), `/adlc` Step 0, the `graphify-ingest` and `graphify-update` gates, `wiki-faq` answers |
 | `build_snapshot.py` | `adlc` | Snapshots the build as a git ref and checks the tester's footprint against it | the story loop, after builder and after tester |
 | `lint_graph.py` | `wiki-lint` | Graph-layer checks: label and title drift, stale labels, orphan community pages, graph staleness against the source files | `wiki-lint` |
 | `build_index_json.py` | `wiki-query` | Writes `wiki/index.json`, the machine-readable locator for large vaults | `wiki-query` large-vault mode, `wrap-up` |
 | `chunks.py`, `merge.py`, `regenerate.py` | `graphify-ingest` | Plan the extraction chunks; merge AST and semantic JSON and re-cluster; regenerate the report, `wiki/code/` and the hot-cache snapshot from the labels | `graphify-ingest` |
 | `detect.py`, `update.py` | `graphify-update` | Detect what changed since the last run; apply the incremental update with labels preserved | `graphify-update` |
 | `usage_report.py` | `wrap-up` | Rolls token usage up from the host's session transcripts into `wiki/meta/usage.md` | `wrap-up` |
+| `tells_check.py` | `technical-writer` | Finds the patterns of machine-written text a regular expression can see (`references/ai-tells.md`); skips frontmatter, code and quoted text; exit 1 on a `fix` finding. Tests in `test_tells_check.py` | `technical-writer` on every page it writes, `wrap-up` 6b, `wiki-lint` writing check |
+| `bin/add-service-worktree.sh` | plugin | Adds one service to a `layout: worktrees` vault: ignores `/services/`, checks the service branch out as a worktree (an orphan branch when new), seeds `service-wikis/<svc>/`; commits nothing | the operator or the scaffold, once per service |
+| `bin/setup-ub-mode.sh`, `bin/ub-tool.sh` | plugin | Copy the ub-mode skill into the vault and clone crapper, dryer and mutator into `tools/` at pinned commits, each with a virtualenv; `ub-tool.sh` becomes the vault's `scripts/tool.sh`, which finds the interpreter on Windows and Unix | the operator or the scaffold, once per vault with `engineering: ub-mode` |
 | `bin/setup-graphify.sh` | plugin | Installs the graphify library into a compatible Python and pins the path for a project | the operator or `graphify-ingest`, once per project; skipped while the pinned interpreter imports graphify |
 
 ## Conventions

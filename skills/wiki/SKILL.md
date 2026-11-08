@@ -139,7 +139,7 @@ Steps:
 1. Determine the wiki mode. Ask: "Is this vault for a code project (Mode B), product / business documentation (Mode C), an agent-operated delivery lifecycle where AI agents cover the BA / QA / PM roles (Mode ADLC), or a combination (B+C)?" Read `references/modes.md` for the folder maps and details. ADLC is additive: it does not replace B or C, pairs with the `qa` (and often `ops`) concern, and integrates `ba-suite` via `references/ba-suite-pipeline.md`. The reference also points to the original Karpathy six-mode pattern at `.raw/llm-wiki-pattern-spec.md` if a user explicitly wants Mode A/D/E/F (rare).
 2. Determine concerns. Ask: "Does the team include any of these roles producing structured artifacts? Pick any of: ops (DevOps/SRE), qa (testing), sec (security), design (UX), writing (user docs). Or 'none'." See `references/modes.md` § Concerns for when each applies; per-concern folder maps live in `references/concerns/<name>.md`. Skip concerns where the role is informal — concerns are about **artifacts**, not roles.
 3. Ask the purpose: "In one sentence, what is this vault for?" (captured into `AGENTS.md`'s `Purpose:` field).
-3a. **Determine the toolset.** Run `python3 <plugin>/skills/wiki/scripts/toolset.py --vault . detect` and show the proposed block. Ask the operator to confirm or change three choices and one path: the reader (`obsidian`, `wiki-renderer`, `none`), the code navigation (`graphify`, `semble`, `serena`, `idea` for the JetBrains IDE's MCP server, `none`; several allowed) and the design tools (`impeccable`, `taste-skill`, `none`) with the folder of the design system they follow. Write the answers as the `Toolset:` block below `Concerns:` in `AGENTS.md`, then run `toolset.py --vault . check` and report each missing tool with its install line. Keys, options, defaults and what each choice changes: `references/toolset.md`. A vault created before this block existed behaves as `reader: obsidian`, graphify when a graph exists, no design tool.
+3a. **Determine the toolset.** Run `python3 <plugin>/skills/wiki/scripts/toolset.py --vault . detect` and show the proposed block. Ask the operator to confirm or change three choices and one path: the reader (`obsidian`, `wiki-renderer`, `none`), the code navigation (`graphify`, `semble`, `serena`, `idea` for the JetBrains IDE's MCP server, `none`; several allowed) and the design tools (`impeccable`, `taste-skill`, `none`) with the folder of the design system they follow. For Mode ADLC and Mode B, ask three more: the layout (`symlinks`: each service its own repository linked into `services/`; `worktrees`: one repository, a branch per service checked out at `services/<svc>`, code wikis in `service-wikis/`, per `references/service-worktrees.md`), the engineering method (`ub-mode` or `none`, per `references/engineering-ub-mode.md`) and the cost plugin (`tokeneconomizer` or `none`). Write the answers as the `Toolset:` block below `Concerns:` in `AGENTS.md`, then run `toolset.py --vault . check` and report each missing tool with its install line (for `worktrees`, run `bin/add-service-worktree.sh` per service after step 8's first commit; for `ub-mode`, `bin/setup-ub-mode.sh`). Keys, options, defaults and what each choice changes: `references/toolset.md`. A vault created before this block existed behaves as `reader: obsidian`, graphify when a graph exists, no design tool.
 4. Create full folder structure under `wiki/` based on the mode and selected concerns.
    - **Base mode folders must match `references/modes.md` for the chosen letter.** For example, Mode B requires `wiki/modules/`, `wiki/components/`, `wiki/decisions/`, `wiki/dependencies/`, and `wiki/flows/`.
    - **For each selected concern, add the folders listed in `references/concerns/<name>.md`** (e.g. `ops` adds `runbooks/`, `incidents/`, `services/`, `observability/`).
@@ -198,6 +198,9 @@ Toolset:
   code-nav: [graphify / semble, serena, idea / none]
   design: [impeccable, taste-skill / none]
   design-system: [folder path / none]
+  layout: [symlinks / worktrees]
+  engineering: [ub-mode / none]
+  cost: [tokeneconomizer / none]
 Purpose: [ONE SENTENCE]
 Owner: [NAME]
 Created: YYYY-MM-DD
@@ -245,7 +248,27 @@ Workers and skills look this table up before writing a record: it makes filing a
 
 ## Writing
 
-Every document for a human reader (a client brief, a help page, a story or requirement, a report or a reply to the operator) follows the plugin's `skills/wiki/references/writing-style.md`; `meta/operator-profile.md` § Writing names this vault's reference document and exceptions. An identifier never stands alone: plain words first, the id in brackets. Every table has a lead-in. Links land on what they name, checked on the deployed page.
+Every document for a human reader (a client brief, a help page, a story or requirement, a report or a reply to the operator, a row of a `_changelog.md`) follows the plugin's `skills/wiki/references/writing-style.md` and goes through the `technical-writer` skill's AI-tells pass; `meta/operator-profile.md` § Writing names this vault's reference document and exceptions. An identifier never stands alone: plain words first, the id in brackets. Every table has a lead-in. Links land on what they name, checked on the deployed page.
+
+1. Load the `technical-writer` skill before writing or editing a page. When a worker writes the page, its output goes through the skill's checks before it is filed, and a dispatch packet to a worker that writes pages names the skill and the checker.
+2. Run the checker on every page you created or changed and fix each `fix` finding before reporting the work as done: `python3 <plugin>/skills/technical-writer/scripts/tells_check.py <page or folder>`.
+3. `wrap-up` and `wiki-lint` run it on the product wiki and the code wikis.
+
+[IF engineering: ub-mode]
+## Engineering
+
+Every code change follows the `ub-mode` skill (`.claude/skills/ub-mode/SKILL.md`): test first, then the three quality tools. Each service's `AGENTS.md` has its commands and its definition of done; read it before touching that service.
+
+[IF layout: worktrees]
+Code and documentation never share a commit:
+
+| Change | Where you work | Branch it commits to |
+|---|---|---|
+| a service's code | `services/<service>/` | `<service>` |
+| a service's documentation | `service-wikis/<service>/` | main |
+| project wiki, skills, scripts | the vault root | main |
+
+A fresh clone gets the services back with `git worktree add services/<service> <service>` per service.
 
 ## Operations
 

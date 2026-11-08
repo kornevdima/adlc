@@ -98,7 +98,7 @@ ADLC is a **separate, additive** mode. It does not replace Mode B or Mode C. It 
 ### Operating model
 
 - **The wiki is canonical.** BA deliverables live here as Markdown with stable IDs. Office files are a generated view, not the source of truth.
-- **Multi-wiki topology.** One product / ADLC wiki plus N code wikis (Mode B), linked through `services/` symlinks. Work flows down (impl specs into code wikis) and up (shipped features back into the product wiki).
+- **Multi-wiki topology.** One product / ADLC wiki plus N code wikis (Mode B), linked through `services/` symlinks, or, with `layout: worktrees` in the `Toolset:` block, kept in one repository: each service a branch checked out at `services/<svc>`, each code wiki a folder at `service-wikis/<svc>/` on the main branch ([`service-worktrees.md`](service-worktrees.md)). Work flows down (impl specs into code wikis) and up (shipped features back into the product wiki).
 - **The bundled BA method set is the engine at both ends** (`skills/wiki/references/ba/`, no external plugin). It ingests raw context (Confluence, Jira, meeting notes) into BA deliverables, and exports wiki content to Office formats. See [`ba-suite-pipeline.md`](ba-suite-pipeline.md).
 - **Humans operate and gate.** Agents produce; humans confirm scope and sign off. The value is measurable: deliverables produced per feature against the BA / QA / PM time they replace.
 
@@ -123,7 +123,8 @@ vault/
 │   ├── meta/             # mission-control board, ba-activity ledger (metrics seam), lint reports
 │   └── glossary.md       # project terms + one entry per identifier, generated from the registers (references/glossary.md)
 │   # every folder above carries _index.md (catalog) and _changelog.md (history; pages hold the current state only)
-├── services/             # symlinks to code checkouts; each service's code wiki holds its specs (no project-context folder)
+├── services/             # symlinks to code checkouts (layout: symlinks) or git worktrees of service branches (layout: worktrees); each service's code wiki holds its specs (no project-context folder)
+├── service-wikis/        # layout: worktrees only: one code wiki per service, on the main branch
 └── AGENTS.md
 ```
 

@@ -20,11 +20,16 @@ git commit -m "Initial vault scaffold"
 Create a `.gitattributes` in the vault root as part of the scaffold:
 
 ```gitattributes
+* text=auto eol=lf
+
 wiki/log.md merge=union
 **/wiki/log.md merge=union
+service-wikis/*/log.md merge=union
 ```
 
-`log.md` is append-only with newest entries at the top, so concurrent sessions (teammates, parallel agents, a wrap-up racing an ingest) both prepend — a normal merge conflicts every time, while `merge=union` keeps both entries automatically. The `**/` pattern covers co-located code wikis under `services/`. The team-sync protocol (`team-sync.md`) depends on this being present before the second concurrent session ever runs.
+`* text=auto eol=lf` stores and checks out every text file with LF endings on every machine. Without it, a vault edited on Windows and macOS shows every page as changed after a checkout, and a worktree checked out with other settings disagrees with the main checkout about which files changed. Binary files are detected and left alone.
+
+`log.md` is append-only with newest entries at the top, so concurrent sessions (teammates, parallel agents, a wrap-up racing an ingest) both prepend; a normal merge conflicts every time, while `merge=union` keeps both entries automatically. The `**/` pattern covers co-located code wikis under `services/`; the `service-wikis/` line covers the code wikis of the worktree layout ([`service-worktrees.md`](service-worktrees.md)). The team-sync protocol (`team-sync.md`) depends on this being present before the second concurrent session ever runs.
 
 In a co-located repo (Mode B wiki inside a code repo), also add:
 

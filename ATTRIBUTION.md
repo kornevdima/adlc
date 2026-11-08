@@ -19,6 +19,29 @@ adlc is an original work. The following third-party patterns, tools, and creator
 
 ---
 
+## Signs of AI writing (Wikipedia)
+
+**Source:** English Wikipedia, [Wikipedia:Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing), by its editors, CC BY-SA 4.0
+**Use:** `skills/technical-writer/references/ai-tells.md` adapts the guide's catalogue of patterns into a checklist for wiki pages, with our own fixes and examples, and `skills/technical-writer/scripts/tells_check.py` checks the patterns a regular expression can see. The adapted catalogue is shared under CC BY-SA 4.0.
+
+---
+
+## ub-mode, crapper, dryer, mutator
+
+**Author:** Robert C. Martin ([unclebob](https://github.com/unclebob))
+**Source:** https://github.com/unclebob/ub-mode (MIT) and the crapper, dryer and mutator repositories
+**Use:** Not bundled. `bin/setup-ub-mode.sh` clones them at pinned commits into a vault that chooses `engineering: ub-mode`; the skill is copied unchanged with its LICENSE. `skills/wiki/references/engineering-ub-mode.md` describes how the delivery loop applies them.
+
+---
+
+## TokenEconomizer
+
+**Author:** Microsoft Research and UC Berkeley
+**Source:** https://github.com/microsoft/TokenEconomizer (Apache-2.0)
+**Use:** Not bundled. `toolset.md` § Cost describes it as the optional `cost` plugin and the settings that suit a delivery vault; `toolset.py check` looks for it.
+
+---
+
 ## Shift-Left Engineering Advisor
 
 **Source:** the `anthropic-skills:shift-left-engineering-advisor` skill
