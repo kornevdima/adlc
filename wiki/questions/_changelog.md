@@ -12,6 +12,7 @@ Change history for pages in this folder. Pages show the current state only; hist
 
 | Date | Page | Change |
 |---|---|---|
+| 2026-11-08 | [[Operating model for adlc 1.3.0]] | Filed from the operator's four rulings on the research: one release, generated board, separate decision kinds, artifact pages and drivers |
 | 2026-11-08 | [[Research How work is organized]] | Operator ruling recorded: metrics are computed outside adlc; the records carry the fields |
 | 2026-11-08 | [[Research How work is organized]] | Second pass: 21 primaries fetched, Open Questions rewritten, sources extended, three contradictions added |
 | 2026-11-08 | [[Research How work is organized]] | Filed by autoresearch from the brief `.raw/briefs/2026-11-08 How work is organized.md`; nine questions answered, none blocked |

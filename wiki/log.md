@@ -21,6 +21,11 @@ Append-only. New entries go at the TOP. Never edit past entries.
 
 Entry format: `## [YYYY-MM-DD] operation | Title`
 
+## [2026-11-08] plan | Operating model for adlc 1.3.0
+- **Trigger:** the planning step the research brief deferred to the operator.
+- **Rulings (operator, 2026-11-08):** everything in one release, 1.3.0, EGM moves to 1.4.0; the board is a generated Markdown page from story frontmatter with done-against-total counts as a view, plus a Bases file only under `reader: obsidian`; decision levels get separate record kinds (product in `decisions/`, team in `How we work.md`, machine in a local-only page, ADRs in the code wiki) and a rule page on what is not a decision; gate pages become artifact pages and the architecture worker writes drivers, scenarios and constraints, never requirements, each gate one decision line on the epic page.
+- **Plan:** [[Operating model for adlc 1.3.0]], fifteen items in seven blocks with the files each touches, the completion check, the order of work, and three points still open (reflection files committed after review or kept out of git; spike worker in 1.3.0 or later; where `How we work.md` lives).
+
 ## [2026-11-08] ruling | Metrics are computed outside adlc
 - **Operator ruling** on the research [[Research How work is organized]], section 5 and finding F6: adlc is not a metrics-collecting or DORA-reporting tool. The epics, sprints and stories in the wiki are the source of truth and carry the fields a later computation needs; the computation itself runs outside the plugin, from those records and from git.
 - Recorded on the synthesis (section 5, the F6 row, the gaps list) and on [[Delivery Metrics and Their Data Sources]] (For this plugin).

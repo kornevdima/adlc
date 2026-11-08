@@ -2,7 +2,7 @@
 type: meta
 title: "Questions Index"
 created: 2026-10-22
-updated: 2026-11-04
+updated: 2026-11-08
 tags:
   - meta
   - index
@@ -23,6 +23,7 @@ Filed answers and the pages behind plugin fixes: each one opened from a question
 
 ## Open
 
+- [[Operating model for adlc 1.3.0]] — plan for the release that closes the gaps [[Research How work is organized]] found: PRD, domains, releases, a generated board, epics/ and sprint records, plugin-owned story frontmatter, decision kinds, spike record and routes, acceptance rule, quotes out of tracked pages, artifact pages and drivers, portfolio and joining records (status: open, rulings of 2026-11-08)
 - [[Integrate the wiki toolset into the ADLC workers]] — workers write into a vault they have no toolset for; three reinvention instances measured in one session (status: open)
 - [[Operator profile - learn engagement style from corrections]] — `project-profile` covers the codebase, nothing covers the human running it; business-input vs fully-managed as the axis (status: open — smallest useful version shipped 2026-09-03, see its resolution log)
 - [[Configurable subagent models per host]] — a hardcoded `model: sonnet` broke worker dispatch in a Copilot org without Claude models; design: no model in agents, `adlc:setup` writes per-host tiers to a user file, dispatchers pass `model` (status: postponed — low priority, operator 2026-10-02)
