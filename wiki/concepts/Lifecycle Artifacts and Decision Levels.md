@@ -11,6 +11,8 @@ tags:
 related:
   - "[[nygard-documenting-architecture-decisions]]"
   - "[[madr-markdown-decision-records]]"
+  - "[[productplan-product-requirements-document]]"
+  - "[[google-sre-book-introduction-playbooks]]"
 status: draft
 ---
 
@@ -24,19 +26,19 @@ The table gives the stage, the record it leaves, and how well the claim is sourc
 
 | Stage | Record | Notes | Confidence |
 |---|---|---|---|
-| Discover | PRD (product requirements document) | Purpose, users, behaviour, scope, assumptions, open questions; the why before the what; implementation left to the development team (Atlassian PRD guide, search summary only, page not retrieved) | medium |
-| Discover | Spike record | A time-boxed investigation to cut risk or sharpen an estimate (Scaled Agile glossary and Mountain Goat Software, search summaries) | medium |
+| Discover | PRD (product requirements document) | The record of what a release must deliver: every capability with a use case, goals, non-functional requirements, assumptions, constraints, dependencies; it describes needs and may not dictate an implementation, which engineering specifies afterwards (Source: [[productplan-product-requirements-document]]) | high |
+| Discover | Spike record | A time-boxed investigation that produces knowledge, not working software, to cut risk or sharpen an estimate; the term comes from Extreme Programming (Mountain Goat Software and Scrum.org, via search results; the Agile Alliance glossary page returned 404) | medium |
 | Design | Domain model | Entities, relations and vocabulary the code uses; owned by the service that holds the data | low (practice judgment) |
 | Design | ADR | One significant engineering decision (Source: [[nygard-documenting-architecture-decisions]], [[madr-markdown-decision-records]]) | high |
 | Build and verify | Test plan | What is checked, where, against which requirement | low (practice judgment) |
 | Release | Release and deliverable records | What shipped, which version, which requirements it closes | low (practice judgment) |
 | Operate | Infrastructure as code | The environment itself, versioned; the code is the record | low (practice judgment) |
-| Operate | Runbook (Google says playbook) | Steps for a known alert; written ahead of time it gave about 3x better time to repair than improvising (Google SRE book, search summary) | medium |
-| Operate | Postmortem | Blameless; fixes target the system, not people; written for every significant incident (Google SRE materials, search summary) | medium |
+| Operate | Runbook (Google says playbook) | Steps for a known alert; recorded ahead of time it gave roughly 3x better time to repair than winging it, per Google's own experience (Source: [[google-sre-book-introduction-playbooks]]) | high |
+| Operate | Postmortem | Blameless; fixes target the system, not people; written for every significant incident (Google SRE materials, search summary; the postmortem chapter was not fetched) | medium |
 
 ## What a spike should leave behind
 
-The sources define the spike only as a time-boxed question. What it leaves behind is practice judgment (low): the question, the time box, the commands run, tool and library versions, failed attempts with why they failed, and the result. Failed attempts matter most, because they stop the next person repeating them. If the result changes the design, it feeds an ADR; the spike record is evidence, not a decision.
+The sources define the spike as a time-boxed activity whose output is knowledge. Recommended boxes run from under four hours (Scrum.org) to one to three days. At the end the team decides; if more research is needed, that becomes a new, separately prioritised spike. The record contents below are practice judgment (low): the question, the time box, the commands run, tool and library versions, failed attempts with why they failed, and the result. Failed attempts matter most, because they stop the next person repeating them. If the result changes the design, it feeds an ADR; the spike record is evidence, not a decision.
 
 ## Levels of decision
 
@@ -60,4 +62,4 @@ Test for a record (practice judgment, low): would a future developer without con
 
 ## Gaps
 
-The Atlassian PRD page could not be retrieved in full, and no primary source was read for the domain model, test plan, release record or infrastructure as code.
+The Atlassian PRD page returned only navigation, so ProductPlan stands in. The Agile Alliance spike glossary page returned 404, so spike claims rest on search results from Mountain Goat Software and Scrum.org. The SRE postmortem chapter was not read. No primary source was read for the domain model, test plan, release record or infrastructure as code.

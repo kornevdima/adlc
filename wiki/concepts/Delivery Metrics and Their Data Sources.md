@@ -2,7 +2,9 @@
 type: concept
 title: "Delivery Metrics and Their Data Sources"
 confidence: medium
-sources: ["[[dora-metrics-guide]]", "[[getdx-flow-metrics]]"]
+created: 2026-11-08
+updated: 2026-11-08
+sources: ["[[dora-metrics-guide]]", "[[getdx-flow-metrics]]", "[[dora-2025-ai-assisted-report]]", "[[space-developer-productivity]]", "[[atlassian-control-chart]]"]
 tags: [metrics, dora, space, flow, estimation, frontmatter]
 ---
 
@@ -31,11 +33,11 @@ The table lists each metric, its raw data, and where that data comes from.
 
 ## Definitions and tiers
 
-DORA has five measures: change lead time, deployment frequency, failed deployment recovery time, change fail rate, deployment rework rate (Source: [[dora-metrics-guide]], high). The 2025 report adds reliability as a further outcome (low; not read directly). 2024 tiers, from secondary summaries (medium): elite deploys on demand with lead time under a day and recovery under an hour; low deploys less than monthly. Cutoffs for low and for failure rate vary by source.
+DORA has five measures: change lead time, deployment frequency, failed deployment recovery time, change fail rate, deployment rework rate (Source: [[dora-metrics-guide]], high). The 2025 report (released 23 September 2025) finds that AI amplifies the existing organization, and replaces the four tiers with seven team archetypes built from several measures (Source: [[dora-2025-ai-assisted-report]]; the page states the amplifier finding, medium for the archetypes from search summaries). Its reliability outcome is still unread (low). 2024 tiers, from secondary summaries (medium): elite deploys on demand with lead time under a day and recovery under an hour; low deploys less than monthly. Cutoffs for low and for failure rate vary by source.
 
-Flow metrics: flow time, flow velocity, flow efficiency, flow load, flow distribution (Source: [[getdx-flow-metrics]], medium). Cycle time is conventionally start of work to done; flow time starts earlier, at approval.
+Flow metrics: flow time, flow velocity, flow efficiency, flow load, flow distribution (Source: [[getdx-flow-metrics]], medium). Cycle time is the time spent working on an item, from work begins to done; lead time starts earlier, when the item is logged. Jira does not fix the boundaries: the team selects which statuses count, so record the selection (Source: [[atlassian-control-chart]], high). Flow time in the DX model starts at approval.
 
-SPACE (Forsgren, Storey and colleagues, ACM Queue 19(1), 2021; older than 3 years but foundational) has five dimensions: satisfaction and well-being, performance, activity, communication and collaboration, efficiency and flow. Guidance: use at least three dimensions, report in aggregate for teams, and treat activity counts as the most misused. This run could not fetch the article (HTTP 403), so this rests on search summaries (confidence: medium). Only activity and part of efficiency come from git; satisfaction needs a survey.
+SPACE (Forsgren, Storey and colleagues, ACM Queue 19(1), 2021; older than 3 years but foundational) has five dimensions: satisfaction and well-being, performance, activity, communication and collaboration, efficiency and flow. Guidance: use at least three dimensions, report in aggregate for teams, and treat activity counts as the most misused. The ACM article returned HTTP 403; the Microsoft Research record confirms authors, venue and the thesis that no single metric or dimension suffices (Source: [[space-developer-productivity]], high for that thesis). The five dimensions and the three-dimension advice rest on consistent secondary summaries (medium). Only activity and part of efficiency come from git; satisfaction needs a survey.
 
 ## Estimation
 
@@ -57,4 +59,4 @@ An epic needs the same dates plus its child ids; its times are derived from chil
 
 ## Gaps
 
-Tier thresholds for 2025 and the reliability definition need the primary report; SPACE needs the ACM text; Atlassian's own control-chart documentation was not reached.
+The 2025 PDF exceeded the fetch size limit, so the reliability definition, the measures behind the archetypes and their shares need a read of the PDF. The SPACE paper's own wording on dimension count and activity metrics needs the ACM text or a PDF copy.

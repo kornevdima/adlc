@@ -44,11 +44,34 @@ sources:
   - "[[spec-kit-research]]"
   - "[[cooper-stage-gate-systems-1990]]"
   - "[[claude-ai-native-sdlc-playbook]]"
+  - "[[team-topologies-key-concepts]]"
+  - "[[safe-product-management]]"
+  - "[[raci-responsibility-assignment-matrix]]"
+  - "[[obsidian-bases-help]]"
+  - "[[writethedocs-docs-as-code]]"
+  - "[[atlassian-link-confluence-page-to-work-item]]"
+  - "[[productplan-product-requirements-document]]"
+  - "[[google-sre-book-introduction-playbooks]]"
+  - "[[backstage-descriptor-format]]"
+  - "[[redhat-golden-paths]]"
+  - "[[contextmapper-context-map]]"
+  - "[[claude-code-settings-files-and-precedence]]"
+  - "[[claude-code-worktrees-page]]"
+  - "[[gitleaks-readme]]"
+  - "[[dora-2025-ai-assisted-report]]"
+  - "[[space-developer-productivity]]"
+  - "[[atlassian-control-chart]]"
+  - "[[kiro-specs-docs]]"
+  - "[[bmad-method-docs]]"
+  - "[[aws-ai-dlc-phases-and-stages]]"
+  - "[[sei-attribute-driven-design-method-collection]]"
 ---
 
 # Research: How work is organized
 
 Brief: `.raw/briefs/2026-11-08 How work is organized.md`. Run on 2026-11-08 with one inventory question answered from this repository (Q0) and eight web questions (Q1 to Q8), one research worker each. The case study is a small two-service web app run through adlc 1.2.0 by one operator; its twelve findings (F1 to F12) are stated in the brief in general terms. This page proposes no change to the plugin; the operator decides the changes in a separate planning step.
+
+A second pass on the same day sent one worker per question after the primaries the first pass could not reach; it added 21 source pages and raised the confidence of the nine concept pages, which carry the detail. The Open Questions section lists what is still secondary.
 
 ## Overview
 
@@ -104,13 +127,13 @@ Alternatives. Direct commits to main for one person: fastest, no review latency,
 
 ## 5. Measuring delivery
 
-Git gives the end of the clock (when code landed and shipped); the work item gives the start of the clock and the meaning (Source: [[Delivery Metrics and Their Data Sources]]). The five DORA measures (change lead time, deployment frequency, failed deployment recovery time, change fail rate, deployment rework rate) come mostly from commit, tag and revert timestamps (Source: [[dora-metrics-guide]]). Cycle time, flow efficiency, work in progress, flow distribution and estimation accuracy need the item: status-change timestamps, type, size, release. A story or epic record therefore carries `id`, `type`, `parent`, `created`, `ready`, `started`, `done`, a dated status history, `size`, `release` and `caused_by`, and every commit carries the item id. The dates of an epic derive from its children. SPACE adds satisfaction and collaboration, which need a survey, not a file.
+Git gives the end of the clock (when code landed and shipped); the work item gives the start of the clock and the meaning (Source: [[Delivery Metrics and Their Data Sources]]). The five DORA measures (change lead time, deployment frequency, failed deployment recovery time, change fail rate, deployment rework rate) come mostly from commit, tag and revert timestamps (Source: [[dora-metrics-guide]]). Cycle time, flow efficiency, work in progress, flow distribution and estimation accuracy need the item: status-change timestamps, type, size, release. Cycle time and lead time in a tracker follow whichever statuses the team selects as start and stop, so the status history, not a fixed transition, is the record (Source: [[atlassian-control-chart]]). The 2025 DORA report replaces the four performance tiers with team archetypes (Source: [[dora-2025-ai-assisted-report]], medium). A story or epic record therefore carries `id`, `type`, `parent`, `created`, `ready`, `started`, `done`, a dated status history, `size`, `release` and `caused_by`, and every commit carries the item id. The dates of an epic derive from its children. SPACE adds satisfaction and collaboration, which need a survey, not a file.
 
 Alternatives. Derive everything from git: zero discipline on the items, but no start of clock, no item type, no estimate, and a revert is indistinguishable from a normal fix. Full status history on every item: complete flow metrics, at the cost of one dated line per transition that a closing step must write. Story points against throughput forecasting: a coarse size costs one field and lets both methods be compared later.
 
 ## 6. Governing agent work
 
-Every surveyed agentic method puts a human gate between artifacts, keeps the human-facing steps in the main thread, and records approval as a file in the repository (Source: [[Agentic Lifecycle Methods Compared]]). Workers suit bounded, measurable work: research, spikes, build, test, review. Gates, rulings, contracts and commits stay in the main thread (Source: [[anthropic-building-effective-agents]]). An approval record names the approved artifact version, not only that approval happened; a broad reply accepts only what it names. Status files drift when a stage skips them, so one closing step owns every shared file. No surveyed method treats spikes, environment setup or changes to the tooling itself as a first-class step; a lifecycle that does fills a gap all of them leave. A gate is criteria written before the work, evidence as pointers to existing artifacts, and one decision line with verdict, date, deciding role and conditions; kill, hold and recycle must be real outcomes (Source: [[Gates as Checkpoints Without Documents]], [[cooper-stage-gate-systems-1990]]).
+Every surveyed agentic method puts a human gate between artifacts, keeps the human-facing steps in the main thread, and records approval as a file in the repository (Source: [[Agentic Lifecycle Methods Compared]]). Workers suit bounded, measurable work: research, spikes, build, test, review. Gates, rulings, contracts and commits stay in the main thread (Source: [[anthropic-building-effective-agents]]). An approval record names the approved artifact version, not only that approval happened; a broad reply accepts only what it names. AI-DLC's audit log is the fullest surveyed form: a receipt per verified checkpoint, auto-approved ones included, with bypass settings recorded and skipped stages marked, append-only and kept apart from the state file (Source: [[aws-ai-dlc-phases-and-stages]]). Status files drift when a stage skips them, so one closing step owns every shared file. No surveyed method treats spikes, environment setup or changes to the tooling itself as a first-class step; a lifecycle that does fills a gap all of them leave. A gate is criteria written before the work, evidence as pointers to existing artifacts, and one decision line with verdict, date, deciding role and conditions; kill, hold and recycle must be real outcomes (Source: [[Gates as Checkpoints Without Documents]], [[cooper-stage-gate-systems-1990]]).
 
 Alternatives. A single agent following rules (AI-DLC): simple, auditable through one log, but no context isolation and the main thread does everything. Orchestrator and workers (Anthropic): isolated context and parallel work, but the orchestrator must define a step for every kind of work or the agent invents one. Persona switching in one session (BMAD): role discipline without dispatch overhead, but no isolation and status files reported to drift.
 
@@ -152,20 +175,23 @@ Gaps between the model and adlc as built:
 - BMAD: one guide folds the scrum master and QA agents into the developer; the current docs list them separately; release notes deprecate the story pair for a single build chain (Source: [[Agentic Lifecycle Methods Compared]]). Low confidence either way.
 - AI-DLC: the blog says every approval is recorded; a repository issue says the log records that approval happened, not what was approved (Source: [[aws-ai-dlc-workflows]]). The issue is the more specific claim.
 - Requirements classes: a 2022 IIBA chapter workshop argues the functional and non-functional split matters mainly to designers; the BABOK schema keeps it (Source: [[Disciplines Bodies of Knowledge and Boundaries]]).
+- BABOK: version 2 treats transition requirements as a category beside solution requirements; later versions nest the functional and non-functional split under solution requirements (Source: [[Disciplines Bodies of Knowledge and Boundaries]]).
+- The playbook claim of roughly three times better time to repair sits in the Introduction of the SRE book, not in the on-call chapter where secondary sources place it; the book says playbook where this wiki says runbook (Source: [[google-sre-book-introduction-playbooks]]).
+- The Backstage descriptor page contradicts itself on whether a Template's owner is optional; it does not affect the catalog fields used here (Source: [[backstage-descriptor-format]]).
 - ISO 25010: eight characteristics in the 2011 edition, nine in 2023. DORA 2024 tier cutoffs and the count of flow metrics (four to six) vary by secondary source (Source: [[Delivery Metrics and Their Data Sources]]).
 
 ## Open Questions
 
-No question was blocked; the page cap of 3 per question left these unsourced.
+No question was blocked. Two passes ran; the second fetched 21 primaries the first pass could not reach. What is still secondary or unread:
 
-- RACI practice (Q1); Team Topologies and SAFe role pages were seen only in search excerpts; Shape Up from excerpts, its chapter fetch returned 404.
-- No current Atlassian page states the page-versus-issue rule; Obsidian Bases and Kanban boards built from frontmatter and other file-based trackers were not researched (Q2).
-- The PRD guide, the spike glossary entry and the SRE runbook chapters were not fetched; domain model, test plan, release record and infrastructure as code rest on practice judgment (Q3).
-- Handbooks, golden paths, platform teams and context-map patterns were not fetched; C4 pages are undated (Q4).
-- gitleaks and pre-commit setup, which settings files are personal, and handling of verbatim user text in logs are practice, not sourced (Q5).
-- The 2025 DORA report, the SPACE article (403), the Flow Framework primary and the control-chart documentation of Atlassian were not reached (Q6).
-- Kiro and BMAD details rest on search summaries; the Claude Code sub-agent documentation was not read (Q7).
-- The IIBA page needed a login and the SEI report returned 403; TOGAF, ISO 42010, PMBOK, ISTQB, SWEBOK, SRE and the design bodies are named but unverified (Q8).
+- A RACI primary (the PMBOK wording was not seen); the SAFe Product Owner relation and System Architect page, partly behind a login; the Team Topologies page is undated (Q1).
+- No current Atlassian page states the page-versus-issue rule; whether the Obsidian Kanban plugin maps lanes to a note property; the Bases views and functions detail (Q2).
+- The spike glossary entry (404 at both URL forms) and the SRE postmortem chapter; domain model, test plan, release record and infrastructure as code still rest on practice judgment (Q3).
+- The origin of the golden-path term rests on one vendor page; the DDD definitions of the context-map relationship types beyond customer-supplier; the SAFe dependency board, handbooks and architecture principles (Q4).
+- The local CLAUDE.md variant and the memory file layout; whether worktrees isolate ports and databases (Q5).
+- The 2025 DORA report PDF exceeded the fetch limit, so the reliability definition and the archetype measures are unread; the SPACE paper text (ACM returned 403; only the abstract via the Microsoft Research record) (Q6).
+- Kiro hooks and steering; the BMAD planning pages, sprint status file and whether the scrum master and QA agents are still separate; the AI-DLC audit field list and the definition of a bolt; the Claude Code sub-agents page (Q7).
+- TOGAF (every Open Group URL redirects to a login) and BABOK (the IIBA page is gated) remain secondary; the ADD driver and scenario definitions are in the report PDF, not the method page; ISTQB, PMBOK, SWEBOK, SRE as a body of knowledge and the design bodies are unverified (Q8).
 
 ## Sources
 
@@ -177,3 +203,14 @@ No question was blocked; the page cap of 3 per question left these unsourced.
 - [[dora-metrics-guide]]: Harvey, DORA, 2026-01-05. [[getdx-flow-metrics]]: DX after Kersten, 2025-09-09.
 - [[aws-ai-dlc-workflows]]: Matos and others, AWS, 2025-11-29. [[anthropic-building-effective-agents]]: Anthropic, 2024-12-19. [[spec-kit-research]]: filed 2026-05-10.
 - [[cooper-stage-gate-systems-1990]]: Cooper, 1990, via a mirror. [[claude-ai-native-sdlc-playbook]]: Claxton, Anthropic, 2026-08-21.
+
+Second pass:
+
+- [[team-topologies-key-concepts]]: Team Topologies, undated. [[safe-product-management]]: Scaled Agile, 2024-10-15. [[raci-responsibility-assignment-matrix]]: search results, undated.
+- [[obsidian-bases-help]]: Obsidian, undated. [[writethedocs-docs-as-code]]: Write the Docs, undated. [[atlassian-link-confluence-page-to-work-item]]: Atlassian, undated.
+- [[productplan-product-requirements-document]]: ProductPlan, undated. [[google-sre-book-introduction-playbooks]]: Beyer and others, Google, 2016.
+- [[backstage-descriptor-format]]: Backstage project, undated. [[redhat-golden-paths]]: Red Hat, undated. [[contextmapper-context-map]]: Context Mapper project, undated.
+- [[claude-code-settings-files-and-precedence]] and [[claude-code-worktrees-page]]: Anthropic, fetched 2026-11-08. [[gitleaks-readme]]: Gitleaks maintainers, fetched 2026-11-08.
+- [[dora-2025-ai-assisted-report]]: DORA, 2025-09-23. [[space-developer-productivity]]: Forsgren and others, 2021-02. [[atlassian-control-chart]]: Atlassian, undated.
+- [[kiro-specs-docs]]: Kiro, fetched 2026-11-08. [[bmad-method-docs]]: BMad Code organization, fetched 2026-11-08. [[aws-ai-dlc-phases-and-stages]]: AWS Labs, fetched 2026-11-08.
+- [[sei-attribute-driven-design-method-collection]]: SEI, Carnegie Mellon, 2006-10-31.

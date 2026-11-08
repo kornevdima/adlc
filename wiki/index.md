@@ -26,7 +26,7 @@ related:
 
 # Wiki Index
 
-Last updated: 2026-11-08 | Total pages: 164 | Source pages: 50
+Last updated: 2026-11-08 | Total pages: 185 | Source pages: 71
 
 Navigation: [[overview]] | [[log]] | [[hot]] | [[maintenance-triggers]] | [[architecture/_index|Architecture]]
 
@@ -207,6 +207,27 @@ How the plugin is built, as-built at 1.1.0. Full catalog: [[architecture/_index]
 - [[aws-ai-dlc-workflows]] — 2025-11-29 | AWS DevOps blog, awslabs | AI-DLC phases, gates, state file and audit log
 - [[anthropic-building-effective-agents]] — 2024-12-19 | Anthropic | workflows against agents; orchestrator-workers; checkpoints
 - [[cooper-stage-gate-systems-1990]] — 1990 | Robert G. Cooper | stage-gate: deliverables, criteria, go / kill / hold / recycle; via a mirror
+- [[team-topologies-key-concepts]] — undated | Team Topologies | the four team types and three interaction modes, from the authors' site
+- [[safe-product-management]] — 2024-10-15 | Scaled Agile | what SAFe Product Management owns
+- [[raci-responsibility-assignment-matrix]] — undated | search results | the four letters and the one-A rule; no primary
+- [[obsidian-bases-help]] — undated | Obsidian | Bases: views over notes by properties, a built-in Kanban view
+- [[writethedocs-docs-as-code]] — undated | Write the Docs | docs as code defined
+- [[atlassian-link-confluence-page-to-work-item]] — undated | Atlassian | two-way links between pages and work items
+- [[productplan-product-requirements-document]] — undated | ProductPlan | what a PRD contains and leaves to engineering
+- [[google-sre-book-introduction-playbooks]] — 2016 | Beyer and others, Google | playbooks give roughly 3x better time to repair
+- [[backstage-descriptor-format]] — undated | Backstage project | owner required; system, domain, dependsOn, providesApis fields
+- [[redhat-golden-paths]] — undated | Red Hat | golden paths and platform teams, one vendor explainer
+- [[contextmapper-context-map]] — undated | Context Mapper project | context-map relationship types
+- [[claude-code-settings-files-and-precedence]] — fetched 2026-11-08 | Anthropic | user, project and local settings files; precedence
+- [[claude-code-worktrees-page]] — fetched 2026-11-08 | Anthropic | worktree paths, sharing, cleanup
+- [[gitleaks-readme]] — fetched 2026-11-08 | Gitleaks maintainers | pre-commit setup, allowlists, a hook can be skipped
+- [[dora-2025-ai-assisted-report]] — 2025-09-23 | DORA | the 2025 report landing page; archetypes replace tiers (medium)
+- [[space-developer-productivity]] — 2021-02 | Forsgren and others | the SPACE record; no single metric suffices
+- [[atlassian-control-chart]] — undated | Atlassian | cycle time and lead time follow the statuses the team selects
+- [[kiro-specs-docs]] — fetched 2026-11-08 | Kiro (AWS) | requirements, design, tasks; approval between them
+- [[bmad-method-docs]] — fetched 2026-11-08 | BMad Code organization | the delivery loop; planning pages unread (low)
+- [[aws-ai-dlc-phases-and-stages]] — fetched 2026-11-08 | AWS Labs | stages, gates and what the audit log records
+- [[sei-attribute-driven-design-method-collection]] — 2006-10-31 | SEI, Carnegie Mellon | ADD inputs and steps
 
 ---
 

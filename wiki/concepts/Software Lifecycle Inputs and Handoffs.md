@@ -9,6 +9,9 @@ tags: [concept, roles, handoff, workflow]
 related:
   - "[[scrum-guide-2020]]"
   - "[[shape-up-basecamp]]"
+  - "[[team-topologies-key-concepts]]"
+  - "[[safe-product-management]]"
+  - "[[raci-responsibility-assignment-matrix]]"
   - "[[Structured Handoff]]"
 ---
 
@@ -18,7 +21,7 @@ Every framework names the same few inputs under different titles. A small team f
 
 ## The inputs and what each produces
 
-| Input | Produces | Consumes | Scrum | Shape Up | SAFe (medium, secondary sources) |
+| Input | Produces | Consumes | Scrum | Shape Up | SAFe (medium) |
 |---|---|---|---|---|---|
 | Product | Goal, ordered backlog or pitch | Feedback, stakeholder needs | Product Owner | Shaper, betting table | Product Management, Product Owner, Business Owners |
 | Design | Interface and flow decisions | Problem and appetite | inside Developers | Designer on the build team | inside Agile Teams |
@@ -38,9 +41,9 @@ Every framework names the same few inputs under different titles. A small team f
 
 ## Other frameworks
 
-- SAFe splits product work across Product Management (program backlog), Product Owner (team backlog), System Architect (technical direction) and Release Train Engineer (coordination), with Business Owners agreeing objectives. Confidence medium: the official page fetched covered only Agile Teams, so the split rests on secondary summaries.
-- Team Topologies organizes teams, not individuals: stream-aligned, platform, enabling and complicated-subsystem teams, linked by collaboration, X-as-a-Service and facilitating interaction modes. Its handoff is a service boundary between teams. Confidence medium: seen through search excerpts of the official site, including a February 2025 post.
-- RACI was not researched in this pass. It assigns Responsible, Accountable, Consulted and Informed per artifact and is the usual way to record the table above.
+- SAFe names Product Management as owner of strategy, vision, roadmap and the ART backlog (the backlog of the Agile Release Train, the group of teams that ships together). System Architect, Release Train Engineer and Business Owners are named as fellow ART leaders (Source: [[safe-product-management]]). Confidence medium: the page is official and dated October 2024, but part of it is behind a login. The Product Owner link, the System Architect's duties and the "program backlog" label come from secondary summaries and stay unconfirmed.
+- Team Topologies organizes teams, not individuals. Four team types: stream-aligned, enabling, complicated subsystem, platform. Three interaction modes: collaboration, X-as-a-Service, facilitation. A handoff is therefore a service boundary between teams (Source: [[team-topologies-key-concepts]]). Confidence high for the definitions, taken from the authors' own site; the page is undated.
+- RACI records who does what per artifact. Four letters: Responsible (does the work, several allowed), Accountable (signs off, exactly one), Consulted (input before), Informed (told after). The one-A rule is the useful part: an artifact with no Accountable has no owner, and with two the decision stalls. A person can hold A and R on a small team, which fits the "inputs not headcount" point below (Source: [[raci-responsibility-assignment-matrix]]). Confidence medium: reference and community pages, not the PMBOK text.
 
 ## Implication
 

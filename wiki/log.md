@@ -21,6 +21,13 @@ Append-only. New entries go at the TOP. Never edit past entries.
 
 Entry format: `## [YYYY-MM-DD] operation | Title`
 
+## [2026-11-08] autoresearch | How work is organized, pass 2
+- **Trigger:** the operator asked to fetch what the first pass listed under weakest evidence.
+- Questions: 8 follow-ups (P1 to P8, one per original question, Sonnet workers), 8 done, 0 blocked; 21 primaries fetched where the first pass had search summaries.
+- Sources found: 21 | Pages created: 21 source pages; 8 concept pages updated in place; synthesis [[Research How work is organized]] updated (Open Questions, Sources, three contradictions, two sentences on cycle-time clocks and the AI-DLC audit log).
+- Key finding: the model stands. What rose to high: Team Topologies definitions, the Backstage catalog fields, Bases boards, settings and worktree file names, gitleaks setup, cycle and lead time clocks, the SEI ADD inputs, the PRD and playbook rows. Still secondary: TOGAF and BABOK (login-gated), the 2025 DORA report body (PDF over the fetch limit), the SPACE text (403), BMAD planning pages, Kiro hooks and steering, a RACI primary.
+- Checks: redaction clean apart from source URLs; tells check: one title-case heading and one phrase fixed; no dead links.
+
 ## [2026-11-08] autoresearch | How work is organized
 - **Trigger:** the brief `.raw/briefs/2026-11-08 How work is organized.md`, written after a product-owner review of a project run through adlc 1.2.0 (the case study, stated in general terms as findings F1 to F12).
 - Questions: 9 total (Q0 answered from this repository, Q1 to Q8 by one research worker each on Sonnet), 9 answered, 0 blocked

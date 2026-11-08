@@ -49,6 +49,11 @@ All source pages — summaries of ingested documents, transcripts, articles, and
 - [[getdx-flow-metrics]] — 2025-09-09 | DX after Mik Kersten | the five flow metrics
 - [[aws-ai-dlc-workflows]] — 2025-11-29 | AWS DevOps blog | AI-DLC open-sourced workflows
 - [[anthropic-building-effective-agents]] — 2024-12-19 | Anthropic | building effective agents
+- [[raci-responsibility-assignment-matrix]] — undated | search results | RACI
+- [[writethedocs-docs-as-code]] — undated | Write the Docs | docs as code
+- [[productplan-product-requirements-document]] — undated | ProductPlan | the PRD
+- [[redhat-golden-paths]] — undated | Red Hat | golden paths
+- [[dora-2025-ai-assisted-report]] — 2025-09-23 | DORA | the 2025 report page
 ---
 
 ## Code Repositories
@@ -65,6 +70,9 @@ All source pages — summaries of ingested documents, transcripts, articles, and
 - [[vibe-coding-new-sdlc-day1]] — 2026-05 | Osmani, Saboo, Kartakis (Google) | Day 1, vibe-coding course | syntax→intent thesis; vibe/structured/agentic spectrum; Agent = Model + Harness; factory model; CapEx/OpEx economics; eval-not-demo checklists
 
 - [[cooper-stage-gate-systems-1990]] — 1990 | Robert G. Cooper | Stage-Gate systems; read via a third-party mirror
+- [[google-sre-book-introduction-playbooks]] — 2016 | Beyer and others, Google | SRE book Introduction
+- [[space-developer-productivity]] — 2021-02 | Forsgren and others | SPACE, via the Microsoft Research record
+- [[sei-attribute-driven-design-method-collection]] — 2006-10-31 | SEI | Attribute-Driven Design
 ---
 
 ## Documentation and standards
@@ -77,6 +85,19 @@ All source pages — summaries of ingested documents, transcripts, articles, and
 - [[github-code-owners-and-push-protection]] — fetched 2026-11-08 | GitHub | code owners, required review, push protection
 - [[dora-metrics-guide]] — 2026-01-05 | Nathen Harvey, DORA | the five DORA measures
 
+- [[team-topologies-key-concepts]] — undated | Team Topologies | team types and interaction modes
+- [[safe-product-management]] — 2024-10-15 | Scaled Agile | the Product Management role page
+- [[obsidian-bases-help]] — undated | Obsidian | Bases, with a Kanban view
+- [[atlassian-link-confluence-page-to-work-item]] — undated | Atlassian | page-to-work-item links
+- [[atlassian-control-chart]] — undated | Atlassian | the control chart, cycle and lead time
+- [[backstage-descriptor-format]] — undated | Backstage project | the catalog descriptor format
+- [[contextmapper-context-map]] — undated | Context Mapper project | context maps
+- [[claude-code-settings-files-and-precedence]] — fetched 2026-11-08 | Anthropic | settings files and precedence
+- [[claude-code-worktrees-page]] — fetched 2026-11-08 | Anthropic | worktrees
+- [[gitleaks-readme]] — fetched 2026-11-08 | Gitleaks maintainers | secret scanning hook
+- [[kiro-specs-docs]] — fetched 2026-11-08 | Kiro (AWS) | specs
+- [[bmad-method-docs]] — fetched 2026-11-08 | BMad Code organization | the method docs home
+- [[aws-ai-dlc-phases-and-stages]] — fetched 2026-11-08 | AWS Labs | AI-DLC phases and stages
 ---
 
 ## Add new sources here after each ingest.

@@ -1,7 +1,7 @@
 ---
 type: meta
 title: "Hot Cache"
-updated: 2026-11-08T21:30:00
+updated: 2026-11-08T22:30:00
 tags:
   - meta
   - hot-cache
@@ -23,7 +23,7 @@ Navigation: [[index]] | [[log]]
 
 ## Last Updated
 
-**2026-11-08 (later session: the operating-model research)**. `/autoresearch` ran on the brief `.raw/briefs/2026-11-08 How work is organized.md`: Q0 from this repository, Q1 to Q8 by Sonnet workers, 25 pages, synthesis [[Research How work is organized]]. The result: adlc governs the story loop well and has almost nothing around it (no product layer, no team or machine record, no spike record, no measurement fields, no step for non-story work); the twelve findings are mapped to a seven-part model with alternatives and trade-offs, and the gaps in adlc as built are listed. `max_questions` is 8 and `max_pages` 30 in program.md now. Nothing committed; the brief, the pages and the budget edits are all uncommitted.
+**2026-11-08 (later session: the operating-model research)**. `/autoresearch` ran on the brief `.raw/briefs/2026-11-08 How work is organized.md`: Q0 from this repository, Q1 to Q8 by Sonnet workers, 25 pages, synthesis [[Research How work is organized]]. The result: adlc governs the story loop well and has almost nothing around it (no product layer, no team or machine record, no spike record, no measurement fields, no step for non-story work); the twelve findings are mapped to a seven-part model with alternatives and trade-offs, and the gaps in adlc as built are listed. A second pass fetched 21 primaries the first could not reach and raised the concept pages' confidence; what is still secondary (TOGAF, BABOK, the 2025 DORA report body, SPACE, BMAD planning pages) is in the synthesis's Open Questions. `max_questions` is 8 and `max_pages` 30 in program.md now. The first pass is committed; the second pass is its own commit after it.
 
 **2026-11-08 (session: review of the 1.2.0 branch, PR 3 closed, the loop wired to the new keys)**. The branch `feat/toolset-layout-engineering-cost` (`layout`, `engineering` and `cost` keys; the AI-tells pass) was reviewed on macOS, all 29 tests green, and its gaps fixed on the branch: `/adlc` reads the two keys and its packets carry the code wiki path and the ub-mode definition of done, Step 2.7 makes two commits under worktrees; `wrap-up`, `wiki-query`, `wiki-lint`, the architecture worker and three references know `service-wikis/`; `tells_check.py` skips `log.md`. Detail in the log entry. PR 3 is closed and its remote branch deleted; the work is merged to main and pushed after the evals (the log entry has the scores).
 
