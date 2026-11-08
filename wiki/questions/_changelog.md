@@ -12,6 +12,7 @@ Change history for pages in this folder. Pages show the current state only; hist
 
 | Date | Page | Change |
 |---|---|---|
+| 2026-11-08 | [[Operating model for adlc 1.3.0]] | Items 7, 8, 9 and 11 rewritten after discussion: team choices in AGENTS.md, spike as a backlog item with its own pipeline, reflection files gitignored; one open point left |
 | 2026-11-08 | [[Operating model for adlc 1.3.0]] | Filed from the operator's four rulings on the research: one release, generated board, separate decision kinds, artifact pages and drivers |
 | 2026-11-08 | [[Research How work is organized]] | Operator ruling recorded: metrics are computed outside adlc; the records carry the fields |
 | 2026-11-08 | [[Research How work is organized]] | Second pass: 21 primaries fetched, Open Questions rewritten, sources extended, three contradictions added |

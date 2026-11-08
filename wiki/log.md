@@ -21,6 +21,10 @@ Append-only. New entries go at the TOP. Never edit past entries.
 
 Entry format: `## [YYYY-MM-DD] operation | Title`
 
+## [2026-11-08] ruling | Spikes, team choices and reflection files
+- **Operator rulings** on the open points of [[Operating model for adlc 1.3.0]]: `.raw/reflection/` is gitignored, never committed, and `meta/` holds no prompt as typed; a spike is a backlog item of type spike with its own pipeline (question, time box, what it feeds; a spike worker or the person runs it; the record on the story page, the raw log in `.raw/spikes/`; the decision cites the spike as evidence), not a record type of its own; team choices live in the vault's AGENTS.md (the Toolset block and a How we work section), not in a wiki page.
+- Items 7, 8, 9 and 11 rewritten. One point stays open: whether the spike worker ships in 1.3.0.
+
 ## [2026-11-08] plan | Operating model for adlc 1.3.0
 - **Trigger:** the planning step the research brief deferred to the operator.
 - **Rulings (operator, 2026-11-08):** everything in one release, 1.3.0, EGM moves to 1.4.0; the board is a generated Markdown page from story frontmatter with done-against-total counts as a view, plus a Bases file only under `reader: obsidian`; decision levels get separate record kinds (product in `decisions/`, team in `How we work.md`, machine in a local-only page, ADRs in the code wiki) and a rule page on what is not a decision; gate pages become artifact pages and the architecture worker writes drivers, scenarios and constraints, never requirements, each gate one decision line on the epic page.
