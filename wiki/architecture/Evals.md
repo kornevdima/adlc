@@ -3,7 +3,7 @@ type: module
 title: "Evals"
 path: "evals/"
 created: 2026-10-22
-updated: 2026-10-22
+updated: 2026-11-09
 tags:
   - architecture
   - module
@@ -48,16 +48,16 @@ Thirty cases across thirteen skills:
 
 ## Graders
 
-Deterministic first: `file_exists`, `regex` on a named file, `tool_used` with `min` and `max`. Rules learned the hard way, kept in `evals/README.md`: "never called" needs both `min: 0` and `max: 0`; a prompt that starts with a slash command makes no Skill tool call, so `tool_used: Skill` fits natural-language prompts only; an LLM grader over a long trace may not see all of it, so point it at a file or the last message; a regex must not contain a frontmatter delimiter; a pattern must be JavaScript-safe.
+Deterministic first: `file_exists`, `regex` on a named file, `tool_used` with `min` and `max`. Rules learned the hard way, kept in `evals/README.md`: "never called" needs both `min: 0` and `max: 0`; a prompt that starts with a slash command makes no Skill tool call, so `tool_used: Skill` fits natural-language prompts only; `input_match` is tested against the whole JSON of the tool's input, content included, so a "never wrote this file" check anchors on `"file_path"`, or a report that merely names the folder counts as a write to it; an LLM grader over a trace sees about its first 20,000 characters, with the SessionStart hook output first, so a long run's writes never reach the judge: grade the files instead (`regex` or `llm` on a named file, `regex` with `target: files` over the created paths); a regex must not contain a frontmatter delimiter; a pattern must be JavaScript-safe.
 
 ## Tags and cost
 
-`fast` (under a minute, cents), `slow` (minutes and dollars), `read-only`, `writes` (needs `--allow-tools Write Edit`, some `Bash`), `scaffold`, `network`, `needs-deps`, `regression`. The fast set is the pre-bump check and costs about two dollars; at 1.0.9 it was eleven cases, all passing. Results and the HTML report go to `evals/results/`, which git ignores.
+`fast` (under a minute, cents), `slow` (minutes and dollars), `read-only`, `writes` (needs `--allow-tools Write Edit`, some `Bash`), `scaffold`, `network`, `needs-deps`, `regression`. The two `network` cases cannot pass under `claude plugin eval`: the runner's sandbox allows no outbound network and grants no web tool, so every research question comes back blocked; a sandboxed run only shows the loop stopping honestly. The fast set is the pre-bump check and costs about two dollars; at 1.0.9 it was eleven cases, all passing. Results and the HTML report go to `evals/results/`, which git ignores.
 
 ## Not yet in the suite
 
 - The five graphify skills keep their own runner (cases G1 to G5 with a demo application fixture) under `skills/graphify-ingest/evals/`; the product-management layer keeps cases E1 to E8 under its own `evals/`.
-- The two older `adlc` cases do not discriminate yet: the no-plugin baseline passes them too, because the field failures they pin happened deep into long sessions. They stay as regression pins. The three 1.3.0 cases (routes, spike, acceptance) were written with the release and not yet run; the operator runs the fast set before the push.
+- The two older `adlc` cases do not discriminate yet: the no-plugin baseline passes them too, because the field failures they pin happened deep into long sessions. They stay as regression pins. The 1.3.0 cases (routes, spike, acceptance, the ADLC scaffold) ran on macOS on 2026-11-09 and pass; the whole suite stood at 28 of 30 cases at 1.00, the two `network` cases apart.
 - The worker agents have no cases. A defect that escapes the verifier in the field becomes a case through the upstream route.
 - The twelve slow cases are run before a release but not on every bump.
 

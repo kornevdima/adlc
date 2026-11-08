@@ -1,7 +1,7 @@
 ---
 type: meta
 title: "Operation Log"
-updated: 2026-11-08
+updated: 2026-11-09
 tags:
   - meta
   - log
@@ -20,6 +20,15 @@ Navigation: [[index]] | [[hot]] | [[overview]]
 Append-only. New entries go at the TOP. Never edit past entries.
 
 Entry format: `## [YYYY-MM-DD] operation | Title`
+
+## [2026-11-09] test | 1.3.0 evals on macOS, the graders anchored
+- **Trigger:** the operator asked to pull the release branch and run the evals before the release. `release/1.3.0` was checked out from the remote (there is no `1.30.0` branch).
+- **Checks:** 55 Python tests green across seven files; `setup-team.sh` twice on a scratch copy of the `adlc-vault` fixture (writes, then skips); `migrate_1_3.py` dry run and apply on a scratch copy of a co-located Mode ADLC vault: 364 actions, a board of 354 stories, `board.py --check` current, a second apply regenerates only the board. The script has no mode check: on a copy of a Mode B code wiki it created the product and work folders too.
+- **Evals, first pass (every case, Bash granted, one run each):** 24 of 30 at 1.00, the four 1.3.0 cases among them, `wiki/scaffold-adlc` included. Below 1.00: `wiki-lint/clean` and `seeded`, `wiki-ingest/single` and `batch`, `autoresearch/new-topic` and `resume`.
+- **Diagnosis (three runs each, workspaces kept):** no plugin regression. The runner tests `input_match` against the whole JSON of the tool input, content included, so a lint report that names `wiki/concepts/` or a source page that cites `.raw/outbox-pattern.md` counted as a write to it; the traces show no write under `wiki/concepts/` and none to a raw file. A trace judge sees about the first 20,000 characters, the hook output first, so the ingest and autoresearch judges never saw the writes. The autoresearch runs are blocked by the runner's sandbox (`network.allowedDomains: []`, no web tool): the loop planned, dispatched its workers, reported every question blocked and filed nothing invented, which is what the branch asked of a blocked run.
+- **Changed:** eleven graders anchored on `"file_path"` (lint clean, seeded and history-markers; ingest single and batch; `wiki/resume`; `autoresearch/resume`); the ingest `pages` and `all-three` trace judges replaced by six file graders (source frontmatter, a new concept page, links to existing pages; three source pages, cross-links, the index); the clean-lint rubric says WARN and INFO rows are fine. `evals/README.md` carries the two grader rules and the `network` limit; [[Evals]] and the architecture changelog updated.
+- **Result:** 28 of 30 cases at 1.00, the lint and ingest cases three runs each; the two `network` cases cannot pass in the sandbox. About $41 across all runs.
+- **Next:** merge `release/1.3.0` to main and push; migrate the co-located vaults with `migrate_1_3.py`, dry run first.
 
 ## [2026-11-08] release | 1.3.0, the operating model built
 - **Trigger:** the operator asked to implement [[Operating model for adlc 1.3.0]]; all fifteen items, one release.
