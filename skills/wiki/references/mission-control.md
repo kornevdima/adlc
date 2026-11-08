@@ -1,12 +1,16 @@
 # Mission control and the metrics seam (ADLC mode)
 
-Two derived pages in the product wiki's `meta/` folder give the operator an async view of the delivery and make the agent's cost savings measurable. Together they close the metrics seam: producers stamp `produced_by` / `feature` / `effort_estimate` frontmatter (see [`modes.md`](modes.md)), and these pages are the rollups that consume it.
+Two derived pages in the product wiki's `meta/` folder give the agents' view of the delivery and make the agent's cost savings measurable. Together they close the metrics seam: producers stamp `produced_by` / `feature` / `effort_estimate` frontmatter (see [`modes.md`](modes.md)), and these pages are the rollups that consume it. A third page, `wiki/board.md`, outside `meta/`, is the team's board: generated from the story frontmatter, shareable, and described below.
 
-Both pages are **derived views**. The detailed records — verification contracts and records, review records, feature pages, note frontmatter — always win on disagreement, exactly like the assertion-coverage ledger (see [`concerns/qa.md`](concerns/qa.md)). Never edit delivery state on the board that isn't backed by a record; never trust the board over the record.
+All three are **derived views**. The detailed records — verification contracts and records, review records, feature pages, story frontmatter — always win on disagreement, exactly like the assertion-coverage ledger (see [`concerns/qa.md`](concerns/qa.md)). Never edit delivery state on a board that isn't backed by a record; never trust a board over the record.
 
-## meta/mission-control.md — the operator's board
+## wiki/board.md, the team's board
 
-The operator plugs into a running delivery like a project manager: what is in flight, what is blocked, what needs a human. Chat scrollback doesn't answer that; this page does.
+The board a product owner, a stakeholder or a new teammate reads. `skills/wiki/scripts/board.py --vault .` renders it from the frontmatter of every page in `user-stories/` (`frontmatter.md` § Work records): one section per status (draft, ready, in progress, blocked, done, dropped), one card per story with its kind, size, priority, services, feature, epic, sprint and release, then one table per epic and per release with the count of stories done against the total. It holds no data of its own and is never edited by hand: the loop regenerates it at every story close (`/adlc` Step 2.8), `wrap-up` regenerates it with the other roll-ups (step 6), and `board.py --check` tells `wiki-lint` when it is stale. With `reader: obsidian` in the toolset the script also writes `board.base` beside it, a live Bases view of the same stories. The page lives outside `meta/` because `meta/` is the agents' state and this page is for people.
+
+## meta/mission-control.md — the agents' board
+
+The dispatcher's own view of a running delivery, and the operator's when they plug in mid-run: what is in flight, what is blocked, what needs a human. Chat scrollback doesn't answer that; this page does. It carries the stage detail the team's board leaves out (verdicts, rounds, the defect route, the milestone verify).
 
 ```markdown
 ---
@@ -53,6 +57,15 @@ Features shipped since: N. Status: `conditional — milestone verify pending` | 
 - **The dispatcher, at stage transitions.** When a worker is dispatched, a handoff is accepted, a verdict lands (APPROVED / CHANGES_REQUESTED / PASS / FAIL), or a FAIL is routed to `bugs/` + backlog — update the affected row in the same breath as the record. One row edit, not a rewrite.
 - **`wrap-up`, at session end.** Reconcile the whole board against the records this session touched (it is one of the rollups in the wrap-up reconcile step).
 - Statuses obey the readiness bar literally: any pending criterion is `conditional — <criterion> pending`, never ✅.
+
+### When more than one session runs
+
+The one place these rules live; `team-sync.md` points here.
+
+- **Pull before reading.** A session reads the board, the ledgers and the epic pages only after `git pull` of the vault; a board read from a stale checkout is a board from another session's past.
+- **One dispatcher per epic.** Two `/adlc` sessions never work the same epic at once; the run ledger `_run <EPIC-ID>.md` is the lock, and a session that finds one it did not write asks before touching the epic (resume is the owner's call). Two sessions on two epics in one vault are fine; they touch different ledgers and different story pages.
+- **Regenerate rather than merge.** `board.md` is regenerated from the stories, never merged; `mission-control.md` and `ba-activity.md` are reconciled from the records, never hand-merged; `hot.md` is rewritten from `log.md` and the session. On a conflict in any of them, take either side and regenerate.
+- **When two sessions touched mission control:** the one that wraps up second reconciles every row against the records (the verification and review records, the story frontmatter, the ledger Notes) and says so in its log entry; a row with no record behind it is deleted, not kept. The story pages carry the truth about status and dates, so the boards can always be rebuilt from them.
 
 ## meta/ba-activity.md — the cost rollup
 

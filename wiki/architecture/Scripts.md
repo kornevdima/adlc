@@ -13,11 +13,12 @@ related:
   - "[[Plugin architecture overview]]"
   - "[[Skills and routing]]"
   - "[[Wiki maintenance edits blocked in ADLC vaults]]"
+  - "[[Operating model for adlc 1.3.0]]"
 ---
 
 # Scripts
 
-Sixteen Python scripts, standard library only, each beside the skill that owns it, plus one shell installer. A script exists wherever a check or a rewrite has to be deterministic: a prompt may miss a dead link, a script does not. The scripts are also the reason the permission profile works in auto mode: `permissions.md` allow-lists each script by path, so the routine operation never needs an ad-hoc `sed` that the profile would deny ([[Wiki maintenance edits blocked in ADLC vaults]]).
+Eighteen Python scripts, standard library only, each beside the skill that owns it, plus five shell scripts under `bin/`. A script exists wherever a check or a rewrite has to be deterministic: a prompt may miss a dead link, a script does not. The scripts are also the reason the permission profile works in auto mode: `permissions.md` allow-lists each script by path, so the routine operation never needs an ad-hoc `sed` that the profile would deny ([[Wiki maintenance edits blocked in ADLC vaults]]).
 
 ## Inventory
 
@@ -30,6 +31,8 @@ Sixteen Python scripts, standard library only, each beside the skill that owns i
 | `guard_env.py` | `wiki` | PreToolUse hook: blocks any tool call that reads an env file or prints resolved configuration; `.env.example` and commit / PR message text stay allowed. Payload tests in `test_guard_env.py` | the vault's `.claude/settings.json`, copied there by the scaffold |
 | `okf_export.py` | `wiki` | Renders the vault as an Open Knowledge Format bundle | by hand, for sharing ([[Open Knowledge Format]]) |
 | `toolset.py` | `wiki` | `show` resolves the vault's `Toolset:` block with its defaults (one `key=value` per line, or `--key` for one); `check` says which chosen tools are installed, each with its install line, and for the IDE server whether the IDE answers an MCP initialize; `detect` proposes a block from what the machine has; `code-wiki <svc>` prints a service's code wiki path for the vault's layout (`services/<svc>/wiki/` or `service-wikis/<svc>/`). `check` also covers the layout (`/services/` ignored, worktrees present), ub-mode (skill and three tool virtualenvs) and TokenEconomizer. Reads MCP server names and the IDE server's URL only. Parser tests in `test_toolset.py` | the scaffold (step 3a), `/adlc` Step 0, the `graphify-ingest` and `graphify-update` gates, `wiki-faq` answers |
+| `board.py` | `wiki` | Renders the team's board, `wiki/board.md`, from the frontmatter of every `user-stories/` page: one section per status, one card per story (kind, size, priority, services, feature, epic, sprint, release), and a done-against-total table per epic and per release; `--check` exits 1 when the page is stale; writes `board.base` beside it under `reader: obsidian`. Idempotent (its `updated:` is the newest story's). Tests in `test_board.py` | `/adlc` Step 2.8 (every story close) and the epic close, `wrap-up` 6, `wiki-lint` 6b, the scaffold and the migration |
+| `migrate_1_3.py` | `wiki` | Moves a 1.2.0 vault to the 1.3.0 model: the new folders with their indexes and changelogs, the ignore lines, epic pages out of `sprints/`, gate pages renamed to the artifact names with `relink.py`, `kind` and `history` on the stories, the `## How we work` section and `catalog-info.yaml`, then the board. Dry run by default, idempotent. Tests in `test_migrate_1_3.py`; dry run and apply checked on a copy of a co-located vault (20 actions) | the operator, once per vault, from `migration-1.3.md` |
 | `build_snapshot.py` | `adlc` | Snapshots the build as a git ref and checks the tester's footprint against it | the story loop, after builder and after tester |
 | `lint_graph.py` | `wiki-lint` | Graph-layer checks: label and title drift, stale labels, orphan community pages, graph staleness against the source files | `wiki-lint` |
 | `build_index_json.py` | `wiki-query` | Writes `wiki/index.json`, the machine-readable locator for large vaults; `--services` adds the code wikis of either layout (`services/*/wiki`, `service-wikis/*`) | `wiki-query` large-vault mode, `wrap-up` |
@@ -40,6 +43,7 @@ Sixteen Python scripts, standard library only, each beside the skill that owns i
 | `bin/add-service-worktree.sh` | plugin | Adds one service to a `layout: worktrees` vault: ignores `/services/`, checks the service branch out as a worktree (an orphan branch when new), seeds `service-wikis/<svc>/`; commits nothing | the operator or the scaffold, once per service |
 | `bin/setup-ub-mode.sh`, `bin/ub-tool.sh` | plugin | Copy the ub-mode skill into the vault and clone crapper, dryer and mutator into `tools/` at pinned commits, each with a virtualenv; `ub-tool.sh` becomes the vault's `scripts/tool.sh`, which finds the interpreter on Windows and Unix | the operator or the scaffold, once per vault with `engineering: ub-mode` |
 | `bin/setup-graphify.sh` | plugin | Installs the graphify library into a compatible Python and pins the path for a project | the operator or `graphify-ingest`, once per project; skipped while the pinned interpreter imports graphify |
+| `bin/setup-team.sh` | plugin | The joining checklist's files: `CODEOWNERS` from the `Roles:` block, `CONTRIBUTING.md` from `## How we work`, a pre-commit hook that runs `gitleaks protect --staged`; never overwrites, installs nothing | the operator or the scaffold (step 8a) when a second person joins |
 
 ## Conventions
 

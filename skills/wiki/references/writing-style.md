@@ -86,7 +86,7 @@ Rules: lead with the answer; say what changed and where; no recap of the request
 ## Corrections
 
 - **A correction is a pattern, not a line.** When the operator corrects one spot (a missing link, an unexplained code, a wording), search the whole document, and its translation, for the same pattern and fix every instance in the same edit. Report how many places changed. If an instance needs a judgement call, list it and ask instead of leaving it silently.
-- Log each correction in the operator profile's correction log, verbatim and classified. A correction becomes a standing rule in § Writing only when the operator says it is standing, or ratifies a distill proposal after it repeats.
+- Log each correction in the operator profile's correction log, classified (the date, the class, what it exposed, the outcome, the session), and write the words as typed to the session's reflection file (`.raw/reflection/<session>.md`, gitignored), never into a committed page. A correction becomes a standing rule in § Writing only when the operator says it is standing, or ratifies a distill proposal after it repeats.
 
 ## Translation
 

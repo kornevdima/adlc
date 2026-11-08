@@ -9,8 +9,8 @@ Built on [Andrej Karpathy's LLM Wiki pattern](https://gist.github.com/karpathy/4
 | Layer | What it is | Key pieces |
 |---|---|---|
 | **Knowledge substrate** | A compounding Markdown wiki vault (Obsidian-flavoured; Obsidian or wiki-renderer reads it), OKF-aligned, plus optional code navigation: a graphify graph, or Semble and Serena. Every source ingested, every question answered from it, zero manual filing. | `wiki`, `wiki-ingest`, `wiki-query`, `wiki-lint`, `save`, `autoresearch`, `graphify-*` |
-| **Role skills** | BA, product, and architecture methods that read and write the substrate — requirements, stories, specs, governance. Methods are bundled; no external plugins. | `product-management-layer`, `ba-export`, bundled BA + shift-left references |
-| **Delivery orchestration** | Mode ADLC: a plan-driven loop that works an epic story by story, dispatching (design →) build → test → review → verify workers, committing with trace IDs, keeping a live mission-control board. | `adlc`, `wrap-up`, 16 subagents |
+| **Role skills** | BA, product, and architecture methods that read and write the substrate — the PRD, requirements, epics, stories, releases, architecture artifacts, governance. Methods are bundled; no external plugins. | `product-management-layer`, `ba-export`, bundled BA + shift-left references |
+| **Delivery orchestration** | Mode ADLC: a plan-driven loop that works an epic story by story, dispatching (design →) build → test → review → verify workers (or the spike pipeline for a spike), writing the story dates, committing with trace IDs, regenerating the team's board. Routes for the work that is not a story. | `adlc`, `wrap-up`, 17 subagents |
 | **Project bindings** | Per-repo calibration: AGENTS.md profiling, repo-local worker specializations distilled from each run. | `project-profile`, `/adlc distill` |
 
 The operator model: the engineer refines and plans in a **grilling session** (the one stage that never runs unattended), then delegates to the loop and reviews evidence — records, boards, and diffs, not a 700k-token transcript.
@@ -112,14 +112,28 @@ With `code-nav: semble, serena` or `idea` the workers and `wiki-query` call the 
 
 Non-engineers bring a need in by dropping a five-heading note (problem, outcome, who is affected, constraints, open questions) into `.raw/intake/`; the next ingest turns it into requirements and stories. Template: [`modes.md` § Intake for non-engineers](skills/wiki/references/modes.md#intake-for-non-engineers).
 
-Worker subagents (dispatched by the loop, not invoked directly): `scope-analyst`, `feature-designer` (optional: a design brief before the build and a design review after the code review, when the toolset names impeccable or taste-skill), `feature-builder`, `feature-tester`, `feature-reviewer`, `feature-verifier`, `devops` (optional: push / deploy / deployed-revision check, only on the operator's word), `doc-writer`, `architecture-subagent`, `ba-suite-subagent`, `ba-export-subagent`, `research-subagent`, `wiki-ingest-subagent`, `wiki-lint-subagent`, `graphify-extract-subagent`, `mechanical-scanner-subagent`.
+Worker subagents (dispatched by the loop, not invoked directly): `scope-analyst`, `feature-designer` (optional: a design brief before the build and a design review after the code review, when the toolset names impeccable or taste-skill), `feature-builder`, `feature-tester`, `feature-reviewer`, `feature-verifier`, `spike` (a time-boxed experiment whose record a decision cites; or the operator runs it and the loop documents it), `devops` (optional: push / deploy / deployed-revision check, only on the operator's word), `doc-writer`, `architecture-subagent`, `ba-suite-subagent`, `ba-export-subagent`, `research-subagent`, `wiki-ingest-subagent`, `wiki-lint-subagent`, `graphify-extract-subagent`, `mechanical-scanner-subagent`.
+
+### The operating model (1.3.0)
+
+The loop sits inside a small operating model, all of it plain pages in the vault ([`modes.md`](skills/wiki/references/modes.md), [`frontmatter.md` § Work records](skills/wiki/references/frontmatter.md), [`records.md`](skills/wiki/references/records.md), [`routes.md`](skills/adlc/references/routes.md)):
+
+| Layer | What the vault holds |
+|---|---|
+| Product | `product/prd.md` (why and what), `product/context.md` (the C4 context, the team dependencies), `domains/` (product domains and their context map), `catalog-info.yaml` |
+| Work | `epics/` (rulings and gate lines), `user-stories/` (features, defects, risks, debt and spikes, with dates the loop writes), `sprints/` (time boxes), `releases/` (what the user gets); `board.md`, generated from the stories by `board.py` |
+| Decisions | product decisions in `decisions/` with `decided_by`, `decided_on`, `evidence`; ADRs in the code wiki; team choices in `AGENTS.md` (`Toolset:` and `## How we work`); machine setup in a gitignored local file |
+| Gates | one decision line per checkpoint on the epic page; the architecture worker writes drivers, a domain model, ADRs and a workflow, never requirements or gate pages |
+| Non-story work | research, spikes, architecture design, setup, plugin complaints and bookkeeping each have one route and one record |
+
+adlc computes no metric from these records; the fields are there for a computation outside the plugin. An existing vault moves to the model with `python3 skills/wiki/scripts/migrate_1_3.py --vault . --apply` ([`migration-1.3.md`](skills/wiki/references/migration-1.3.md)).
 
 ### Coming from the AI-Native SDLC Playbook
 
 | Playbook | ADLC |
 |---|---|
-| `intent.md` | a `.raw/` source or intake note → requirements and stories with stable IDs |
-| `spec.md` | the per-service shift-left spec (Gates 1–3) in the code wiki |
+| `intent.md` | a `.raw/` source or intake note → the PRD, requirements and stories with stable IDs |
+| `spec.md` | the per-service architecture artifacts (drivers, domain model, ADRs, workflow) in the code wiki; gates as lines on the epic page |
 | `plan.md` | the run ledger + per-story verification contract |
 | `CLAUDE.md` | `AGENTS.md` (from `/project-profile`) |
 | `REVIEW.md` | `reviews/_policy.md` per service |

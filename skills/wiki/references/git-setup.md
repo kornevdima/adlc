@@ -43,7 +43,7 @@ so GitHub collapses wiki files in PR diffs — reviewers see code only. Branch t
 
 ## .gitignore
 
-The root `.gitignore` in this repo already covers the right exclusions:
+The vault's `.gitignore` carries these lines; the scaffold writes them:
 
 ```
 .obsidian/workspace.json
@@ -52,9 +52,12 @@ The root `.gitignore` in this repo already covers the right exclusions:
 .obsidian-git-data
 .trash/
 .DS_Store
+.claude/settings.local.json
+*.local.md
+.raw/reflection/
 ```
 
-`workspace.json` changes constantly as you move panes around. Excluding it keeps the diff clean.
+`workspace.json` changes constantly as you move panes around. Excluding it keeps the diff clean. `settings.local.json` is one person's permission allowlist and tool pruning. `*.local.md` covers `wiki/meta/machine.local.md`, what one computer has installed ([`records.md`](records.md) § Machine setup). `.raw/reflection/` holds the operator's corrections as typed, one file per session; the committed correction log points at it by session and carries no quote ([`operator-profile.md`](operator-profile.md) § The reflection file). `.raw/spikes/` is not ignored: a spike's raw command log is committed with its story, and the secret scan from the joining checklist ([`team-sync.md`](team-sync.md)) covers it.
 
 ---
 

@@ -133,6 +133,8 @@ Tag every story with:
 
 L-sized stories must be flagged: `[NEEDS SPLITTING — too large for a single sprint item]`
 
+**In adlc** the tags become the story's frontmatter (`skills/wiki/references/frontmatter.md` § Work records): Story Type maps to `kind` (Functional and Technical Enabler to `feature`, NFR to `feature` with the NFR id in `traces_to`, Spike to `spike`; a defect from the bug route is `defect` with `caused_by`), Effort Indicator to `size`, MoSCoW to `priority`, Epic to `epic` (a wikilink to the record in `epics/`), Dependencies to `depends_on`; `services` names the services the story touches; `release` and `sprint` come from the epic record and the sprint plan when they exist, else stay empty. The loop writes `ready`, `started`, `done` and `history`; leave them empty. A Spike story also carries `question`, `time_box` (its size, two days at most), `feeds` (the decision the answer goes into) and an empty `mode`; its acceptance criteria are "what counts as answered" (`skills/adlc/references/routes.md` § Spikes). Each epic named in Step 1 gets a record page in `epics/` (`type: epic`, `release`, `feature`) if none exists; the epic's stories are listed by the board, never by hand on the epic page.
+
 ### Step 7 — Build Dependency Map
 Identify sequencing constraints between stories:
 - "This story needs [story ID] to be Done first"

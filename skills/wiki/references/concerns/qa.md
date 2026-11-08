@@ -18,7 +18,7 @@ wiki/
 ---
 type: test-plan
 title: "..."
-release: "..."                  # release/version this plan covers
+release: "[[R-1.4]]"            # the release record in releases/ this plan covers (frontmatter.md, Work records)
 scope: feature                  # feature | release | regression | exploratory
 modules_in_scope: []            # wikilinks to wiki/modules/ (Mode B)
 entry_criteria: ""

@@ -8,7 +8,7 @@ The seed already existed: the `adlc` run ledger carries `checkpoint` / `on_fail`
 
 ## Where it lives
 
-`wiki/meta/operator-profile.md` in the product wiki — **per project**, because the engagement pole is a property of the project, not of the person (the same operator runs a content site as business-input and an internal tool as fully-managed, and each would be harmed by the other's settings). Seeded at ADLC scaffold (`wiki` skill step 8) and by `/adlc` Step 0 when absent. Git-tracked like the rest of `meta/`. No PII beyond the operator's role; quotes are their own words *about the work*.
+`wiki/meta/operator-profile.md` in the product wiki — **per project**, because the engagement pole is a property of the project, not of the person (the same operator runs a content site as business-input and an internal tool as fully-managed, and each would be harmed by the other's settings). Seeded at ADLC scaffold (`wiki` skill step 8) and by `/adlc` Step 0 when absent. Git-tracked like the rest of `meta/`. No PII beyond the operator's role, and **no prompt as typed**: `meta/` is the agent-facing state of the project and travels with the vault, so the correction log keeps the date, the class, what the correction exposed, the outcome and a session reference, while the operator's words as typed live in `.raw/reflection/<session>.md`, which the vault's `.gitignore` excludes ([`git-setup.md`](git-setup.md)). Nothing in that folder is reviewed for commit because nothing in it is committed; the distilled rulings in the profile are what travels, and a new machine starts without the raw material.
 
 ## The axis: business-input vs fully-managed
 
@@ -50,8 +50,8 @@ status: evergreen
 - Product and design decisions; content removal; whether an asset is fit to publish
 
 ## Standing rulings
-<!-- cross-story rules only, one line each, dated, verbatim where possible; these ride in every dispatch packet, so keep the section short (~20 lines). A ruling on one story, bug or decision goes on that record's page, not here. -->
-- YYYY-MM-DD — "re-use the shared component, no per-route rules" (design)
+<!-- cross-story rules only, one line each, dated, in the operator's sense but your words (no prompt as typed in a committed page); these ride in every dispatch packet, so keep the section short (~20 lines). A ruling on one story, bug or decision goes on that record's page, not here. -->
+- YYYY-MM-DD — reuse the shared component; no per-route styling rules (design; session 2026-10-04-a)
 
 ## Writing
 <!-- optional: how documents for a human reader are written here (client briefs, help pages, story and requirement wording, reports to the operator). The generic method is the plugin's wiki/references/writing-style.md, applied by the technical-writer skill; this section holds the vault's reference document (one the operator called good) and its exceptions. Older vaults named this section "Client documents"; the skill reads either. -->
@@ -78,11 +78,15 @@ status: evergreen
 <!-- proposed: YYYY-MM-DD → profile setting — checkpoints → epic boundaries (seen 2×: EPIC-A, EPIC-B) -->
 
 ## Correction log
-<!-- the event only: what happened and what was done. No "Pattern:" verdicts; generalising is distill's job, on repeats. -->
-| Date | Quote (verbatim, short) | Class | What it exposed | Outcome |
+<!-- the event only: what happened and what was done. No "Pattern:" verdicts; generalising is distill's job, on repeats. No quote: the words as typed are in .raw/reflection/<session>.md (gitignored); the Session column points there. -->
+| Date | Class | What it exposed | Outcome | Session |
 |---|---|---|---|---|
-| YYYY-MM-DD | "why run a dev server if it's runnable from npm" | instrument | worker rebuilt the wired preview server, worse | contract now names the instrument |
+| YYYY-MM-DD | instrument | worker rebuilt the wired preview server, worse, when the npm script already served it | contract now names the instrument | 2026-10-04-a |
 ```
+
+### The reflection file
+
+`.raw/reflection/<session>.md`, one file per session, named by the date and a letter (`2026-10-04-a.md`), created on the first correction of the session. Each entry: the time, the correction as typed, one line of context (the story, the worker, the stop). The correction log's Session column is the pointer. The folder is gitignored; a teammate's machine has its own files or none, and the profile's rows still read without them. Older vaults whose log carries a Quote column keep their past rows as they are; new rows use the five columns above, and `wrap-up` adds the Session header the first time it writes one.
 
 ## Correction classes
 
@@ -100,11 +104,13 @@ The **distribution is the finding**: in the session that motivated this referenc
 6. **Standing rulings are a different weight from preferences.** A one-off and a standing law look identical in a transcript. The explicit "Standing rulings" block is the manual solution; anything not in it is a preference.
 7. **A ruling lives where it applies.** The test: would this ruling change how a *different, future* story is built? If not ("three factors" for one estimate, "lower to 400" for one default, "accept" on one visual), it is a decision on that story: record it on the story, bug or decision page it settles, and log the event in the correction log. It enters Standing rulings only when the operator states it as standing ("always", "from now on", "for the whole product") or ratifies a distill proposal after it repeats. In one production vault, 120 single-story rulings piled up in Standing rulings and rode in every dispatch packet, while 45 one-off "Pattern:" verdicts in the log turned case-by-case calls into blanket rules the operator had to correct.
 8. **Every distilled lesson names its target.** One of: an AGENTS.md **Don't** (a runtime or code trap of the service), a **worker rule** (the repo's `.claude/agents/`), a **profile setting** (how this operator wants to work), or **upstream** (the plugin, for lessons general to every service). Distill states which and why, with the occurrence count. An upstream lesson is filed in `meta/adlc-upstream.md` ([`adlc-upstream.md`](adlc-upstream.md)), not only proposed in chat. That file carries it out of the vault, and the profile line it replaces is its workaround.
+9. **Acceptance names what it accepts, whatever the pole.** A broad reply ("fine", "go ahead") to a stop that carried several items accepts none of them by itself: the dispatcher lists back the items it takes as accepted and asks once (`/adlc` Step 2 § Writing a ruling question). The fully-managed pole lets the agent rule more within stated principles; it never lets one word stand for several rulings. Each accepted ruling carries `decided_by`, `decided_on` and `evidence`.
+10. **A ruling is recorded in your words, with a pointer to theirs.** The committed pages (this profile, the story and decision pages) carry the ruling's sense and the session reference; the operator's sentence as typed stays in the reflection file on the machine that heard it.
 
 ## How the loop uses it
 
 - **`/adlc` Step 0** reads it; the pole sets the run-policy defaults; **standing rulings** and **preferred instruments** ride in every dispatch packet next to the Carry-forward, so a worker that knows "this operator's eyes are the acceptance gate" reaches for a screenshot early rather than a harness late.
-- **Story loop** — every operator interjection is classified and appended to the correction log. A `ruling` is taken; dispatching a census against it is a category error. It is recorded on the page it decides (rule 7), not added to Standing rulings unless the operator says it is standing.
+- **Story loop** — every operator interjection is classified and appended to the correction log, with the words as typed written to the session's reflection file. A `ruling` is taken; dispatching a census against it is a category error. It is recorded on the page it decides (rule 7) with `decided_by`, `decided_on` and `evidence`, not added to Standing rulings unless the operator says it is standing.
 - **Step 4.4 distill** — reads the run's rows, groups them, and writes a `proposed:` line only for what occurred at least twice, each naming its target (rule 8) and its evidence. It also proposes moving any story-bound line out of Standing rulings to the page it decides.
 - **`wrap-up`** — appends interjections the loop did not log (non-`/adlc` sessions), lists open proposals in its report.
 

@@ -4,7 +4,7 @@ A vault declares which reader shows its pages, which tool its workers navigate c
 
 ## The block
 
-The scaffold writes it (wiki skill, step 3a) from `toolset.py detect` and the operator's answers. Edit it by hand to change a choice later.
+The scaffold writes it (wiki skill, step 3a) from `toolset.py detect` and the operator's answers. Edit it by hand to change a choice later. The block is the team's tool choice, one of the four decision levels in [`records.md`](records.md): a tool selection is never a page in `decisions/` or an ADR unless reversing it would cost more than a story; a change to the block is one row in the vault's changelog. The rest of the team's choices (branching, review, the definition of done) is the `## How we work` section beside it.
 
 ```markdown
 Mode: ADLC
@@ -33,7 +33,7 @@ The slots and what each one decides:
 
 | Slot | Options | Default when absent | Decides |
 |---|---|---|---|
-| `reader` | `obsidian`, `wiki-renderer`, `none` | `obsidian` | Which reader-only artefacts the skills write (Bases, Canvas, Dataview, `.obsidian/app.json`), what the scaffold tells the operator to open, whether the Obsidian MCP notes apply |
+| `reader` | `obsidian`, `wiki-renderer`, `none` | `obsidian` | Which reader-only artefacts the skills write (Bases, Canvas, Dataview, `.obsidian/app.json`, `board.base` beside `board.md`, `context.canvas` beside `product/context.md`), what the scaffold tells the operator to open, whether the Obsidian MCP notes apply |
 | `code-nav` | `graphify`, `semble`, `serena`, `idea`, `none` (several allowed) | `graphify` when the service has `graphify-out/graph.json`, else `none` | How workers find and read code, how `wiki-query` answers structural questions, whether the graph skills and the graph refresh run |
 | `design` | `impeccable`, `taste-skill`, `none` (several allowed) | `none` | Whether the `feature-designer` worker is dispatched and which design skills it runs |
 | `design-system` | a folder path, `none` | `none` | Where the designer reads the brand book, tokens and dated rulings |

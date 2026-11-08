@@ -1,8 +1,26 @@
 ---
 type: user-story
 title: "US-200 Render Mermaid diagrams under the strict CSP"
+kind: feature
+feature: "[[FEAT-002 Diagrams in pages]]"
+epic: "[[EPIC-002 Wiki rendering]]"
+sprint: "[[S07]]"
+release: "[[R-1.0]]"
 status: ready
-epic: EPIC-002
+created: 2026-09-22
+ready: 2026-09-26
+started: ""
+done: ""
+history:
+  - "2026-09-22 draft"
+  - "2026-09-26 ready"
+size: M
+priority: must
+services:
+  - web
+depends_on: []
+caused_by: ""
+updated: 2026-09-26
 ---
 
 # US-200 Render Mermaid diagrams under the strict CSP

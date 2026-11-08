@@ -15,7 +15,7 @@ A lesson whose fix belongs in the plugin: `skills/`, `agents/`, the scripts, the
 - **No, it's this service → AGENTS.md Don't** (or the repo-local worker).
 - **No, it's this operator → the operator profile.**
 
-This is target **upstream** in `operator-profile.md` rule 8. When a local fix was also made (in a repo-local worker, or in the profile), the entry names it as the workaround to remove once the plugin ships the fix.
+This is target **upstream** in `operator-profile.md` rule 8, and the route for every plugin change in `skills/adlc/references/routes.md`: a vault session records and exports, it never opens a pull request against the plugin, so the two repositories' histories stay apart and the vault's names stay out of the plugin. When a local fix was also made (in a repo-local worker, or in the profile), the entry names it as the workaround to remove once the plugin ships the fix.
 
 ## Template
 

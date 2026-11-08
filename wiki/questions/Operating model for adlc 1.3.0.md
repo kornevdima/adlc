@@ -8,7 +8,7 @@ tags:
   - plan
   - operating-model
   - release
-status: open
+status: delivered
 related:
   - "[[Research How work is organized]]"
   - "[[Use cases and modes]]"
@@ -26,7 +26,9 @@ related:
 
 # Operating model for adlc 1.3.0
 
-The work plan for the gaps that [[Research How work is organized]] lists in its section 7. The operator ruled on 2026-11-08: everything ships in one release, 1.3.0; the agreed EGM spec-review work moves to 1.4.0. The board is a generated Markdown page; decision levels get separate record kinds; gate pages become artifact pages and the architecture worker writes drivers, never requirements; adlc collects no metrics, the records only carry the fields.
+The work plan for the gaps that [[Research How work is organized]] lists in its section 7, built on 2026-11-08 as plugin version 1.3.0 (the as-built description is in [[Workers and the dispatch pipeline]], [[Shared references]], [[Scripts]] and [[Use cases and modes]]). The operator ruled on 2026-11-08: everything ships in one release, 1.3.0; the agreed EGM spec-review work moves to 1.4.0. The board is a generated Markdown page; decision levels get separate record kinds; gate pages become artifact pages and the architecture worker writes drivers, never requirements; adlc collects no metrics, the records only carry the fields.
+
+Three points were settled during the build and differ from the wording below. The work-item kind is a `kind:` field (feature, defect, risk, debt, spike) and the page `type:` stays `user-story`, because the glossary script keys on `type:` to find a page's family. The migration renames a former Gate 2 page to `adrs/decisions.md` and leaves the split into one ADR per page to the worker's next run. The new eval cases are written and not yet run; the fast set runs before the push.
 
 Fifteen work items in seven blocks, with the files each one touches and how its completion is checked. The order of work is at the end. The product wiki means a Mode ADLC vault's `wiki/`; the code wiki means a service's own wiki under `services/<svc>/wiki/` or `service-wikis/<svc>/`.
 

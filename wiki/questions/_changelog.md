@@ -12,6 +12,7 @@ Change history for pages in this folder. Pages show the current state only; hist
 
 | Date | Page | Change |
 |---|---|---|
+| 2026-11-08 | [[Operating model for adlc 1.3.0]] | Built as plugin version 1.3.0; status delivered; three build-time settlements recorded (the `kind` field, the Gate 2 rename target, the evals written but not run) |
 | 2026-11-08 | [[Operating model for adlc 1.3.0]] | Last open point closed: spike worker in 1.3.0; a spike also runs in operator-run mode, the plugin documents the outcome |
 | 2026-11-08 | [[Operating model for adlc 1.3.0]] | Items 7, 8, 9 and 11 rewritten after discussion: team choices in AGENTS.md, spike as a backlog item with its own pipeline, reflection files gitignored; one open point left |
 | 2026-11-08 | [[Operating model for adlc 1.3.0]] | Filed from the operator's four rulings on the research: one release, generated board, separate decision kinds, artifact pages and drivers |

@@ -25,6 +25,8 @@ Read both before processing any input:
 - `skills/wiki/references/ba/references/scrum-events-guide.md` — Scrum Guide 2020 event definitions, purposes, time-boxes, and artefact connections
 - `skills/wiki/references/ba/references/definition-of-ready-done.md` — Default DoR and DoD criteria with customisation rules and the BA's responsibility for each criterion
 
+**In adlc** every sprint also has a record page, `sprints/S<NN>.md` (`type: sprint`; `skills/wiki/references/frontmatter.md` § sprint): the goal, the start and end dates, the epics worked and the stories planned. Sprint Planning creates or updates it; the Sprint Review sets its status to `done`. A sprint carries stories from several epics, and a story names its sprint and its epic as two fields; the event packs below link the record rather than restating it. The run ledger (`_run <EPIC-ID>.md`) in the same folder is the delivery loop's state, not a sprint artefact. The team's Definition of Done lives in the vault `AGENTS.md`'s `## How we work` section; the pack's DoD gap analysis compares against that section.
+
 ---
 
 ## Scope Boundaries

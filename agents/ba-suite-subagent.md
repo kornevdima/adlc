@@ -41,11 +41,12 @@ Map of method to ADLC folder:
 | ba-suite skill | Wiki folder | ID scheme |
 |---|---|---|
 | ba-elicitation-synthesizer | `requirements/` | `{PREFIX}-FR/NFR-NNN` |
+| ba-prd | `product/prd.md` | links the requirement and feature ids |
 | ba-stakeholder-analyzer | `stakeholders/` | RACI roles |
 | ba-workshop-facilitator | `comms/` | session synthesis |
 | ba-process-modeler | `features/` | process spec |
 | ba-gap-analysis | `gaps/` | `G-{DIM}-NNN` |
-| ba-user-story-factory | `user-stories/` | `{PREFIX}-{EPIC}-NNN` |
+| ba-user-story-factory | `user-stories/` (backlog items), `epics/` (epic records) | `{PREFIX}-{EPIC}-NNN`, `EPIC-NNN`; frontmatter per `skills/wiki/references/frontmatter.md` § Work records |
 | ba-business-case-builder | `deliverables/` | business case |
 | ba-rfi-rfp-analyzer | `deliverables/` or `intel/` | `{Section}-NNN` |
 | ba-solution-assessment | `deliverables/` | scoring model |
@@ -64,7 +65,9 @@ Map of method to ADLC folder:
    - **Pages hold the current state only.** A change to an existing page rewrites it (no dated "Update" or "Correction" block, no "as filed", no "was X, now Y") and adds one row to that folder's `_changelog.md` (date, page, change; newest first). A new id gets its glossary entry: the dispatcher runs `glossary.py build` and `link --apply` after you report; say which ids are new. See `skills/wiki/references/writing-style.md` § Pages that stay current.
 6. Build `[[traceability]]` links: requirements to stories to tests, gaps to business cases.
 7. **Reality-check claims about the product.** When the vault has `services/` checkouts, do not assert that a capability exists / is shipped based on PRDs or meeting notes alone — confirm it in the code, or mark the claim `[UNVERIFIED — from docs]`. Cross-check new requirements against the existing register; a contradiction goes under open assumptions, never filed silently alongside what it contradicts.
-8. Do NOT write Office files. That is the export step.
+8. **File decisions at their level.** A product decision goes to `decisions/` with `decided_by` (a role), `decided_on` and `evidence`. A team or tool choice the sources state ("we branch per story", "the team uses X") is **never** a decision record: write it into the vault `AGENTS.md` (`Toolset:` block for a tool, `## How we work` for the rest) and list it in your report under "Filed in AGENTS.md" (`skills/wiki/references/records.md`). A decision the sources leave without evidence becomes an open question or a spike story (`kind: spike`), not a record with an empty `evidence`.
+9. **Work records.** A story carries the frontmatter of `frontmatter.md` § Work records (`kind`, `feature`, `epic`, `sprint`, `release`, `status: draft`, `size`, `priority`, `services`, `depends_on`); the loop fills `ready`, `started`, `done` and `history`, so leave them empty. Each epic has a record in `epics/` with its `release`; each release named in the sources has a record in `releases/`. After the backlog changes, say so: the dispatcher regenerates `board.md`.
+10. Do NOT write Office files. That is the export step.
 
 ## Do NOT
 
@@ -83,6 +86,7 @@ Created: [[Page 1]], [[Page 2]]
 Updated: [[Page 3]]
 Changelog: <folder>/_changelog.md (n rows)
 IDs: [e.g. FR-164..171, PROJ-023-017..028]   # generic, no PII; new ids need glossary entries
+Filed in AGENTS.md: [team or tool choices written to Toolset / How we work, or "none"]
 Traceability: [N reqs -> M stories -> K tests]
 Open assumptions: [for the dispatcher to decide, or "none"]
 Left undone: [requested deliverables not produced, or "nothing"]

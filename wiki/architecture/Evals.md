@@ -24,11 +24,11 @@ Cases for `claude plugin eval` under `evals/`, run locally before each version b
 
 `evals/<skill>/<case>/` holds `prompt.md` (frontmatter plus the user prompt), `graders/*.md`, and, when the case needs a starting vault or repo, `case.yaml` naming a `scaffold.sh`. The prompt's frontmatter carries the expected outcome, the tags, the allowed tools and the turn and time budgets.
 
-Twenty-six cases across thirteen skills:
+Thirty cases across thirteen skills:
 
 | Skill | Cases |
 |---|---|
-| `wiki` | scaffold a Mode B vault; resume |
+| `wiki` | scaffold a Mode B vault; scaffold with a toolset; scaffold a Mode ADLC vault (the product and work folders, the board, `catalog-info.yaml`, the How we work section); resume |
 | `wiki-ingest` | single source; batch |
 | `wiki-query` | a known concept; an absent one; a large vault with the locator |
 | `wiki-lint` | clean vault; seeded defects; history markers and a missing changelog |
@@ -40,11 +40,11 @@ Twenty-six cases across thirteen skills:
 | `ba-export` | a deliverable to `.docx` |
 | `obsidian-markdown` | convert GitHub-flavoured Markdown; the contradiction callout |
 | `obsidian-bases` | a source base |
-| `adlc` | a ruling question cites the record; a ruling question leads with the outcome |
+| `adlc` | a ruling question cites the record; a ruling question leads with the outcome; a research request lands on the autoresearch route; a discovery question opens a spike story with no command run; a one-word reply to a five-item list produces a list-back, not five rulings |
 
 ## Fixtures
 
-`evals/_fixtures/use.sh <layer>...` copies layers into the case workspace in order: `vault-base` (a small CQRS and event-sourcing vault), `lint-defects`, `raw-outbox`, `raw-three`, `autoresearch-resume`, `repo-fresh`, `repo-agents`, `ba-checkout`, `wrapup-changes`, `adlc-vault` (a standalone Mode ADLC vault with a stale board on purpose). Two special steps: `@commit` initialises git and commits what is there; `@large` generates sixty pages and the locator. A scaffold script layers fixtures and then adds the case's own files, so a regression case is one heredoc on top of a shared vault.
+`evals/_fixtures/use.sh <layer>...` copies layers into the case workspace in order: `vault-base` (a small CQRS and event-sourcing vault), `lint-defects`, `raw-outbox`, `raw-three`, `autoresearch-resume`, `repo-fresh`, `repo-agents`, `ba-checkout`, `wrapup-changes`, `adlc-vault` (a standalone Mode ADLC vault with a stale board on purpose, an epic record with a Gates table, a release record and a story with the 1.3.0 frontmatter). Two special steps: `@commit` initialises git and commits what is there; `@large` generates sixty pages and the locator. A scaffold script layers fixtures and then adds the case's own files, so a regression case is one heredoc on top of a shared vault.
 
 ## Graders
 
@@ -57,7 +57,7 @@ Deterministic first: `file_exists`, `regex` on a named file, `tool_used` with `m
 ## Not yet in the suite
 
 - The five graphify skills keep their own runner (cases G1 to G5 with a demo application fixture) under `skills/graphify-ingest/evals/`; the product-management layer keeps cases E1 to E8 under its own `evals/`.
-- The two `adlc` cases do not discriminate yet: the no-plugin baseline passes them too, because the field failures they pin happened deep into long sessions. They stay as regression pins.
+- The two older `adlc` cases do not discriminate yet: the no-plugin baseline passes them too, because the field failures they pin happened deep into long sessions. They stay as regression pins. The three 1.3.0 cases (routes, spike, acceptance) were written with the release and not yet run; the operator runs the fast set before the push.
 - The worker agents have no cases. A defect that escapes the verifier in the field becomes a case through the upstream route.
 - The twelve slow cases are run before a release but not on every bump.
 

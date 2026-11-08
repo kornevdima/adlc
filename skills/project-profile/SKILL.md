@@ -195,6 +195,8 @@ The seven headings above are the **skill-owned sections** — the only ones this
 
 **Engineering method.** When the vault's `Toolset:` block says `engineering: ub-mode` (`python3 <plugin>/skills/wiki/scripts/toolset.py --vault <vault> show --key engineering`), add the quality-tool rows to `Build & Test` and a `## How we change code` section with the four-point definition of done, from the template in `skills/wiki/references/engineering-ub-mode.md` § The service AGENTS.md. Treat `How we change code` as skill-owned. When the block says `layout: worktrees`, add one line under the title: this folder is branch `<service>`, checked out as a worktree, and its documentation is in `service-wikis/<service>/` on the main branch.
 
+**Team choices stay at the vault level.** `How we change code` is the service's gates; the team's branching, review and definition-of-done rules are the vault `AGENTS.md`'s `## How we work` section (`skills/wiki/references/records.md` § Team choices), which the wiki scaffold writes. Never file a team or tool choice the interview surfaces as a decision record; name the section it belongs in. When the vault has a `catalog-info.yaml` and the service has none, propose one (`kind: Component`, `spec.system` naming the vault's system, `spec.owner` from `Roles:`) and write it only if the operator agrees.
+
 Target length: under 2K tokens total for the **skill-owned** content. If the file exceeds 3K tokens, push back: AGENTbench shows costs ramping without benefits beyond ~2K. On the augment path the cap applies to skill-owned sections only — never truncate a preserved foreign section to hit a token target.
 
 ### Step 6 — Create .agents/rules/ scaffolding

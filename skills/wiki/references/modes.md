@@ -107,26 +107,36 @@ ADLC is a **separate, additive** mode. It does not replace Mode B or Mode C. It 
 ```
 vault/
 ├── .raw/                 # Confluence / Jira / meeting-note sources (immutable)
-│   └── exports/          # formal Office exports (PlantUML) + HTML tech-doc exports (Mermaid)
+│   ├── exports/          # formal Office exports (PlantUML) + HTML tech-doc exports (Mermaid)
+│   ├── spikes/           # one raw command log per spike story, committed (routes.md § Spikes)
+│   └── reflection/       # the operator's corrections as typed, one file per session; gitignored
 ├── wiki/
+│   ├── product/          # prd.md (purpose, users, scope, feature list) and context.md (C4 context, team dependencies)
+│   ├── domains/          # product domains: one page per domain, context-map.md for the relations
 │   ├── requirements/     # registers, RTM, approval packs, change records
 │   ├── features/         # feature specs, AS-IS / TO-BE
-│   ├── user-stories/     # INVEST backlog + Gherkin
+│   ├── epics/            # one record per epic: rulings table, Gates table, as-built at close
+│   ├── user-stories/     # the backlog: features, defects, risks, debt and spikes, one page each (frontmatter.md § Work records)
+│   ├── releases/         # one record per release: what the user gets, the epics it bundles, the stories it closed
 │   ├── gaps/             # gap registers, heatmaps, roadmap
 │   ├── stakeholders/     # RACI, power / interest, engagement
-│   ├── decisions/        # product / business decisions (not engineering ADRs)
+│   ├── decisions/        # product decisions only, each with decided_by, decided_on and evidence (records.md)
 │   ├── deliverables/     # business cases, solution assessments, milestones
-│   ├── sprints/          # sprint packs, impediment + retro logs
+│   ├── sprints/          # one record per sprint (S07.md), the sprint packs, and the run ledger while an epic runs
 │   ├── planning/         # BA approach, governance, information mgmt, performance
 │   ├── comms/            # circulation memos, synthesis exports, meeting notes
 │   ├── sources/          # one summary page per ingested raw source
-│   ├── meta/             # mission-control board, ba-activity ledger (metrics seam), lint reports
+│   ├── meta/             # mission-control (the agents' board), ba-activity ledger, operator profile, lint reports; agent-facing state, no prompt as typed
+│   ├── board.md          # the team's board, generated from story frontmatter by scripts/board.py; shareable, holds no data of its own
 │   └── glossary.md       # project terms + one entry per identifier, generated from the registers (references/glossary.md)
 │   # every folder above carries _index.md (catalog) and _changelog.md (history; pages hold the current state only)
 ├── services/             # symlinks to code checkouts (layout: symlinks) or git worktrees of service branches (layout: worktrees); each service's code wiki holds its specs (no project-context folder)
 ├── service-wikis/        # layout: worktrees only: one code wiki per service, on the main branch
-└── AGENTS.md
+├── catalog-info.yaml     # the portfolio descriptor: owner, system, domain (records.md § The project in a bigger system)
+└── AGENTS.md             # Mode, Concerns, Toolset, Roles, and the team's How we work section
 ```
+
+The four work records (story, epic, sprint, release) and their fields are in [`frontmatter.md`](frontmatter.md) § Work records: the BA worker creates them, the delivery loop advances them, and no field is a roll-up. What is a decision record and what is not (the toolset block, the How we work section, a ruling on one story, a design brief, the run ledger) is in [`records.md`](records.md). Work that is not a feature story (research, a spike, architecture design, environment setup, a plugin change, bookkeeping) has its route in `skills/adlc/references/routes.md`.
 
 Recommended concerns: add `qa` (`test-plans/`, `test-cases/`, `coverage/`, `bugs/`) in almost all cases, since ADLC produces test artifacts. Add `ops` when the product is operated in production.
 
@@ -149,12 +159,12 @@ updated: YYYY-MM-DD
 ---
 ```
 
-Key wiki pages to create: `[[Project Overview]]`, `[[Requirements Index]]`, `[[Backlog Index]]`, `[[Gap Analysis]]`, `[[Stakeholder Map]]`, `[[Decision Log]]`.
+Key wiki pages to create: `[[Project Overview]]`, `product/prd.md` (the PRD, from `ba/ba-prd.md`), `product/context.md` (the C4 context and the team dependencies), `domains/context-map.md`, `[[Requirements Index]]`, `[[Backlog Index]]`, `[[Gap Analysis]]`, `[[Stakeholder Map]]`, `[[Decision Log]]`, and `board.md` (generated).
 
 ### The pipelines
 
-1. **Ingest** — `ba-suite` converts Confluence / Jira / meeting-note context into BA deliverables (product wiki) with stable IDs and `[[traceability]]` links, and the shift-left `architecture-subagent` refines those into per-service technical specs (in each service's code wiki). This is the "ingest better deliverables" path: structured artifacts, not generic entity / concept extraction. Maps: [`ba-suite-pipeline.md`](ba-suite-pipeline.md) and [`technical-planning.md`](technical-planning.md).
-2. **Plan, build, verify** — each service is its own service: its spec lands in the service code wiki, the repo agent builds it, and the feature is verified with the operator's toolset (`docker compose` local run + chrome-devtools MCP e2e + the service's own tests). See [`technical-planning.md`](technical-planning.md). The `adlc` skill runs this as a resumable story-by-story loop (run ledger in `sprints/`, workers dispatched per stage).
+1. **Ingest** — `ba-suite` converts Confluence / Jira / meeting-note context into BA deliverables (product wiki) with stable IDs and `[[traceability]]` links: the requirements register, the PRD (`product/prd.md`), the features, the backlog with its epics and releases. The shift-left `architecture-subagent` then reads the requirements and writes each service's architecture artifacts (drivers, domain model, ADRs, engineering workflow) into that service's code wiki. This is the "ingest better deliverables" path: structured artifacts, not generic entity / concept extraction. Maps: [`ba-suite-pipeline.md`](ba-suite-pipeline.md) and [`technical-planning.md`](technical-planning.md).
+2. **Plan, build, verify** — each service is its own service: its artifacts land in the service code wiki, the repo agent builds it, and the feature is verified with the operator's toolset (`docker compose` local run + chrome-devtools MCP e2e + the service's own tests). See [`technical-planning.md`](technical-planning.md). The `adlc` skill runs this as a resumable story-by-story loop (run ledger in `sprints/`, workers dispatched per stage); a story of `kind: spike` runs the spike pipeline instead (`skills/adlc/references/routes.md`). Every story close regenerates `board.md`.
 3. **Sync (session wrap-up)** — when the operator says "end session" or "wrap up", the `wrap-up` skill uses already-loaded context to check git changes across `services/`, inject updates into the code wikis (impl specs, ADRs, plans), reflect shipped features / resolved gaps / new requirements into this wiki, then refresh `hot.md` and append `log.md`. The Stop hook is a backstop nudge.
 4. **Export** — reuse `ba-suite`'s Office generation to render wiki content to `.xlsx` / `.docx` under `.raw/exports/`, and push deliverables to the team tracker over MCP (ClickUp or Jira). Formal-export diagrams use PlantUML; living tech docs use Mermaid, HTML-exported to `.raw/exports/`. Mapping + MCP config: [`mcp-setup.md`](mcp-setup.md). Implemented by the `ba-export` skill (+ `ba-export-subagent`); folder + ID conventions are kept export-friendly.
 
@@ -187,11 +197,11 @@ The next ingest picks it up like any other source: `wiki-ingest` files a `source
 
 The ingest and planning pipelines run through two workers that each cover a whole skill family: `agents/ba-suite-subagent.md` (BA deliverables) and `agents/architecture-subagent.md` (shift-left technical specs). The ADLC pass and the `wrap-up` skill dispatch them one task at a time (parallel where independent) and update `index` / `log` / `hot` after. See [`ba-suite-pipeline.md`](ba-suite-pipeline.md) and [`technical-planning.md`](technical-planning.md).
 
-The per-service **build pipeline** runs six more service-level workers: `agents/scope-analyst.md` (census before the contract when scope is unknown; reconcile of the remaining plan after review), `agents/feature-builder.md`, `agents/feature-tester.md`, `agents/feature-reviewer.md`, `agents/feature-verifier.md`, `agents/doc-writer.md` (census -> build -> test -> review -> verify -> reconcile -> document; review loops back to builder / tester on changes requested). Export uses `agents/ba-export-subagent.md`. All BA + build + shift-left methods are bundled (`references/ba/`, `references/shift-left/`) — no external plugin.
+The per-service **build pipeline** runs six more service-level workers: `agents/scope-analyst.md` (census before the contract when scope is unknown; reconcile of the remaining plan after review), `agents/feature-builder.md`, `agents/feature-tester.md`, `agents/feature-reviewer.md`, `agents/feature-verifier.md`, `agents/doc-writer.md` (census -> build -> test -> review -> verify -> reconcile -> document; review loops back to builder / tester on changes requested). A spike story goes to `agents/spike.md` instead, or the operator runs it and the loop documents the outcome. Export uses `agents/ba-export-subagent.md`. All BA + build + shift-left methods are bundled (`references/ba/`, `references/shift-left/`) — no external plugin.
 
 ### Team state sharing
 
-When more than one person (dev, architect, BA / QA, writer) operates agents against the same wiki set, follow [`team-sync.md`](team-sync.md): git as the state bus, role → concern ownership, pull-first / wrap-up-last session protocol, union-merge for `log.md`, regenerate-don't-merge for `hot.md`, machine-local `services/` symlinks.
+When more than one person (dev, architect, BA / QA, writer) operates agents against the same wiki set, follow [`team-sync.md`](team-sync.md): git as the state bus, role → concern ownership, pull-first / wrap-up-last session protocol, union-merge for `log.md`, regenerate-don't-merge for `hot.md`, machine-local `services/` symlinks, and the joining checklist (`CODEOWNERS` from the `Roles:` block, `CONTRIBUTING.md`, a secret scan before every commit) when a second person joins. The team's own choices (branching, review rules, the definition of done) live in the vault `AGENTS.md`'s `## How we work` section beside the `Toolset:` block, not in a wiki page; a machine's local setup goes to `meta/machine.local.md`, which the gitignore excludes.
 
 ### Permissions
 
@@ -203,7 +213,7 @@ ADLC vaults often hold client data. Keep PII (person names, headcount, contract 
 
 ### Metrics seam
 
-`log.md` records every operation with the skill that ran it; the `produced_by` / `effort_estimate` / `feature` frontmatter fields feed the rollups. Two derived pages in `meta/` consume them: `mission-control.md` (the operator's async delivery board, updated by the dispatcher at stage transitions) and `ba-activity.md` (the cost rollup, refreshed at wrap-up). Formats, update triggers, and the derived-view rule: [`mission-control.md`](mission-control.md). Seed both at scaffold time with empty tables.
+`log.md` records every operation with the skill that ran it; the `produced_by` / `effort_estimate` / `feature` frontmatter fields feed the rollups. Two derived pages in `meta/` consume them: `mission-control.md` (the agents' delivery board, updated by the dispatcher at stage transitions) and `ba-activity.md` (the cost rollup, refreshed at wrap-up). Formats, update triggers, and the derived-view rule: [`mission-control.md`](mission-control.md). Seed both at scaffold time with empty tables. The team's board is `wiki/board.md`, generated from story frontmatter (`scripts/board.py`). The story, epic, sprint and release records carry the dates a delivery computation needs (`frontmatter.md` § Work records); adlc itself computes no metric and generates no report, the computation runs outside the plugin from the records and from git.
 
 ---
 

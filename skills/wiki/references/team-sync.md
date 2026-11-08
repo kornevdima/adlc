@@ -15,14 +15,30 @@ Ownership means "arbiter of conflicts and approver of changes in that area", not
 
 | Role | Owns (product wiki) | Owns (service code wikis) |
 |---|---|---|
-| BA / PM | `requirements/`, `user-stories/`, `stakeholders/`, `gaps/`, `deliverables/`, `planning/` | — |
-| Architect | `decisions/` (business-facing) | `specs/` (gates), `decisions/` (ADRs), `flows/` |
+| Product owner | `product/` (the PRD, the context), `decisions/` (product decisions), `releases/`, the gate 1 verdict | — |
+| BA / PM | `requirements/`, `epics/`, `user-stories/`, `sprints/`, `stakeholders/`, `gaps/`, `deliverables/`, `planning/` | — |
+| Architect | `domains/` (the domain pages and the context map), the gate 1.5 and 2 verdicts | `architecture-drivers.md`, `domain-model.md`, `adrs/`, `engineering-workflow.md`, the bounded-context note, `flows/` |
 | Developer | — | `modules/`, `components/`, `plans/`, implementation notes |
 | QA | `test-plans/`, `test-cases/`, `coverage/`, `bugs/` | verification records, e2e coverage notes |
 | Tech writer | `user-docs/`, `tutorials/`, `api-docs/` | — |
 | Operator (any) | `hot.md`, `log.md`, `index.md` via wrap-up | same, per service wiki |
 
-Record the mapping in the vault `AGENTS.md` (a `Roles:` block under `Mode:` / `Concerns:`) so every agent session knows whose area it is editing and who gates what.
+Record the mapping in the vault `AGENTS.md` (a `Roles:` block under `Mode:` / `Concerns:`) so every agent session knows whose area it is editing and who gates what. The same block is what `CODEOWNERS` is written from (below). The team's own working rules (branching, who reviews what, the definition of done) are the `## How we work` section of the same file, and the tools are its `Toolset:` block; neither is a wiki record ([`records.md`](records.md) § Team choices).
+
+## When a second person joins
+
+A one-person vault needs none of this; the day a second person clones it, run the checklist. The wiki skill runs it on request (step 8a), and `sh <plugin>/bin/setup-team.sh <vault>` writes the files and installs the hook.
+
+| Step | What | Who |
+|---|---|---|
+| 1 | `CODEOWNERS` at the vault root, one line per role from the `Roles:` block, so each input's owner reviews changes to the paths they own; `*` falls to the operator | the script, from the block; review it |
+| 2 | `CONTRIBUTING.md` at the vault root: branch naming (from `## How we work`), the pull-request flow, who reviews what, where personal settings live | the script, from `## How we work`; edit the wording |
+| 3 | A secret scan before every commit: a `gitleaks` pre-commit hook (`gitleaks protect --staged`), because `.raw/spikes/` logs what was typed and `.raw/` holds client material | the script installs the hook; `gitleaks` itself is the operator's install |
+| 4 | Branch protection on the main branch (reviews required, no force push): the operator's step in the hosting service | the operator |
+| 5 | Personal settings stay in `.claude/settings.local.json`, machine setup in `wiki/meta/machine.local.md`; both are gitignored and neither is reviewed | everyone |
+| 6 | The multi-session rules in [`mission-control.md`](mission-control.md) § When more than one session runs: pull before reading, one dispatcher per epic, regenerate rather than merge | every session |
+
+After the checklist the vault still works for one person; the files cost nothing until a second one arrives.
 
 ## Session protocol
 
@@ -44,13 +60,14 @@ One writer per wiki area at a time is advisory, not enforced — concurrent sess
 
   Union merge keeps both sides' lines; because entries are self-contained dated blocks, order glitches are cosmetic and the next wrap-up can reorder. Keep entries one-line-per-fact pointers (full records are their own pages) — this is also what keeps the log greppable.
 - **`hot.md` — regenerate, never merge.** It is a cache of "what's hot now", scoped to the last session. On conflict, take either side and let the next wrap-up regenerate it from `log.md` + the session. Never hand-merge two hot caches.
-- **`meta/mission-control.md` / `meta/ba-activity.md` — derived, regenerate from records.** Like `hot.md`, never hand-merge: on conflict take either side, then reconcile the board against the verification / review records and the ledger against `produced_by` frontmatter (see [`mission-control.md`](mission-control.md)). The records are the truth; the pages are views.
+- **`meta/mission-control.md` / `meta/ba-activity.md` / `board.md` — derived, regenerate from records.** Like `hot.md`, never hand-merge: on conflict take either side, then reconcile the board against the verification / review records, regenerate `board.md` with `board.py`, and refresh the ledger from `produced_by` frontmatter (see [`mission-control.md`](mission-control.md), whose § When more than one session runs holds the rules). The records are the truth; the pages are views.
 - **`index.md` / `_index.md` — derived counts, sorted entries.** Keep catalog lines one-per-page and alphabetically / chronologically sorted so concurrent additions land in different diff hunks. Counts are derived — when in doubt, `wiki-lint` reconciles them; don't fight over them in a merge.
 - **Records are pages.** Verification records, review records, retros, decision records: one file each, named with feature + date. Two sessions never conflict on a file only one of them creates.
 
 ## Cross-machine invariants
 
-- **`services/` symlinks are machine-local.** Gitignore them; each teammate recreates their own (a `bin/` setup script or a documented one-liner per service). Committed wiki content must never embed a teammate's absolute checkout path — wikilinks and `traces_to:` IDs are location-independent, and graphify already stores project-root-relative paths.
+- **`services/` symlinks are machine-local.** Gitignore them; each teammate recreates their own (a `bin/` setup script or a documented one-liner per service). Committed wiki content must never embed a teammate's absolute checkout path — wikilinks and `traces_to:` IDs are location-independent, and graphify already stores project-root-relative paths. What one machine has (runtimes, the IDE's MCP port, the symlink targets, the containers usually up) goes to `wiki/meta/machine.local.md`, gitignored through `*.local.md`.
+- **The operator's words stay on the machine.** `.raw/reflection/` holds the corrections as typed and is gitignored; the committed correction log carries the class, what it exposed and a session reference ([`operator-profile.md`](operator-profile.md)).
 - **Same wiki, any host.** Nothing in the vault may assume a particular editor (Obsidian vs IDE), OS, or clone location. The wiki is plain Markdown + git; that is the portability contract.
 
 ## Status fields are the shared state machine

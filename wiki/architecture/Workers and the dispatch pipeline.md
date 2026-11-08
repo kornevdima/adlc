@@ -3,7 +3,7 @@ type: module
 title: "Workers and the dispatch pipeline"
 path: "agents/"
 created: 2026-10-22
-updated: 2026-11-04
+updated: 2026-11-08
 tags:
   - architecture
   - module
@@ -22,11 +22,11 @@ related:
 
 # Workers and the dispatch pipeline
 
-Sixteen subagents in `agents/<name>.md`. A skill dispatches one through the Agent tool with `subagent_type: "<name>"` and a packet of inputs; the worker runs in its own context, writes its record into the wiki, and returns one report. Nobody invokes a worker directly, and the description of each one says so. The agent files carry no model name: the host's default applies, and a per-host tier file is a postponed design ([[Configurable subagent models per host]]).
+Seventeen subagents in `agents/<name>.md`. A skill dispatches one through the Agent tool with `subagent_type: "<name>"` and a packet of inputs; the worker runs in its own context, writes its record into the wiki, and returns one report. Nobody invokes a worker directly, and the description of each one says so. The agent files carry no model name: the host's default applies, and a per-host tier file is a postponed design ([[Configurable subagent models per host]]).
 
 ## The per-story pipeline
 
-The `adlc` skill is the dispatcher. For one story in one service it runs, in order:
+The `adlc` skill is the dispatcher. Before the first story it reads the epic record in `epics/` (its release link, its rulings and its Gates table) and the story frontmatter the plugin owns (`kind`, `epic`, `release`, `status`, `size`, `priority`, `services`); it writes the story's `ready`, `started` and `done` dates at the transitions below and regenerates the team's board (`board.py`) at every close ([[Operating model for adlc 1.3.0]]). For one story in one service it runs, in order:
 
 1. **`scope-analyst` in census mode**, when the story's scope is not yet measured against the code: it checks the story's claims, sweeps for the defect family, computes the blast radius, and proposes. It never rules and never writes feature code.
 2. **The dispatcher writes the verification contract** (scenarios, preconditions, data hygiene, target fingerprint) before any code exists ([[Validation Contract]]).
@@ -39,7 +39,9 @@ The `adlc` skill is the dispatcher. For one story in one service it runs, in ord
 7. **The dispatcher re-verifies the evidence and commits** with trace ids; on fail it files the bug page and the backlog item. Under `layout: worktrees` the code commits in the service's worktree and the wiki changes at the vault root, two commits with the same trace id.
 8. **`scope-analyst` in reconcile mode**: folds the outcome into the remaining plan rows.
 
-At the epic close: `doc-writer` writes end-user documentation from the as-built code when the service has the writing concern; `devops` pushes, opens the PR, deploys through the service's documented path and verifies the deployed revision, only when the operator says so and never touching infrastructure or secrets.
+A story of `kind: spike` leaves this pipeline at step 1 and runs the spike pipeline (`skills/adlc/references/routes.md`): the dispatcher writes a four-line contract (the question, the time box, what counts as answered, the decision it feeds) and the mode. In `autonomous` mode the **`spike`** worker (Bash, Read, Write, Edit) runs the commands in its own context, appends every command and its output to `.raw/spikes/<STORY-ID>.log`, and returns the structured record (commands in order, versions, failed attempts and why, the result); in `operator-run` mode the person runs the commands and the dispatcher documents the outcome into the same record and log as they happen. The close writes the decision with the spike's story page as its `evidence`. The worker never writes feature code, never edits a wiki page and never decides what the answer means.
+
+At the epic close: `doc-writer` writes end-user documentation from the as-built code when the service has the writing concern; `devops` pushes, opens the PR, deploys through the service's documented path and verifies the deployed revision, only when the operator says so and never touching infrastructure or secrets. The ledger folds into the epic record, which cannot close without a release link.
 
 ## The other workers
 
@@ -50,13 +52,14 @@ At the epic close: `doc-writer` writes end-user documentation from the as-built 
 | `graphify-extract-subagent` | `graphify-ingest`, `graphify-update` | Extracts entities, edges and hyperedges from one chunk of files into JSON |
 | `research-subagent` | `autoresearch` | Answers one plan question: searches, fetches, files source and concept pages |
 | `mechanical-scanner-subagent` | `project-profile` | Scans a repo's build, test and lint configuration into the mechanical sections of `AGENTS.md` |
-| `ba-suite-subagent` | the ADLC ingest pass, `wrap-up` | Runs one business-analysis method from the bundled library and files the deliverable with stable ids |
-| `architecture-subagent` | the ADLC technical-planning pass | Refines requirements into a per-service shift-left spec in that service's code wiki |
+| `ba-suite-subagent` | the ADLC ingest pass, `wrap-up` | Runs one business-analysis method from the bundled library (the PRD method among them) and files the deliverable with stable ids and the work-record frontmatter; files a team choice in `AGENTS.md`, never in `decisions/` |
+| `architecture-subagent` | the ADLC technical-planning pass, `/adlc` Step 0 (the architecture route) | Reads the BA's requirements and the service's domain page and writes the service's architecture artifacts into its code wiki: `architecture-drivers.md` (drivers, quality attribute scenarios, constraints), `domain-model.md` with the bounded-context note, `adrs/`, `engineering-workflow.md`. Writes no requirement and no gate page; proposes a spike for a decision without evidence |
+| `spike` | `/adlc`, a story of `kind: spike` in `autonomous` mode | Runs one time-boxed experiment in its own context, logs every command to `.raw/spikes/`, returns the record; never writes feature code or a wiki page |
 | `ba-export-subagent` | `ba-export` | Renders one deliverable to Office or PlantUML under `.raw/exports/` |
 
 ## Rules every worker follows
 
-- **Tool sets are the smallest that do the job.** Writers of pages get Read, Grep, Glob, Write, Edit; builders and testers add Bash; the verifier and devops add the chrome-devtools MCP. The code-touching workers also list the Semble and Serena servers (`mcp__semble__*`, `mcp__serena__*`) and the JetBrains IDE server's nine read tools (`mcp__idea__search_symbol` to `lint_files`; the builder adds `rename_refactoring`, nobody the terminal, run, patch or database tools), all of which resolve to nothing in a vault that has not configured them; the designer adds Skill for the impeccable and taste-skill skills.
+- **Tool sets are the smallest that do the job.** Writers of pages get Read, Grep, Glob, Write, Edit; builders, testers and the spike worker add Bash; the verifier and devops add the chrome-devtools MCP. The code-touching workers also list the Semble and Serena servers (`mcp__semble__*`, `mcp__serena__*`) and the JetBrains IDE server's nine read tools (`mcp__idea__search_symbol` to `lint_files`; the builder adds `rename_refactoring`, nobody the terminal, run, patch or database tools), all of which resolve to nothing in a vault that has not configured them; the designer adds Skill for the impeccable and taste-skill skills.
 - **Code navigation follows the vault's toolset.** graphify, or Semble to find and Serena or the JetBrains IDE server to read symbols and callers ([[JetBrains MCP server vs Serena for code navigation]]), or Grep; the dispatch packet carries the `code-nav` line and the service's `## Code navigation` section, and reports say which instrument found each claim ([[Configurable toolset for reader, code navigation and design]]).
 - **Records go where the layout says.** The dispatcher resolves each service's code wiki path once (`toolset.py code-wiki <svc>`: `services/<svc>/wiki/` under `layout: symlinks`, `service-wikis/<svc>/` under `layout: worktrees`) and passes it in every packet to a worker that writes a record. With `engineering: ub-mode` the builder packet carries the service's definition of done; the builder runs the three tool gates and the reviewer re-runs crapper and dryer on the diff ([[Configurable toolset for reader, code navigation and design]]).
 - **Workers write their record and report its path.** `log.md`, `hot.md` and the board belong to the dispatcher ([[Workers write to logs the dispatcher owns]]).

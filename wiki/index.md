@@ -34,7 +34,7 @@ Navigation: [[overview]] | [[log]] | [[hot]] | [[maintenance-triggers]] | [[arch
 
 ## Open tasks
 
-- [[Operating model for adlc 1.3.0]] — the 1.3.0 plan from the operating-model research: fifteen items in seven blocks (product layer, work layer, decision kinds, spikes and routes, approvals, quotes, gates and drivers, portfolio and growth), one release, EGM moves to 1.4.0 (status: open)
+- [[Operating model for adlc 1.3.0]] — the 1.3.0 plan from the operating-model research: fifteen items in seven blocks (product layer, work layer, decision kinds, spikes and routes, approvals, quotes, gates and drivers, portfolio and growth), one release, EGM moves to 1.4.0 (built as 1.3.0 on 2026-11-08; status: delivered)
 - [[Integrate the wiki toolset into the ADLC workers]] — workers write into a vault they have no toolset for; three reinvention instances measured in one session (status: open)
 - [[Operator profile - learn engagement style from corrections]] — `project-profile` covers the codebase, nothing covers the human running it; business-input vs fully-managed as the axis (status: open — smallest useful version shipped 2026-09-03, see its resolution log)
 - [[Configurable subagent models per host]] — a hardcoded `model: sonnet` broke worker dispatch in a Copilot org without Claude models; design: no model in agents, `adlc:setup` writes per-host tiers to a user file, dispatchers pass `model` (status: postponed — low priority, operator 2026-10-02)
