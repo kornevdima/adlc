@@ -69,3 +69,7 @@ _attachments/
 
 # Cursor reference copy (temporary; remove after cleanup phase wraps)
 _cursor/
+
+# Upstream reports hand-delivered from vaults: local intake only, never pushed (the README stays)
+.raw/upstream/*
+!.raw/upstream/README.md

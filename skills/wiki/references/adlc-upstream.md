@@ -93,7 +93,7 @@ They remove them, or approve the removal.
 
 ## On the plugin side
 
-The plugin repo takes reports in `.raw/upstream/` (manual), and from issues titled `[upstream]`. Each one becomes, or joins, a page in its `wiki/questions/` with `upstream: [<vault_key>/UP-nnn]` in the frontmatter. When a release ships the fix, it adds a row to `upstream-shipped.md`.
+The plugin repo takes reports in `.raw/upstream/` (manual; the folder is gitignored apart from its README, so a delivered report is never pushed), and from issues titled `[upstream]`. Each one becomes, or joins, a page in its `wiki/questions/` with `upstream: [<vault_key>/UP-nnn]` in the frontmatter. When a release ships the fix, it adds a row to `upstream-shipped.md`.
 
 The plugin wiki, its commits and its release notes follow the redaction list of § Sending step 1. A vault is named only by its `vault_key`, a service as `<service>`, and paths stay generic.
 
