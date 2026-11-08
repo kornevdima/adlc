@@ -21,6 +21,7 @@ claude plugin eval . --scaffold --allow-tools Write Edit --ablation none --no-pu
 - Every case sets `runs: 1` to keep cost down. Add `--runs 3` for a release decision: single runs are noisy.
 - Drop `--ablation none` to also run a no-plugin baseline arm (double cost) and see how much the plugin adds.
 - Results and the HTML report go to `evals/results/` (git-ignored).
+- To see what a run wrote, add `--keep-temp`: each run keeps `/private/tmp/e-<id>/` with `out/trace.jsonl` (every tool call with its input) and the workspace under `sealed/home/cwd/` (open it with `chmod 700` on the kept dir and `sealed/`, as the runner says). The aggregate JSON keeps grader verdicts only, not the tool inputs.
 
 ## Tags
 

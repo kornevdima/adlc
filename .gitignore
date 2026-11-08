@@ -6,6 +6,7 @@
 .smart-connections/
 .obsidian-git-data
 .trash/
+.serena/
 
 # System
 .DS_Store
