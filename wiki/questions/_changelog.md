@@ -12,6 +12,7 @@ Change history for pages in this folder. Pages show the current state only; hist
 
 | Date | Page | Change |
 |---|---|---|
+| 2026-11-08 | [[Research How work is organized]] | Operator ruling recorded: metrics are computed outside adlc; the records carry the fields |
 | 2026-11-08 | [[Research How work is organized]] | Second pass: 21 primaries fetched, Open Questions rewritten, sources extended, three contradictions added |
 | 2026-11-08 | [[Research How work is organized]] | Filed by autoresearch from the brief `.raw/briefs/2026-11-08 How work is organized.md`; nine questions answered, none blocked |
 | 2026-11-04 | [[Configurable toolset for reader, code navigation and design]] | Filed from the operator's request and resolved in 1.1.0 (unreleased) |

@@ -21,6 +21,10 @@ Append-only. New entries go at the TOP. Never edit past entries.
 
 Entry format: `## [YYYY-MM-DD] operation | Title`
 
+## [2026-11-08] ruling | Metrics are computed outside adlc
+- **Operator ruling** on the research [[Research How work is organized]], section 5 and finding F6: adlc is not a metrics-collecting or DORA-reporting tool. The epics, sprints and stories in the wiki are the source of truth and carry the fields a later computation needs; the computation itself runs outside the plugin, from those records and from git.
+- Recorded on the synthesis (section 5, the F6 row, the gaps list) and on [[Delivery Metrics and Their Data Sources]] (For this plugin).
+
 ## [2026-11-08] autoresearch | How work is organized, pass 2
 - **Trigger:** the operator asked to fetch what the first pass listed under weakest evidence.
 - Questions: 8 follow-ups (P1 to P8, one per original question, Sonnet workers), 8 done, 0 blocked; 21 primaries fetched where the first pass had search summaries.

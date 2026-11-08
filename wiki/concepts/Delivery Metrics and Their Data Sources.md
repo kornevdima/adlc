@@ -57,6 +57,10 @@ So lead time, cycle time and throughput can be computed later, each record needs
 
 An epic needs the same dates plus its child ids; its times are derived from children, not entered by hand.
 
+## For this plugin
+
+Ruling (operator, 2026-11-08): adlc does not generate DORA reports or collect metrics. The epics, sprints and stories in the wiki are the source of truth and carry the fields; any measurement is computed from them and from git by a tool outside the plugin. The fields above are the whole requirement on the records.
+
 ## Gaps
 
 The 2025 PDF exceeded the fetch size limit, so the reliability definition, the measures behind the archetypes and their shares need a read of the PDF. The SPACE paper's own wording on dimension count and activity metrics needs the ACM text or a PDF copy.
