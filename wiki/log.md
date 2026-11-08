@@ -21,6 +21,9 @@ Append-only. New entries go at the TOP. Never edit past entries.
 
 Entry format: `## [YYYY-MM-DD] operation | Title`
 
+## [2026-11-08] ruling | Spike worker in 1.3.0, with an operator-run mode
+- **Operator ruling** on the last open point of [[Operating model for adlc 1.3.0]]: the spike worker ships in 1.3.0. A spike is not always autonomous: in operator-run mode the person runs the commands and the plugin's work is to document the outcome into the same record and raw log. The plan has no open points.
+
 ## [2026-11-08] ruling | Spikes, team choices and reflection files
 - **Operator rulings** on the open points of [[Operating model for adlc 1.3.0]]: `.raw/reflection/` is gitignored, never committed, and `meta/` holds no prompt as typed; a spike is a backlog item of type spike with its own pipeline (question, time box, what it feeds; a spike worker or the person runs it; the record on the story page, the raw log in `.raw/spikes/`; the decision cites the spike as evidence), not a record type of its own; team choices live in the vault's AGENTS.md (the Toolset block and a How we work section), not in a wiki page.
 - Items 7, 8, 9 and 11 rewritten. One point stays open: whether the spike worker ships in 1.3.0.
